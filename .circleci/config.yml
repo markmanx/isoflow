@@ -16,9 +16,6 @@ jobs:
       - run:
           name: Build
           command: npm run build
-      - run:
-          name: Publish to NPM
-          command: npm publish
       - persist_to_workspace:
           root: ~/repo
           paths:
