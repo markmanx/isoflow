@@ -1,17 +1,9 @@
 {
   "name": "isoflow",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://isoflow.io",
+  "private": false,
+  "main": "./dist/index.js",
   "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.11.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,28 +11,34 @@
     "@types/node": "^16.18.12",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.10",
     "@xstate/react": "^3.2.1",
     "auto-bind": "^5.0.1",
     "gsap": "^3.11.4",
     "paper": "^0.12.17",
     "react-hook-form": "^7.43.2",
     "react-router-dom": "^6.8.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
     "xstate": "^4.37.0",
     "zod": "^3.20.6",
     "zustand": "^4.3.3"
   },
   "peerDependencies": {
-    "react": ">17.0",
-    "react-dom": ">17.0"
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "webpack"
   },
   "eslintConfig": {
     "extends": [

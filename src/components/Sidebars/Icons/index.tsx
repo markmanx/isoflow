@@ -1,3 +1,4 @@
+import React from "react";
 import { useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { IconCategory } from "./IconCategory";

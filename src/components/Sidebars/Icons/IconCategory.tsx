@@ -1,5 +1,5 @@
+import React from "react";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import { Icon as IconI } from "../../../types";
 import { Icon } from "./Icon";
 import { Section } from "../Section";

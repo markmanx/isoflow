@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useEffect, useContext } from "react";
 import { Renderer } from "../renderer/Renderer";
 import { useGlobalState } from "../hooks/useGlobalState";
