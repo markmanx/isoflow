@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "post-commit": "bash scripts/post_commit.sh"
+  }
+}
