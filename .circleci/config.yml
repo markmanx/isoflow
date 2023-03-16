@@ -19,6 +19,13 @@ jobs:
       - run:
           name: Publish to NPM
           command: npm publish
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - ./dist
+            - ./LICENSE
+            - ./package.json
+            - ./README.md
 
   deploy:
     <<: *defaults
@@ -26,20 +33,18 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      - run:
           name: Publish package
-          command: npm publish
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm publish
 
 workflows:
   main:
     jobs:
       - build:
           filters:
-            branches:
-              only:
-                - main
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - build
