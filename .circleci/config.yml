@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Publish package
           command: |
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            npm set //registry.npmjs.org/:_authToken=$npm_TOKEN
             npm publish
 
 workflows:
