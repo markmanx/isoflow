@@ -18,6 +18,14 @@ Coming soon under the MIT licence | Use it now on [isoflow.io](https://isoflow.i
 - **Powerful annotation tools:** Annotate nodes, groups and connectors.
 - **Step-by-step walkthroughs:** Create interactive tours of large diagrams to help viewers easily digest information.
 
+## Roadmap
+
+Migration to open-source: ██░░░░░░░░░
+
+- [x] Set up automated publishing to NPM registry
+- [ ] Migrate private JS project to public Typescript project
+- [ ] Publish icons as separate importable package
+
 ## License
 
-Isoflow is MIT licensed.
+Isoflow is MIT licensed (see ./LICENSE).
