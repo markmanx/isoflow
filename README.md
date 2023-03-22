@@ -24,6 +24,10 @@ Migration to open-source: ██░░░░░░░░░
 
 - [x] Set up automated publishing to NPM registry
 - [ ] Migrate private JS project to public Typescript project
+  - [ ] Pan / Select / Zoom modes
+  - [ ] Icons
+  - [ ] Groups
+  - [ ] Connectors
 - [ ] Publish icons as separate importable package
 
 ## License
