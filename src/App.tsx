@@ -17,7 +17,14 @@ const App = ({ initialScene }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <ModeManagerProvider>
-        <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
           <RendererContainer key="renderer" />
           <Sidebar />
           <SideNav />
