@@ -13,7 +13,7 @@ interface Props {
   initialScene: SceneI;
 }
 
-export const App = ({ initialScene }: Props) => {
+const App = ({ initialScene }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <ModeManagerProvider>
@@ -27,3 +27,5 @@ export const App = ({ initialScene }: Props) => {
     </ThemeProvider>
   );
 };
+
+export default App;
