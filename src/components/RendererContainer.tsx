@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { observer } from "mobx-react";
-import { useRef, useEffect, useState } from "react";
+import Box from "@mui/material/Box";
 import { Renderer } from "../renderer/Renderer";
 import { useGlobalState } from "../hooks/useGlobalState";
 import { useMouseInput } from "../hooks/useMouseInput";
@@ -21,10 +21,6 @@ export const RendererContainer = observer(() => {
     setDomEl(rendererEl.current);
     modeManager.setRenderer(renderer);
     modeManager.activateMode(Select);
-  }, [setRenderer, setDomEl, modeManager]);
-
-  useEffect(() => {
-    if (!modeManager) return;
 
     setCallbacks({
       onMouseMove: (event) => {
@@ -43,7 +39,7 @@ export const RendererContainer = observer(() => {
         modeManager.onMouseEvent("MOUSE_LEAVE", event);
       },
     });
-  }, [setCallbacks, modeManager]);
+  }, [setRenderer, setDomEl, modeManager]);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface MouseCoords {
   x: number;
@@ -20,28 +20,63 @@ interface MouseEvents {
   onMouseLeave: _MouseEvent;
 }
 
-const mouseEventToCoords = (e: MouseEvent) => {
-  return {
-    x: e.clientX,
-    y: e.clientY,
-  };
-};
+const getOffset = (domEl?: HTMLElement) => {
+  if (!domEl)
+    return {
+      top: 0,
+      left: 0,
+    };
 
-const parseMousePosition = (e: MouseEvent, mousedown: MouseCoords | null) => {
-  const current = mouseEventToCoords(e);
-  const delta = mousedown
-    ? { x: current.x - mousedown.x, y: current.y - mousedown.y }
-    : null;
+  const box = domEl.getBoundingClientRect();
 
-  return {
-    position: { x: current.x, y: current.y },
-    delta,
-  };
+  const body = document.body;
+  const docEl = document.documentElement;
+
+  const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  const clientTop = docEl.clientTop || body.clientTop || 0;
+  const clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  const top = box.top + scrollTop - clientTop;
+  const left = box.left + scrollLeft - clientLeft;
+
+  return { top: Math.round(top), left: Math.round(left) };
 };
 
 export const useMouseInput = () => {
   const [domEl, setDomEl] = useState<HTMLDivElement>();
   const [callbacks, setCallbacks] = useState<MouseEvents>();
+
+  const mouseEventToCoords = useCallback(
+    (e: MouseEvent) => {
+      const offset = getOffset(domEl);
+
+      return {
+        x: e.clientX - offset.left + window.scrollX,
+        y: e.clientY - offset.top + window.scrollY,
+      };
+    },
+    [domEl]
+  );
+
+  const parseMousePosition = useCallback(
+    (e: MouseEvent, mousedown: MouseCoords | null) => {
+      const current = mouseEventToCoords(e);
+      const delta = mousedown
+        ? {
+            x: current.x - mousedown.x,
+            y: current.y - mousedown.y,
+          }
+        : null;
+
+      return {
+        position: { x: current.x, y: current.y },
+        delta,
+      };
+    },
+    [mouseEventToCoords]
+  );
 
   useEffect(() => {
     if (!callbacks || !domEl) return;
