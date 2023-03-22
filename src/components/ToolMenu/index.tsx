@@ -1,20 +1,21 @@
 import React from "react";
+import { observer } from "mobx-react";
 import { useContext } from "react";
 import { useTheme } from "@mui/material";
-import { useActor } from "@xstate/react";
 import Card from "@mui/material/Card";
 import { MenuItem } from "../MenuItem";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import NearMeIcon from "@mui/icons-material/NearMe";
-import { GlobalStateContext } from "../../contexts/GlobalStateContext";
 import { useZoom } from "../../hooks/useZoom";
+import { modeManagerContext } from "../../contexts/ModeManagerContext";
+import { Select } from "../../modes/Select";
+import { Pan } from "../../modes/Pan";
 
-export const ToolMenu = () => {
+export const ToolMenu = observer(() => {
+  const modeManager = useContext(modeManagerContext);
   const theme = useTheme();
-  const { editor } = useContext(GlobalStateContext);
-  const [state] = useActor(editor);
   const { incrementZoom, decrementZoom } = useZoom();
 
   return (
@@ -30,16 +31,16 @@ export const ToolMenu = () => {
       <MenuItem
         name="Select"
         Icon={NearMeIcon}
-        onClick={() => editor.send("SWITCH_TO_SELECT")}
+        onClick={() => modeManager.activateMode(Select)}
         size={theme.customVars.toolMenu.height}
-        isActive={state.matches("SELECT_MODE")}
+        isActive={modeManager.currentMode instanceof Select}
       />
       <MenuItem
         name="Pan"
         Icon={PanToolIcon}
-        onClick={() => editor.send("SWITCH_TO_PAN")}
+        onClick={() => modeManager.activateMode(Pan)}
         size={theme.customVars.toolMenu.height}
-        isActive={state.matches("PAN_MODE")}
+        isActive={modeManager.currentMode instanceof Pan}
       />
       <MenuItem
         name="Zoom in"
@@ -55,4 +56,4 @@ export const ToolMenu = () => {
       />
     </Card>
   );
-};
+});

@@ -1,12 +1,13 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
+import Box from "@mui/material/Box";
 import { SideNav } from "./components/SideNav";
 import { Sidebar } from "./components/Sidebars";
 import { ToolMenu } from "./components/ToolMenu";
 import { RendererContainer } from "./components/RendererContainer";
 import { SceneI } from "./validation/SceneSchema";
-import { GlobalStateProvider } from "./contexts/GlobalStateContext";
+import { ModeManagerProvider } from "./contexts/ModeManagerContext";
 
 interface Props {
   initialScene: SceneI;
@@ -15,12 +16,14 @@ interface Props {
 export const App = ({ initialScene }: Props) => {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStateProvider>
-        <RendererContainer key="renderer" />
-        <Sidebar />
-        <SideNav />
-        <ToolMenu />
-      </GlobalStateProvider>
+      <ModeManagerProvider>
+        <Box sx={{ width: "100%", height: "100%", position: "relative" }}>
+          <RendererContainer key="renderer" />
+          <Sidebar />
+          <SideNav />
+          <ToolMenu />
+        </Box>
+      </ModeManagerProvider>
     </ThemeProvider>
   );
 };
