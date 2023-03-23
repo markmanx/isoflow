@@ -1,6 +1,6 @@
 {
   "name": "isoflow",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "private": false,
   "main": "./dist/index.js",
   "types": "./dist/App.d.ts",
