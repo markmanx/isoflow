@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
@@ -9,5 +9,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "strict": true
-  }
+  },
+  "files": ["./src/App.tsx"]
 }
