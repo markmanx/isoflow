@@ -4,11 +4,12 @@ export const IconSchema = z.object({
   id: z.string(),
   name: z.string(),
   url: z.string(),
+  category: z.string().optional(),
 });
 
 export const NodeSchema = z.object({
   id: z.string(),
-  label: z.string().nullable(),
+  label: z.string().optional(),
   icon: z.string(),
 });
 

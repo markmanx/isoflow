@@ -47,7 +47,7 @@
     "react-dom": ">=17"
   },
   "scripts": {
-    "dev": "nodemon --exec concurrently \"webpack\" \"tsc --declaration --emitDeclarationOnly\"",
+    "dev": "nodemon --watch src --exec npm run build",
     "build": "webpack && tsc --declaration --emitDeclarationOnly",
     "test": "jest"
   },

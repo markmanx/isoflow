@@ -35,4 +35,6 @@ const App = ({ initialScene }: Props) => {
   );
 };
 
+type Scene = SceneI;
+export { Scene };
 export default App;
