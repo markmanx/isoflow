@@ -53,6 +53,14 @@ const App = () => (
 )
 ```
 
+If using Next.js, make sure you only import Isoflow in the browser:
+
+```
+const Isoflow = dynamic(() => import("isoflow"), {
+  ssr: false,
+});
+```
+
 ## License
 
 Isoflow is MIT licensed (see ./LICENSE).
