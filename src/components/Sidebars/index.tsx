@@ -13,7 +13,7 @@ export const Sidebar = () => {
     (state) => ({
       selectedSideNavItem: state.selectedSideNavItem,
       closeSideNav: state.closeSideNav,
-      icons: state.icons,
+      icons: state.initialScene.icons,
     })
   );
 

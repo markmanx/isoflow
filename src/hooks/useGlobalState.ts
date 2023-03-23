@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { IconI } from "../validation/SceneSchema";
+import { SceneI } from "../validation/SceneSchema";
 import { Renderer } from "../renderer/Renderer";
 
 interface GlobalState {
-  icons: IconI[];
+  initialScene: SceneI;
+  setInitialScene: (scene: SceneI) => void;
   selectedSideNavItem: number | null;
   setSelectedSideNavItem: (index: number) => void;
   closeSideNav: () => void;
@@ -12,7 +13,15 @@ interface GlobalState {
 }
 
 export const useGlobalState = create<GlobalState>((set) => ({
-  icons: [],
+  initialScene: {
+    icons: [],
+    nodes: [],
+    groups: [],
+    connectors: [],
+  },
+  setInitialScene: (scene) => {
+    set({ initialScene: scene });
+  },
   selectedSideNavItem: null,
   setSelectedSideNavItem: (val) => {
     set({ selectedSideNavItem: val });
