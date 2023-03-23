@@ -12,9 +12,11 @@ import { useGlobalState } from "./hooks/useGlobalState";
 
 interface Props {
   initialScene: SceneI;
+  width?: number | string;
+  height: number | string;
 }
 
-const App = ({ initialScene }: Props) => {
+const App = ({ initialScene, width, height }: Props) => {
   const setInitialScene = useGlobalState((state) => state.setInitialScene);
 
   useEffect(() => {
@@ -26,8 +28,8 @@ const App = ({ initialScene }: Props) => {
       <ModeManagerProvider>
         <Box
           sx={{
-            width: "100%",
-            height: "100%",
+            width: width ?? "100%",
+            height,
             position: "relative",
             overflow: "hidden",
           }}
