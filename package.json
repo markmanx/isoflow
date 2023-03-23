@@ -2,9 +2,14 @@
   "name": "isoflow",
   "version": "0.3.12",
   "private": false,
+  "description": "A highly customizable React component for building interactive flow diagrams.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markmanx/isoflow.git"
+  },
   "main": "./dist/index.js",
   "types": "./dist/App.d.ts",
-  "license": "MIT",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
