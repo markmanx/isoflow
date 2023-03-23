@@ -3,8 +3,9 @@ import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Header } from "../Header";
-import { Section } from "../Section";
+import { Header } from "../../Sidebar/Header";
+import { Section } from "../../Sidebar/Section";
+import { Sidebar } from "../../Sidebar";
 
 interface Props {
   onClose: () => void;
@@ -28,8 +29,7 @@ export const ProjectSettings = ({ onClose }: Props) => {
   }, []);
 
   return (
-    <>
-      <Header title="Project settings" onClose={onClose} />
+    <Sidebar header={<Header title="Project settings" onClose={onClose} />}>
       <Section>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
@@ -49,6 +49,6 @@ export const ProjectSettings = ({ onClose }: Props) => {
           </Grid>
         </form>
       </Section>
-    </>
+    </Sidebar>
   );
 };

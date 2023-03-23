@@ -3,7 +3,8 @@ import { useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { IconCategory } from "./IconCategory";
 import { Icon as IconI } from "../../../types";
-import { Header } from "../Header";
+import { Sidebar } from "../../Sidebar";
+import { Header } from "../../Sidebar/Header";
 
 interface Props {
   icons: IconI[];
@@ -38,8 +39,7 @@ export const Icons = ({ icons, onClose }: Props) => {
   }, [icons]);
 
   return (
-    <>
-      <Header title="Icons" onClose={onClose} />
+    <Sidebar header={<Header title="Icons" onClose={onClose} />}>
       <Grid container spacing={4}>
         {categorisedIcons.map((cat) => (
           <Grid item xs={12} key={cat.name}>
@@ -47,6 +47,6 @@ export const Icons = ({ icons, onClose }: Props) => {
           </Grid>
         ))}
       </Grid>
-    </>
+    </Sidebar>
   );
 };

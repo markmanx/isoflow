@@ -28,7 +28,7 @@ export const Sidebar = () => {
         sx={{
           position: "absolute",
           width: "400px",
-          height: "100vh",
+          height: "100%",
           top: 0,
           left: theme.customVars.sideNav.width,
           borderRadius: 0,
