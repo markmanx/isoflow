@@ -47,7 +47,7 @@
     "react-dom": ">=17"
   },
   "scripts": {
-    "dev": "nodemon --watch src --exec npm run build",
+    "dev": "nodemon --watch ./src/ -e ts,tsx --exec npm run build",
     "build": "webpack && tsc --declaration --emitDeclarationOnly",
     "test": "jest"
   },
