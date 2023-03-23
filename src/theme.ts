@@ -30,6 +30,12 @@ const customVars: CustomThemeVars = {
 
 export const theme = createTheme({
   customVars,
+  typography: {
+    h5: {
+      fontSize: "1.3rem",
+      lineHeight: 1.2,
+    },
+  },
   palette: {
     mode: "dark",
     secondary: {

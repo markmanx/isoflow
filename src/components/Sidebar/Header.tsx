@@ -13,10 +13,12 @@ interface Props {
 
 export const Header = ({ title, onClose }: Props) => {
   return (
-    <Section>
+    <Section py={2}>
       <Grid container spacing={2}>
         <Grid item xs={10}>
-          <Typography variant="h5">{title}</Typography>
+          <Box sx={{ display: "flex", alignItems: "center", height: "100%" }}>
+            <Typography variant="h5">{title}</Typography>
+          </Box>
         </Grid>
         <Grid item xs={2}>
           <Box>
