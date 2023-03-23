@@ -24,11 +24,34 @@ Migration to open-source: ██░░░░░░░░░
 
 - [x] Set up automated publishing to NPM registry
 - [ ] Migrate private JS project to public Typescript project
-  - [ ] Pan / Select / Zoom modes
-  - [ ] Icons
+  - [x] Pan / Select / Zoom modes
+  - [x] Display icons in sidebar
+  - [ ] Nodes
   - [ ] Groups
   - [ ] Connectors
 - [ ] Publish icons as separate importable package
+
+## Installation
+
+Note: Isoflow is currently not production ready. To view it's current state of development:
+
+`npm install isoflow`
+
+```
+import Isoflow from 'isoflow';
+
+const App = () => (
+  <Isoflow
+    height={500}
+    initialScene={{
+      icons: [],
+      nodes: [],
+      connectors: [],
+      groups: []
+    }}
+  >
+)
+```
 
 ## License
 
