@@ -48,7 +48,7 @@
   },
   "scripts": {
     "dev": "nodemon --exec concurrently \"webpack\" \"tsc --declaration --emitDeclarationOnly\"",
-    "build": "webpack-",
+    "build": "webpack && tsc --declaration --emitDeclarationOnly",
     "test": "jest"
   },
   "eslintConfig": {
