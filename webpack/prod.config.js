@@ -4,7 +4,7 @@ module.exports = {
   mode: "production",
   entry: "./src/App.tsx",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../dist"),
     filename: "index.js",
     libraryTarget: "commonjs2",
   },
