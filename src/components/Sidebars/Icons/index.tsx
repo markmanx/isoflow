@@ -42,7 +42,7 @@ export const Icons = ({ icons, onClose }: Props) => {
     <Sidebar header={<Header title="Icons" onClose={onClose} />}>
       <Grid container spacing={4}>
         {categorisedIcons.map((cat) => (
-          <Grid item xs={12} key={cat.name}>
+          <Grid item xs={12} key={`icon-category-${cat.name}`}>
             <IconCategory {...cat} />
           </Grid>
         ))}
