@@ -2,7 +2,7 @@ import React from "react";
 import { useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { IconCategory } from "./IconCategory";
-import { Icon as IconI } from "../../../types";
+import { IconI } from "../../../validation/SceneSchema";
 import { Sidebar } from "../../Sidebar";
 import { Header } from "../../Sidebar/Header";
 

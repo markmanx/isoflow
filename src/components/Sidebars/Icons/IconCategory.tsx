@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { Icon as IconI } from "../../../types";
+import { IconI } from "../../../validation/SceneSchema";
 import { Icon } from "./Icon";
 import { Section } from "../../Sidebar/Section";
 
