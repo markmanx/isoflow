@@ -1,19 +1,39 @@
+import { makeAutoObservable } from "mobx";
 import Paper, { Group } from "paper";
 import gsap from "gsap";
+import autobind from "auto-bind";
 import { Grid } from "./elements/Grid";
 import { Cursor } from "./elements/Cursor";
 import { PROJECTED_TILE_WIDTH, PROJECTED_TILE_HEIGHT } from "./constants";
 import { clamp } from "../utils";
+import { Nodes } from "./elements/Nodes";
+import { SceneI, IconI } from "../validation/SceneSchema";
+import { OnSceneChange } from "./types";
+import { createSceneEvent, SceneEvent } from "./SceneEvent";
+import { mockScene } from "../mockData";
+
+interface Config {
+  grid: {
+    width: number;
+    height: number;
+  };
+  icons: IconI[];
+}
 
 export class Renderer {
   activeLayer: paper.Layer;
-  zoom: number = 1;
+  zoom = 1;
 
-  config = {
+  config: Config = {
     grid: {
       width: 51,
       height: 51,
     },
+    icons: [],
+  };
+  createSceneEvent: ReturnType<typeof createSceneEvent>;
+  callbacks: {
+    onSceneChange: OnSceneChange;
   };
   groups: {
     container: paper.Group;
@@ -22,6 +42,7 @@ export class Renderer {
   sceneElements: {
     grid: Grid;
     cursor: Cursor;
+    nodes: Nodes;
   };
   domElements: {
     container: HTMLDivElement;
@@ -33,7 +54,16 @@ export class Renderer {
   };
   rafRef?: number;
 
-  constructor(containerEl: HTMLDivElement) {
+  constructor(containerEl: HTMLDivElement, onChange: OnSceneChange) {
+    makeAutoObservable(this);
+    autobind(this);
+
+    this.createSceneEvent = createSceneEvent(this.onSceneChange);
+
+    this.callbacks = {
+      onSceneChange: onChange,
+    };
+
     Paper.settings = {
       insertelements: false,
       applyMatrix: false,
@@ -47,8 +77,9 @@ export class Renderer {
     Paper.setup(this.domElements.canvas);
 
     this.sceneElements = {
-      grid: new Grid(this.config),
-      cursor: new Cursor(this.config),
+      grid: new Grid(this),
+      cursor: new Cursor(this),
+      nodes: new Nodes(this),
     };
 
     this.groups = {
@@ -58,6 +89,7 @@ export class Renderer {
 
     this.groups.elements.addChild(this.sceneElements.grid.container);
     this.groups.elements.addChild(this.sceneElements.cursor.container);
+    this.groups.elements.addChild(this.sceneElements.nodes.container);
 
     this.groups.container.addChild(this.groups.elements);
     this.groups.container.set({ position: [0, 0] });
@@ -68,6 +100,30 @@ export class Renderer {
     this.scrollTo(0, 0);
 
     this.render();
+
+    this.init();
+  }
+
+  init() {}
+
+  loadScene(scene: SceneI) {
+    const sceneEvent = this.createSceneEvent({
+      type: "SCENE_LOAD",
+    });
+
+    this.config.icons = scene.icons;
+
+    scene.nodes.forEach((node) => {
+      this.sceneElements.nodes.addNode(
+        {
+          ...node,
+          icon: mockScene.icons[0],
+        },
+        sceneEvent
+      );
+    });
+
+    sceneEvent.complete();
   }
 
   initDOM(containerEl: HTMLDivElement) {
@@ -101,6 +157,34 @@ export class Renderer {
     return {
       x: clamp(row, -halfRowNum, halfRowNum),
       y: clamp(col, -halfColNum, halfColNum),
+    };
+  }
+
+  getTilePosition(x: number, y: number) {
+    const halfW = PROJECTED_TILE_WIDTH * 0.5;
+    const halfH = PROJECTED_TILE_HEIGHT * 0.5;
+
+    return {
+      x: x * halfW - y * halfW,
+      y: x * halfH + y * halfH,
+    };
+  }
+
+  getTileBounds(x: number, y: number) {
+    const position = this.getTilePosition(x, y);
+
+    return {
+      left: {
+        x: position.x - PROJECTED_TILE_WIDTH * 0.5,
+        y: position.y - PROJECTED_TILE_HEIGHT * 0.5,
+      },
+      right: {
+        x: position.x + PROJECTED_TILE_WIDTH * 0.5,
+        y: position.y - PROJECTED_TILE_HEIGHT * 0.5,
+      },
+      top: { x: position.x, y: position.y - PROJECTED_TILE_HEIGHT },
+      bottom: { x: position.x, y: position.y },
+      center: { x: position.x, y: position.y - PROJECTED_TILE_HEIGHT * 0.5 },
     };
   }
 
@@ -139,6 +223,10 @@ export class Renderer {
     );
   }
 
+  clear() {
+    this.sceneElements.nodes.clear();
+  }
+
   destroy() {
     this.domElements.canvas.remove();
 
@@ -153,5 +241,24 @@ export class Renderer {
 
       Paper.view.update();
     }
+  }
+
+  exportScene() {
+    const exported = {
+      icons: this.config.icons,
+      nodes: this.sceneElements.nodes.export(),
+      groups: [],
+      connectors: [],
+    };
+
+    return exported;
+  }
+
+  onSceneChange(sceneEvent: SceneEvent) {
+    this.callbacks.onSceneChange(sceneEvent.event, this.exportScene());
+  }
+
+  get nodes() {
+    return this.sceneElements.nodes;
   }
 }

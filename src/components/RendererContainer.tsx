@@ -12,11 +12,12 @@ export const RendererContainer = observer(() => {
   const rendererEl = useRef<HTMLDivElement>(null);
   const { setDomEl, setCallbacks } = useMouseInput();
   const setRenderer = useGlobalState((state) => state.setRenderer);
+  const onSceneChange = useGlobalState((state) => state.onSceneChange);
 
   useEffect(() => {
     if (!rendererEl.current) return;
 
-    const renderer = new Renderer(rendererEl.current);
+    const renderer = new Renderer(rendererEl.current, onSceneChange);
     setRenderer(renderer);
     setDomEl(rendererEl.current);
     modeManager.setRenderer(renderer);
@@ -39,7 +40,7 @@ export const RendererContainer = observer(() => {
         modeManager.onMouseEvent("MOUSE_LEAVE", event);
       },
     });
-  }, [setRenderer, setDomEl, modeManager]);
+  }, [setRenderer, setDomEl, modeManager, onSceneChange]);
 
   return (
     <div

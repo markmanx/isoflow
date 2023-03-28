@@ -1,7 +1,6 @@
-import type { Icon } from "./types";
-import type { SceneI } from "./validation/SceneSchema";
+import type { SceneI, IconI, NodeI } from "./validation/SceneSchema";
 
-export const mockIcons: Icon[] = [
+export const icons: IconI[] = [
   {
     id: "block",
     name: "Block",
@@ -51,9 +50,21 @@ export const mockIcons: Icon[] = [
   },
 ];
 
+export const nodes: NodeI[] = [
+  {
+    id: "Node1",
+    label: "Node 1",
+    icon: "block",
+    position: {
+      x: 0,
+      y: 0,
+    },
+  },
+];
+
 export const mockScene: SceneI = {
-  icons: mockIcons,
-  nodes: [],
+  icons,
+  nodes,
   connectors: [],
   groups: [],
 };

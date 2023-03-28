@@ -43,7 +43,7 @@ import Isoflow from 'isoflow';
 const App = () => (
   <Isoflow
     height={500}
-    initialScene={{
+    scene={{
       icons: [],
       nodes: [],
       connectors: [],

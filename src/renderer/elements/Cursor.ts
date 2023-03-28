@@ -1,4 +1,4 @@
-import { Group, Shape, Point } from "paper";
+import { Shape, Point } from "paper";
 import { gsap } from "gsap";
 import { applyProjectionMatrix } from "../utils/projection";
 import { TILE_SIZE, PIXEL_UNIT } from "../constants";
@@ -7,7 +7,8 @@ import {
   getBoundingBox,
   getTileBounds,
 } from "../utils/gridHelpers";
-import type { SceneElement, Context, Coords } from "../types";
+import type { Context, Coords } from "../types";
+import { SceneElement } from "../SceneElement";
 
 export enum CURSOR_TYPES {
   OUTLINE = "OUTLINE",
@@ -17,12 +18,9 @@ export enum CURSOR_TYPES {
   DOT = "DOT",
 }
 
-export class Cursor implements SceneElement {
-  ctx: Context;
-  container = new Group();
-
+export class Cursor extends SceneElement {
   renderElements = {
-    rectangle: new Shape.Rectangle({}),
+    rectangle: new Shape.Rectangle([0, 0]),
   };
 
   animations: {
@@ -42,7 +40,9 @@ export class Cursor implements SceneElement {
   currentType?: CURSOR_TYPES;
 
   constructor(ctx: Context) {
-    this.ctx = ctx;
+    super(ctx);
+
+    this.renderElements.rectangle = new Shape.Rectangle({});
 
     this.animations = {
       highlight: gsap

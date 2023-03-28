@@ -9,13 +9,11 @@ import { useGlobalState } from "../../hooks/useGlobalState";
 
 export const Sidebar = () => {
   const theme = useTheme();
-  const { selectedSideNavItem, closeSideNav, icons } = useGlobalState(
-    (state) => ({
-      selectedSideNavItem: state.selectedSideNavItem,
-      closeSideNav: state.closeSideNav,
-      icons: state.initialScene.icons,
-    })
+  const selectedSideNavItem = useGlobalState(
+    (state) => state.selectedSideNavItem
   );
+  const closeSideNav = useGlobalState((state) => state.closeSideNav);
+  const icons = useGlobalState((state) => state.renderer.config.icons);
 
   return (
     <Slide

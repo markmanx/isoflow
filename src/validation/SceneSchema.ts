@@ -11,6 +11,10 @@ export const NodeSchema = z.object({
   id: z.string(),
   label: z.string().optional(),
   icon: z.string(),
+  position: z.object({
+    x: z.number(),
+    y: z.number(),
+  }),
 });
 
 export const ConnectorSchema = z.object({
