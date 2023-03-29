@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import autoBind from "auto-bind";
 import { Renderer } from "../renderer/Renderer";
 import { ModeBase } from "./ModeBase";
 import { Mouse } from "./types";
@@ -14,7 +13,6 @@ export class ModeManager {
 
   constructor() {
     makeAutoObservable(this);
-    autoBind(this);
   }
 
   setRenderer(renderer: Renderer) {

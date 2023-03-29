@@ -23,7 +23,11 @@ describe("scene validation works correctly", () => {
 
   test("finds invalid nodes in scene", () => {
     const { icons } = scene;
-    const invalidNode = { id: "invalidNode", label: null, icon: "doesntExist" };
+    const invalidNode = {
+      id: "invalidNode",
+      icon: "doesntExist",
+      position: { x: -1, y: -1 },
+    };
     const nodes: NodeI[] = [...scene.nodes, invalidNode];
 
     const result = findInvalidNode(nodes, icons);
