@@ -3,8 +3,9 @@
 <div align="center">
 
 ![GitHub License MIT](https://img.shields.io/github/license/wbkd/react-flow?color=%23ff0072)
+![CircleCI](https://circleci.com/gh/markmanx/isoflow.svg?style=shield)
 
-A highly customizable React component for building interactive flow diagrams.
+A highly customizable React component for building interactive network diagrams.
 
 Coming soon under the MIT licence | Use it now on [isoflow.io](https://isoflow.io)
 
