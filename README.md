@@ -32,6 +32,10 @@ Migration to open-source: ██░░░░░░░░░
   - [ ] Connectors
 - [ ] Publish icons as separate importable package
 
+## Want to contribute?
+
+See [good first issues](https://github.com/markmanx/isoflow/contribute).
+
 ## Installation
 
 Note: Isoflow is currently not production ready. To view it's current state of development:
