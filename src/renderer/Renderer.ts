@@ -258,6 +258,12 @@ export class Renderer {
     this.callbacks.onSceneChange(sceneEvent.event, this.exportScene());
   }
 
+  getItemsByTile(x: number, y: number) {
+    const node = this.nodes.getNodeByTile(x, y);
+
+    return [node].filter((i) => Boolean(i));
+  }
+
   get nodes() {
     return this.sceneElements.nodes;
   }

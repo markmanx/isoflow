@@ -1,5 +1,8 @@
 import { ModeBase } from "./ModeBase";
 import { Mouse } from "./types";
+import { getTargetFromSelection } from "./utils";
+import { SelectNode } from "./SelectNode";
+import { Node } from "../renderer/elements/Node";
 
 export class Select extends ModeBase {
   entry(mouse: Mouse) {
@@ -22,6 +25,20 @@ export class Select extends ModeBase {
 
   MOUSE_LEAVE() {
     this.ctx.renderer.sceneElements.cursor.disable();
+  }
+
+  MOUSE_DOWN(mouse: Mouse) {
+    const { renderer } = this.ctx;
+    const { x, y } = renderer.getTileFromMouse(
+      mouse.position.x,
+      mouse.position.y
+    );
+    const items = renderer.getItemsByTile(x, y);
+    const target = getTargetFromSelection(items);
+
+    if (target instanceof Node) {
+      this.ctx.activateMode(SelectNode, (instance) => (instance.node = target));
+    }
   }
 
   MOUSE_MOVE(mouse: Mouse) {

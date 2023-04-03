@@ -1,5 +1,5 @@
 import { Renderer } from "../renderer/Renderer";
-import type { ModeBase } from "./ModeBase";
+import type { ModeManager } from "./ModeManager";
 
 export interface Mode {
   initial: string;
@@ -19,6 +19,6 @@ export interface Mouse {
 
 export interface ModeContext {
   renderer: Renderer;
-  activateMode: (mode: typeof ModeBase) => void;
-  deactivate: () => void;
+  activateMode: ModeManager["activateMode"];
+  deactivate: ModeManager["deactivate"];
 }

@@ -5,7 +5,11 @@ import { Mouse } from "./types";
 
 export class ModeManager {
   renderer?: Renderer = undefined;
-  currentMode?: ModeBase = undefined;
+  currentMode?: {
+    instance: ModeBase;
+    class: typeof ModeBase;
+  };
+  lastMode?: typeof ModeBase;
   mouse: Mouse = {
     position: { x: 0, y: 0 },
     delta: null,
@@ -19,19 +23,34 @@ export class ModeManager {
     this.renderer = renderer;
   }
 
-  activateMode(Mode: typeof ModeBase) {
+  activateMode<T extends typeof ModeBase>(
+    Mode: T,
+    init?: (instance: InstanceType<T>) => void
+  ) {
     if (!this.renderer) return;
 
-    const lastMode = this.currentMode;
-    this.currentMode?.exit();
+    if (this.currentMode) {
+      this.currentMode.instance.exit();
+      this.lastMode = this.currentMode.class;
+    }
 
-    this.currentMode = new Mode({
-      renderer: this.renderer,
-      activateMode: this.activateMode.bind(this),
-      deactivate: lastMode?.exit ?? (() => {}),
-    });
+    this.currentMode = {
+      instance: new Mode({
+        renderer: this.renderer,
+        activateMode: this.activateMode.bind(this),
+        deactivate: this.deactivate.bind(this),
+      }),
+      class: Mode,
+    };
 
-    this.currentMode.entry(this.mouse);
+    init?.(this.currentMode.instance as InstanceType<T>);
+    this.currentMode.instance.entry(this.mouse);
+  }
+
+  deactivate() {
+    if (!this.lastMode) return;
+
+    this.activateMode(this.lastMode);
   }
 
   onMouseEvent(eventName: string, mouse: Mouse) {
@@ -43,6 +62,6 @@ export class ModeManager {
   send(eventName: string, params?: any) {
     // TODO: Improve typings below
     // @ts-ignore
-    this.currentMode?.[eventName]?.(params);
+    this.currentMode.instance?.[eventName]?.(params);
   }
 }

@@ -19,10 +19,6 @@ export class Nodes {
     this.ctx = ctx;
   }
 
-  getNodeById(id: string) {
-    return this.nodes.find((node) => node.id === id);
-  }
-
   addNode(options: NodeOptions, sceneEvent?: SceneEvent) {
     const node = new Node(
       this.ctx,
@@ -51,7 +47,21 @@ export class Nodes {
 
   onMove(x: number, y: number, node: Node) {
     const tile = this.ctx.getTileBounds(x, y);
+    node.position = {
+      x,
+      y,
+    };
     node.container.position.set(tile.bottom);
+  }
+
+  getNodeById(id: string) {
+    return this.nodes.find((node) => node.id === id);
+  }
+
+  getNodeByTile(x: number, y: number) {
+    return this.nodes.find(
+      (node) => node.position.x === x && node.position.y === y
+    );
   }
 
   clear() {
