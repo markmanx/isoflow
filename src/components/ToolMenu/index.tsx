@@ -33,14 +33,14 @@ export const ToolMenu = observer(() => {
         Icon={NearMeIcon}
         onClick={() => modeManager.activateMode(Select)}
         size={theme.customVars.toolMenu.height}
-        isActive={modeManager.currentMode instanceof Select}
+        isActive={modeManager.currentMode?.instance instanceof Select}
       />
       <MenuItem
         name="Pan"
         Icon={PanToolIcon}
         onClick={() => modeManager.activateMode(Pan)}
         size={theme.customVars.toolMenu.height}
-        isActive={modeManager.currentMode instanceof Pan}
+        isActive={modeManager.currentMode?.instance instanceof Pan}
       />
       <MenuItem
         name="Zoom in"

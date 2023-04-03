@@ -1,4 +1,5 @@
 import { ModeBase } from "./ModeBase";
+import { Select } from "../modes/Select";
 import { Mouse, ModeContext } from "./types";
 import { Node } from "../renderer/elements/Node";
 
@@ -21,6 +22,6 @@ export class SelectNode extends ModeBase {
   }
 
   MOUSE_UP() {
-    this.ctx.deactivate();
+    this.ctx.activateMode(Select);
   }
 }

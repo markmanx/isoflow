@@ -20,5 +20,4 @@ export interface Mouse {
 export interface ModeContext {
   renderer: Renderer;
   activateMode: ModeManager["activateMode"];
-  deactivate: ModeManager["deactivate"];
 }
