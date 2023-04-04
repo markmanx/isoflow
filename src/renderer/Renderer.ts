@@ -114,16 +114,20 @@ export class Renderer {
     this.config.icons = scene.icons;
 
     scene.nodes.forEach((node) => {
-      this.sceneElements.nodes.addNode(
-        {
-          ...node,
-          icon: mockScene.icons[0],
-        },
-        sceneEvent
-      );
+      this.sceneElements.nodes.addNode(node, sceneEvent);
     });
 
     sceneEvent.complete();
+  }
+
+  getIconById(id: string) {
+    const icon = this.config.icons.find((icon) => icon.id === id);
+
+    if (!icon) {
+      throw new Error(`Icon not found: ${id}`);
+    }
+
+    return icon;
   }
 
   initDOM(containerEl: HTMLDivElement) {

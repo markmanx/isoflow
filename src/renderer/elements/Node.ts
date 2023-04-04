@@ -9,7 +9,7 @@ const NODE_IMG_PADDING = 0 * PIXEL_UNIT;
 export interface NodeOptions {
   id: string;
   position: Coords;
-  icon: IconI;
+  icon: string;
 }
 
 interface Callbacks {
@@ -49,7 +49,7 @@ export class Node {
     this.moveTo(this.position.x, this.position.y);
   }
 
-  async updateIcon(icon: IconI) {
+  async updateIcon(icon: string) {
     this.icon = icon;
     const { iconContainer, icon: iconEl } = this.renderElements;
 
@@ -65,7 +65,7 @@ export class Node {
         resolve(null);
       };
 
-      iconEl.source = this.icon.url;
+      iconEl.source = this.ctx.getIconById(this.icon).url;
     });
   }
 
@@ -77,7 +77,7 @@ export class Node {
     return {
       id: this.id,
       position: this.position,
-      icon: this.icon.id,
+      icon: this.icon,
     };
   }
 
