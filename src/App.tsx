@@ -14,7 +14,7 @@ import { OnSceneChange } from "./renderer/types";
 
 interface Props {
   initialScene: SceneI;
-  onSceneChange: OnSceneChange;
+  onSceneChange?: OnSceneChange;
   width?: number | string;
   height: number | string;
 }
@@ -49,6 +49,8 @@ const App = observer(
     const setOnSceneChange = useGlobalState((state) => state.setOnSceneChange);
 
     useEffect(() => {
+      if (!onSceneChange) return;
+
       setOnSceneChange(onSceneChange);
     }, [setOnSceneChange, onSceneChange]);
 
