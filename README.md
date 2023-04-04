@@ -32,10 +32,6 @@ Migration to open-source: ██░░░░░░░░░
   - [ ] Connector controls
 - [ ] Publish icons as separate importable package
 
-## Want to contribute?
-
-See [good first issues](https://github.com/markmanx/isoflow/contribute).
-
 ## Installation
 
 Note: Isoflow is currently in development and _NOT_ production ready. To view it's current state of development:
@@ -84,6 +80,17 @@ const Isoflow = dynamic(() => import("isoflow"), {
   ssr: false,
 });
 ```
+
+## Development setup
+
+1. Clone the repo
+2. `npm i`
+3. `npm run start`
+4. Visit `localhost:3000` in your browser
+
+## Contributions
+
+See [good first issues](https://github.com/markmanx/isoflow/contribute).
 
 ## License
 
