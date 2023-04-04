@@ -7,10 +7,11 @@ export interface Coords {
   y: number;
 }
 
+export type GeneralEventI = {
+  type: "SCENE_LOAD";
+};
+
 export type NodeEventI =
-  | {
-      type: "SCENE_LOAD";
-    }
   | {
       type: "NODE_CREATED";
       node: Node;
@@ -20,7 +21,7 @@ export type NodeEventI =
       node: Node;
     };
 
-export type SceneEventI = NodeEventI;
+export type SceneEventI = NodeEventI | GeneralEventI;
 
 export type Context = Renderer;
 
