@@ -27,9 +27,9 @@ Migration to open-source: ██░░░░░░░░░
 - [ ] Migrate private JS project to public Typescript project
   - [x] Pan / Select / Zoom modes
   - [x] Display icons in sidebar
-  - [ ] Nodes
-  - [ ] Groups
-  - [ ] Connectors
+  - [ ] Node controls
+  - [ ] Group controls
+  - [ ] Connector controls
 - [ ] Publish icons as separate importable package
 
 ## Want to contribute?
@@ -38,22 +38,41 @@ See [good first issues](https://github.com/markmanx/isoflow/contribute).
 
 ## Installation
 
-Note: Isoflow is currently not production ready. To view it's current state of development:
+Note: Isoflow is currently in development and _NOT_ production ready. To view it's current state of development:
 
 `npm install isoflow`
 
 ```
 import Isoflow from 'isoflow';
 
+const scene = {
+  icons: [
+    {
+      id: "block",
+      name: "Block",
+      url: "https://isoflow.io/static/assets/icons/networking/primitive.svg",
+      category: "Networking",
+    },
+  ],
+  nodes: [
+    {
+      id: "a_node",
+      label: "A node",
+      icon: "block",
+      position: {
+        x: 0,
+        y: 0,
+      },
+    },
+  ],
+  connectors: [],
+  groups: []
+}
+
 const App = () => (
   <Isoflow
     height={500}
-    scene={{
-      icons: [],
-      nodes: [],
-      connectors: [],
-      groups: []
-    }}
+    scene={scene}
   >
 )
 ```
