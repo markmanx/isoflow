@@ -1,4 +1,5 @@
 import { Group } from "paper";
+import gsap from "gsap";
 import autobind from "auto-bind";
 import { makeAutoObservable } from "mobx";
 import { Context } from "../types";
@@ -6,6 +7,7 @@ import { Node, NodeOptions } from "./Node";
 import cuid from "cuid";
 import { SceneElement } from "../SceneElement";
 import { SceneEvent } from "../SceneEvent";
+import { tweenPosition } from "../../utils";
 
 export class Nodes {
   ctx: Context;
@@ -45,13 +47,17 @@ export class Nodes {
       .complete();
   }
 
-  onMove(x: number, y: number, node: Node) {
+  onMove(x: number, y: number, node: Node, opts?: { skipAnimation: boolean }) {
     const tile = this.ctx.getTileBounds(x, y);
     node.position = {
       x,
       y,
     };
-    node.container.position.set(tile.bottom);
+
+    tweenPosition(node.container, {
+      ...tile.bottom,
+      duration: opts?.skipAnimation ? 0 : 0.05,
+    });
   }
 
   getNodeById(id: string) {

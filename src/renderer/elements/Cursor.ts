@@ -9,6 +9,7 @@ import {
 } from "../utils/gridHelpers";
 import type { Context, Coords } from "../types";
 import { SceneElement } from "../SceneElement";
+import { tweenPosition } from "../../utils";
 
 export enum CURSOR_TYPES {
   OUTLINE = "OUTLINE",
@@ -41,6 +42,7 @@ export class Cursor extends SceneElement {
 
   constructor(ctx: Context) {
     super(ctx);
+    this.displayAt = this.displayAt.bind(this);
 
     this.renderElements.rectangle = new Shape.Rectangle({});
 
@@ -192,7 +194,9 @@ export class Cursor extends SceneElement {
     return { ...this.position, ...this.size };
   }
 
-  displayAt(x: number, y: number, options?: { animate: boolean }) {
+  displayAt(x: number, y: number, opts?: { skipAnimation: boolean }) {
+    if (x === this.position.x && y === this.position.y) return;
+
     this.position = {
       x,
       y,
@@ -201,8 +205,11 @@ export class Cursor extends SceneElement {
     const tileBoundsPosition =
       this.currentType === CURSOR_TYPES.LASSO ? "left" : "center";
 
-    const position = getTileBounds(x, y)[tileBoundsPosition];
+    const tile = getTileBounds(x, y)[tileBoundsPosition];
 
-    this.container.set({ position });
+    tweenPosition(this.container, {
+      ...tile,
+      duration: opts?.skipAnimation ? 0 : 0.05,
+    });
   }
 }
