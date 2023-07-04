@@ -12,7 +12,7 @@ describe("Mode manager functions correctly", () => {
     const exitSpy = jest.spyOn(TestMode.prototype, "exit");
     const eventSpy = jest.spyOn(TestMode.prototype, "TEST_EVENT");
     const mouseEventSpy = jest.spyOn(TestMode.prototype, "MOUSE_MOVE");
-    const renderer = new Renderer({} as unknown as HTMLDivElement, () => {});
+    const renderer = new Renderer({} as unknown as HTMLDivElement);
     const modeManager = new ModeManager();
     modeManager.setRenderer(renderer);
     modeManager.activateMode(TestMode);

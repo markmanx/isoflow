@@ -1,5 +1,5 @@
 import { PROJECTED_TILE_HEIGHT, PROJECTED_TILE_WIDTH } from "../constants";
-import { Coords } from "../types";
+import { Coords } from "../../types";
 
 // Iterates over every item in a 2 dimensional array
 // const tileIterator = (w, h, cb) => {

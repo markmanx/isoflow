@@ -1,7 +1,7 @@
-import { makeAutoObservable, action } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { Renderer } from "../renderer/Renderer";
 import { ModeBase } from "./ModeBase";
-import { Mouse } from "./types";
+import type { Mouse, OnSceneChange } from "../types";
 
 export class ModeManager {
   // mobx requires all properties to be initialised explicitly (i.e. prop = undefined)
@@ -15,6 +15,7 @@ export class ModeManager {
     position: { x: 0, y: 0 },
     delta: null,
   };
+  emitEvent?: OnSceneChange;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,6 +23,10 @@ export class ModeManager {
 
   setRenderer(renderer: Renderer) {
     this.renderer = renderer;
+  }
+
+  setEventEmitter(fn: OnSceneChange) {
+    this.emitEvent = fn;
   }
 
   activateMode<T extends typeof ModeBase>(
@@ -39,6 +44,7 @@ export class ModeManager {
       instance: new Mode({
         renderer: this.renderer,
         activateMode: this.activateMode.bind(this),
+        emitEvent: this.emitEvent ?? (() => {}),
       }),
       class: Mode,
     };

@@ -1,5 +1,5 @@
 import cuid from "cuid";
-import { SceneEventI } from "./types";
+import { SceneEventI } from "../types";
 
 type OnSceneEventComplete = (event: SceneEvent) => void;
 

@@ -1,6 +1,6 @@
 import { Group, Path, Point } from "paper";
 import { applyProjectionMatrix } from "../utils/projection";
-import type { Context } from "../types";
+import type { Context } from "../../types";
 import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from "../constants";
 import { SceneElement } from "../SceneElement";
 

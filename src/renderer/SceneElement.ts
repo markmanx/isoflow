@@ -1,5 +1,5 @@
 import { Group } from "paper";
-import { Context } from "./types";
+import { Context } from "../types";
 
 export class SceneElement {
   container = new Group();

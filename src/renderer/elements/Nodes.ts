@@ -1,11 +1,9 @@
 import { Group } from "paper";
-import gsap from "gsap";
 import autobind from "auto-bind";
-import { makeAutoObservable } from "mobx";
-import { Context } from "../types";
+import { makeAutoObservable, toJS } from "mobx";
+import { Context } from "../../types";
 import { Node, NodeOptions } from "./Node";
 import cuid from "cuid";
-import { SceneElement } from "../SceneElement";
 import { SceneEvent } from "../SceneEvent";
 import { tweenPosition } from "../../utils";
 
@@ -13,6 +11,7 @@ export class Nodes {
   ctx: Context;
   container = new Group();
   nodes: Node[] = [];
+  selected: Node[] = [];
 
   constructor(ctx: Context) {
     makeAutoObservable(this);
@@ -30,24 +29,23 @@ export class Nodes {
       },
       {
         onMove: this.onMove.bind(this),
+        onDestroy: this.onDestroy.bind(this),
       }
     );
 
     this.nodes.push(node);
     this.container.addChild(node.container);
 
-    this.ctx
-      .createSceneEvent(
-        {
-          type: "NODE_CREATED",
-          node,
-        },
-        sceneEvent
-      )
-      .complete();
+    this.ctx.emitEvent({
+      type: "NODE_CREATED",
+      data: { node: node.id },
+    });
   }
 
   onMove(x: number, y: number, node: Node, opts?: { skipAnimation: boolean }) {
+    const from = node.position;
+    const to = { x, y };
+
     const tile = this.ctx.getTileBounds(x, y);
     node.position = {
       x,
@@ -57,6 +55,25 @@ export class Nodes {
     tweenPosition(node.container, {
       ...tile.bottom,
       duration: opts?.skipAnimation ? 0 : 0.05,
+    });
+
+    this.ctx.emitEvent({
+      type: "NODE_MOVED",
+      data: { node: node.id, from, to },
+    });
+  }
+
+  onDestroy(node: Node) {
+    const id = node.id;
+    const nodeIndex = this.nodes.indexOf(node);
+
+    if (nodeIndex === -1) return;
+
+    this.nodes.splice(nodeIndex, 1);
+
+    this.ctx.emitEvent({
+      type: "NODE_REMOVED",
+      data: { node: id },
     });
   }
 
@@ -73,6 +90,17 @@ export class Nodes {
   clear() {
     this.nodes.forEach((node) => node.destroy());
     this.nodes = [];
+  }
+
+  setSelectedNodes(ids: string[]) {
+    this.nodes.forEach((node) => {
+      node.selected = ids.includes(node.id);
+    });
+
+    this.ctx.emitEvent({
+      type: "NODES_SELECTED",
+      data: { nodes: ids },
+    });
   }
 
   export() {

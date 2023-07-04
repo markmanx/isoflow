@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { observer } from "mobx-react";
-import Box from "@mui/material/Box";
 import { Renderer } from "../renderer/Renderer";
 import { useGlobalState } from "../hooks/useGlobalState";
 import { useMouseInput } from "../hooks/useMouseInput";
@@ -17,10 +16,10 @@ export const RendererContainer = observer(() => {
   useEffect(() => {
     if (!rendererEl.current) return;
 
-    const renderer = new Renderer(rendererEl.current, onSceneChange);
-    setRenderer(renderer);
+    const renderer = setRenderer(rendererEl.current);
     setDomEl(rendererEl.current);
     modeManager.setRenderer(renderer);
+    modeManager.setEventEmitter(renderer.callbacks.emitEvent);
     modeManager.activateMode(Select);
 
     setCallbacks({

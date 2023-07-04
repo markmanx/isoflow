@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { Group, Raster } from "paper";
-import { Coords, Context } from "../types";
-import { IconI } from "../../validation/SceneSchema";
+import { Coords, Context } from "../../types";
 import { PROJECTED_TILE_WIDTH, PIXEL_UNIT } from "../constants";
 
 const NODE_IMG_PADDING = 0 * PIXEL_UNIT;
@@ -14,6 +13,7 @@ export interface NodeOptions {
 
 interface Callbacks {
   onMove: (x: number, y: number, node: Node) => void;
+  onDestroy: (node: Node) => void;
 }
 
 export class Node {
@@ -21,6 +21,7 @@ export class Node {
   container = new Group();
 
   id;
+  selected = false;
   callbacks: Callbacks;
   position;
   icon;
@@ -40,6 +41,8 @@ export class Node {
 
     this.renderElements.iconContainer.addChild(this.renderElements.icon);
     this.container.addChild(this.renderElements.iconContainer);
+
+    this.destroy = this.destroy.bind(this);
 
     this.init();
   }
@@ -87,5 +90,6 @@ export class Node {
 
   destroy() {
     this.container.remove();
+    this.callbacks.onDestroy(this);
   }
 }

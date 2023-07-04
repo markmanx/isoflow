@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import Paper, { Group } from "paper";
 import gsap from "gsap";
 import autobind from "auto-bind";
@@ -8,9 +8,7 @@ import { PROJECTED_TILE_WIDTH, PROJECTED_TILE_HEIGHT } from "./constants";
 import { clamp } from "../utils";
 import { Nodes } from "./elements/Nodes";
 import { SceneI, IconI } from "../validation/SceneSchema";
-import { OnSceneChange } from "./types";
-import { createSceneEvent, SceneEvent } from "./SceneEvent";
-import { mockScene } from "../mockData";
+import { OnSceneChange, SceneEventI } from "../types";
 
 interface Config {
   grid: {
@@ -31,9 +29,8 @@ export class Renderer {
     },
     icons: [],
   };
-  createSceneEvent: ReturnType<typeof createSceneEvent>;
   callbacks: {
-    onSceneChange: OnSceneChange;
+    emitEvent: OnSceneChange;
   };
   groups: {
     container: paper.Group;
@@ -54,19 +51,17 @@ export class Renderer {
   };
   rafRef?: number;
 
-  constructor(containerEl: HTMLDivElement, onChange: OnSceneChange) {
+  constructor(containerEl: HTMLDivElement) {
     makeAutoObservable(this);
     autobind(this);
-
-    this.createSceneEvent = createSceneEvent(this.onSceneChange);
-
-    this.callbacks = {
-      onSceneChange: onChange,
-    };
 
     Paper.settings = {
       insertelements: false,
       applyMatrix: false,
+    };
+
+    this.callbacks = {
+      emitEvent: () => {},
     };
 
     this.domElements = {
@@ -106,18 +101,16 @@ export class Renderer {
 
   init() {}
 
-  loadScene(scene: SceneI) {
-    const sceneEvent = this.createSceneEvent({
-      type: "SCENE_LOAD",
-    });
+  setEventHandler(eventHandler: OnSceneChange) {
+    this.callbacks.emitEvent = eventHandler;
+  }
 
+  loadScene(scene: SceneI) {
     this.config.icons = scene.icons;
 
     scene.nodes.forEach((node) => {
-      this.sceneElements.nodes.addNode(node, sceneEvent);
+      this.sceneElements.nodes.addNode(node);
     });
-
-    sceneEvent.complete();
   }
 
   getIconById(id: string) {
@@ -192,6 +185,33 @@ export class Renderer {
     };
   }
 
+  getTileScreenPosition(x: number, y: number) {
+    const { width: viewW, height: viewH } = Paper.view.bounds;
+    const { offsetLeft: offsetX, offsetTop: offsetY } = this.domElements.canvas;
+    const tilePosition = this.getTileBounds(x, y).center;
+    const globalItemsGroupPosition = this.groups.elements.globalToLocal([0, 0]);
+    const screenPosition = {
+      x:
+        (tilePosition.x +
+          this.scrollPosition.x +
+          globalItemsGroupPosition.x +
+          this.groups.elements.position.x +
+          viewW * 0.5) *
+          this.zoom +
+        offsetX,
+      y:
+        (tilePosition.y +
+          this.scrollPosition.y +
+          globalItemsGroupPosition.y +
+          this.groups.elements.position.y +
+          viewH * 0.5) *
+          this.zoom +
+        offsetY,
+    };
+
+    return screenPosition;
+  }
+
   setGrid(width: number, height: number) {}
 
   setZoom(zoom: number) {
@@ -201,6 +221,11 @@ export class Renderer {
     gsap.to(Paper.view, {
       duration: 0.3,
       zoom: this.zoom,
+    });
+
+    this.emitEvent({
+      type: "ZOOM_CHANGED",
+      data: { level: zoom },
     });
   }
 
@@ -247,7 +272,7 @@ export class Renderer {
     }
   }
 
-  exportScene() {
+  exportScene(): SceneI {
     const exported = {
       icons: this.config.icons,
       nodes: this.sceneElements.nodes.export(),
@@ -258,17 +283,13 @@ export class Renderer {
     return exported;
   }
 
-  onSceneChange(sceneEvent: SceneEvent) {
-    this.callbacks.onSceneChange(sceneEvent.event, this.exportScene());
+  emitEvent(event: SceneEventI) {
+    this.callbacks.emitEvent(event);
   }
 
   getItemsByTile(x: number, y: number) {
-    const node = this.nodes.getNodeByTile(x, y);
+    const node = this.sceneElements.nodes.getNodeByTile(x, y);
 
     return [node].filter((i) => Boolean(i));
-  }
-
-  get nodes() {
-    return this.sceneElements.nodes;
   }
 }

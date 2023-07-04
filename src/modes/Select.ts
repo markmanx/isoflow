@@ -1,5 +1,5 @@
 import { ModeBase } from "./ModeBase";
-import { Mouse } from "./types";
+import { Mouse } from "../types";
 import { getTargetFromSelection } from "./utils";
 import { SelectNode } from "./SelectNode";
 import { Node } from "../renderer/elements/Node";
@@ -38,7 +38,10 @@ export class Select extends ModeBase {
 
     if (target instanceof Node) {
       this.ctx.activateMode(SelectNode, (instance) => (instance.node = target));
+      return;
     }
+
+    this.ctx.emitEvent({ type: "GRID_SELECTED" });
   }
 
   MOUSE_MOVE(mouse: Mouse) {

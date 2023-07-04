@@ -1,5 +1,5 @@
 import { ModeBase } from "./ModeBase";
-import { Mouse } from "./types";
+import { Mouse } from "../types";
 import { Renderer } from "../renderer/Renderer";
 
 const changeCursor = (cursorType: string, renderer: Renderer) => {

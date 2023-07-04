@@ -6,11 +6,12 @@ import { theme } from "./theme";
 import { SideNav } from "./components/SideNav";
 import { Sidebar } from "./components/Sidebars";
 import { ToolMenu } from "./components/ToolMenu";
+import { ContextMenu } from "./components/ContextMenus";
 import { RendererContainer } from "./components/RendererContainer";
 import { SceneI } from "./validation/SceneSchema";
 import { ModeManagerProvider } from "./contexts/ModeManagerContext";
 import { useGlobalState } from "./hooks/useGlobalState";
-import { OnSceneChange } from "./renderer/types";
+import { OnSceneChange } from "./types";
 
 interface Props {
   initialScene: SceneI;
@@ -33,6 +34,7 @@ const InnerApp = React.memo(
             }}
           >
             <RendererContainer />
+            <ContextMenu />
             <Sidebar />
             <SideNav />
             <ToolMenu />
@@ -42,7 +44,6 @@ const InnerApp = React.memo(
     );
   }
 );
-
 const App = observer(
   ({ initialScene, width, height, onSceneChange }: Props) => {
     const setInitialScene = useGlobalState((state) => state.setInitialScene);

@@ -1,4 +1,4 @@
-import { MouseCoords, ModeContext } from "../../types";
+import { MouseCoords, ModeContext } from "../../../types";
 import { ModeBase } from "../../ModeBase";
 
 export class TestMode extends ModeBase {
