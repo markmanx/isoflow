@@ -36,8 +36,7 @@ jobs:
           name: Publish package
           command: |
             npm set //registry.npmjs.org/:_authToken=$npm_TOKEN
-            npm config set tag-version-prefix ""
-            npm publish --tag << pipeline.git.tag >>
+            npm publish
 
 workflows:
   main:
