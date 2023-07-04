@@ -36,7 +36,7 @@ jobs:
           name: Publish package
           command: |
             npm set //registry.npmjs.org/:_authToken=$npm_TOKEN
-            npm publish
+            npm publish --tag << pipeline.git.tag >>
 
 workflows:
   main:
