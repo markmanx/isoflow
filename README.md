@@ -88,6 +88,14 @@ const Isoflow = dynamic(() => import("isoflow"), {
 3. `npm run start`
 4. Visit `localhost:3000` in your browser
 
+## To deploy to npm
+
+CI is sensitive to any tag pushed to `main` branch. It will build and deploy the app to NPM.
+To deploy:
+
+1. Bump the version using `npm version patch` or similar
+2. `git push && git push --tags`
+
 ## Contributions
 
 See [good first issues](https://github.com/markmanx/isoflow/contribute).
