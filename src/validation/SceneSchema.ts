@@ -10,7 +10,7 @@ export const IconSchema = z.object({
 export const NodeSchema = z.object({
   id: z.string(),
   label: z.string().optional(),
-  icon: z.string(),
+  iconId: z.string(),
   position: z.object({
     x: z.number(),
     y: z.number(),
@@ -37,7 +37,7 @@ export type GroupI = z.infer<typeof GroupSchema>;
 
 export const findInvalidNode = (nodes: NodeI[], icons: IconI[]) => {
   return nodes.find((node) => {
-    const validIcon = icons.find((icon) => node.icon === icon.id);
+    const validIcon = icons.find((icon) => node.iconId === icon.id);
     return !Boolean(validIcon);
   });
 };

@@ -4,7 +4,6 @@ import { makeAutoObservable, toJS } from "mobx";
 import { Context } from "../../types";
 import { Node, NodeOptions } from "./Node";
 import cuid from "cuid";
-import { SceneEvent } from "../SceneEvent";
 import { tweenPosition } from "../../utils";
 
 export class Nodes {
@@ -20,7 +19,7 @@ export class Nodes {
     this.ctx = ctx;
   }
 
-  addNode(options: NodeOptions, sceneEvent?: SceneEvent) {
+  addNode(options: NodeOptions) {
     const node = new Node(
       this.ctx,
       {
@@ -85,6 +84,10 @@ export class Nodes {
     return this.nodes.find(
       (node) => node.position.x === x && node.position.y === y
     );
+  }
+
+  unfocusAll() {
+    this.nodes.forEach((node) => node.setFocus(false));
   }
 
   clear() {

@@ -54,7 +54,7 @@ export const nodes: NodeI[] = [
   {
     id: "Node1",
     label: "Node 1",
-    icon: "block",
+    iconId: "block",
     position: {
       x: 0,
       y: 0,

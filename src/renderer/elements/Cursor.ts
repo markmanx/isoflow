@@ -14,7 +14,7 @@ import { tweenPosition } from "../../utils";
 export enum CURSOR_TYPES {
   OUTLINE = "OUTLINE",
   CIRCLE = "CIRCLE",
-  TILE = "TITLE",
+  TILE = "TILE",
   LASSO = "LASSO",
   DOT = "DOT",
 }

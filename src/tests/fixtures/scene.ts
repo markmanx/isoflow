@@ -17,7 +17,7 @@ export const scene: SceneI = {
     {
       id: "node1",
       label: "Node1",
-      icon: "icon1",
+      iconId: "icon1",
       position: {
         x: 0,
         y: 0,
@@ -26,7 +26,7 @@ export const scene: SceneI = {
     {
       id: "node2",
       label: "Node2",
-      icon: "icon2",
+      iconId: "icon2",
       position: {
         x: 1,
         y: 1,
@@ -35,7 +35,7 @@ export const scene: SceneI = {
     {
       id: "node3",
       label: "Node3",
-      icon: "icon1",
+      iconId: "icon1",
       position: {
         x: 2,
         y: 2,

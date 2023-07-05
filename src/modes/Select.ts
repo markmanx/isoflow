@@ -1,6 +1,6 @@
 import { ModeBase } from "./ModeBase";
 import { Mouse } from "../types";
-import { getTargetFromSelection } from "./utils";
+import { getTargetFromSelection, isMouseOverNewTile } from "./utils";
 import { SelectNode } from "./SelectNode";
 import { Node } from "../renderer/elements/Node";
 
@@ -19,8 +19,10 @@ export class Select extends ModeBase {
     this.ctx.renderer.sceneElements.cursor.disable();
   }
 
-  MOUSE_ENTER() {
-    this.ctx.renderer.sceneElements.cursor.enable();
+  MOUSE_ENTER(mouse: Mouse) {
+    const { renderer } = this.ctx;
+
+    renderer.sceneElements.cursor.enable();
   }
 
   MOUSE_LEAVE() {
@@ -45,11 +47,23 @@ export class Select extends ModeBase {
   }
 
   MOUSE_MOVE(mouse: Mouse) {
-    const tile = this.ctx.renderer.getTileFromMouse(
-      mouse.position.x,
-      mouse.position.y
+    const newTile = isMouseOverNewTile(
+      mouse,
+      this.ctx.renderer.getTileFromMouse
     );
 
-    this.ctx.renderer.sceneElements.cursor.displayAt(tile.x, tile.y);
+    if (newTile) {
+      this.ctx.renderer.sceneElements.cursor.displayAt(newTile.x, newTile.y);
+
+      const items = this.ctx.renderer.getItemsByTile(newTile.x, newTile.y);
+      const target = getTargetFromSelection(items);
+
+      this.ctx.renderer.unfocusAll();
+
+      if (target instanceof Node) {
+        target.setFocus(true);
+        return;
+      }
+    }
   }
 }

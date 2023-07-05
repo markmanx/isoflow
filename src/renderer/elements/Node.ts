@@ -1,14 +1,15 @@
 import { makeAutoObservable } from "mobx";
-import { Group, Raster } from "paper";
+import { Group } from "paper";
 import { Coords, Context } from "../../types";
-import { PROJECTED_TILE_WIDTH, PIXEL_UNIT } from "../constants";
-
-const NODE_IMG_PADDING = 0 * PIXEL_UNIT;
+import { theme } from "../../theme";
+import { NodeTile } from "./NodeTile";
+import { NodeIcon } from "./NodeIcon";
 
 export interface NodeOptions {
   id: string;
   position: Coords;
-  icon: string;
+  iconId: string;
+  color?: string;
 }
 
 interface Callbacks {
@@ -24,11 +25,12 @@ export class Node {
   selected = false;
   callbacks: Callbacks;
   position;
-  icon;
-  renderElements = {
-    iconContainer: new Group(),
-    icon: new Raster(),
-  };
+  color: string = theme.customVars.diagramPalette.purple;
+  isSelected = false;
+  isFocussed = false;
+
+  icon: NodeIcon;
+  tile: NodeTile;
 
   constructor(ctx: Context, options: NodeOptions, callbacks: Callbacks) {
     makeAutoObservable(this);
@@ -36,40 +38,31 @@ export class Node {
     this.ctx = ctx;
     this.id = options.id;
     this.position = options.position;
-    this.icon = options.icon;
     this.callbacks = callbacks;
 
-    this.renderElements.iconContainer.addChild(this.renderElements.icon);
-    this.container.addChild(this.renderElements.iconContainer);
+    this.icon = new NodeIcon(options.iconId, ctx);
+    this.tile = new NodeTile();
+
+    this.container.addChild(this.tile.container);
+    this.container.addChild(this.icon.container);
+    this.moveTo(this.position.x, this.position.y);
 
     this.destroy = this.destroy.bind(this);
-
-    this.init();
   }
 
-  async init() {
-    await this.updateIcon(this.icon);
-    this.moveTo(this.position.x, this.position.y);
+  // although focus and selection appear to be the same thing, selection happens when a user
+  // activates a node, and focus happens when a user hovers over a node.
+  setSelected(state: boolean) {
+    this.isSelected = state;
+    this.setFocus(state);
   }
 
-  async updateIcon(icon: string) {
-    this.icon = icon;
-    const { iconContainer, icon: iconEl } = this.renderElements;
+  setFocus(state: boolean) {
+    if (!state && this.isSelected) {
+      return;
+    }
 
-    await new Promise((resolve) => {
-      iconEl.onLoad = () => {
-        iconEl.scale(
-          (PROJECTED_TILE_WIDTH - NODE_IMG_PADDING) / iconEl.bounds.width
-        );
-
-        iconContainer.pivot = iconEl.bounds.bottomCenter;
-        iconContainer.position.set(0, 0);
-
-        resolve(null);
-      };
-
-      iconEl.source = this.ctx.getIconById(this.icon).url;
-    });
+    this.tile.setFocus(state);
   }
 
   moveTo(x: number, y: number) {
@@ -80,7 +73,7 @@ export class Node {
     return {
       id: this.id,
       position: this.position,
-      icon: this.icon,
+      ...this.icon.export(),
     };
   }
 

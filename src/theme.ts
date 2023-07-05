@@ -7,6 +7,9 @@ interface CustomThemeVars {
   toolMenu: {
     height: number;
   };
+  diagramPalette: {
+    purple: string;
+  };
 }
 
 declare module "@mui/material/styles" {
@@ -25,6 +28,9 @@ const customVars: CustomThemeVars = {
   },
   toolMenu: {
     height: 55,
+  },
+  diagramPalette: {
+    purple: "#cabffa",
   },
 };
 

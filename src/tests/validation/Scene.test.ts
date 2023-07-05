@@ -25,7 +25,7 @@ describe("scene validation works correctly", () => {
     const { icons } = scene;
     const invalidNode = {
       id: "invalidNode",
-      icon: "doesntExist",
+      iconId: "doesntExist",
       position: { x: -1, y: -1 },
     };
     const nodes: NodeI[] = [...scene.nodes, invalidNode];

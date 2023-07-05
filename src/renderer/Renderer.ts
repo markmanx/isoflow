@@ -252,6 +252,10 @@ export class Renderer {
     );
   }
 
+  unfocusAll() {
+    this.sceneElements.nodes.unfocusAll();
+  }
+
   clear() {
     this.sceneElements.nodes.clear();
   }
