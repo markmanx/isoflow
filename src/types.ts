@@ -1,6 +1,6 @@
 import { Renderer } from "./renderer/Renderer";
 import type { ModeManager } from "./modes/ModeManager";
-import type { Node } from "./renderer/elements/Node";
+import { Coords } from "./renderer/elements/Coords";
 
 export interface Mode {
   initial: string;
@@ -8,25 +8,15 @@ export interface Mode {
   destroy?: () => void;
 }
 
-export interface MouseCoords {
-  x: number;
-  y: number;
-}
-
 export interface Mouse {
-  position: MouseCoords;
-  delta: MouseCoords | null;
+  position: Coords;
+  delta: Coords | null;
 }
 
 export interface ModeContext {
   renderer: Renderer;
   activateMode: ModeManager["activateMode"];
   emitEvent: OnSceneChange;
-}
-
-export interface Coords {
-  x: number;
-  y: number;
 }
 
 export type GeneralEventI = {
@@ -37,7 +27,10 @@ export type GeneralEventI = {
 export type NodeEventI =
   // Grid Events
   | {
-      type: "GRID_SELECTED";
+      type: "TILE_SELECTED";
+      data: {
+        tile: Coords;
+      };
     }
   // Node Events
   | {

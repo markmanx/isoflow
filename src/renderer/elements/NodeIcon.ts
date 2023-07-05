@@ -1,6 +1,6 @@
 import { Group, Raster } from "paper";
 import { PROJECTED_TILE_WIDTH, PIXEL_UNIT } from "../constants";
-import { Coords, Context } from "../../types";
+import { Context } from "../../types";
 
 const NODE_IMG_PADDING = 0 * PIXEL_UNIT;
 

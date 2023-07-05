@@ -8,7 +8,7 @@ interface Props {
 }
 
 const COLOR = "grey.900";
-const SIZE = 14;
+const SIZE = 11;
 const ANIMATIONS = {
   in: keyframes`
   0% {

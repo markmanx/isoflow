@@ -1,5 +1,5 @@
 import { PROJECTED_TILE_HEIGHT, PROJECTED_TILE_WIDTH } from "../constants";
-import { Coords } from "../../types";
+import { Coords } from "../elements/Coords";
 
 // Iterates over every item in a 2 dimensional array
 // const tileIterator = (w, h, cb) => {
@@ -45,15 +45,15 @@ export const sortByPosition = (items: Coords[]) => {
 
 export const getBoundingBox = (
   tiles: Coords[],
-  offset: Coords = { x: 0, y: 0 }
+  offset: Coords = new Coords(0, 0)
 ) => {
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
   return [
-    { x: lowX - offset.x, y: lowY - offset.y },
-    { x: highX + offset.x, y: lowY - offset.y },
-    { x: highX + offset.x, y: highY + offset.y },
-    { x: lowX - offset.x, y: highY + offset.y },
+    new Coords(lowX - offset.x, lowY - offset.y),
+    new Coords(highX + offset.x, lowY - offset.y),
+    new Coords(highX + offset.x, highY + offset.y),
+    new Coords(lowX - offset.x, highY + offset.y),
   ];
 };
 

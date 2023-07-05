@@ -7,7 +7,8 @@ import {
   getBoundingBox,
   getTileBounds,
 } from "../utils/gridHelpers";
-import type { Context, Coords } from "../../types";
+import type { Context } from "../../types";
+import { Coords } from "./Coords";
 import { SceneElement } from "../SceneElement";
 import { tweenPosition } from "../../utils";
 

@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { SceneI } from "../validation/SceneSchema";
 import { Node } from "../renderer/elements/Node";
+import { Coords } from "../renderer/elements/Coords";
 import { Renderer } from "../renderer/Renderer";
 import { OnSceneChange, SceneEventI } from "../types";
 
 interface GlobalState {
-  showContextMenuAt: Node | null;
+  showContextMenuFor: Node | Coords | null;
   onSceneChange: OnSceneChange;
   setOnSceneChange: (onSceneChange: OnSceneChange) => void;
   initialScene: SceneI;
@@ -20,7 +21,7 @@ interface GlobalState {
 }
 
 export const useGlobalState = create<GlobalState>((set, get) => ({
-  showContextMenuAt: null,
+  showContextMenuFor: null,
   selectedElements: [],
   selectedSideNavItem: null,
   onSceneChange: () => {},
@@ -45,8 +46,8 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
     const { renderer } = get();
 
     switch (event.type) {
-      case "GRID_SELECTED":
-        set({ showContextMenuAt: null, selectedElements: [] });
+      case "TILE_SELECTED":
+        set({ showContextMenuFor: event.data.tile, selectedElements: [] });
         break;
       case "NODES_SELECTED":
         set({ selectedElements: event.data.nodes });
@@ -55,21 +56,21 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
           const node = renderer.sceneElements.nodes.getNodeById(
             event.data.nodes[0]
           );
-          set({ showContextMenuAt: node });
+          set({ showContextMenuFor: node });
         }
         break;
       case "NODE_REMOVED":
         set({
-          showContextMenuAt: null,
+          showContextMenuFor: null,
           selectedElements: [],
           selectedSideNavItem: null,
         });
         break;
       case "NODE_MOVED":
-        set({ showContextMenuAt: null, selectedElements: [] });
+        set({ showContextMenuFor: null, selectedElements: [] });
         break;
       case "ZOOM_CHANGED":
-        set({ showContextMenuAt: null, selectedElements: [] });
+        set({ showContextMenuFor: null, selectedElements: [] });
         break;
       default:
         break;

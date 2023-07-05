@@ -3,6 +3,7 @@ import { Mouse } from "../types";
 import { getTargetFromSelection, isMouseOverNewTile } from "./utils";
 import { SelectNode } from "./SelectNode";
 import { Node } from "../renderer/elements/Node";
+import { Coords } from "../renderer/elements/Coords";
 
 export class Select extends ModeBase {
   entry(mouse: Mouse) {
@@ -43,7 +44,10 @@ export class Select extends ModeBase {
       return;
     }
 
-    this.ctx.emitEvent({ type: "GRID_SELECTED" });
+    this.ctx.emitEvent({
+      type: "TILE_SELECTED",
+      data: { tile: new Coords(x, y) },
+    });
   }
 
   MOUSE_MOVE(mouse: Mouse) {

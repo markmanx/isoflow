@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { Renderer } from "../renderer/Renderer";
+import { Coords } from "../renderer/elements/Coords";
 import { ModeBase } from "./ModeBase";
 import type { Mouse, OnSceneChange } from "../types";
 
@@ -12,7 +13,7 @@ export class ModeManager {
   } = undefined;
   lastMode?: typeof ModeBase = undefined;
   mouse: Mouse = {
-    position: { x: 0, y: 0 },
+    position: new Coords(0, 0),
     delta: null,
   };
   emitEvent?: OnSceneChange;

@@ -3,6 +3,7 @@ import autobind from "auto-bind";
 import { makeAutoObservable, toJS } from "mobx";
 import { Context } from "../../types";
 import { Node, NodeOptions } from "./Node";
+import { Coords } from "./Coords";
 import cuid from "cuid";
 import { tweenPosition } from "../../utils";
 
@@ -19,11 +20,19 @@ export class Nodes {
     this.ctx = ctx;
   }
 
-  addNode(options: NodeOptions) {
+  addNode(
+    options: Omit<NodeOptions, "position" | "id"> & {
+      id?: string;
+      position: { x: number; y: number };
+    }
+  ) {
+    const position = new Coords(options.position.x, options.position.y);
+
     const node = new Node(
       this.ctx,
       {
         ...options,
+        position,
         id: options.id ?? cuid(),
       },
       {
@@ -42,14 +51,11 @@ export class Nodes {
   }
 
   onMove(x: number, y: number, node: Node, opts?: { skipAnimation: boolean }) {
-    const from = node.position;
-    const to = { x, y };
+    const from = new Coords(node.position.x, node.position.y);
+    const to = new Coords(x, y);
 
     const tile = this.ctx.getTileBounds(x, y);
-    node.position = {
-      x,
-      y,
-    };
+    node.position = new Coords(x, y);
 
     tweenPosition(node.container, {
       ...tile.bottom,

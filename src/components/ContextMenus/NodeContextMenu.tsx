@@ -1,5 +1,4 @@
 import React from "react";
-import { observer } from "mobx-react";
 import { useGlobalState } from "../../hooks/useGlobalState";
 import { ContextMenu } from "./ContextMenu";
 import { ContextMenuItem } from "./ContextMenuItem";

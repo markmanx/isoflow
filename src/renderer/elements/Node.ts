@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { Group } from "paper";
-import { Coords, Context } from "../../types";
+import { Context } from "../../types";
+import { Coords } from "./Coords";
 import { theme } from "../../theme";
 import { NodeTile } from "./NodeTile";
 import { NodeIcon } from "./NodeIcon";

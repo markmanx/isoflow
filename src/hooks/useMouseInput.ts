@@ -1,13 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-
-interface MouseCoords {
-  x: number;
-  y: number;
-}
+import { Coords } from "../renderer/elements/Coords";
 
 interface MousePosition {
-  position: MouseCoords;
-  delta: MouseCoords | null;
+  position: Coords;
+  delta: Coords | null;
 }
 
 type _MouseEvent = (e: MousePosition) => void;
@@ -52,26 +48,23 @@ export const useMouseInput = () => {
     (e: MouseEvent) => {
       const offset = getOffset(domEl);
 
-      return {
-        x: e.clientX - offset.left + window.scrollX,
-        y: e.clientY - offset.top + window.scrollY,
-      };
+      return new Coords(
+        e.clientX - offset.left + window.scrollX,
+        e.clientY - offset.top + window.scrollY
+      );
     },
     [domEl]
   );
 
   const parseMousePosition = useCallback(
-    (e: MouseEvent, mousedown: MouseCoords | null) => {
+    (e: MouseEvent, mousedown: Coords | null) => {
       const current = mouseEventToCoords(e);
       const delta = mousedown
-        ? {
-            x: current.x - mousedown.x,
-            y: current.y - mousedown.y,
-          }
+        ? new Coords(current.x - mousedown.x, current.y - mousedown.y)
         : null;
 
       return {
-        position: { x: current.x, y: current.y },
+        position: new Coords(current.x, current.y),
         delta,
       };
     },
@@ -81,7 +74,7 @@ export const useMouseInput = () => {
   useEffect(() => {
     if (!callbacks || !domEl) return;
 
-    let lastPosition: MouseCoords | null = null;
+    let lastPosition: Coords | null = null;
 
     const onMouseDown = (e: MouseEvent) => {
       callbacks.onMouseDown(parseMousePosition(e, lastPosition));
