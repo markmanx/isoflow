@@ -87,7 +87,9 @@ export class Nodes {
   }
 
   unfocusAll() {
-    this.nodes.forEach((node) => node.setFocus(false));
+    this.nodes.forEach((node) => {
+      if (node.isFocussed) node.setFocus(false);
+    });
   }
 
   clear() {

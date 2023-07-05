@@ -58,6 +58,8 @@ export class Node {
   }
 
   setFocus(state: boolean) {
+    this.isFocussed = state;
+
     if (!state && this.isSelected) {
       return;
     }
