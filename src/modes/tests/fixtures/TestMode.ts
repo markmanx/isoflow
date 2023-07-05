@@ -1,4 +1,4 @@
-import { MouseCoords, ModeContext } from "../../../types";
+import { Coords } from "../../../renderer/elements/Coords";
 import { ModeBase } from "../../ModeBase";
 
 export class TestMode extends ModeBase {
@@ -8,5 +8,5 @@ export class TestMode extends ModeBase {
 
   TEST_EVENT() {}
 
-  MOUSE_MOVE(e: MouseCoords) {}
+  MOUSE_MOVE(e: Coords) {}
 }
