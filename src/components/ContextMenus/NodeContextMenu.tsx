@@ -11,10 +11,7 @@ interface Props {
 
 export const NodeContextMenu = ({ node }: Props) => {
   const renderer = useGlobalState((state) => state.renderer);
-  const position = renderer.getTileScreenPosition(
-    node.position.x,
-    node.position.y
-  );
+  const position = renderer.getTileScreenPosition(node.position);
 
   return (
     <ContextMenu position={position}>

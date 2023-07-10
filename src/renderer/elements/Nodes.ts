@@ -1,5 +1,4 @@
 import { Group } from "paper";
-import autobind from "auto-bind";
 import { makeAutoObservable, toJS } from "mobx";
 import { Context } from "../../types";
 import { Node, NodeOptions } from "./Node";
@@ -15,7 +14,6 @@ export class Nodes {
 
   constructor(ctx: Context) {
     makeAutoObservable(this);
-    autobind(this);
 
     this.ctx = ctx;
   }
@@ -50,15 +48,15 @@ export class Nodes {
     });
   }
 
-  onMove(x: number, y: number, node: Node, opts?: { skipAnimation: boolean }) {
-    const from = new Coords(node.position.x, node.position.y);
-    const to = new Coords(x, y);
+  onMove(coords: Coords, node: Node, opts?: { skipAnimation: boolean }) {
+    const from = node.position;
+    const to = coords;
 
-    const tile = this.ctx.getTileBounds(x, y);
-    node.position = new Coords(x, y);
+    const tile = this.ctx.getTileBounds(coords);
+    node.position = coords;
 
     tweenPosition(node.container, {
-      ...tile.bottom,
+      ...tile.center,
       duration: opts?.skipAnimation ? 0 : 0.05,
     });
 
@@ -86,9 +84,9 @@ export class Nodes {
     return this.nodes.find((node) => node.id === id);
   }
 
-  getNodeByTile(x: number, y: number) {
+  getNodeByTile(coords: Coords) {
     return this.nodes.find(
-      (node) => node.position.x === x && node.position.y === y
+      (node) => node.position.x === coords.x && node.position.y === coords.y
     );
   }
 
@@ -104,14 +102,45 @@ export class Nodes {
   }
 
   setSelectedNodes(ids: string[]) {
-    this.nodes.forEach((node) => {
-      node.selected = ids.includes(node.id);
-    });
+    const nodes = ids
+      .map((id) => {
+        const node = this.getNodeById(id);
+        node?.setSelected(true);
+
+        return node;
+      })
+      .filter((node) => node !== undefined) as Node[];
 
     this.ctx.emitEvent({
       type: "NODES_SELECTED",
-      data: { nodes: ids },
+      data: { nodes },
     });
+  }
+
+  translateNodes(nodes: Node[], translation: Coords) {
+    // const updatedConnectors = [];
+
+    nodes.forEach((node) => {
+      // const connectors = this.connectors.getConnectorsByNode(node.id);
+
+      // connectors.forEach((con) => {
+      //   if (updatedConnectors.includes(con.id)) return;
+
+      //   const connectedNode = con.from.id === node.id ? con.to : con.from;
+
+      //   if (!nodes.find(({ id }) => id === connectedNode.id)) {
+      //     con.removeAllAnchors();
+      //   } else {
+      //     con.translateAnchors(translate);
+      //   }
+
+      //   updatedConnectors.push(con.id);
+      // });
+
+      node.moveTo(node.position.add(translation), { skipAnimation: true });
+    });
+
+    // this.connectors.updateAllPaths();
   }
 
   export() {

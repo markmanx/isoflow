@@ -14,16 +14,20 @@ export interface NodeOptions {
 }
 
 interface Callbacks {
-  onMove: (x: number, y: number, node: Node) => void;
+  onMove: (
+    coords: Coords,
+    node: Node,
+    opts?: { skipAnimation: boolean }
+  ) => void;
   onDestroy: (node: Node) => void;
 }
 
 export class Node {
   ctx: Context;
   container = new Group();
+  type = "NODE";
 
   id;
-  selected = false;
   callbacks: Callbacks;
   position;
   color: string = theme.customVars.diagramPalette.purple;
@@ -46,7 +50,7 @@ export class Node {
 
     this.container.addChild(this.tile.container);
     this.container.addChild(this.icon.container);
-    this.moveTo(this.position.x, this.position.y);
+    this.moveTo(this.position);
 
     this.destroy = this.destroy.bind(this);
   }
@@ -68,8 +72,8 @@ export class Node {
     this.tile.setFocus(state);
   }
 
-  moveTo(x: number, y: number) {
-    this.callbacks.onMove(x, y, this);
+  moveTo(coords: Coords, opts?: { skipAnimation: boolean }) {
+    this.callbacks.onMove(coords, this, opts);
   }
 
   export() {

@@ -12,7 +12,7 @@ interface Props {
 export const TileContextMenu = ({ tile }: Props) => {
   const renderer = useGlobalState((state) => state.renderer);
   const icons = useGlobalState((state) => state.initialScene.icons);
-  const position = renderer.getTileScreenPosition(tile.x, tile.y);
+  const position = renderer.getTileScreenPosition(tile);
 
   return (
     <ContextMenu position={position}>

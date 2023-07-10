@@ -1,73 +1,91 @@
 import { ModeBase } from "./ModeBase";
 import { Mouse } from "../types";
-import { getTargetFromSelection, isMouseOverNewTile } from "./utils";
+import { getTargetFromSelection } from "./utils";
 import { SelectNode } from "./SelectNode";
-import { Node } from "../renderer/elements/Node";
+import { CreateLasso } from "./CreateLasso";
+import { CURSOR_TYPES } from "../renderer/elements/Cursor";
 import { Coords } from "../renderer/elements/Coords";
 
 export class Select extends ModeBase {
-  entry(mouse: Mouse) {
-    const tile = this.ctx.renderer.getTileFromMouse(
-      mouse.position.x,
-      mouse.position.y
-    );
+  dragStartTile: Coords | null = null;
 
-    this.ctx.renderer.sceneElements.cursor.displayAt(tile.x, tile.y);
-    this.ctx.renderer.sceneElements.cursor.enable();
+  entry(mouse: Mouse) {
+    this.ctx.renderer.unfocusAll();
+
+    this.ctx.renderer.sceneElements.cursor.setCursorType(CURSOR_TYPES.TILE);
+
+    const tile = this.ctx.renderer.getTileFromMouse(mouse.position);
+
+    this.ctx.renderer.sceneElements.cursor.displayAt(tile, {
+      skipAnimation: true,
+    });
+    this.ctx.renderer.sceneElements.cursor.setVisible(true);
   }
 
   exit() {
-    this.ctx.renderer.sceneElements.cursor.disable();
+    this.ctx.renderer.sceneElements.cursor.setVisible(false);
   }
 
-  MOUSE_ENTER(mouse: Mouse) {
+  MOUSE_UP(mouse: Mouse) {
     const { renderer } = this.ctx;
+    const tile = renderer.getTileFromMouse(mouse.position);
+    const items = renderer.getItemsByTile(tile);
+    const target = getTargetFromSelection(items);
 
-    renderer.sceneElements.cursor.enable();
-  }
+    if (!target?.type) {
+      this.ctx.emitEvent({
+        type: "TILE_SELECTED",
+        data: { tile },
+      });
+    }
 
-  MOUSE_LEAVE() {
-    this.ctx.renderer.sceneElements.cursor.disable();
+    this.dragStartTile = null;
   }
 
   MOUSE_DOWN(mouse: Mouse) {
+    this.dragStartTile = this.ctx.renderer.getTileFromMouse(mouse.position);
+
     const { renderer } = this.ctx;
-    const { x, y } = renderer.getTileFromMouse(
-      mouse.position.x,
-      mouse.position.y
-    );
-    const items = renderer.getItemsByTile(x, y);
+    const tile = renderer.getTileFromMouse(mouse.position);
+    const items = renderer.getItemsByTile(tile);
     const target = getTargetFromSelection(items);
 
-    if (target instanceof Node) {
+    if (target?.type === "NODE") {
       this.ctx.activateMode(SelectNode, (instance) => (instance.node = target));
       return;
     }
-
-    this.ctx.emitEvent({
-      type: "TILE_SELECTED",
-      data: { tile: new Coords(x, y) },
-    });
   }
 
   MOUSE_MOVE(mouse: Mouse) {
-    const newTile = isMouseOverNewTile(
-      mouse,
-      this.ctx.renderer.getTileFromMouse
-    );
+    const currentTile = this.ctx.renderer.getTileFromMouse(mouse.position);
 
-    if (newTile) {
-      this.ctx.renderer.sceneElements.cursor.displayAt(newTile.x, newTile.y);
+    if (mouse.delta) {
+      const prevTile = this.ctx.renderer.getTileFromMouse(
+        mouse.position.subtract(mouse.delta)
+      );
 
-      const items = this.ctx.renderer.getItemsByTile(newTile.x, newTile.y);
-      const target = getTargetFromSelection(items);
+      if (currentTile.isEqual(prevTile)) return;
+    }
 
-      this.ctx.renderer.unfocusAll();
+    if (this.dragStartTile && !currentTile.isEqual(this.dragStartTile)) {
+      this.ctx.activateMode(CreateLasso, (mode) => {
+        console.log(this.dragStartTile);
+        this.dragStartTile && mode.setStartTile(this.dragStartTile);
+        mode.MOUSE_MOVE(mouse);
+      });
 
-      if (target instanceof Node) {
-        target.setFocus(true);
-        return;
-      }
+      return;
+    }
+
+    this.ctx.renderer.sceneElements.cursor.displayAt(currentTile);
+    this.ctx.renderer.unfocusAll();
+
+    const items = this.ctx.renderer.getItemsByTile(currentTile);
+    const target = getTargetFromSelection(items);
+
+    if (target?.type === "NODE") {
+      target.setFocus(true);
+      return;
     }
   }
 }

@@ -1,20 +1,16 @@
-import { makeAutoObservable, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
 import Paper, { Group } from "paper";
 import gsap from "gsap";
-import autobind from "auto-bind";
 import { Grid } from "./elements/Grid";
 import { Cursor } from "./elements/Cursor";
 import { PROJECTED_TILE_WIDTH, PROJECTED_TILE_HEIGHT } from "./constants";
 import { clamp } from "../utils";
 import { Nodes } from "./elements/Nodes";
 import { SceneI, IconI } from "../validation/SceneSchema";
+import { Coords } from "./elements/Coords";
 import { OnSceneChange, SceneEventI } from "../types";
 
 interface Config {
-  grid: {
-    width: number;
-    height: number;
-  };
   icons: IconI[];
 }
 
@@ -23,10 +19,6 @@ export class Renderer {
   zoom = 1;
 
   config: Config = {
-    grid: {
-      width: 51,
-      height: 51,
-    },
     icons: [],
   };
   callbacks: {
@@ -53,7 +45,6 @@ export class Renderer {
 
   constructor(containerEl: HTMLDivElement) {
     makeAutoObservable(this);
-    autobind(this);
 
     Paper.settings = {
       insertelements: false,
@@ -72,7 +63,7 @@ export class Renderer {
     Paper.setup(this.domElements.canvas);
 
     this.sceneElements = {
-      grid: new Grid(this),
+      grid: new Grid(new Coords(51, 51), this),
       cursor: new Cursor(this),
       nodes: new Nodes(this),
     };
@@ -136,78 +127,74 @@ export class Renderer {
     return { canvas };
   }
 
-  getTileFromMouse(_mouseX: number, _mouseY: number) {
+  getTileFromMouse(mouse: Coords) {
     const halfW = PROJECTED_TILE_WIDTH / 2;
     const halfH = PROJECTED_TILE_HEIGHT / 2;
 
     const mouseX =
-      (_mouseX - this.groups.elements.position.x) * (1 / this.zoom);
+      (mouse.x - this.groups.elements.position.x) * (1 / this.zoom);
     const mouseY =
-      (_mouseY - this.groups.elements.position.y) * (1 / this.zoom) + halfH;
+      (mouse.y - this.groups.elements.position.y) * (1 / this.zoom) + halfH;
 
     const row = Math.floor((mouseX / halfW + mouseY / halfH) / 2);
     const col = Math.floor((mouseY / halfH - mouseX / halfW) / 2);
 
-    const halfRowNum = Math.floor(this.config.grid.width * 0.5);
-    const halfColNum = Math.floor(this.config.grid.height * 0.5);
+    const halfRowNum = Math.floor(this.sceneElements.grid.size.x * 0.5);
+    const halfColNum = Math.floor(this.sceneElements.grid.size.y * 0.5);
 
-    return {
-      x: clamp(row, -halfRowNum, halfRowNum),
-      y: clamp(col, -halfColNum, halfColNum),
-    };
+    return new Coords(
+      clamp(row, -halfRowNum, halfRowNum),
+      clamp(col, -halfColNum, halfColNum)
+    );
   }
 
-  getTilePosition(x: number, y: number) {
+  getTilePosition({ x, y }: Coords) {
     const halfW = PROJECTED_TILE_WIDTH * 0.5;
     const halfH = PROJECTED_TILE_HEIGHT * 0.5;
 
-    return {
-      x: x * halfW - y * halfW,
-      y: x * halfH + y * halfH,
-    };
+    return new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
   }
 
-  getTileBounds(x: number, y: number) {
-    const position = this.getTilePosition(x, y);
+  getTileBounds(coords: Coords) {
+    const position = this.getTilePosition(coords);
 
     return {
       left: {
         x: position.x - PROJECTED_TILE_WIDTH * 0.5,
-        y: position.y - PROJECTED_TILE_HEIGHT * 0.5,
+        y: position.y,
       },
       right: {
         x: position.x + PROJECTED_TILE_WIDTH * 0.5,
-        y: position.y - PROJECTED_TILE_HEIGHT * 0.5,
+        y: position.y,
       },
-      top: { x: position.x, y: position.y - PROJECTED_TILE_HEIGHT },
-      bottom: { x: position.x, y: position.y },
-      center: { x: position.x, y: position.y - PROJECTED_TILE_HEIGHT * 0.5 },
+      top: { x: position.x, y: position.y - PROJECTED_TILE_HEIGHT * 0.5 },
+      bottom: { x: position.x, y: position.y + PROJECTED_TILE_HEIGHT * 0.5 },
+      center: { x: position.x, y: position.y },
     };
   }
 
-  getTileScreenPosition(x: number, y: number) {
+  getTileScreenPosition(position: Coords) {
     const { width: viewW, height: viewH } = Paper.view.bounds;
     const { offsetLeft: offsetX, offsetTop: offsetY } = this.domElements.canvas;
-    const tilePosition = this.getTileBounds(x, y).center;
+    const tilePosition = this.getTileBounds(position).center;
     const globalItemsGroupPosition = this.groups.elements.globalToLocal([0, 0]);
-    const screenPosition = {
-      x:
-        (tilePosition.x +
-          this.scrollPosition.x +
-          globalItemsGroupPosition.x +
-          this.groups.elements.position.x +
-          viewW * 0.5) *
-          this.zoom +
+    const screenPosition = new Coords(
+      (tilePosition.x +
+        this.scrollPosition.x +
+        globalItemsGroupPosition.x +
+        this.groups.elements.position.x +
+        viewW * 0.5) *
+        this.zoom +
         offsetX,
-      y:
-        (tilePosition.y +
-          this.scrollPosition.y +
-          globalItemsGroupPosition.y +
-          this.groups.elements.position.y +
-          viewH * 0.5) *
-          this.zoom +
-        offsetY,
-    };
+
+      (tilePosition.y +
+        this.scrollPosition.y +
+        globalItemsGroupPosition.y +
+        this.groups.elements.position.y +
+        viewH * 0.5) *
+        this.zoom +
+        offsetY
+    );
 
     return screenPosition;
   }
@@ -291,8 +278,8 @@ export class Renderer {
     this.callbacks.emitEvent(event);
   }
 
-  getItemsByTile(x: number, y: number) {
-    const node = this.sceneElements.nodes.getNodeByTile(x, y);
+  getItemsByTile(coords: Coords) {
+    const node = this.sceneElements.nodes.getNodeByTile(coords);
 
     return [node].filter((i) => Boolean(i));
   }

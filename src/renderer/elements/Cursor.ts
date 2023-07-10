@@ -1,4 +1,4 @@
-import { Shape, Point } from "paper";
+import { Shape, Point, Group } from "paper";
 import { gsap } from "gsap";
 import { applyProjectionMatrix } from "../utils/projection";
 import { TILE_SIZE, PIXEL_UNIT } from "../constants";
@@ -21,6 +21,8 @@ export enum CURSOR_TYPES {
 }
 
 export class Cursor extends SceneElement {
+  container = new Group();
+
   renderElements = {
     rectangle: new Shape.Rectangle([0, 0]),
   };
@@ -29,20 +31,15 @@ export class Cursor extends SceneElement {
     highlight: gsap.core.Tween;
   };
 
-  position = {
-    x: 0,
-    y: 0,
-  };
+  position = new Coords(0, 0);
 
-  size = {
-    width: 1,
-    height: 1,
-  };
+  size: Coords = new Coords(1, 1);
 
   currentType?: CURSOR_TYPES;
 
   constructor(ctx: Context) {
     super(ctx);
+
     this.displayAt = this.displayAt.bind(this);
 
     this.renderElements.rectangle = new Shape.Rectangle({});
@@ -62,8 +59,8 @@ export class Cursor extends SceneElement {
     applyProjectionMatrix(this.container);
 
     this.setCursorType(CURSOR_TYPES.TILE);
-    this.displayAt(0, 0);
-    this.enable();
+    this.displayAt(new Coords(0, 0));
+    this.setVisible(true);
   }
 
   setCursorType(type: CURSOR_TYPES) {
@@ -71,10 +68,7 @@ export class Cursor extends SceneElement {
 
     this.currentType = type;
     this.container.set({ pivot: [0, 0] });
-    this.size = {
-      width: 1,
-      height: 1,
-    };
+    this.size = new Coords(1, 1);
 
     switch (type) {
       case CURSOR_TYPES.OUTLINE:
@@ -134,12 +128,8 @@ export class Cursor extends SceneElement {
     }
   }
 
-  enable() {
-    this.container.visible = true;
-  }
-
-  disable() {
-    this.container.visible = false;
+  setVisible(state: boolean) {
+    this.container.visible = state;
   }
 
   createSelection(from: Coords, to: Coords) {
@@ -151,21 +141,19 @@ export class Cursor extends SceneElement {
     this.setCursorType(CURSOR_TYPES.LASSO);
 
     const sorted = sortByPosition(boundingBox);
+    const position = new Coords(sorted.lowX, sorted.highY);
 
-    this.position = {
-      x: sorted.lowX,
-      y: sorted.lowY,
-    };
+    this.position.set(position.x, position.y);
 
-    this.size = {
-      width: sorted.highX - sorted.lowX,
-      height: sorted.highY - sorted.lowY,
-    };
+    this.size = new Coords(
+      sorted.highX - sorted.lowX,
+      sorted.highY - sorted.lowY
+    );
 
     this.renderElements.rectangle.set({
       size: [
-        (this.size.width + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
-        (this.size.height + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
+        (this.size.x + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
+        (this.size.y + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
       ],
     });
 
@@ -175,38 +163,29 @@ export class Cursor extends SceneElement {
 
     const targetTile = boundingBox[3];
 
-    this.container.position = new Point(
-      getTileBounds(targetTile.x, targetTile.y).left
-    );
+    this.container.position = new Point(getTileBounds(targetTile).left);
   }
 
   predictBoundsAt(tile: Coords) {
     const bounds = [
       { x: tile.x, y: tile.y },
-      { x: tile.x, y: tile.y - this.size.height },
-      { x: tile.x + this.size.width, y: tile.y - this.size.height },
-      { x: tile.x + this.size.width, y: tile.y },
+      { x: tile.x, y: tile.y - this.size.y },
+      { x: tile.x + this.size.x, y: tile.y - this.size.y },
+      { x: tile.x + this.size.x, y: tile.y },
     ];
 
     return bounds;
   }
 
-  getInfo() {
-    return { ...this.position, ...this.size };
-  }
+  displayAt(position: Coords, opts?: { skipAnimation: boolean }) {
+    if (this.position.isEqual(position)) return;
 
-  displayAt(x: number, y: number, opts?: { skipAnimation: boolean }) {
-    if (x === this.position.x && y === this.position.y) return;
-
-    this.position = {
-      x,
-      y,
-    };
+    this.position.set(position.x, position.y);
 
     const tileBoundsPosition =
       this.currentType === CURSOR_TYPES.LASSO ? "left" : "center";
 
-    const tile = getTileBounds(x, y)[tileBoundsPosition];
+    const tile = getTileBounds(position)[tileBoundsPosition];
 
     tweenPosition(this.container, {
       ...tile,

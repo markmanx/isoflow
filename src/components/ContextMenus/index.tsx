@@ -13,11 +13,16 @@ export const ContextMenu = () => {
   }
 
   if (targetElement instanceof Node) {
-    return <NodeContextMenu node={targetElement} />;
+    return <NodeContextMenu node={targetElement} key={targetElement.id} />;
   }
 
   if (targetElement instanceof Coords) {
-    return <TileContextMenu tile={targetElement} />;
+    return (
+      <TileContextMenu
+        tile={targetElement}
+        key={JSON.stringify(targetElement)}
+      />
+    );
   }
 
   return null;

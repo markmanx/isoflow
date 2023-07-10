@@ -12,10 +12,11 @@ interface GlobalState {
   initialScene: SceneI;
   setInitialScene: (scene: SceneI) => void;
   selectedSideNavItem: number | null;
+  setSelectedElements: (elements: Node[]) => void;
   setSelectedSideNavItem: (index: number) => void;
   closeSideNav: () => void;
   renderer: Renderer;
-  selectedElements: string[];
+  selectedElements: Node[];
   setRenderer: (containerEl: HTMLDivElement) => Renderer;
   onRendererEvent: (event: SceneEventI) => void;
 }
@@ -35,6 +36,15 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
   setInitialScene: (scene) => {
     set({ initialScene: scene });
   },
+  setSelectedElements: (elements: Node[]) => {
+    const { renderer } = get();
+
+    renderer.unfocusAll();
+    elements.forEach((element) => {
+      element.setFocus(true);
+    });
+    set({ selectedElements: elements });
+  },
   setSelectedSideNavItem: (val) => {
     set({ selectedSideNavItem: val });
   },
@@ -43,34 +53,37 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
   },
   renderer: new Renderer(document.createElement("div")),
   onRendererEvent: (event) => {
-    const { renderer } = get();
+    const { setSelectedElements } = get();
 
     switch (event.type) {
       case "TILE_SELECTED":
-        set({ showContextMenuFor: event.data.tile, selectedElements: [] });
+        setSelectedElements([]);
+        set({ showContextMenuFor: event.data.tile });
         break;
       case "NODES_SELECTED":
-        set({ selectedElements: event.data.nodes });
+        setSelectedElements(event.data.nodes);
 
         if (event.data.nodes.length === 1) {
-          const node = renderer.sceneElements.nodes.getNodeById(
-            event.data.nodes[0]
-          );
-          set({ showContextMenuFor: node });
+          set({ showContextMenuFor: event.data.nodes[0] });
         }
         break;
       case "NODE_REMOVED":
+        setSelectedElements([]);
         set({
           showContextMenuFor: null,
-          selectedElements: [],
           selectedSideNavItem: null,
         });
         break;
       case "NODE_MOVED":
-        set({ showContextMenuFor: null, selectedElements: [] });
+        setSelectedElements([]);
+        set({ showContextMenuFor: null });
         break;
       case "ZOOM_CHANGED":
-        set({ showContextMenuFor: null, selectedElements: [] });
+        setSelectedElements([]);
+        set({ showContextMenuFor: null });
+        break;
+      case "MULTISELECT_UPDATED":
+        setSelectedElements(event.data.itemsSelected);
         break;
       default:
         break;

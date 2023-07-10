@@ -1,6 +1,7 @@
 import { Renderer } from "./renderer/Renderer";
 import type { ModeManager } from "./modes/ModeManager";
 import { Coords } from "./renderer/elements/Coords";
+import { Node } from "./renderer/elements/Node";
 
 export interface Mode {
   initial: string;
@@ -19,19 +20,31 @@ export interface ModeContext {
   emitEvent: OnSceneChange;
 }
 
-export type GeneralEventI = {
-  type: "SCENE_LOAD";
-  data: {};
-};
-
-export type NodeEventI =
-  // Grid Events
+export type GeneralEventI =
+  | {
+      type: "SCENE_LOAD";
+      data: {};
+    }
   | {
       type: "TILE_SELECTED";
       data: {
         tile: Coords;
       };
     }
+  | {
+      type: "MULTISELECT_UPDATED";
+      data: {
+        itemsSelected: Node[];
+      };
+    }
+  | {
+      type: "ZOOM_CHANGED";
+      data: {
+        level: number;
+      };
+    };
+
+export type NodeEventI =
   // Node Events
   | {
       type: "NODE_CREATED";
@@ -48,7 +61,7 @@ export type NodeEventI =
   | {
       type: "NODES_SELECTED";
       data: {
-        nodes: string[];
+        nodes: Node[];
       };
     }
   | {
@@ -57,13 +70,6 @@ export type NodeEventI =
         node: string;
         from: Coords;
         to: Coords;
-      };
-    }
-  // Utility Events
-  | {
-      type: "ZOOM_CHANGED";
-      data: {
-        level: number;
       };
     };
 
