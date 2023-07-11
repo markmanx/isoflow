@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useContext } from "react";
 import { observer } from "mobx-react";
-import { Renderer } from "../renderer/Renderer";
 import { useGlobalState } from "../hooks/useGlobalState";
-import { useMouseInput } from "../hooks/useMouseInput";
 import { modeManagerContext } from "../contexts/ModeManagerContext";
 import { Select } from "../modes/Select";
 
 export const RendererContainer = observer(() => {
   const modeManager = useContext(modeManagerContext);
   const rendererEl = useRef<HTMLDivElement>(null);
-  const { setDomEl, setCallbacks } = useMouseInput();
   const setRenderer = useGlobalState((state) => state.setRenderer);
   const onSceneChange = useGlobalState((state) => state.onSceneChange);
 
@@ -17,29 +14,10 @@ export const RendererContainer = observer(() => {
     if (!rendererEl.current) return;
 
     const renderer = setRenderer(rendererEl.current);
-    setDomEl(rendererEl.current);
     modeManager.setRenderer(renderer);
     modeManager.setEventEmitter(renderer.callbacks.emitEvent);
     modeManager.activateMode(Select);
-
-    setCallbacks({
-      onMouseMove: (event) => {
-        modeManager.onMouseEvent("MOUSE_MOVE", event);
-      },
-      onMouseDown: (event) => {
-        modeManager.onMouseEvent("MOUSE_DOWN", event);
-      },
-      onMouseUp: (event) => {
-        modeManager.onMouseEvent("MOUSE_UP", event);
-      },
-      onMouseEnter: (event) => {
-        modeManager.onMouseEvent("MOUSE_ENTER", event);
-      },
-      onMouseLeave: (event) => {
-        modeManager.onMouseEvent("MOUSE_LEAVE", event);
-      },
-    });
-  }, [setRenderer, setDomEl, modeManager, onSceneChange]);
+  }, [setRenderer, modeManager, onSceneChange]);
 
   return (
     <div

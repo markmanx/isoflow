@@ -33,7 +33,7 @@ export class Pan extends ModeBase {
 
   MOUSE_MOVE(mouse: Mouse) {
     if (this.isPanning && mouse.delta !== null) {
-      this.ctx.renderer.scrollToDelta(mouse.delta.x, mouse.delta.y);
+      this.ctx.renderer.scrollToDelta(mouse.delta);
     }
   }
 }

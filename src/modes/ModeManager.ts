@@ -1,8 +1,15 @@
 import { makeAutoObservable } from "mobx";
+import paper from "paper";
 import { Renderer } from "../renderer/Renderer";
 import { Coords } from "../renderer/elements/Coords";
 import { ModeBase } from "./ModeBase";
 import type { Mouse, OnSceneChange } from "../types";
+
+const MOUSE_EVENTS = new Map([
+  ["mousemove", "MOUSE_MOVE"],
+  ["mousedown", "MOUSE_DOWN"],
+  ["mouseup", "MOUSE_UP"],
+]);
 
 export class ModeManager {
   // mobx requires all properties to be initialised explicitly (i.e. prop = undefined)
@@ -17,13 +24,24 @@ export class ModeManager {
     delta: null,
   };
   emitEvent?: OnSceneChange;
+  tool?: paper.Tool;
 
   constructor() {
     makeAutoObservable(this);
+
+    this.onMouseEvent = this.onMouseEvent.bind(this);
+    this.send = this.send.bind(this);
   }
 
   setRenderer(renderer: Renderer) {
     this.renderer = renderer;
+
+    this.tool = new paper.Tool();
+    this.tool.onMouseMove = this.onMouseEvent;
+    this.tool.onMouseDown = this.onMouseEvent;
+    this.tool.onMouseUp = this.onMouseEvent;
+    this.tool.onKeyDown = this.onMouseEvent;
+    this.tool.onKeyUp = this.onMouseEvent;
   }
 
   setEventEmitter(fn: OnSceneChange) {
@@ -34,6 +52,8 @@ export class ModeManager {
     Mode: T,
     init?: (instance: InstanceType<T>) => void
   ) {
+    console.log("ACTIVATING MODE", Mode.name);
+
     if (!this.renderer) return;
 
     if (this.currentMode) {
@@ -54,10 +74,16 @@ export class ModeManager {
     this.currentMode.instance.entry(this.mouse);
   }
 
-  onMouseEvent(eventName: string, mouse: Mouse) {
-    this.mouse = mouse;
+  onMouseEvent(event: paper.ToolEvent) {
+    const type = MOUSE_EVENTS.get(event.type);
 
-    this.send(eventName, mouse);
+    if (!type) return;
+
+    const position = new Coords(event.point.x, event.point.y);
+    const delta = new Coords(event.delta.x, event.delta.y);
+
+    this.mouse = { position, delta };
+    this.send(type, this.mouse);
   }
 
   send(eventName: string, params?: any) {

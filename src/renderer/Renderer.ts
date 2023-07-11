@@ -37,17 +37,14 @@ export class Renderer {
     container: HTMLDivElement;
     canvas: HTMLCanvasElement;
   };
-  scrollPosition = {
-    x: 0,
-    y: 0,
-  };
+  scrollPosition = new Coords(0, 0);
   rafRef?: number;
 
   constructor(containerEl: HTMLDivElement) {
     makeAutoObservable(this);
 
     Paper.settings = {
-      insertelements: false,
+      insertItems: false,
       applyMatrix: false,
     };
 
@@ -57,7 +54,7 @@ export class Renderer {
 
     this.domElements = {
       container: containerEl,
-      ...this.initDOM(containerEl),
+      canvas: this.initDOM(containerEl).canvas,
     };
 
     Paper.setup(this.domElements.canvas);
@@ -83,7 +80,7 @@ export class Renderer {
     this.activeLayer = Paper.project.activeLayer;
     this.activeLayer.addChild(this.groups.container);
 
-    this.scrollTo(0, 0);
+    this.scrollTo(new Coords(0, 0));
 
     this.render();
 
@@ -102,6 +99,8 @@ export class Renderer {
     scene.nodes.forEach((node) => {
       this.sceneElements.nodes.addNode(node);
     });
+
+    this.setZoom(1);
   }
 
   getIconById(id: string) {
@@ -131,13 +130,17 @@ export class Renderer {
     const halfW = PROJECTED_TILE_WIDTH / 2;
     const halfH = PROJECTED_TILE_HEIGHT / 2;
 
-    const mouseX =
-      (mouse.x - this.groups.elements.position.x) * (1 / this.zoom);
-    const mouseY =
-      (mouse.y - this.groups.elements.position.y) * (1 / this.zoom) + halfH;
+    const canvasPosition = new Coords(
+      mouse.x - this.groups.elements.position.x,
+      mouse.y - this.groups.elements.position.y + halfH
+    );
 
-    const row = Math.floor((mouseX / halfW + mouseY / halfH) / 2);
-    const col = Math.floor((mouseY / halfH - mouseX / halfW) / 2);
+    const row = Math.floor(
+      (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2
+    );
+    const col = Math.floor(
+      (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2
+    );
 
     const halfRowNum = Math.floor(this.sceneElements.grid.size.x * 0.5);
     const halfColNum = Math.floor(this.sceneElements.grid.size.y * 0.5);
@@ -208,6 +211,9 @@ export class Renderer {
     gsap.to(Paper.view, {
       duration: 0.3,
       zoom: this.zoom,
+      onComplete: () => {
+        this.scrollTo(this.scrollPosition);
+      },
     });
 
     this.emitEvent({
@@ -216,15 +222,15 @@ export class Renderer {
     });
   }
 
-  scrollTo(x: number, y: number) {
-    this.scrollPosition = { x, y };
+  scrollTo(coords: Coords) {
+    this.scrollPosition.set(coords.x, coords.y);
 
     const { center: viewCenter } = Paper.view.bounds;
 
-    const newPosition = {
-      x: x + viewCenter.x,
-      y: y + viewCenter.y,
-    };
+    const newPosition = new Coords(
+      coords.x + viewCenter.x,
+      coords.y + viewCenter.y
+    );
 
     gsap.to(this.groups.elements.position, {
       duration: 0,
@@ -232,11 +238,10 @@ export class Renderer {
     });
   }
 
-  scrollToDelta(deltaX: number, deltaY: number) {
-    this.scrollTo(
-      this.scrollPosition.x + deltaX * (1 / this.zoom),
-      this.scrollPosition.y + deltaY * (1 / this.zoom)
-    );
+  scrollToDelta(delta: Coords) {
+    const position = this.scrollPosition.add(delta);
+
+    this.scrollTo(position);
   }
 
   unfocusAll() {

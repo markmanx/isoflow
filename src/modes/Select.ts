@@ -69,7 +69,6 @@ export class Select extends ModeBase {
 
     if (this.dragStartTile && !currentTile.isEqual(this.dragStartTile)) {
       this.ctx.activateMode(CreateLasso, (mode) => {
-        console.log(this.dragStartTile);
         this.dragStartTile && mode.setStartTile(this.dragStartTile);
         mode.MOUSE_MOVE(mouse);
       });

@@ -8,7 +8,10 @@ interface Props {
 }
 
 const COLOR = "grey.900";
-const SIZE = 11;
+const ARROW = {
+  size: 11,
+  top: 8,
+};
 const ANIMATIONS = {
   in: keyframes`
   0% {
@@ -27,21 +30,21 @@ export const ContextMenu = ({ position, children }: Props) => {
     <Box
       sx={{
         position: "absolute",
-        top: position.y,
-        left: position.x + SIZE,
+        top: position.y - 20,
+        left: position.x + ARROW.size * 2,
         animation: `${ANIMATIONS.in} 0.2s ease-in-out`,
       }}
     >
       <Box
         sx={{
           position: "absolute",
-          left: -(SIZE - 2),
-          top: 8,
+          left: -(ARROW.size - 2),
+          top: ARROW.top,
           width: 0,
           height: 0,
-          borderTop: `${SIZE}px solid transparent`,
-          borderBottom: `${SIZE}px solid transparent`,
-          borderRight: `${SIZE}px solid`,
+          borderTop: `${ARROW.size}px solid transparent`,
+          borderBottom: `${ARROW.size}px solid transparent`,
+          borderRight: `${ARROW.size}px solid`,
           borderRightColor: COLOR,
         }}
       />
