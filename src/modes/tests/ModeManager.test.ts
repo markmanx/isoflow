@@ -2,6 +2,9 @@ import { ModeManager } from "../ModeManager";
 import { Renderer } from "../../renderer/Renderer";
 import { TestMode } from "./fixtures/TestMode";
 
+jest.mock("paper", () => ({
+  Tool: jest.fn().mockImplementation(() => ({})),
+}));
 jest.mock("../../renderer/Renderer", () => ({
   Renderer: jest.fn(),
 }));

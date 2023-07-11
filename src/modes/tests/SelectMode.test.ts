@@ -7,6 +7,9 @@ import { Coords } from "../../renderer/elements/Coords";
 import { Node } from "../../renderer/elements/Node";
 import * as utils from "../utils";
 
+jest.mock("paper", () => ({
+  Tool: jest.fn().mockImplementation(() => ({})),
+}));
 jest.mock("../utils", () => ({
   getTargetFromSelection: jest.fn(),
 }));
@@ -55,7 +58,7 @@ describe("Select mode functions correctly", () => {
   it("Cursor repositions when tile is hovered", () => {
     const { renderer, modeManager } = createRenderer();
     const displayAtSpy = jest.spyOn(renderer.sceneElements.cursor, "displayAt");
-    modeManager.onMouseEvent("MOUSE_MOVE", {
+    modeManager.send("MOUSE_MOVE", {
       position: new Coords(2, 2),
       delta: null,
     });
@@ -67,7 +70,7 @@ describe("Select mode functions correctly", () => {
     const { modeManager } = createRenderer();
     const mockNode = new MockNode();
     jest.spyOn(utils, "getTargetFromSelection").mockReturnValueOnce(mockNode);
-    modeManager.onMouseEvent("MOUSE_MOVE", {
+    modeManager.send("MOUSE_MOVE", {
       position: new Coords(1, 1),
       delta: null,
     });
@@ -77,7 +80,7 @@ describe("Select mode functions correctly", () => {
     const { renderer, modeManager } = createRenderer();
     jest.spyOn(utils, "getTargetFromSelection").mockReturnValueOnce(null);
     const unfocusAllSpy = jest.spyOn(renderer, "unfocusAll");
-    modeManager.onMouseEvent("MOUSE_MOVE", {
+    modeManager.send("MOUSE_MOVE", {
       position: new Coords(1, 1),
       delta: null,
     });
@@ -87,11 +90,11 @@ describe("Select mode functions correctly", () => {
     const activateModeSpy = jest.spyOn(ModeManager.prototype, "activateMode");
     const { modeManager } = createRenderer();
     jest.spyOn(utils, "getTargetFromSelection").mockReturnValue(null);
-    modeManager.onMouseEvent("MOUSE_DOWN", {
+    modeManager.send("MOUSE_DOWN", {
       position: new Coords(0, 0),
       delta: null,
     });
-    modeManager.onMouseEvent("MOUSE_MOVE", {
+    modeManager.send("MOUSE_MOVE", {
       position: new Coords(2, 2),
       delta: new Coords(2, 2),
     });
@@ -103,7 +106,7 @@ describe("Select mode functions correctly", () => {
     const { modeManager } = createRenderer();
     const mockNode = new MockNode();
     jest.spyOn(utils, "getTargetFromSelection").mockReturnValue(mockNode);
-    modeManager.onMouseEvent("MOUSE_DOWN", {
+    modeManager.send("MOUSE_DOWN", {
       position: new Coords(0, 0),
       delta: null,
     });

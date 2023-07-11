@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import paper from "paper";
+import { Tool } from "paper";
 import { Renderer } from "../renderer/Renderer";
 import { Coords } from "../renderer/elements/Coords";
 import { ModeBase } from "./ModeBase";
@@ -36,7 +36,7 @@ export class ModeManager {
   setRenderer(renderer: Renderer) {
     this.renderer = renderer;
 
-    this.tool = new paper.Tool();
+    this.tool = new Tool();
     this.tool.onMouseMove = this.onMouseEvent;
     this.tool.onMouseDown = this.onMouseEvent;
     this.tool.onMouseUp = this.onMouseEvent;
@@ -79,10 +79,12 @@ export class ModeManager {
 
     if (!type) return;
 
-    const position = new Coords(event.point.x, event.point.y);
-    const delta = new Coords(event.delta.x, event.delta.y);
+    const mouse = {
+      position: new Coords(event.point.x, event.point.y),
+      delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null,
+    };
 
-    this.mouse = { position, delta };
+    this.mouse = mouse;
     this.send(type, this.mouse);
   }
 
