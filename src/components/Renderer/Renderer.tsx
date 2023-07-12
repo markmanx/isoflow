@@ -19,12 +19,20 @@ export const Renderer = () => {
   }, [renderer.init, interfaceManager.activateMode]);
 
   useEffect(() => {
+    if (!renderer.isReady) return;
+
     renderer.nodeManager.updateNode("abc", {
       position: interfaceManager.mouse.position,
     });
-  }, [interfaceManager.mouse.position, renderer.nodeManager.updateNode]);
+  }, [
+    interfaceManager.mouse.position,
+    renderer.nodeManager.updateNode,
+    renderer.isReady,
+  ]);
 
   useEffect(() => {
+    if (!renderer.isReady) return;
+
     renderer.nodeManager.removeNode("abc");
 
     renderer.nodeManager.createNode({
@@ -32,7 +40,7 @@ export const Renderer = () => {
       position: new Coords(0, 0),
       iconId: "block",
     });
-  }, []);
+  }, [renderer.isReady]);
 
   return (
     <Box
@@ -54,12 +62,12 @@ export const Renderer = () => {
           width: "100%",
           height: "100%",
         }}
-      ></Box>
+      />
       {renderer.nodeManager.nodes.map((node) => (
         <Node
           key={node.id}
           {...node}
-          parentContainer={renderer.nodeManager.container}
+          parentContainer={renderer.nodeManager.container as paper.Group}
         />
       ))}
     </Box>

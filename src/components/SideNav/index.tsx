@@ -13,8 +13,8 @@ const menuItems = [
 
 export const SideNav = () => {
   const theme = useTheme();
-  const sidebarState = useGlobalState((state) => state.sidebarState);
-  const setSidebarState = useGlobalState((state) => state.setSidebarState);
+  // const sidebarState = useGlobalState((state) => state.sidebarState);
+  // const setSidebarState = useGlobalState((state) => state.setSidebarState);
 
   return (
     <Box

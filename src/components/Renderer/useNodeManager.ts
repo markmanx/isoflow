@@ -5,7 +5,7 @@ import { NodeProps } from "./Node";
 type Node = Omit<NodeProps, "parentContainer">;
 
 export const useNodeManager = () => {
-  const container = useRef<paper.Group>(new Group());
+  const container = useRef<paper.Group>();
   const [nodes, setNodes] = useState<Node[]>([]);
 
   const createNode = useCallback((node: Node) => {
@@ -30,7 +30,14 @@ export const useNodeManager = () => {
     });
   }, []);
 
+  const init = useCallback(() => {
+    container.current = new Group();
+
+    return container.current;
+  }, []);
+
   return {
+    init,
     nodes,
     setNodes,
     createNode,

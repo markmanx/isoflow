@@ -3,11 +3,10 @@ import React, { useEffect, useMemo } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { theme } from "./theme";
-import { SideNav } from "./components/SideNav";
-import { Sidebar } from "./components/Sidebars";
-import { ToolMenu } from "./components/ToolMenu";
-import { ContextMenu } from "./components/ContextMenus";
-import { RendererContainer } from "./components/RendererContainer";
+// import { SideNav } from "./components/SideNav";
+// import { Sidebar } from "./components/Sidebars";
+// import { ToolMenu } from "./components/ToolMenu";
+// import { ContextMenu } from "./components/ContextMenus";
 import { SceneI } from "./validation/SceneSchema";
 import { ModeManagerProvider } from "./contexts/ModeManagerContext";
 import { useGlobalState } from "./hooks/useGlobalState";
@@ -37,10 +36,10 @@ const InnerApp = React.memo(
             }}
           >
             <Renderer />
-            <ContextMenu />
+            {/* <ContextMenu />
             <Sidebar />
             <SideNav />
-            <ToolMenu />
+            <ToolMenu /> */}
           </Box>
         </ModeManagerProvider>
       </ThemeProvider>

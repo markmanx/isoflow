@@ -43,9 +43,11 @@ export const drawGrid = (width: number, height: number) => {
 };
 
 export const useGrid = () => {
-  const container = useRef(new Group());
+  const container = useRef<paper.Group>();
 
   const init = useCallback((width: number, height: number) => {
+    container.current = new Group();
+
     const grid = drawGrid(width, height);
     container.current.addChild(grid);
 

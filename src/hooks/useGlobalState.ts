@@ -5,36 +5,25 @@ import { Coords } from "../renderer/elements/Coords";
 import { Renderer } from "../renderer/Renderer";
 import { OnSceneChange, SceneEventI } from "../types";
 
-type SidebarState =
-  | {
-      type: "SINGLE_NODE";
-      node: Node;
-    }
-  | {
-      type: "PROJECT_SETTINGS";
-    };
-
 interface GlobalState {
   showContextMenuFor: Node | Coords | null;
   onSceneChange: OnSceneChange;
   setOnSceneChange: (onSceneChange: OnSceneChange) => void;
   initialScene: SceneI;
   setInitialScene: (scene: SceneI) => void;
+  selectedSideNavItem: number | null;
   setSelectedElements: (elements: Node[]) => void;
-  setSidebarState: (state: SidebarState | null) => void;
-  renderer: Renderer;
+  setSelectedSideNavItem: (index: number) => void;
+  closeSideNav: () => void;
   selectedElements: Node[];
-  setRenderer: (renderer: Renderer) => void;
+  setRenderer: (containerEl: HTMLDivElement) => void;
   onRendererEvent: (event: SceneEventI) => void;
-  sidebarState: SidebarState | null;
-  closeSidebar: () => void;
-  closeContextMenu: () => void;
 }
 
 export const useGlobalState = create<GlobalState>((set, get) => ({
   showContextMenuFor: null,
   selectedElements: [],
-  sidebarState: null,
+  selectedSideNavItem: null,
   onSceneChange: () => {},
   setOnSceneChange: (onSceneChange) => set({ onSceneChange }),
   initialScene: {
@@ -43,33 +32,25 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
     connectors: [],
     groups: [],
   },
-  closeContextMenu: () => {
-    set({ showContextMenuFor: null });
-  },
   setInitialScene: (scene) => {
     set({ initialScene: scene });
   },
   setSelectedElements: (elements: Node[]) => {
-    const { renderer } = get();
-
-    renderer.unfocusAll();
-    elements.forEach((element) => {
-      element.setFocus(true);
-    });
-    set({ selectedElements: elements });
+    // const { renderer } = get();
+    // renderer.unfocusAll();
+    // elements.forEach((element) => {
+    //   element.setFocus(true);
+    // });
+    // set({ selectedElements: elements });
   },
-  setSidebarState: (val) => {
-    set({ sidebarState: val });
+  setSelectedSideNavItem: (val) => {
+    set({ selectedSideNavItem: val });
   },
-  closeSidebar: () => {
-    const { setSidebarState, setSelectedElements } = get();
-
-    setSidebarState(null);
-    setSelectedElements([]);
+  closeSideNav: () => {
+    set({ selectedSideNavItem: null });
   },
-  renderer: new Renderer(document.createElement("div")),
   onRendererEvent: (event) => {
-    const { setSelectedElements, renderer } = get();
+    const { setSelectedElements } = get();
 
     switch (event.type) {
       case "TILE_SELECTED":
@@ -80,20 +61,14 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
         setSelectedElements(event.data.nodes);
 
         if (event.data.nodes.length === 1) {
-          const node = event.data.nodes[0];
-
-          set({
-            showContextMenuFor: event.data.nodes[0],
-            sidebarState: { type: "SINGLE_NODE", node: event.data.nodes[0] },
-          });
-          renderer.scrollToTile(node.position);
+          set({ showContextMenuFor: event.data.nodes[0] });
         }
         break;
       case "NODE_REMOVED":
         setSelectedElements([]);
         set({
           showContextMenuFor: null,
-          sidebarState: null,
+          selectedSideNavItem: null,
         });
         break;
       case "NODE_MOVED":
@@ -111,7 +86,17 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
         break;
     }
   },
-  setRenderer: (renderer) => {
-    set({ renderer });
+  setRenderer: (containerEl) => {
+    // set((state) => {
+    //   if (state.renderer) {
+    //     state.renderer.destroy();
+    //   }
+    //   const scene = state.initialScene;
+    //   const renderer = new Renderer(containerEl);
+    //   renderer.setEventHandler(state.onRendererEvent);
+    //   renderer.loadScene(scene);
+    //   renderer.setZoom(state.renderer.zoom);
+    //   return { renderer };
+    // });
   },
 }));
