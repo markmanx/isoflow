@@ -1,6 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Tool } from "paper";
 import { Coords } from "../../../utils/Coords";
+
+enum MOUSE_EV {
+  "MOUSE_MOVE" = "MOUSE_MOVE",
+}
 
 const MOUSE_EVENTS = new Map([
   ["mousemove", "MOUSE_MOVE"],
@@ -15,16 +19,49 @@ interface Mouse {
   delta: Coords | null;
 }
 
+export type Mode = {
+  entry: (mouse: Mouse) => void;
+  exit: () => void;
+  name: string;
+} & Partial<{
+  [key in keyof typeof MOUSE_EV]: (mouse: Mouse) => void;
+}>;
+
 export const useInterfaceManager = () => {
-  const [currentMode, setCurrentMode] = useState(null);
+  const tool = useRef<paper.Tool>();
+  const [currentMode, setCurrentMode] = useState<Mode>();
   const [mouse, setMouse] = useState<Mouse>({
     position: new Coords(0, 0),
     delta: new Coords(0, 0),
   });
 
-  const activateMode = useCallback(() => {}, []);
+  const activateMode = useCallback(
+    (mode: () => Mode, initCallback?: (mode: Mode) => void) => {
+      if (currentMode?.name === mode().name) return;
 
-  const sendEvent = useCallback((type: string, payload: any) => {}, []);
+      setCurrentMode((prevMode) => {
+        if (prevMode) {
+          prevMode.exit();
+        }
+
+        const initializedMode = mode();
+
+        initCallback?.(initializedMode);
+
+        return initializedMode;
+      });
+    },
+    [currentMode]
+  );
+
+  const sendEvent = useCallback(
+    (type: MOUSE_EV) => {
+      if (!currentMode) return;
+
+      currentMode[type]?.({ position: new Coords(0, 0), delta: null });
+    },
+    [currentMode]
+  );
 
   const onMouseEvent = useCallback(
     (event: paper.ToolEvent) => {
@@ -32,28 +69,34 @@ export const useInterfaceManager = () => {
 
       if (!type) return;
 
-      const mouse = {
+      const _mouse = {
         position: new Coords(event.point.x, event.point.y),
         delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null,
       };
 
-      setMouse(mouse);
-      sendEvent(type, mouse);
+      setMouse(_mouse);
+      sendEvent(type as MOUSE_EV);
     },
     [sendEvent]
   );
 
   useEffect(() => {
-    const tool = new Tool();
-    tool.onMouseMove = onMouseEvent;
-    tool.onMouseDown = onMouseEvent;
-    tool.onMouseUp = onMouseEvent;
-    tool.onKeyDown = onMouseEvent;
-    tool.onKeyUp = onMouseEvent;
+    tool.current = new Tool();
+    tool.current.onMouseMove = onMouseEvent;
+    tool.current.onMouseDown = onMouseEvent;
+    tool.current.onMouseUp = onMouseEvent;
+    tool.current.onKeyDown = onMouseEvent;
+    tool.current.onKeyUp = onMouseEvent;
+
+    return () => {
+      tool.current?.remove();
+    };
   }, [onMouseEvent]);
 
   return {
     activateMode,
+    currentMode,
+    setCurrentMode,
     mouse,
   };
 };

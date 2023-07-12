@@ -4,6 +4,7 @@ import { useRenderer } from "./useRenderer";
 import { Node } from "./Node";
 import { useInterfaceManager } from "./interfaceManager/useInterfaceManager";
 import { Coords } from "../../utils/Coords";
+import { Select } from "./interfaceManager/Select";
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLCanvasElement>(null);
@@ -12,8 +13,10 @@ export const Renderer = () => {
 
   useEffect(() => {
     if (!containerRef.current) return;
+
     renderer.init(containerRef.current);
-  }, [renderer.init]);
+    interfaceManager.activateMode(Select);
+  }, [renderer.init, interfaceManager.activateMode]);
 
   useEffect(() => {
     renderer.nodeManager.updateNode("abc", {
