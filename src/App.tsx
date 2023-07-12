@@ -13,6 +13,7 @@ import { ModeManagerProvider } from "./contexts/ModeManagerContext";
 import { useGlobalState } from "./hooks/useGlobalState";
 import { OnSceneChange } from "./types";
 import { GlobalStyles } from "./GlobalStyles";
+import { Renderer } from "./components/Renderer/Renderer";
 
 interface Props {
   initialScene: SceneI;
@@ -35,7 +36,7 @@ const InnerApp = React.memo(
               overflow: "hidden",
             }}
           >
-            <RendererContainer />
+            <Renderer />
             <ContextMenu />
             <Sidebar />
             <SideNav />
