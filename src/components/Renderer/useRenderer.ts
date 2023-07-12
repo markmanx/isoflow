@@ -1,6 +1,7 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useEffect } from "react";
 import Paper, { Group, Shape } from "paper";
 import { useGrid } from "./useGrid";
+import { useNodeManager } from "./useNodeManager";
 
 const render = () => {
   if (Paper.view) {
@@ -13,34 +14,35 @@ const render = () => {
 };
 
 export const useRenderer = () => {
-  const grid = useGrid();
   const container = useRef(new Group());
   const activeLayer = useRef<paper.Layer>();
+  const grid = useGrid();
+  const nodeManager = useNodeManager();
 
-  const init = useCallback(
-    (canvas: HTMLCanvasElement) => {
-      Paper.projects.forEach((project) => project.remove());
+  const init = useCallback((canvas: HTMLCanvasElement) => {
+    Paper.projects.forEach((project) => project.remove());
 
-      Paper.settings = {
-        insertItems: false,
-        applyMatrix: false,
-      };
+    Paper.settings = {
+      insertItems: false,
+      applyMatrix: false,
+    };
 
-      Paper.setup(canvas);
-      activeLayer.current = Paper.project.activeLayer;
+    Paper.setup(canvas);
+    activeLayer.current = Paper.project.activeLayer;
 
-      const gridContainer = grid.init(51, 51);
-      container.current.addChild(gridContainer);
+    const gridContainer = grid.init(51, 51);
 
-      activeLayer.current?.addChild(container.current);
+    container.current.addChild(gridContainer);
+    container.current.addChild(nodeManager.container);
+    activeLayer.current?.addChild(container.current);
 
-      render();
-    },
-    [grid, activeLayer]
-  );
+    render();
+  }, []);
 
   return {
     init,
     container: container.current,
+    grid,
+    nodeManager,
   };
 };
