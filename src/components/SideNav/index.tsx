@@ -7,18 +7,14 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useGlobalState } from "../../hooks/useGlobalState";
 
 const menuItems = [
-  { name: "Icons", Icon: AddIcon },
-  { name: "Project settings", Icon: SettingsIcon },
+  { type: "SINGLE_NODE", name: "Icons", Icon: AddIcon },
+  { type: "PROJECT_SETTINGS", name: "Project settings", Icon: SettingsIcon },
 ];
 
 export const SideNav = () => {
   const theme = useTheme();
-  const selectedSideNavItem = useGlobalState(
-    (state) => state.selectedSideNavItem
-  );
-  const setSelectedSideNavItem = useGlobalState(
-    (state) => state.setSelectedSideNavItem
-  );
+  const sidebarState = useGlobalState((state) => state.sidebarState);
+  const setSidebarState = useGlobalState((state) => state.setSidebarState);
 
   return (
     <Box
@@ -31,16 +27,16 @@ export const SideNav = () => {
         bgcolor: "grey.900",
       }}
     >
-      {menuItems.map((item, index) => (
+      {/* {menuItems.map((item, index) => (
         <MenuItem
           key={item.name}
-          isActive={index === selectedSideNavItem}
-          onClick={() => setSelectedSideNavItem(index)}
+          isActive={item.type === sidebarState?.type}
+          onClick={() => setSidebarState(index)}
           size={theme.customVars.sideNav.width}
           tooltipPosition="right"
           {...item}
         />
-      ))}
+      ))} */}
     </Box>
   );
 };

@@ -12,6 +12,7 @@ import { SceneI } from "./validation/SceneSchema";
 import { ModeManagerProvider } from "./contexts/ModeManagerContext";
 import { useGlobalState } from "./hooks/useGlobalState";
 import { OnSceneChange } from "./types";
+import { GlobalStyles } from "./GlobalStyles";
 
 interface Props {
   initialScene: SceneI;
@@ -24,6 +25,7 @@ const InnerApp = React.memo(
   ({ height, width }: Pick<Props, "height" | "width">) => {
     return (
       <ThemeProvider theme={theme}>
+        <GlobalStyles />
         <ModeManagerProvider>
           <Box
             sx={{

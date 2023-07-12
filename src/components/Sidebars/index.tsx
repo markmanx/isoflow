@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import { useTheme } from "@mui/material";
 import Card from "@mui/material/Card";
 import Slide from "@mui/material/Slide";
-import { Icons } from "./Icons";
-import { Transition } from "./Transition";
+import { NodeSidebar } from "./NodeSidebar";
 import { ProjectSettings } from "./ProjectSettings";
 import { useGlobalState } from "../../hooks/useGlobalState";
 
 export const Sidebar = () => {
   const theme = useTheme();
-  const selectedSideNavItem = useGlobalState(
-    (state) => state.selectedSideNavItem
-  );
-  const closeSideNav = useGlobalState((state) => state.closeSideNav);
-  const icons = useGlobalState((state) => state.renderer.config.icons);
+  const sidebarState = useGlobalState((state) => state.sidebarState);
+  const closeSidebar = useGlobalState((state) => state.closeSidebar);
+  const closeContextMenu = useGlobalState((state) => state.closeContextMenu);
+
+  const onClose = useCallback(() => {
+    closeSidebar();
+    closeContextMenu();
+  }, [closeSidebar, closeContextMenu]);
+
+  const Component = useMemo(() => {
+    switch (sidebarState?.type) {
+      case "SINGLE_NODE":
+        return <NodeSidebar node={sidebarState.node} onClose={onClose} />;
+      case "PROJECT_SETTINGS":
+        return <ProjectSettings onClose={onClose} />;
+      default:
+        return null;
+    }
+  }, [sidebarState]);
 
   return (
     <Slide
       direction="right"
-      in={selectedSideNavItem !== null}
+      in={sidebarState !== null}
       mountOnEnter
       unmountOnExit
     >
@@ -32,12 +45,7 @@ export const Sidebar = () => {
           borderRadius: 0,
         }}
       >
-        <Transition isIn={selectedSideNavItem === 0}>
-          <Icons icons={icons} onClose={closeSideNav} />
-        </Transition>
-        <Transition isIn={selectedSideNavItem === 1}>
-          <ProjectSettings onClose={closeSideNav} />
-        </Transition>
+        {Component}
       </Card>
     </Slide>
   );

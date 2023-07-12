@@ -1,8 +1,12 @@
+import { makeAutoObservable } from "mobx";
+
 export class Coords {
-  x: number;
-  y: number;
+  x: number = 0;
+  y: number = 0;
 
   constructor(x: number, y: number) {
+    makeAutoObservable(this);
+
     this.x = x;
     this.y = y;
   }

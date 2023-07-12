@@ -12,7 +12,7 @@ interface Props {
 
 export const Section = ({ children, py, px, title }: Props) => {
   return (
-    <Box py={py ?? 3} px={px ?? 4}>
+    <Box py={py ?? 3} px={px ?? 2}>
       <Stack>
         {title && <Typography fontWeight={600}>{title}</Typography>}
         {children}

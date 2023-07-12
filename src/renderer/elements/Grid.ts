@@ -1,12 +1,13 @@
 import { Group, Path, Point } from "paper";
+import { makeAutoObservable } from "mobx";
 import { applyProjectionMatrix } from "../utils/projection";
 import type { Context } from "../../types";
 import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from "../constants";
-import { SceneElement } from "../SceneElement";
 import { Coords } from "./Coords";
 import { sortByPosition, getBoundingBox } from "../utils/gridHelpers";
 
-export class Grid extends SceneElement {
+export class Grid {
+  ctx: Context;
   container = new Group();
   renderElements = {
     grid: new Group({ applyMatrix: true }),
@@ -15,9 +16,10 @@ export class Grid extends SceneElement {
   size: Coords;
 
   constructor(size: Coords, ctx: Context) {
-    super(ctx);
+    makeAutoObservable(this);
 
     this.size = size;
+    this.ctx = ctx;
     this.container.addChild(this.renderElements.grid);
 
     for (let x = 0; x <= this.size.x; x++) {

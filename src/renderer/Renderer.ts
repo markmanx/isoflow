@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
 import Paper, { Group } from "paper";
 import gsap from "gsap";
 import { Grid } from "./elements/Grid";
@@ -37,11 +37,16 @@ export class Renderer {
     container: HTMLDivElement;
     canvas: HTMLCanvasElement;
   };
-  scrollPosition = new Coords(0, 0);
+  scroll = {
+    position: new Coords(0, 0),
+    offset: new Coords(0, 0),
+  };
   rafRef?: number;
 
   constructor(containerEl: HTMLDivElement) {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      scroll: observable,
+    });
 
     Paper.settings = {
       insertItems: false,
@@ -183,7 +188,7 @@ export class Renderer {
     const globalItemsGroupPosition = this.groups.elements.globalToLocal([0, 0]);
     const screenPosition = new Coords(
       (tilePosition.x +
-        this.scrollPosition.x +
+        this.scroll.position.x +
         globalItemsGroupPosition.x +
         this.groups.elements.position.x +
         viewW * 0.5) *
@@ -191,7 +196,7 @@ export class Renderer {
         offsetX,
 
       (tilePosition.y +
-        this.scrollPosition.y +
+        this.scroll.position.y +
         globalItemsGroupPosition.y +
         this.groups.elements.position.y +
         viewH * 0.5) *
@@ -212,7 +217,7 @@ export class Renderer {
       duration: 0.3,
       zoom: this.zoom,
       onComplete: () => {
-        this.scrollTo(this.scrollPosition);
+        this.scrollTo(this.scroll.position);
       },
     });
 
@@ -222,8 +227,8 @@ export class Renderer {
     });
   }
 
-  scrollTo(coords: Coords) {
-    this.scrollPosition.set(coords.x, coords.y);
+  scrollTo(coords: Coords, opts?: { skipAnimation?: boolean }) {
+    this.scroll.position.set(coords.x, coords.y);
 
     const { center: viewCenter } = Paper.view.bounds;
 
@@ -233,15 +238,27 @@ export class Renderer {
     );
 
     gsap.to(this.groups.elements.position, {
-      duration: 0,
+      duration: opts?.skipAnimation ? 0 : 0.25,
       ...newPosition,
     });
   }
 
   scrollToDelta(delta: Coords) {
-    const position = this.scrollPosition.add(delta);
+    const position = this.scroll.position.add(delta);
 
     this.scrollTo(position);
+  }
+
+  scrollToTile(coords: Coords, opts?: { skipAnimation?: boolean }) {
+    const tile = this.getTileBounds(coords).center;
+
+    this.scrollTo(
+      new Coords(
+        -(tile.x - this.scroll.offset.x),
+        -(tile.y - this.scroll.offset.y)
+      ),
+      opts
+    );
   }
 
   unfocusAll() {

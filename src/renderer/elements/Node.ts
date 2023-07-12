@@ -76,6 +76,12 @@ export class Node {
     this.callbacks.onMove(coords, this, opts);
   }
 
+  update(options: Partial<NodeOptions>) {
+    if (options.iconId) {
+      this.icon.update(options.iconId);
+    }
+  }
+
   export() {
     return {
       id: this.id,

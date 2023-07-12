@@ -9,6 +9,8 @@ const MOUSE_EVENTS = new Map([
   ["mousemove", "MOUSE_MOVE"],
   ["mousedown", "MOUSE_DOWN"],
   ["mouseup", "MOUSE_UP"],
+  ["mouseenter", "MOUSE_ENTER"],
+  ["mouseleave", "MOUSE_LEAVE"],
 ]);
 
 export class ModeManager {
@@ -52,8 +54,6 @@ export class ModeManager {
     Mode: T,
     init?: (instance: InstanceType<T>) => void
   ) {
-    console.log("ACTIVATING MODE", Mode.name);
-
     if (!this.renderer) return;
 
     if (this.currentMode) {

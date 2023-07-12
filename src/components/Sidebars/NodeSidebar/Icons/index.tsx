@@ -2,16 +2,14 @@ import React from "react";
 import { useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import { IconCategory } from "./IconCategory";
-import { IconI } from "../../../validation/SceneSchema";
-import { Sidebar } from "../../Sidebar";
-import { Header } from "../../Sidebar/Header";
+import { IconI } from "../../../../validation/SceneSchema";
 
 interface Props {
   icons: IconI[];
-  onClose: () => void;
+  onClick: (icon: IconI) => void;
 }
 
-export const Icons = ({ icons, onClose }: Props) => {
+export const Icons = ({ icons, onClick }: Props) => {
   const categorisedIcons = useMemo(() => {
     const _categories: { name?: string; icons: IconI[] }[] = [];
 
@@ -39,14 +37,12 @@ export const Icons = ({ icons, onClose }: Props) => {
   }, [icons]);
 
   return (
-    <Sidebar header={<Header title="Icons" onClose={onClose} />}>
-      <Grid container spacing={4}>
-        {categorisedIcons.map((cat) => (
-          <Grid item xs={12} key={`icon-category-${cat.name}`}>
-            <IconCategory {...cat} />
-          </Grid>
-        ))}
-      </Grid>
-    </Sidebar>
+    <Grid container spacing={4}>
+      {categorisedIcons.map((cat) => (
+        <Grid item xs={12} key={`icon-category-${cat.name}`}>
+          <IconCategory {...cat} onClick={onClick} />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
