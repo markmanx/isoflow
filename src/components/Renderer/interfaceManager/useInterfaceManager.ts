@@ -29,7 +29,7 @@ export type Mode = {
 
 export const useInterfaceManager = () => {
   const tool = useRef<paper.Tool>();
-  const [currentMode, setCurrentMode] = useState<Mode>();
+  const [currentMode, setCurrentMode] = useState<Mode | null>(null);
   const [mouse, setMouse] = useState<Mouse>({
     position: new Coords(0, 0),
     delta: new Coords(0, 0),
@@ -80,6 +80,10 @@ export const useInterfaceManager = () => {
     [sendEvent]
   );
 
+  const destroy = useCallback(() => {
+    setCurrentMode(null);
+  }, []);
+
   useEffect(() => {
     tool.current = new Tool();
     tool.current.onMouseMove = onMouseEvent;
@@ -93,10 +97,17 @@ export const useInterfaceManager = () => {
     };
   }, [onMouseEvent]);
 
+  useEffect(() => {
+    return () => {
+      destroy();
+    };
+  }, [destroy]);
+
   return {
     activateMode,
     currentMode,
     setCurrentMode,
     mouse,
+    destroy,
   };
 };

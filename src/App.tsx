@@ -9,7 +9,7 @@ import { theme } from "./theme";
 // import { ContextMenu } from "./components/ContextMenus";
 import { SceneI } from "./validation/SceneSchema";
 import { ModeManagerProvider } from "./contexts/ModeManagerContext";
-import { useGlobalState } from "./hooks/useGlobalState";
+import { useAppState } from "./components/Renderer/useAppState";
 import { OnSceneChange } from "./types";
 import { GlobalStyles } from "./GlobalStyles";
 import { Renderer } from "./components/Renderer/Renderer";
@@ -48,14 +48,14 @@ const InnerApp = React.memo(
 );
 const App = observer(
   ({ initialScene, width, height, onSceneChange }: Props) => {
-    const setInitialScene = useGlobalState((state) => state.setInitialScene);
-    const setOnSceneChange = useGlobalState((state) => state.setOnSceneChange);
+    const setInitialScene = useAppState((state) => state.setInitialScene);
+    // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
 
-    useEffect(() => {
-      if (!onSceneChange) return;
+    // useEffect(() => {
+    //   if (!onSceneChange) return;
 
-      setOnSceneChange(onSceneChange);
-    }, [setOnSceneChange, onSceneChange]);
+    //   setOnSceneChange(onSceneChange);
+    // }, [setOnSceneChange, onSceneChange]);
 
     useEffect(() => {
       setInitialScene(initialScene);

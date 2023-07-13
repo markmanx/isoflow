@@ -3,44 +3,32 @@ import { Box } from "@mui/material";
 import { useRenderer } from "./useRenderer";
 import { Node } from "./Node";
 import { useInterfaceManager } from "./interfaceManager/useInterfaceManager";
-import { Coords } from "../../utils/Coords";
 import { Select } from "./interfaceManager/Select";
+import { useAppState } from "./useAppState";
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLCanvasElement>(null);
   const renderer = useRenderer();
   const interfaceManager = useInterfaceManager();
+  const initialScene = useAppState((state) => state.initialScene);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     renderer.init(containerRef.current);
     interfaceManager.activateMode(Select);
+
+    return () => {
+      renderer.destroy();
+    };
   }, [renderer.init, interfaceManager.activateMode]);
 
   useEffect(() => {
     if (!renderer.isReady) return;
 
-    renderer.nodeManager.updateNode("abc", {
-      position: interfaceManager.mouse.position,
-    });
-  }, [
-    interfaceManager.mouse.position,
-    renderer.nodeManager.updateNode,
-    renderer.isReady,
-  ]);
-
-  useEffect(() => {
-    if (!renderer.isReady) return;
-
-    renderer.nodeManager.removeNode("abc");
-
-    renderer.nodeManager.createNode({
-      id: "abc",
-      position: new Coords(0, 0),
-      iconId: "block",
-    });
-  }, [renderer.isReady]);
+    renderer.loadScene(initialScene);
+    renderer.setZoom(0.25);
+  }, [renderer.isReady, renderer.loadScene, renderer.setZoom, initialScene]);
 
   return (
     <Box
