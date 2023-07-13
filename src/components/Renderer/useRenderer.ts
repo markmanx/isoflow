@@ -24,6 +24,7 @@ export const useRenderer = () => {
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const zoom = useAppState((state) => state.zoom);
+  const scroll = useAppState((state) => state.scroll);
 
   const init = useCallback(
     (canvas: HTMLCanvasElement) => {
@@ -47,6 +48,8 @@ export const useRenderer = () => {
 
       render();
       setIsReady(true);
+
+      console.log("IS READY");
     },
     [grid.init, nodeManager.init]
   );
@@ -72,11 +75,21 @@ export const useRenderer = () => {
     gsap.to(activeLayer.current.view, {
       duration: 0.25,
       zoom,
-      // onComplete: () => {
-      //   this.scrollTo(this.scroll.position);
-      // },
     });
   }, [zoom, isReady]);
+
+  useEffect(() => {
+    if (!isReady || !activeLayer.current?.view || !container.current) return;
+
+    const { center: viewCenter } = activeLayer.current.view.bounds;
+
+    const newPosition = new Coords(
+      scroll.position.x + viewCenter.x,
+      scroll.position.y + viewCenter.y
+    );
+
+    container.current.position.set(newPosition.x, newPosition.y);
+  }, [scroll]);
 
   const destroy = useCallback(() => {
     setIsReady(false);
@@ -89,6 +102,7 @@ export const useRenderer = () => {
     grid,
     nodeManager,
     loadScene,
+    scrollTo,
     isReady,
     destroy,
   };

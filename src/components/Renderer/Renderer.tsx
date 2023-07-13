@@ -5,6 +5,7 @@ import { Node } from "./Node";
 import { useInterfaceManager } from "./interfaceManager/useInterfaceManager";
 import { Select } from "./interfaceManager/Select";
 import { useAppState } from "./useAppState";
+import { Coords } from "../../utils/Coords";
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLCanvasElement>(null);
@@ -12,6 +13,7 @@ export const Renderer = () => {
   const interfaceManager = useInterfaceManager();
   const initialScene = useAppState((state) => state.initialScene);
   const setZoom = useAppState((state) => state.setZoom);
+  const setScroll = useAppState((state) => state.setScroll);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -34,7 +36,7 @@ export const Renderer = () => {
     if (!renderer.isReady) return;
 
     renderer.loadScene(initialScene);
-    setZoom(0.15);
+    setScroll({ position: new Coords(0, 0) });
   }, [renderer.isReady, renderer.loadScene, setZoom, initialScene]);
 
   return (
