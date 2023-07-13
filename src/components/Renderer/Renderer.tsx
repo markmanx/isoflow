@@ -21,14 +21,20 @@ export const Renderer = () => {
 
     return () => {
       renderer.destroy();
+      interfaceManager.destroy();
     };
-  }, [renderer.init, interfaceManager.activateMode]);
+  }, [
+    renderer.init,
+    interfaceManager.activateMode,
+    renderer.destroy,
+    interfaceManager.destroy,
+  ]);
 
   useEffect(() => {
     if (!renderer.isReady) return;
 
     renderer.loadScene(initialScene);
-    setZoom(0.25);
+    setZoom(0.15);
   }, [renderer.isReady, renderer.loadScene, setZoom, initialScene]);
 
   return (

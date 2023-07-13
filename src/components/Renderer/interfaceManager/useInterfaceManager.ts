@@ -36,7 +36,12 @@ export const useInterfaceManager = () => {
   });
 
   const activateMode = useCallback(
-    (mode: () => Mode, initCallback?: (mode: Mode) => void) => {
+    (mode: (() => Mode) | null, initCallback?: (mode: Mode) => void) => {
+      if (mode === null) {
+        currentMode?.exit();
+        return;
+      }
+
       if (currentMode?.name === mode().name) return;
 
       setCurrentMode((prevMode) => {
@@ -81,7 +86,7 @@ export const useInterfaceManager = () => {
   );
 
   const destroy = useCallback(() => {
-    setCurrentMode(null);
+    activateMode(null);
   }, []);
 
   useEffect(() => {
@@ -96,12 +101,6 @@ export const useInterfaceManager = () => {
       tool.current?.remove();
     };
   }, [onMouseEvent]);
-
-  useEffect(() => {
-    return () => {
-      destroy();
-    };
-  }, [destroy]);
 
   return {
     activateMode,

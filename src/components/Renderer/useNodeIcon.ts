@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
 import { Group, Raster } from "paper";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useAppState } from "./useAppState";
 import { PROJECTED_TILE_DIMENSIONS } from "./constants";
 
 const NODE_IMG_PADDING = 0;
 
 export const useNodeIcon = (iconId: string) => {
   const container = useRef(new Group());
-  const icons = useGlobalState((state) => state.initialScene.icons);
+  const icons = useAppState((state) => state.initialScene.icons);
 
   useEffect(() => {
+    console.log(icons);
+
     const updateIcon = async () => {
       const icon = icons.find((icon) => icon.id === iconId);
 
@@ -40,7 +42,7 @@ export const useNodeIcon = (iconId: string) => {
     };
 
     updateIcon();
-  }, [iconId]);
+  }, [iconId, icons]);
 
   return {
     container: container.current,
