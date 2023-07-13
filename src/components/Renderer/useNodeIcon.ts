@@ -10,8 +10,6 @@ export const useNodeIcon = (iconId: string) => {
   const icons = useAppState((state) => state.initialScene.icons);
 
   useEffect(() => {
-    console.log(icons);
-
     const updateIcon = async () => {
       const icon = icons.find((icon) => icon.id === iconId);
 

@@ -48,8 +48,6 @@ export const useRenderer = () => {
 
       render();
       setIsReady(true);
-
-      console.log("IS READY");
     },
     [grid.init, nodeManager.init]
   );
