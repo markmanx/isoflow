@@ -11,6 +11,7 @@ export const Renderer = () => {
   const renderer = useRenderer();
   const interfaceManager = useInterfaceManager();
   const initialScene = useAppState((state) => state.initialScene);
+  const setZoom = useAppState((state) => state.setZoom);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -27,8 +28,8 @@ export const Renderer = () => {
     if (!renderer.isReady) return;
 
     renderer.loadScene(initialScene);
-    renderer.setZoom(0.25);
-  }, [renderer.isReady, renderer.loadScene, renderer.setZoom, initialScene]);
+    setZoom(0.25);
+  }, [renderer.isReady, renderer.loadScene, setZoom, initialScene]);
 
   return (
     <Box

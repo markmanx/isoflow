@@ -9,6 +9,8 @@ interface Node {
 interface AppState {
   initialScene: SceneI;
   setInitialScene: (scene: SceneI) => void;
+  zoom: number;
+  setZoom: (zoom: number) => void;
   selectedItems: Node[];
   setSelectedItems: (items: Node[]) => void;
 }
@@ -22,6 +24,10 @@ export const useAppState = create<AppState>((set, get) => ({
   },
   setInitialScene: (scene) => {
     set({ initialScene: scene });
+  },
+  zoom: 1,
+  setZoom: (zoom) => {
+    set({ zoom });
   },
   selectedItems: [],
   setSelectedItems: (items: Node[]) => {

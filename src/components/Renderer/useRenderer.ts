@@ -5,6 +5,7 @@ import { useGrid } from "./useGrid";
 import { useNodeManager } from "./useNodeManager";
 import { SceneI } from "../../validation/SceneSchema";
 import { Coords } from "../../utils/Coords";
+import { useAppState } from "./useAppState";
 
 const render = () => {
   if (Paper.view) {
@@ -18,11 +19,11 @@ const render = () => {
 
 export const useRenderer = () => {
   const [isReady, setIsReady] = useState(false);
-  const [zoom, setZoom] = useState(1);
   const container = useRef<paper.Group>();
   const activeLayer = useRef<paper.Layer>();
   const grid = useGrid();
   const nodeManager = useNodeManager();
+  const zoom = useAppState((state) => state.zoom);
 
   const init = useCallback(
     (canvas: HTMLCanvasElement) => {
@@ -89,7 +90,6 @@ export const useRenderer = () => {
     nodeManager,
     loadScene,
     isReady,
-    setZoom,
     destroy,
   };
 };
