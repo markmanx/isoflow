@@ -46,8 +46,6 @@ export const useRenderer = () => {
 
       render();
       setIsReady(true);
-
-      console.log("READY");
     },
     [grid.init, nodeManager.init]
   );
@@ -68,8 +66,6 @@ export const useRenderer = () => {
 
   useEffect(() => {
     if (!isReady || !activeLayer.current?.view) return;
-
-    console.log({ view: activeLayer.current.view });
 
     gsap.killTweensOf(activeLayer.current.view);
     gsap.to(activeLayer.current.view, {
