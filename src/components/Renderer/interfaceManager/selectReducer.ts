@@ -5,7 +5,7 @@ type Action = |
 { type: 'MOUSE_MOVE', payload: { mouse: PartialAppState['mouse'] } };
 
 export const selectReducer = (action: Action, state: PartialAppState) => {
-  const newState = { ...state };
+  const newState = { mouse: { position: state.mouse.position.clone(), delta: state.mouse.delta?.clone() ?? null }, cursor: { position: state.cursor.position.clone() } };
   const tile = getTileFromMouse({
     gridSize: state.gridSize,
     mouse: action.payload.mouse.position,

@@ -15,7 +15,7 @@ export const Renderer = () => {
   const scroll = useAppState((state) => state.scroll);
   const { activeLayer } = Paper.project;
   useInterfaceManager();
-  const cursorPosition = useAppState((state) => state.cursor.position);
+  const { position: cursorPosition } = useAppState((state) => state.cursor);
   // const setZoom = useAppState((state) => state.setZoom);
   // const setScroll = useAppState((state) => state.setScroll);
   // const setGridSize = useAppState((state) => state.setGridSize);
@@ -29,8 +29,8 @@ export const Renderer = () => {
   }, [renderer.init]);
 
   useEffect(() => {
-    activeLayer.view.zoom = zoom;
-  }, [zoom]);
+    renderer.zoomTo(zoom);
+  }, [zoom, renderer.zoomTo]);
 
   useEffect(() => {
     const { center: viewCenter } = activeLayer.view.bounds;

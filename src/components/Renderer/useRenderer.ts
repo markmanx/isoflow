@@ -2,6 +2,7 @@ import {
   useCallback, useRef,
 } from 'react';
 import Paper, { Group } from 'paper';
+import gsap from 'gsap';
 import { useGrid } from './useGrid';
 import { useNodeManager } from './useNodeManager';
 import { SceneI } from '../../validation/SceneSchema';
@@ -15,6 +16,13 @@ export const useRenderer = () => {
   const nodeManager = useNodeManager();
   const cursor = useCursor();
   const setScroll = useAppState((state) => state.setScroll);
+
+  const zoomTo = useCallback((zoom: number) => {
+    gsap.to(Paper.project.activeLayer.view, {
+      duration: 0.25,
+      zoom,
+    });
+  }, []);
 
   const loadScene = useCallback(
     (scene: SceneI) => {
@@ -50,6 +58,7 @@ export const useRenderer = () => {
     init,
     container,
     grid,
+    zoomTo,
     nodeManager,
     loadScene,
     cursor,

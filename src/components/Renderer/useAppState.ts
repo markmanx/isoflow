@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import gsap from 'gsap';
 import { SceneI, NodeI } from '../../validation/SceneSchema';
 import { Coords } from '../../utils/Coords';
 
@@ -62,44 +61,22 @@ export const useAppState = create<AppState>((set, get) => ({
   },
   zoom: 1,
   setZoom: (zoom) => {
-    const tweenedZoom = { value: get().zoom };
-
-    gsap.to(tweenedZoom, {
-      duration: 0.25,
-      value: zoom,
-      onUpdate: () => {
-        set({ zoom: tweenedZoom.value });
-      },
-    });
+    set({ zoom });
   },
   scroll: {
     position: new Coords(0, 0),
     offset: new Coords(0, 0),
   },
-  setScroll: ({ position }) => {
-    const tweenedPosition = get().scroll.position.clone();
+  setScroll: ({ position, offset }) => {
+    const { position: oldPosition, offset: oldOffset } = get().scroll;
 
-    gsap.to(tweenedPosition, {
-      duration: 0.25,
-      ...position,
-      onUpdate: () => {
-        set({ scroll: { position: tweenedPosition, offset: new Coords(0, 0) } });
-      },
-    });
+    set({ scroll: { position: position ?? oldPosition, offset: offset ?? oldOffset } });
   },
   cursor: {
     position: new Coords(0, 0),
   },
   setCursor: ({ position }) => {
-    const tweenedPosition = get().cursor.position.clone();
-
-    gsap.to(tweenedPosition, {
-      duration: 0.25,
-      ...position,
-      onUpdate: () => {
-        set({ cursor: { position: tweenedPosition } });
-      },
-    });
+    set({ cursor: { position } });
   },
   selectedItems: [],
   setSelectedItems: (items: Node[]) => {
