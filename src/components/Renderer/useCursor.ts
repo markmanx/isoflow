@@ -1,12 +1,10 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import { TILE_SIZE, PIXEL_UNIT } from './constants';
-import { useAppState } from './useAppState';
 import { applyProjectionMatrix } from './utils/projection';
 
 export const useCursor = () => {
   const container = useRef(new Group());
-  const mouse = useAppState((state) => state.mouse);
 
   const init = useCallback(() => {
     container.current.removeChildren();
@@ -28,10 +26,6 @@ export const useCursor = () => {
 
     return container.current;
   }, []);
-
-  useEffect(() => {
-    container.current?.position.set(mouse.position);
-  }, [mouse.position]);
 
   return {
     init,

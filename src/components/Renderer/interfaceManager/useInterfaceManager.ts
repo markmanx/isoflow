@@ -88,7 +88,7 @@ export const useInterfaceManager = () => {
 
   const destroy = useCallback(() => {
     activateMode(null);
-  }, []);
+  }, [activateMode]);
 
   useEffect(() => {
     tool.current = new Tool();
