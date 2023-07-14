@@ -1,16 +1,21 @@
-import { useCallback, useRef, useState, useEffect } from "react";
-import Paper, { Group, Shape } from "paper";
-import gsap from "gsap";
-import { useGrid } from "./useGrid";
-import { useNodeManager } from "./useNodeManager";
-import { SceneI } from "../../validation/SceneSchema";
-import { Coords } from "../../utils/Coords";
-import { useAppState } from "./useAppState";
+import {
+  useCallback, useRef, useState, useEffect,
+} from 'react';
+import Paper, { Group } from 'paper';
+import gsap from 'gsap';
+import { useGrid } from './useGrid';
+import { useNodeManager } from './useNodeManager';
+import { SceneI } from '../../validation/SceneSchema';
+import { Coords } from '../../utils/Coords';
+import { useAppState } from './useAppState';
+import { useCursor } from './useCursor';
 
 const render = () => {
   if (Paper.view) {
     if (global.requestAnimationFrame) {
-      global.requestAnimationFrame(render);
+      const raf = global.requestAnimationFrame(render);
+
+      return raf;
     }
 
     Paper.view.update();
@@ -19,38 +24,15 @@ const render = () => {
 
 export const useRenderer = () => {
   const [isReady, setIsReady] = useState(false);
+  const rafRef = useRef<number>();
   const container = useRef<paper.Group>();
   const activeLayer = useRef<paper.Layer>();
   const grid = useGrid();
   const nodeManager = useNodeManager();
+  const cursor = useCursor();
   const zoom = useAppState((state) => state.zoom);
   const scroll = useAppState((state) => state.scroll);
-
-  const init = useCallback(
-    (canvas: HTMLCanvasElement) => {
-      destroy();
-
-      Paper.settings = {
-        insertItems: false,
-        applyMatrix: false,
-      };
-
-      Paper.setup(canvas);
-      activeLayer.current = Paper.project.activeLayer;
-
-      container.current = new Group();
-      const gridContainer = grid.init(51, 51);
-      const nodeContainer = nodeManager.init();
-
-      container.current.addChild(gridContainer);
-      container.current.addChild(nodeContainer);
-      activeLayer.current?.addChild(container.current);
-
-      render();
-      setIsReady(true);
-    },
-    [grid.init, nodeManager.init]
-  );
+  const setScroll = useAppState((state) => state.setScroll);
 
   const loadScene = useCallback(
     (scene: SceneI) => {
@@ -63,7 +45,7 @@ export const useRenderer = () => {
         });
       });
     },
-    [isReady, nodeManager.createNode]
+    [isReady, nodeManager],
   );
 
   useEffect(() => {
@@ -83,16 +65,60 @@ export const useRenderer = () => {
 
     const newPosition = new Coords(
       scroll.position.x + viewCenter.x,
-      scroll.position.y + viewCenter.y
+      scroll.position.y + viewCenter.y,
     );
 
     container.current.position.set(newPosition.x, newPosition.y);
-  }, [scroll]);
+  }, [scroll, isReady]);
 
   const destroy = useCallback(() => {
+    // nodeManager.destroy();
+
     setIsReady(false);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
     Paper.projects.forEach((project) => project.remove());
+    container.current?.remove();
+
+    console.log('RENDERER DESTROY', Paper.projects);
   }, []);
+
+  const init = useCallback(
+    (canvas: HTMLCanvasElement) => {
+      console.log('START INIT RENDERER', Paper.projects);
+
+      destroy();
+
+      Paper.settings = {
+        insertItems: false,
+        applyMatrix: false,
+      };
+
+      Paper.setup(canvas);
+      activeLayer.current = Paper.project.activeLayer;
+
+      const gridContainer = grid.init();
+      const nodeContainer = nodeManager.init();
+      const cursorContainer = cursor.init();
+
+      container.current = new Group();
+      container.current.addChild(gridContainer);
+      container.current.addChild(cursorContainer);
+      container.current.addChild(nodeContainer);
+      activeLayer.current.addChild(container.current);
+      setScroll({ position: new Coords(0, 0) });
+
+      rafRef.current = render();
+      setIsReady(true);
+      console.log('FINISH INIT RENDERER', Paper.projects);
+    },
+    [
+      grid.init,
+      nodeManager.init,
+      cursor.init,
+      setScroll,
+      destroy,
+    ],
+  );
 
   return {
     init,
@@ -100,7 +126,6 @@ export const useRenderer = () => {
     grid,
     nodeManager,
     loadScene,
-    scrollTo,
     isReady,
     destroy,
   };

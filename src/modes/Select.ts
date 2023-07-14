@@ -1,10 +1,10 @@
-import { ModeBase } from "./ModeBase";
-import { Mouse } from "../types";
-import { getTargetFromSelection } from "./utils";
-import { SelectNode } from "./SelectNode";
-import { CreateLasso } from "./CreateLasso";
-import { CURSOR_TYPES } from "../renderer/elements/Cursor";
-import { Coords } from "../renderer/elements/Coords";
+import { ModeBase } from './ModeBase';
+import { Mouse } from '../types';
+import { getTargetFromSelection } from './utils';
+import { SelectNode } from './SelectNode';
+import { CreateLasso } from './CreateLasso';
+import { CURSOR_TYPES } from '../renderer/elements/Cursor';
+import { Coords } from '../renderer/elements/Coords';
 
 export class Select extends ModeBase {
   dragStartTile: Coords | null = null;
@@ -34,7 +34,7 @@ export class Select extends ModeBase {
 
     if (!target?.type) {
       this.ctx.emitEvent({
-        type: "TILE_SELECTED",
+        type: 'TILE_SELECTED',
         data: { tile },
       });
     }
@@ -50,9 +50,8 @@ export class Select extends ModeBase {
     const items = renderer.getItemsByTile(tile);
     const target = getTargetFromSelection(items);
 
-    if (target?.type === "NODE") {
+    if (target?.type === 'NODE') {
       this.ctx.activateMode(SelectNode, (instance) => (instance.node = target));
-      return;
     }
   }
 
@@ -61,7 +60,7 @@ export class Select extends ModeBase {
 
     if (mouse.delta) {
       const prevTile = this.ctx.renderer.getTileFromMouse(
-        mouse.position.subtract(mouse.delta)
+        mouse.position.subtract(mouse.delta),
       );
 
       if (currentTile.isEqual(prevTile)) return;
@@ -82,9 +81,8 @@ export class Select extends ModeBase {
     const items = this.ctx.renderer.getItemsByTile(currentTile);
     const target = getTargetFromSelection(items);
 
-    if (target?.type === "NODE") {
+    if (target?.type === 'NODE') {
       target.setFocus(true);
-      return;
     }
   }
 }

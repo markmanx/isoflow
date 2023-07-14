@@ -1,12 +1,15 @@
-import React, { useCallback, useRef } from "react";
-import { Path, Point, Group } from "paper";
-import { applyProjectionMatrix } from "./utils/projection";
-import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from "./constants";
+import {
+  useCallback, useRef, useEffect, useState,
+} from 'react';
+import Paper, { Path, Point, Group } from 'paper';
+import { applyProjectionMatrix } from './utils/projection';
+import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from './constants';
+import { useAppState } from './useAppState';
 
 export const drawGrid = (width: number, height: number) => {
   const container = new Group();
 
-  for (let x = 0; x <= width; x++) {
+  for (let x = 0; x <= width; x += 1) {
     const lineLength = height * TILE_SIZE;
     const start = x * TILE_SIZE - lineLength * 0.5;
     const line = new Path({
@@ -15,13 +18,13 @@ export const drawGrid = (width: number, height: number) => {
         [start, lineLength * 0.5],
       ],
       strokeWidth: PIXEL_UNIT * 1,
-      strokeColor: "rgba(0, 0, 0, 0.15)",
+      strokeColor: 'rgba(0, 0, 0, 0.15)',
     });
 
     container.addChild(line);
   }
 
-  for (let y = 0; y <= height; y++) {
+  for (let y = 0; y <= height; y += 1) {
     const lineLength = width * TILE_SIZE;
     const start = y * TILE_SIZE - lineLength * 0.5;
     const line = new Path({
@@ -30,7 +33,7 @@ export const drawGrid = (width: number, height: number) => {
         [lineLength * 0.5, start],
       ],
       strokeWidth: PIXEL_UNIT * 1,
-      strokeColor: "rgba(0, 0, 0, 0.15)",
+      strokeColor: 'rgba(0, 0, 0, 0.15)',
     });
 
     container.addChild(line);
@@ -43,16 +46,18 @@ export const drawGrid = (width: number, height: number) => {
 };
 
 export const useGrid = () => {
-  const container = useRef<paper.Group>();
+  const container = useRef<paper.Group | null>();
+  const gridSize = useAppState((state) => state.gridSize);
 
-  const init = useCallback((width: number, height: number) => {
+  const init = useCallback(() => {
     container.current = new Group();
-
-    const grid = drawGrid(width, height);
+    const grid = drawGrid(gridSize.x, gridSize.y);
     container.current.addChild(grid);
 
+    console.log('INIT GRID', Paper.projects);
+
     return container.current;
-  }, []);
+  }, [gridSize]);
 
   return {
     init,

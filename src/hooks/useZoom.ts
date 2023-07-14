@@ -1,6 +1,6 @@
-import { useCallback } from "react";
-import { clamp } from "../utils";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useCallback } from 'react';
+import { clamp } from '../utils';
+import { useGlobalState } from './useGlobalState';
 
 const ZOOM_INCREMENT = 0.2;
 const MIN_ZOOM = 0.2;
@@ -13,7 +13,7 @@ export const useZoom = () => {
     const targetZoom = clamp(
       renderer.zoom + ZOOM_INCREMENT,
       MIN_ZOOM,
-      MAX_ZOOM
+      MAX_ZOOM,
     );
     renderer.setZoom(targetZoom);
 
@@ -24,7 +24,7 @@ export const useZoom = () => {
     const targetZoom = clamp(
       renderer.zoom - ZOOM_INCREMENT,
       MIN_ZOOM,
-      MAX_ZOOM
+      MAX_ZOOM,
     );
     renderer.setZoom(targetZoom);
 

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const IconSchema = z.object({
   id: z.string(),
@@ -35,33 +35,25 @@ export type NodeI = z.infer<typeof NodeSchema>;
 export type ConnectorI = z.infer<typeof ConnectorSchema>;
 export type GroupI = z.infer<typeof GroupSchema>;
 
-export const findInvalidNode = (nodes: NodeI[], icons: IconI[]) => {
-  return nodes.find((node) => {
-    const validIcon = icons.find((icon) => node.iconId === icon.id);
-    return !Boolean(validIcon);
-  });
-};
+export const findInvalidNode = (nodes: NodeI[], icons: IconI[]) => nodes.find((node) => {
+  const validIcon = icons.find((icon) => node.iconId === icon.id);
+  return !validIcon;
+});
 
 export const findInvalidConnector = (
   connectors: ConnectorI[],
-  nodes: NodeI[]
-) => {
-  return connectors.find((con) => {
-    const fromNode = nodes.find((node) => con.from === node.id);
-    const toNode = nodes.find((node) => con.to === node.id);
+  nodes: NodeI[],
+) => connectors.find((con) => {
+  const fromNode = nodes.find((node) => con.from === node.id);
+  const toNode = nodes.find((node) => con.to === node.id);
 
-    return Boolean(!fromNode || !toNode);
-  });
-};
+  return Boolean(!fromNode || !toNode);
+});
 
-export const findInvalidGroup = (groups: GroupI[], nodes: NodeI[]) => {
-  return groups.find((grp) => {
-    return grp.nodes.find((grpNodeId) => {
-      const validNode = nodes.find((node) => node.id === grpNodeId);
-      return Boolean(!validNode);
-    });
-  });
-};
+export const findInvalidGroup = (groups: GroupI[], nodes: NodeI[]) => groups.find((grp) => grp.nodes.find((grpNodeId) => {
+  const validNode = nodes.find((node) => node.id === grpNodeId);
+  return Boolean(!validNode);
+}));
 
 export const SceneSchema = z
   .object({
@@ -76,8 +68,8 @@ export const SceneSchema = z
     if (invalidNode) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["nodes", invalidNode.id],
-        message: "Invalid node found in scene",
+        path: ['nodes', invalidNode.id],
+        message: 'Invalid node found in scene',
       });
 
       return;
@@ -85,14 +77,14 @@ export const SceneSchema = z
 
     const invalidConnector = findInvalidConnector(
       scene.connectors,
-      scene.nodes
+      scene.nodes,
     );
 
     if (invalidConnector) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["connectors", invalidConnector.id],
-        message: "Invalid connector found in scene",
+        path: ['connectors', invalidConnector.id],
+        message: 'Invalid connector found in scene',
       });
 
       return;
@@ -103,8 +95,8 @@ export const SceneSchema = z
     if (invalidGroup) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["groups", invalidGroup.id],
-        message: "Invalid group found in scene",
+        path: ['groups', invalidGroup.id],
+        message: 'Invalid group found in scene',
       });
     }
   });

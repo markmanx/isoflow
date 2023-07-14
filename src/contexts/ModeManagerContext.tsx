@@ -1,5 +1,5 @@
-import React, { createContext, useMemo } from "react";
-import { ModeManager } from "../modes/ModeManager";
+import React, { createContext, useMemo } from 'react';
+import { ModeManager } from '../modes/ModeManager';
 
 interface Props {
   children: React.ReactNode;
@@ -7,10 +7,8 @@ interface Props {
 
 export const modeManagerContext = createContext(new ModeManager());
 
-export const ModeManagerProvider = ({ children }: Props) => {
-  return (
-    <modeManagerContext.Provider value={new ModeManager()}>
-      {children}
-    </modeManagerContext.Provider>
-  );
-};
+export const ModeManagerProvider = ({ children }: Props) => (
+  <modeManagerContext.Provider value={new ModeManager()}>
+    {children}
+  </modeManagerContext.Provider>
+);

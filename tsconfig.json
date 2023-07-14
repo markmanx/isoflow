@@ -10,5 +10,9 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "files": ["./src/App.tsx"]
+  "include": [
+    "src/Renderer/*.ts"
+    // "src/**/*.ts",
+    // "src/**/*.tsx"
+  ],
 }

@@ -1,15 +1,18 @@
-import { ModeBase } from "./ModeBase";
-import { Select } from "./Select";
-import { getBoundingBox, isWithinBounds } from "../renderer/utils/gridHelpers";
-import { Mouse } from "../types";
-import { Coords } from "../renderer/elements/Coords";
-import { Node } from "../renderer/elements/Node";
-import { CreateLasso } from "./CreateLasso";
+import { ModeBase } from './ModeBase';
+import { Select } from './Select';
+import { getBoundingBox, isWithinBounds } from '../renderer/utils/gridHelpers';
+import { Mouse } from '../types';
+import { Coords } from '../renderer/elements/Coords';
+import { Node } from '../renderer/elements/Node';
+import { CreateLasso } from './CreateLasso';
 
 export class ManipulateLasso extends ModeBase {
   selectedItems: Node[] = [];
+
   isMouseDownWithinLassoBounds = false;
+
   dragOffset = new Coords(0, 0);
+
   isDragging = false;
 
   entry(mouse: Mouse) {}
@@ -27,7 +30,7 @@ export class ManipulateLasso extends ModeBase {
 
     if (mouse.delta) {
       const prevTile = this.ctx.renderer.getTileFromMouse(
-        mouse.position.subtract(mouse.delta)
+        mouse.position.subtract(mouse.delta),
       );
 
       if (currentTile.isEqual(prevTile)) return;
@@ -40,7 +43,7 @@ export class ManipulateLasso extends ModeBase {
       const validTile = grid.getAreaWithinGrid(
         currentTile,
         cursor.size,
-        this.dragOffset
+        this.dragOffset,
       );
 
       const oldCursorPosition = cursor.position.clone();
@@ -52,12 +55,12 @@ export class ManipulateLasso extends ModeBase {
 
       const translateBy = new Coords(
         -(oldCursorPosition.x - newCursorPosition.x),
-        -(oldCursorPosition.y - newCursorPosition.y)
+        -(oldCursorPosition.y - newCursorPosition.y),
       );
 
       renderer.sceneElements.nodes.translateNodes(
-        this.selectedItems.filter((i) => i.type === "NODE"),
-        translateBy
+        this.selectedItems.filter((i) => i.type === 'NODE'),
+        translateBy,
       );
     }
   }
@@ -70,20 +73,20 @@ export class ManipulateLasso extends ModeBase {
       renderer.sceneElements.cursor.position,
       new Coords(
         cursor.position.x + cursor.size.x,
-        cursor.position.y - cursor.size.y
+        cursor.position.y - cursor.size.y,
       ),
     ]);
 
     this.isMouseDownWithinLassoBounds = isWithinBounds(
       currentTile,
-      boundingBox
+      boundingBox,
     );
 
     if (this.isMouseDownWithinLassoBounds) {
       this.isDragging = true;
       this.dragOffset.set(
         currentTile.x - cursor.position.x,
-        currentTile.y - cursor.position.y
+        currentTile.y - cursor.position.y,
       );
 
       return;

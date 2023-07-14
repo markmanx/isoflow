@@ -1,9 +1,9 @@
-import React from "react";
-import { useGlobalState } from "../../hooks/useGlobalState";
-import { NodeContextMenu } from "./NodeContextMenu";
-import { TileContextMenu } from "./TileContextMenu";
-import { Node } from "../../renderer/elements/Node";
-import { Coords } from "../../renderer/elements/Coords";
+import React from 'react';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { NodeContextMenu } from './NodeContextMenu';
+import { TileContextMenu } from './TileContextMenu';
+import { Node } from '../../renderer/elements/Node';
+import { Coords } from '../../renderer/elements/Coords';
 
 export const ContextMenu = () => {
   const targetElement = useGlobalState((state) => state.showContextMenuFor);

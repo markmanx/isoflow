@@ -1,15 +1,17 @@
-import React, { useRef, useEffect, useContext, useMemo } from "react";
-import { observer } from "mobx-react";
-import { Box } from "@mui/material";
-import { useGlobalState } from "../hooks/useGlobalState";
-import { modeManagerContext } from "../contexts/ModeManagerContext";
-import { Select } from "../modes/Select";
-import { Renderer } from "../renderer/Renderer";
-import { Coords } from "../renderer/elements/Coords";
+import React, {
+  useRef, useEffect, useContext, useMemo,
+} from 'react';
+import { observer } from 'mobx-react';
+import { Box } from '@mui/material';
+import { useGlobalState } from '../hooks/useGlobalState';
+import { modeManagerContext } from '../contexts/ModeManagerContext';
+import { Select } from '../modes/Select';
+import { Renderer } from '../renderer/Renderer';
+import { Coords } from '../renderer/elements/Coords';
 import {
   PROJECTED_TILE_WIDTH,
   PROJECTED_TILE_HEIGHT,
-} from "../renderer/constants";
+} from '../renderer/constants';
 
 const UI_OVERLAY_MARGIN = 300;
 
@@ -40,16 +42,14 @@ export const RendererContainer = observer(() => {
     };
   }, [modeManager, onSceneChange, onRendererEvent, initialScene]);
 
-  const uiOverlayPosition = useMemo(() => {
-    return {
-      size: new Coords(
-        renderer.sceneElements.grid.size.x * PROJECTED_TILE_WIDTH +
-          UI_OVERLAY_MARGIN * 2,
-        renderer.sceneElements.grid.size.y * PROJECTED_TILE_HEIGHT +
-          UI_OVERLAY_MARGIN * 2
-      ),
-    };
-  }, [
+  const uiOverlayPosition = useMemo(() => ({
+    size: new Coords(
+      renderer.sceneElements.grid.size.x * PROJECTED_TILE_WIDTH
+          + UI_OVERLAY_MARGIN * 2,
+      renderer.sceneElements.grid.size.y * PROJECTED_TILE_HEIGHT
+          + UI_OVERLAY_MARGIN * 2,
+    ),
+  }), [
     { ...renderer.scroll.position },
     renderer.zoom,
     { ...renderer.sceneElements.grid.size },
@@ -58,30 +58,30 @@ export const RendererContainer = observer(() => {
   return (
     <Box
       sx={{
-        position: "absolute",
+        position: 'absolute',
         top: 0,
         left: 0,
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
       }}
     >
       <Box
         ref={containerRef}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         }}
       />
       <Box
         sx={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
-          width: "1px",
-          height: "1px",
+          width: '1px',
+          height: '1px',
         }}
       />
     </Box>

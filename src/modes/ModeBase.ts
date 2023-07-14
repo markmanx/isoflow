@@ -1,4 +1,4 @@
-import { ModeContext, Mouse } from "../types";
+import { ModeContext, Mouse } from '../types';
 
 export class ModeBase {
   ctx;

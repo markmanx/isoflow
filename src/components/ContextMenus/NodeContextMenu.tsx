@@ -1,9 +1,9 @@
-import React from "react";
-import { useGlobalState } from "../../hooks/useGlobalState";
-import { ContextMenu } from "./ContextMenu";
-import { ContextMenuItem } from "./ContextMenuItem";
-import { Node } from "../../renderer/elements/Node";
-import { ArrowRightAlt, Delete } from "@mui/icons-material";
+import React from 'react';
+import { ArrowRightAlt, Delete } from '@mui/icons-material';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { ContextMenu } from './ContextMenu';
+import { ContextMenuItem } from './ContextMenuItem';
+import { Node } from '../../renderer/elements/Node';
 
 interface Props {
   node: Node;

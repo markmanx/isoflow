@@ -1,14 +1,14 @@
-import { makeAutoObservable, observable } from "mobx";
-import Paper, { Group } from "paper";
-import gsap from "gsap";
-import { Grid } from "./elements/Grid";
-import { Cursor } from "./elements/Cursor";
-import { PROJECTED_TILE_WIDTH, PROJECTED_TILE_HEIGHT } from "./constants";
-import { clamp } from "../utils";
-import { Nodes } from "./elements/Nodes";
-import { SceneI, IconI } from "../validation/SceneSchema";
-import { Coords } from "./elements/Coords";
-import { OnSceneChange, SceneEventI } from "../types";
+import { makeAutoObservable, observable } from 'mobx';
+import Paper, { Group } from 'paper';
+import gsap from 'gsap';
+import { Grid } from './elements/Grid';
+import { Cursor } from './elements/Cursor';
+import { PROJECTED_TILE_WIDTH, PROJECTED_TILE_HEIGHT } from './constants';
+import { clamp } from '../utils';
+import { Nodes } from './elements/Nodes';
+import { SceneI, IconI } from '../validation/SceneSchema';
+import { Coords } from './elements/Coords';
+import { OnSceneChange, SceneEventI } from '../types';
 
 interface Config {
   icons: IconI[];
@@ -16,31 +16,38 @@ interface Config {
 
 export class Renderer {
   activeLayer: paper.Layer;
+
   zoom = 1;
 
   config: Config = {
     icons: [],
   };
+
   callbacks: {
     emitEvent: OnSceneChange;
   };
+
   groups: {
     container: paper.Group;
     elements: paper.Group;
   };
+
   sceneElements: {
     grid: Grid;
     cursor: Cursor;
     nodes: Nodes;
   };
+
   domElements: {
     container: HTMLDivElement;
     canvas: HTMLCanvasElement;
   };
+
   scroll = {
     position: new Coords(0, 0),
     offset: new Coords(0, 0),
   };
+
   rafRef?: number;
 
   constructor(containerEl: HTMLDivElement) {
@@ -119,13 +126,13 @@ export class Renderer {
   }
 
   initDOM(containerEl: HTMLDivElement) {
-    const canvas = document.createElement("canvas");
-    canvas.style.position = "absolute";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.left = "0";
-    canvas.style.top = "0";
-    canvas.setAttribute("resize", "true");
+    const canvas = document.createElement('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.left = '0';
+    canvas.style.top = '0';
+    canvas.setAttribute('resize', 'true');
     containerEl.appendChild(canvas);
 
     return { canvas };
@@ -137,14 +144,14 @@ export class Renderer {
 
     const canvasPosition = new Coords(
       mouse.x - this.groups.elements.position.x,
-      mouse.y - this.groups.elements.position.y + halfH
+      mouse.y - this.groups.elements.position.y + halfH,
     );
 
     const row = Math.floor(
-      (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2
+      (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2,
     );
     const col = Math.floor(
-      (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2
+      (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2,
     );
 
     const halfRowNum = Math.floor(this.sceneElements.grid.size.x * 0.5);
@@ -152,7 +159,7 @@ export class Renderer {
 
     return new Coords(
       clamp(row, -halfRowNum, halfRowNum),
-      clamp(col, -halfColNum, halfColNum)
+      clamp(col, -halfColNum, halfColNum),
     );
   }
 
@@ -187,21 +194,21 @@ export class Renderer {
     const tilePosition = this.getTileBounds(position).center;
     const globalItemsGroupPosition = this.groups.elements.globalToLocal([0, 0]);
     const screenPosition = new Coords(
-      (tilePosition.x +
-        this.scroll.position.x +
-        globalItemsGroupPosition.x +
-        this.groups.elements.position.x +
-        viewW * 0.5) *
-        this.zoom +
-        offsetX,
+      (tilePosition.x
+        + this.scroll.position.x
+        + globalItemsGroupPosition.x
+        + this.groups.elements.position.x
+        + viewW * 0.5)
+        * this.zoom
+        + offsetX,
 
-      (tilePosition.y +
-        this.scroll.position.y +
-        globalItemsGroupPosition.y +
-        this.groups.elements.position.y +
-        viewH * 0.5) *
-        this.zoom +
-        offsetY
+      (tilePosition.y
+        + this.scroll.position.y
+        + globalItemsGroupPosition.y
+        + this.groups.elements.position.y
+        + viewH * 0.5)
+        * this.zoom
+        + offsetY,
     );
 
     return screenPosition;
@@ -222,7 +229,7 @@ export class Renderer {
     });
 
     this.emitEvent({
-      type: "ZOOM_CHANGED",
+      type: 'ZOOM_CHANGED',
       data: { level: zoom },
     });
   }
@@ -234,7 +241,7 @@ export class Renderer {
 
     const newPosition = new Coords(
       coords.x + viewCenter.x,
-      coords.y + viewCenter.y
+      coords.y + viewCenter.y,
     );
 
     gsap.to(this.groups.elements.position, {
@@ -255,9 +262,9 @@ export class Renderer {
     this.scrollTo(
       new Coords(
         -(tile.x - this.scroll.offset.x),
-        -(tile.y - this.scroll.offset.y)
+        -(tile.y - this.scroll.offset.y),
       ),
-      opts
+      opts,
     );
   }
 

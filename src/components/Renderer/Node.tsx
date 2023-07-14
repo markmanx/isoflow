@@ -1,27 +1,29 @@
-import React, { useEffect, useRef } from "react";
-import Paper, { Group } from "paper";
-import { Coords } from "../../utils/Coords";
-import { useNodeIcon } from "./useNodeIcon";
+import { useEffect, useRef } from 'react';
+import { Group } from 'paper';
+import { useNodeIcon } from './useNodeIcon';
 
 export interface NodeProps {
   id: string;
-  position: Coords;
+  position: { x: number; y: number };
   iconId: string;
   parentContainer: paper.Group;
 }
 
-export const Node = ({ position, iconId, parentContainer }: NodeProps) => {
+export const Node = ({
+  position, iconId, parentContainer,
+}: NodeProps) => {
   const container = useRef(new Group());
   const nodeIcon = useNodeIcon(iconId);
 
   useEffect(() => {
+    const containerProxy = container.current;
     container.current.addChild(nodeIcon.container);
     parentContainer.addChild(container.current);
 
     return () => {
-      container.current.remove();
+      containerProxy.remove();
     };
-  }, []);
+  }, [nodeIcon.container, parentContainer]);
 
   useEffect(() => {
     container.current.position.set(position);

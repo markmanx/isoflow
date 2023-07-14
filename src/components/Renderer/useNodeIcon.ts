@@ -1,17 +1,17 @@
-import { useEffect, useRef } from "react";
-import { Group, Raster } from "paper";
-import { useAppState } from "./useAppState";
-import { PROJECTED_TILE_DIMENSIONS } from "./constants";
+import { useEffect, useRef } from 'react';
+import { Group, Raster } from 'paper';
+import { useAppState } from './useAppState';
+import { PROJECTED_TILE_DIMENSIONS } from './constants';
 
 const NODE_IMG_PADDING = 0;
 
 export const useNodeIcon = (iconId: string) => {
   const container = useRef(new Group());
-  const icons = useAppState((state) => state.initialScene.icons);
+  const icons = useAppState((state) => state.scene.icons);
 
   useEffect(() => {
     const updateIcon = async () => {
-      const icon = icons.find((icon) => icon.id === iconId);
+      const icon = icons.find((_icon) => _icon.id === iconId);
 
       if (!icon) {
         return;
@@ -22,8 +22,8 @@ export const useNodeIcon = (iconId: string) => {
       await new Promise((resolve) => {
         iconRaster.onLoad = () => {
           iconRaster.scale(
-            (PROJECTED_TILE_DIMENSIONS.x - NODE_IMG_PADDING) /
-              iconRaster.bounds.width
+            (PROJECTED_TILE_DIMENSIONS.x - NODE_IMG_PADDING)
+              / iconRaster.bounds.width,
           );
 
           const raster = iconRaster.rasterize();

@@ -48,7 +48,7 @@ const InnerApp = React.memo(
 );
 const App = observer(
   ({ initialScene, width, height, onSceneChange }: Props) => {
-    const setInitialScene = useAppState((state) => state.setInitialScene);
+    const setScene = useAppState((state) => state.setScene);
     // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
 
     // useEffect(() => {
@@ -58,8 +58,8 @@ const App = observer(
     // }, [setOnSceneChange, onSceneChange]);
 
     useEffect(() => {
-      setInitialScene(initialScene);
-    }, [initialScene, setInitialScene]);
+      setScene(initialScene);
+    }, [initialScene, setScene]);
 
     return <InnerApp height={height} width={width} />;
   }

@@ -1,34 +1,37 @@
-import { useCallback, useRef, useState } from "react";
-import { Group } from "paper";
-import { NodeProps } from "./Node";
-
-type Node = Omit<NodeProps, "parentContainer">;
+import {
+  useCallback, useRef,
+} from 'react';
+import { Group } from 'paper';
+import { NodeI } from '../../validation/SceneSchema';
+import { useAppState } from './useAppState';
 
 export const useNodeManager = () => {
   const container = useRef<paper.Group>();
-  const [nodes, setNodes] = useState<Node[]>([]);
+  const setNodes = useAppState((state) => state.setNodes);
 
-  const createNode = useCallback((node: Node) => {
-    setNodes((prev) => [...prev, node]);
-  }, []);
+  const createNode = useCallback(
+    (node: NodeI) => {
+      setNodes((oldNodes) => [...oldNodes, node]);
+    },
+    [setNodes],
+  );
 
-  const removeNode = useCallback((id: string) => {
-    setNodes((prev) => prev.filter((node) => node.id !== id));
-  }, []);
+  const updateNode = useCallback(
+    (id: string, updates: NodeI) => {
+      setNodes((oldNodes) => {
+        const nodeIndex = oldNodes.findIndex((node) => node.id === id);
 
-  const updateNode = useCallback((id: string, updates: Partial<Node>) => {
-    setNodes((prev) => {
-      const nodeIndex = prev.findIndex((node) => node.id === id);
+        if (nodeIndex === -1) return oldNodes;
 
-      if (nodeIndex === -1) return prev;
+        const newNodes = [...oldNodes];
+        const nodeToUpdate = { ...newNodes[nodeIndex], ...updates };
+        newNodes[nodeIndex] = nodeToUpdate;
 
-      const newNodes = [...prev];
-      const nodeToUpdate = { ...newNodes[nodeIndex], ...updates };
-      newNodes[nodeIndex] = nodeToUpdate;
-
-      return newNodes;
-    });
-  }, []);
+        return newNodes;
+      });
+    },
+    [setNodes],
+  );
 
   const init = useCallback(() => {
     container.current = new Group();
@@ -36,13 +39,16 @@ export const useNodeManager = () => {
     return container.current;
   }, []);
 
+  const destroy = useCallback(() => {
+    // container.current?.remove();
+    // setNodes(() => []);`
+  }, []);
+
   return {
     init,
-    nodes,
-    setNodes,
     createNode,
-    removeNode,
     updateNode,
     container: container.current,
+    destroy,
   };
 };

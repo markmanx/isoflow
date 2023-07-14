@@ -1,14 +1,16 @@
-import { ModeBase } from "./ModeBase";
-import { Select } from "./Select";
-import { getGridSubset, isWithinBounds } from "../renderer/utils/gridHelpers";
-import { Mouse } from "../types";
-import { Coords } from "../renderer/elements/Coords";
-import { Node } from "../renderer/elements/Node";
-import { ManipulateLasso } from "./ManipulateLasso";
+import { ModeBase } from './ModeBase';
+import { Select } from './Select';
+import { getGridSubset, isWithinBounds } from '../renderer/utils/gridHelpers';
+import { Mouse } from '../types';
+import { Coords } from '../renderer/elements/Coords';
+import { Node } from '../renderer/elements/Node';
+import { ManipulateLasso } from './ManipulateLasso';
 
 export class CreateLasso extends ModeBase {
   startTile: Coords | null = null;
+
   nodesSelected: Node[] = [];
+
   selectionGrid: Coords[] = [];
 
   entry(mouse: Mouse) {
@@ -33,7 +35,7 @@ export class CreateLasso extends ModeBase {
 
     if (mouse.delta) {
       const prevTile = this.ctx.renderer.getTileFromMouse(
-        mouse.position.subtract(mouse.delta)
+        mouse.position.subtract(mouse.delta),
       );
 
       if (currentTile.isEqual(prevTile)) return;
@@ -43,18 +45,18 @@ export class CreateLasso extends ModeBase {
 
     this.ctx.renderer.sceneElements.cursor.createSelection(
       this.startTile,
-      currentTile
+      currentTile,
     );
 
     this.selectionGrid = getGridSubset([this.startTile, currentTile]);
     this.nodesSelected = this.selectionGrid.reduce<Node[]>((acc, tile) => {
       const tileItems = this.ctx.renderer.getItemsByTile(tile);
-      const filtered = tileItems.filter((i) => i?.type === "NODE") as Node[];
+      const filtered = tileItems.filter((i) => i?.type === 'NODE') as Node[];
       return [...acc, ...filtered];
     }, []);
 
     this.ctx.emitEvent({
-      type: "MULTISELECT_UPDATED",
+      type: 'MULTISELECT_UPDATED',
       data: {
         itemsSelected: this.nodesSelected,
       },
@@ -76,8 +78,8 @@ export class CreateLasso extends ModeBase {
     const currentTile = this.ctx.renderer.getTileFromMouse(mouse.position);
 
     if (
-      this.nodesSelected.length === 0 ||
-      !isWithinBounds(currentTile, this.selectionGrid)
+      this.nodesSelected.length === 0
+      || !isWithinBounds(currentTile, this.selectionGrid)
     ) {
       this.ctx.activateMode(Select);
     }

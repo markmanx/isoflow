@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import { SceneI } from "../validation/SceneSchema";
-import { Node } from "../renderer/elements/Node";
-import { Coords } from "../renderer/elements/Coords";
-import { Renderer } from "../renderer/Renderer";
-import { OnSceneChange, SceneEventI } from "../types";
+import { create } from 'zustand';
+import { SceneI } from '../validation/SceneSchema';
+import { Node } from '../renderer/elements/Node';
+import { Coords } from '../renderer/elements/Coords';
+import { Renderer } from '../renderer/Renderer';
+import { OnSceneChange, SceneEventI } from '../types';
 
 interface GlobalState {
   showContextMenuFor: Node | Coords | null;
@@ -53,33 +53,33 @@ export const useGlobalState = create<GlobalState>((set, get) => ({
     const { setSelectedElements } = get();
 
     switch (event.type) {
-      case "TILE_SELECTED":
+      case 'TILE_SELECTED':
         setSelectedElements([]);
         set({ showContextMenuFor: event.data.tile });
         break;
-      case "NODES_SELECTED":
+      case 'NODES_SELECTED':
         setSelectedElements(event.data.nodes);
 
         if (event.data.nodes.length === 1) {
           set({ showContextMenuFor: event.data.nodes[0] });
         }
         break;
-      case "NODE_REMOVED":
+      case 'NODE_REMOVED':
         setSelectedElements([]);
         set({
           showContextMenuFor: null,
           selectedSideNavItem: null,
         });
         break;
-      case "NODE_MOVED":
+      case 'NODE_MOVED':
         setSelectedElements([]);
         set({ showContextMenuFor: null });
         break;
-      case "ZOOM_CHANGED":
+      case 'ZOOM_CHANGED':
         setSelectedElements([]);
         set({ showContextMenuFor: null });
         break;
-      case "MULTISELECT_UPDATED":
+      case 'MULTISELECT_UPDATED':
         setSelectedElements(event.data.itemsSelected);
         break;
       default:

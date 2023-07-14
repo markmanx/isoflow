@@ -1,31 +1,36 @@
-import { makeAutoObservable } from "mobx";
-import { Tool } from "paper";
-import { Renderer } from "../renderer/Renderer";
-import { Coords } from "../renderer/elements/Coords";
-import { ModeBase } from "./ModeBase";
-import type { Mouse, OnSceneChange } from "../types";
+import { makeAutoObservable } from 'mobx';
+import { Tool } from 'paper';
+import { Renderer } from '../renderer/Renderer';
+import { Coords } from '../renderer/elements/Coords';
+import { ModeBase } from './ModeBase';
+import type { Mouse, OnSceneChange } from '../types';
 
 const MOUSE_EVENTS = new Map([
-  ["mousemove", "MOUSE_MOVE"],
-  ["mousedown", "MOUSE_DOWN"],
-  ["mouseup", "MOUSE_UP"],
-  ["mouseenter", "MOUSE_ENTER"],
-  ["mouseleave", "MOUSE_LEAVE"],
+  ['mousemove', 'MOUSE_MOVE'],
+  ['mousedown', 'MOUSE_DOWN'],
+  ['mouseup', 'MOUSE_UP'],
+  ['mouseenter', 'MOUSE_ENTER'],
+  ['mouseleave', 'MOUSE_LEAVE'],
 ]);
 
 export class ModeManager {
   // mobx requires all properties to be initialised explicitly (i.e. prop = undefined)
   renderer?: Renderer = undefined;
+
   currentMode?: {
     instance: ModeBase;
     class: typeof ModeBase;
   } = undefined;
+
   lastMode?: typeof ModeBase = undefined;
+
   mouse: Mouse = {
     position: new Coords(0, 0),
     delta: null,
   };
+
   emitEvent?: OnSceneChange;
+
   tool?: paper.Tool;
 
   constructor() {
@@ -52,7 +57,7 @@ export class ModeManager {
 
   activateMode<T extends typeof ModeBase>(
     Mode: T,
-    init?: (instance: InstanceType<T>) => void
+    init?: (instance: InstanceType<T>) => void,
   ) {
     if (!this.renderer) return;
 

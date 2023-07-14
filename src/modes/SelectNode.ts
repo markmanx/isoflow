@@ -1,10 +1,11 @@
-import { ModeBase } from "./ModeBase";
-import { Select } from "../modes/Select";
-import { Mouse } from "../types";
-import { Node } from "../renderer/elements/Node";
+import { ModeBase } from './ModeBase';
+import { Select } from './Select';
+import { Mouse } from '../types';
+import { Node } from '../renderer/elements/Node';
 
 export class SelectNode extends ModeBase {
   node?: Node;
+
   hasMoved = false;
 
   entry(mouse: Mouse) {

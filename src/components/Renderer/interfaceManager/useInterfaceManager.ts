@@ -1,17 +1,20 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Tool } from "paper";
-import { Coords } from "../../../utils/Coords";
+import {
+  useState, useCallback, useEffect, useRef,
+} from 'react';
+import { Tool } from 'paper';
+import { useAppState } from '../useAppState';
+import { Coords } from '../../../utils/Coords';
 
 enum MOUSE_EV {
-  "MOUSE_MOVE" = "MOUSE_MOVE",
+  'MOUSE_MOVE' = 'MOUSE_MOVE',
 }
 
 const MOUSE_EVENTS = new Map([
-  ["mousemove", "MOUSE_MOVE"],
-  ["mousedown", "MOUSE_DOWN"],
-  ["mouseup", "MOUSE_UP"],
-  ["mouseenter", "MOUSE_ENTER"],
-  ["mouseleave", "MOUSE_LEAVE"],
+  ['mousemove', 'MOUSE_MOVE'],
+  ['mousedown', 'MOUSE_DOWN'],
+  ['mouseup', 'MOUSE_UP'],
+  ['mouseenter', 'MOUSE_ENTER'],
+  ['mouseleave', 'MOUSE_LEAVE'],
 ]);
 
 interface Mouse {
@@ -30,10 +33,8 @@ export type Mode = {
 export const useInterfaceManager = () => {
   const tool = useRef<paper.Tool>();
   const [currentMode, setCurrentMode] = useState<Mode | null>(null);
-  const [mouse, setMouse] = useState<Mouse>({
-    position: new Coords(0, 0),
-    delta: new Coords(0, 0),
-  });
+  const mouse = useAppState((state) => state.mouse);
+  const setMouse = useAppState((state) => state.setMouse);
 
   const activateMode = useCallback(
     (mode: (() => Mode) | null, initCallback?: (mode: Mode) => void) => {
@@ -56,7 +57,7 @@ export const useInterfaceManager = () => {
         return initializedMode;
       });
     },
-    [currentMode]
+    [currentMode],
   );
 
   const sendEvent = useCallback(
@@ -65,7 +66,7 @@ export const useInterfaceManager = () => {
 
       currentMode[type]?.({ position: new Coords(0, 0), delta: null });
     },
-    [currentMode]
+    [currentMode],
   );
 
   const onMouseEvent = useCallback(
@@ -74,15 +75,15 @@ export const useInterfaceManager = () => {
 
       if (!type) return;
 
-      const _mouse = {
+      const mouseProxy = {
         position: new Coords(event.point.x, event.point.y),
         delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null,
       };
 
-      setMouse(_mouse);
+      setMouse({ position: mouseProxy.position, delta: mouseProxy.delta ?? null });
       sendEvent(type as MOUSE_EV);
     },
-    [sendEvent]
+    [sendEvent, setMouse],
   );
 
   const destroy = useCallback(() => {

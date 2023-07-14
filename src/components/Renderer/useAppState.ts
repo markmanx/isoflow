@@ -1,20 +1,22 @@
-import { create } from "zustand";
-import gsap from "gsap";
-import { SceneI } from "../../validation/SceneSchema";
-import { Coords } from "../../utils/Coords";
+import { create } from 'zustand';
+import gsap from 'gsap';
+import { SceneI, NodeI } from '../../validation/SceneSchema';
+import { Coords } from '../../utils/Coords';
 
 interface Node {
-  type: "NODE";
+  type: 'NODE';
   id: string;
 }
 
 interface AppState {
-  initialScene: SceneI;
-  setInitialScene: (scene: SceneI) => void;
+  scene: SceneI;
+  setScene: (scene: SceneI) => void;
   zoom: number;
   setZoom: (zoom: number) => void;
   selectedItems: Node[];
   setSelectedItems: (items: Node[]) => void;
+  gridSize: Coords;
+  setGridSize: (size: Coords) => void;
   scroll: {
     position: Coords;
     offset: Coords;
@@ -26,17 +28,33 @@ interface AppState {
     position?: Coords;
     offset?: Coords;
   }) => void;
+  mouse: {
+    position: Coords;
+    delta: Coords | null;
+  };
+  setMouse: ({
+    position,
+    delta,
+  }: {
+    position?: Coords;
+    delta: Coords | null;
+  }) => void;
+  setNodes: (newNodes: (oldNodes: NodeI[]) => NodeI[]) => void;
 }
 
 export const useAppState = create<AppState>((set, get) => ({
-  initialScene: {
+  scene: {
     nodes: [],
     connectors: [],
     groups: [],
     icons: [],
   },
-  setInitialScene: (scene) => {
-    set({ initialScene: scene });
+  setScene: (scene) => {
+    set({ scene });
+  },
+  gridSize: new Coords(51, 51),
+  setGridSize: (size) => {
+    set({ gridSize: size });
   },
   zoom: 1,
   setZoom: (zoom) => {
@@ -60,5 +78,24 @@ export const useAppState = create<AppState>((set, get) => ({
   selectedItems: [],
   setSelectedItems: (items: Node[]) => {
     set({ selectedItems: items });
+  },
+  mouse: {
+    position: new Coords(0, 0),
+    delta: null,
+  },
+  setMouse: ({ position, delta }) => {
+    const { mouse } = get();
+
+    set({
+      mouse: {
+        position: position ?? mouse.position,
+        delta: delta ?? mouse.delta,
+      },
+    });
+  },
+  setNodes: (nodesFn) => {
+    const { scene } = get();
+    const newNodes = nodesFn(scene.nodes);
+    set({ scene: { ...scene, nodes: newNodes } });
   },
 }));
