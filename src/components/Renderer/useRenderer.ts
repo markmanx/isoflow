@@ -1,5 +1,5 @@
 import {
-  useCallback, useRef, useState, useEffect,
+  useCallback, useRef, useEffect,
 } from 'react';
 import Paper, { Group } from 'paper';
 import gsap from 'gsap';
@@ -23,20 +23,19 @@ const render = () => {
 };
 
 export const useRenderer = () => {
-  const [isReady, setIsReady] = useState(false);
+  const isRendererReady = useAppState((state) => state.isRendererReady);
+  const setIsRendererReady = useAppState((state) => state.setIsRendererReady);
   const rafRef = useRef<number>();
   const container = useRef<paper.Group>();
   const activeLayer = useRef<paper.Layer>();
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const cursor = useCursor();
-  const zoom = useAppState((state) => state.zoom);
-  const scroll = useAppState((state) => state.scroll);
   const setScroll = useAppState((state) => state.setScroll);
 
   const loadScene = useCallback(
     (scene: SceneI) => {
-      if (!container.current || !isReady) return;
+      if (!container.current || !isRendererReady) return;
 
       scene.nodes.forEach((node) => {
         nodeManager.createNode({
@@ -45,47 +44,19 @@ export const useRenderer = () => {
         });
       });
     },
-    [isReady, nodeManager],
+    [isRendererReady, nodeManager],
   );
-
-  useEffect(() => {
-    if (!isReady || !activeLayer.current?.view) return;
-
-    gsap.killTweensOf(activeLayer.current.view);
-    gsap.to(activeLayer.current.view, {
-      duration: 0.25,
-      zoom,
-    });
-  }, [zoom, isReady]);
-
-  useEffect(() => {
-    if (!isReady || !activeLayer.current?.view || !container.current) return;
-
-    const { center: viewCenter } = activeLayer.current.view.bounds;
-
-    const newPosition = new Coords(
-      scroll.position.x + viewCenter.x,
-      scroll.position.y + viewCenter.y,
-    );
-
-    container.current.position.set(newPosition.x, newPosition.y);
-  }, [scroll, isReady]);
 
   const destroy = useCallback(() => {
     // nodeManager.destroy();
-
-    setIsReady(false);
+    setIsRendererReady(false);
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     Paper.projects.forEach((project) => project.remove());
     container.current?.remove();
-
-    console.log('RENDERER DESTROY', Paper.projects);
-  }, []);
+  }, [setIsRendererReady]);
 
   const init = useCallback(
     (canvas: HTMLCanvasElement) => {
-      console.log('START INIT RENDERER', Paper.projects);
-
       destroy();
 
       Paper.settings = {
@@ -108,8 +79,7 @@ export const useRenderer = () => {
       setScroll({ position: new Coords(0, 0) });
 
       rafRef.current = render();
-      setIsReady(true);
-      console.log('FINISH INIT RENDERER', Paper.projects);
+      setIsRendererReady(true);
     },
     [
       grid.init,
@@ -117,16 +87,17 @@ export const useRenderer = () => {
       cursor.init,
       setScroll,
       destroy,
+      setIsRendererReady,
     ],
   );
 
   return {
     init,
-    container: container.current,
+    container,
     grid,
     nodeManager,
     loadScene,
-    isReady,
     destroy,
+    activeLayer,
   };
 };

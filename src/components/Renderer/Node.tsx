@@ -16,6 +16,8 @@ export const Node = ({
   const nodeIcon = useNodeIcon(iconId);
 
   useEffect(() => {
+    if (!nodeIcon.container) return;
+
     const containerProxy = container.current;
     container.current.addChild(nodeIcon.container);
     parentContainer.addChild(container.current);
@@ -23,7 +25,7 @@ export const Node = ({
     return () => {
       containerProxy.remove();
     };
-  }, [nodeIcon.container, parentContainer]);
+  }, []);
 
   useEffect(() => {
     container.current.position.set(position);

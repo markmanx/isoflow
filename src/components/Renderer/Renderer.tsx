@@ -1,37 +1,60 @@
 import React, { useRef, useEffect } from 'react';
-import Paper from 'paper';
 import { Box } from '@mui/material';
+import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
 import { Select } from './interfaceManager/Select';
 import { useAppState } from './useAppState';
-// import { Coords } from '../../utils/Coords';
+import { Coords } from '../../utils/Coords';
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLCanvasElement>(null);
   const renderer = useRenderer();
   const interfaceManager = useInterfaceManager();
   const scene = useAppState((state) => state.scene);
+  const isRendererReady = useAppState((state) => state.isRendererReady);
+  const zoom = useAppState((state) => state.zoom);
+  const scroll = useAppState((state) => state.scroll);
   // const setZoom = useAppState((state) => state.setZoom);
   // const setScroll = useAppState((state) => state.setScroll);
   // const setGridSize = useAppState((state) => state.setGridSize);
 
   useEffect(() => {
-    console.log('RENDERER USEEFFECT MOUNTING', Paper.projects);
-
     if (!containerRef.current) return;
 
     renderer.init(containerRef.current);
     interfaceManager.activateMode(Select);
 
     return () => {
-      console.log('RENDERER USEEFFECT UNMOUNTING', Paper.projects);
-
+      if (renderer.activeLayer.current) gsap.killTweensOf(renderer.activeLayer.current.view);
       renderer.destroy();
       interfaceManager.destroy();
     };
   }, [renderer.init, interfaceManager.activateMode, renderer.destroy, interfaceManager.destroy]);
+
+  useEffect(() => {
+    if (!isRendererReady || !renderer.activeLayer.current?.view) return;
+
+    gsap.killTweensOf(renderer.activeLayer.current.view);
+    gsap.to(renderer.activeLayer.current.view, {
+      duration: 0.25,
+      zoom,
+    });
+  }, [zoom, isRendererReady]);
+
+  useEffect(() => {
+    if (!isRendererReady || !renderer.activeLayer.current?.view || !renderer.container.current) return;
+
+    const { center: viewCenter } = renderer.activeLayer.current.view.bounds;
+
+    const newPosition = new Coords(
+      scroll.position.x + viewCenter.x,
+      scroll.position.y + viewCenter.y,
+    );
+
+    renderer.container.current.position.set(newPosition.x, newPosition.y);
+  }, [scroll, isRendererReady]);
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -60,7 +83,7 @@ export const Renderer = () => {
           height: '100%',
         }}
       />
-      {renderer.isReady && scene.nodes.map((node) => (
+      {isRendererReady && scene.nodes.map((node) => (
         <Node
           key={node.id}
           {...node}

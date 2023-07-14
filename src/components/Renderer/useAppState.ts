@@ -40,6 +40,8 @@ interface AppState {
     delta: Coords | null;
   }) => void;
   setNodes: (newNodes: (oldNodes: NodeI[]) => NodeI[]) => void;
+  isRendererReady: boolean;
+  setIsRendererReady: (isReady: boolean) => void;
 }
 
 export const useAppState = create<AppState>((set, get) => ({
@@ -97,5 +99,9 @@ export const useAppState = create<AppState>((set, get) => ({
     const { scene } = get();
     const newNodes = nodesFn(scene.nodes);
     set({ scene: { ...scene, nodes: newNodes } });
+  },
+  isRendererReady: false,
+  setIsRendererReady: (isReady) => {
+    set({ isRendererReady: isReady });
   },
 }));

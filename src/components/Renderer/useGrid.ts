@@ -54,8 +54,6 @@ export const useGrid = () => {
     const grid = drawGrid(gridSize.x, gridSize.y);
     container.current.addChild(grid);
 
-    console.log('INIT GRID', Paper.projects);
-
     return container.current;
   }, [gridSize]);
 

@@ -1,11 +1,12 @@
-import { Group, Raster } from "paper";
-import { PROJECTED_TILE_WIDTH, PIXEL_UNIT } from "../constants";
-import { Context } from "../../types";
+import { Group, Raster } from 'paper';
+import { PROJECTED_TILE_WIDTH, PIXEL_UNIT } from '../constants';
+import { Context } from '../../types';
 
 const NODE_IMG_PADDING = 0 * PIXEL_UNIT;
 
 export class NodeIcon {
   container = new Group();
+
   ctx: Context;
 
   iconId: string;
@@ -30,13 +31,13 @@ export class NodeIcon {
     const icon = this.ctx.getIconById(iconId);
 
     if (!icon) {
-      return new Error("Icon not found");
+      return new Error('Icon not found');
     }
 
     await new Promise((resolve) => {
       iconRaster.onLoad = () => {
         iconRaster.scale(
-          (PROJECTED_TILE_WIDTH - NODE_IMG_PADDING) / iconRaster.bounds.width
+          (PROJECTED_TILE_WIDTH - NODE_IMG_PADDING) / iconRaster.bounds.width,
         );
 
         const raster = iconRaster.rasterize();
