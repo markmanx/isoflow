@@ -1,27 +1,26 @@
-import React from "react";
-import { observer } from "mobx-react";
-import { useContext } from "react";
-import { useTheme } from "@mui/material";
-import Card from "@mui/material/Card";
-import { MenuItem } from "../MenuItem";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-import NearMeIcon from "@mui/icons-material/NearMe";
-import { useZoom } from "../../hooks/useZoom";
-import { modeManagerContext } from "../../contexts/ModeManagerContext";
-import { Select } from "../../modes/Select";
-import { Pan } from "../../modes/Pan";
+import React, { useContext, useEffect } from 'react';
+import { observer } from 'mobx-react';
+import { useTheme } from '@mui/material';
+import Card from '@mui/material/Card';
+import PanToolIcon from '@mui/icons-material/PanTool';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
+import NearMeIcon from '@mui/icons-material/NearMe';
+import { MenuItem } from '../MenuItem';
+import { modeManagerContext } from '../../contexts/ModeManagerContext';
+import { Select } from '../../modes/Select';
+import { Pan } from '../../modes/Pan';
+import { useZoom } from '../Renderer/useZoom';
 
 export const ToolMenu = observer(() => {
   const modeManager = useContext(modeManagerContext);
   const theme = useTheme();
-  const { incrementZoom, decrementZoom } = useZoom();
+  const { zoom, incrementZoom, decrementZoom } = useZoom();
 
   return (
     <Card
       sx={{
-        position: "absolute",
+        position: 'absolute',
         top: theme.spacing(4),
         right: theme.spacing(4),
         height: theme.customVars.toolMenu.height,

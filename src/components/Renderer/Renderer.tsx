@@ -32,10 +32,8 @@ export const Renderer = () => {
   }, [renderer.init, interfaceManager.activateMode, interfaceManager.destroy]);
 
   useEffect(() => {
-    if (!activeLayer.view || !isRendererReady) return;
-
     activeLayer.view.zoom = zoom;
-  }, [zoom, isRendererReady]);
+  }, [zoom]);
 
   useEffect(() => {
     const { center: viewCenter } = activeLayer.view.bounds;

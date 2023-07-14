@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { theme } from './theme';
 // import { SideNav } from "./components/SideNav";
 // import { Sidebar } from "./components/Sidebars";
-// import { ToolMenu } from "./components/ToolMenu";
+import { ToolMenu } from "./components/ToolMenu";
 // import { ContextMenu } from "./components/ContextMenus";
 import { SceneI } from './validation/SceneSchema';
 import { ModeManagerProvider } from './contexts/ModeManagerContext';
@@ -35,10 +35,10 @@ const InnerApp = React.memo(
           }}
         >
           <Renderer />
-          {/* <ContextMenu />
-            <Sidebar />
-            <SideNav />
-            <ToolMenu /> */}
+          {/* <ContextMenu /> */}
+          {/* <Sidebar /> */}
+          {/* <SideNav /> */}
+          <ToolMenu />
         </Box>
       </ModeManagerProvider>
     </ThemeProvider>

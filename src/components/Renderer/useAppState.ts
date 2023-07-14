@@ -58,22 +58,30 @@ export const useAppState = create<AppState>((set, get) => ({
   setGridSize: (size) => {
     set({ gridSize: size });
   },
-  zoom: 0.25,
+  zoom: 1,
   setZoom: (zoom) => {
-    set({ zoom });
+    const tweenedZoom = { value: get().zoom };
+
+    gsap.to(tweenedZoom, {
+      duration: 0.25,
+      value: zoom,
+      onUpdate: () => {
+        set({ zoom: tweenedZoom.value });
+      },
+    });
   },
   scroll: {
     position: new Coords(0, 0),
     offset: new Coords(0, 0),
   },
   setScroll: ({ position }) => {
-    const oldPosition = get().scroll.position.clone();
+    const tweenedPosition = get().scroll.position.clone();
 
-    gsap.to(oldPosition, {
+    gsap.to(tweenedPosition, {
       duration: 0.25,
       ...position,
       onUpdate: () => {
-        set({ scroll: { position: oldPosition, offset: new Coords(0, 0) } });
+        set({ scroll: { position: tweenedPosition, offset: new Coords(0, 0) } });
       },
     });
   },
