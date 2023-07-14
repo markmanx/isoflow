@@ -1,29 +1,54 @@
-import { PROJECTED_TILE_DIMENSIONS } from "../constants";
-import { Coords } from "../../../utils/Coords";
+import Paper from 'paper';
+import { PROJECTED_TILE_DIMENSIONS } from '../constants';
+import { Coords } from '../../../utils/Coords';
+import { clamp } from '../../../utils';
 
-export const getTileFromMouse(mouse: Coords, view: paper.View, scroll: Coords) {
-    const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
-    const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
+interface GetTileFromMouse {
+  mouse: Coords;
+  scroll: Coords;
+  gridSize: Coords;
+}
 
-    const canvasPosition = new Coords(
-      mouse.x - this.groups.elements.position.x,
-      mouse.y - this.groups.elements.position.y + halfH
-    );
+export const getTileFromMouse = ({ mouse, scroll, gridSize }: GetTileFromMouse) => {
+  const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
+  const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
-    const row = Math.floor(
-      (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2
-    );
-    const col = Math.floor(
-      (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2
-    );
+  const canvasPosition = new Coords(
+    mouse.x - (scroll.x + Paper.view.bounds.center.x),
+    mouse.y - (scroll.y + Paper.view.bounds.center.y) + halfH,
+  );
 
-    const halfRowNum = Math.floor(this.sceneElements.grid.size.x * 0.5);
-    const halfColNum = Math.floor(this.sceneElements.grid.size.y * 0.5);
+  const row = Math.floor(
+    (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2,
+  );
+  const col = Math.floor(
+    (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2,
+  );
 
-    return new Coords(
-      clamp(row, -halfRowNum, halfRowNum),
-      clamp(col, -halfColNum, halfColNum)
-    );
-  }
+  const halfRowNum = Math.floor(gridSize.x * 0.5);
+  const halfColNum = Math.floor(gridSize.y * 0.5);
 
-  // gridsize, container.position = scroll + view, mouse
+  return new Coords(
+    clamp(row, -halfRowNum, halfRowNum),
+    clamp(col, -halfColNum, halfColNum),
+  );
+};
+
+export const getTilePosition = ({ x, y }: Coords) => {
+  const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
+  const halfH = PROJECTED_TILE_DIMENSIONS.y * 0.5;
+
+  return new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
+};
+
+export const getTileBounds = (coords: Coords) => {
+  const position = getTilePosition(coords);
+
+  return {
+    left: new Coords(position.x - PROJECTED_TILE_DIMENSIONS.x * 0.5, position.y),
+    right: new Coords(position.x + PROJECTED_TILE_DIMENSIONS.x * 0.5, position.y),
+    top: new Coords(position.x, position.y - PROJECTED_TILE_DIMENSIONS.y * 0.5),
+    bottom: new Coords(position.x, position.y + PROJECTED_TILE_DIMENSIONS.y * 0.5),
+    center: new Coords(position.x, position.y),
+  };
+};

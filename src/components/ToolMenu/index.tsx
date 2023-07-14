@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { observer } from 'mobx-react';
 import { useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -15,7 +15,7 @@ import { useZoom } from '../Renderer/useZoom';
 export const ToolMenu = observer(() => {
   const modeManager = useContext(modeManagerContext);
   const theme = useTheme();
-  const { zoom, incrementZoom, decrementZoom } = useZoom();
+  const { incrementZoom, decrementZoom } = useZoom();
 
   return (
     <Card

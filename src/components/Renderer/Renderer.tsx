@@ -5,31 +5,28 @@ import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
-import { Select } from './interfaceManager/Select';
 import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
 
 export const Renderer = () => {
   const renderer = useRenderer();
-  const interfaceManager = useInterfaceManager();
   const scene = useAppState((state) => state.scene);
-  const isRendererReady = useAppState((state) => state.isRendererReady);
   const zoom = useAppState((state) => state.zoom);
   const scroll = useAppState((state) => state.scroll);
   const { activeLayer } = Paper.project;
+  useInterfaceManager();
+  const cursorPosition = useAppState((state) => state.cursor.position);
   // const setZoom = useAppState((state) => state.setZoom);
   // const setScroll = useAppState((state) => state.setScroll);
   // const setGridSize = useAppState((state) => state.setGridSize);
 
   useEffect(() => {
     renderer.init();
-    interfaceManager.activateMode(Select);
 
     return () => {
       if (activeLayer) gsap.killTweensOf(activeLayer.view);
-      interfaceManager.destroy();
     };
-  }, [renderer.init, interfaceManager.activateMode, interfaceManager.destroy]);
+  }, [renderer.init]);
 
   useEffect(() => {
     activeLayer.view.zoom = zoom;
@@ -44,7 +41,11 @@ export const Renderer = () => {
     );
 
     renderer.container.current.position.set(newPosition.x, newPosition.y);
-  }, [scroll, isRendererReady]);
+  }, [scroll]);
+
+  useEffect(() => {
+    renderer.cursor.moveTo(cursorPosition);
+  }, [cursorPosition, renderer.cursor.moveTo]);
 
   // useEffect(() => {
   //   setTimeout(() => {

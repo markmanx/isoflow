@@ -2,6 +2,7 @@ import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import { TILE_SIZE, PIXEL_UNIT } from './constants';
 import { applyProjectionMatrix } from './utils/projection';
+import { Coords } from '../../utils/Coords';
 
 export const useCursor = () => {
   const container = useRef(new Group());
@@ -27,7 +28,12 @@ export const useCursor = () => {
     return container.current;
   }, []);
 
+  const moveTo = useCallback((position: Coords) => {
+    container.current.position.set(position.x, position.y);
+  }, []);
+
   return {
     init,
+    moveTo,
   };
 };

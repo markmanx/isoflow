@@ -8,7 +8,7 @@ interface Node {
   id: string;
 }
 
-interface AppState {
+export interface AppState {
   scene: SceneI;
   setScene: (scene: SceneI) => void;
   zoom: number;
@@ -28,6 +28,10 @@ interface AppState {
     position?: Coords;
     offset?: Coords;
   }) => void;
+  cursor: {
+    position: Coords;
+  },
+  setCursor: ({ position }: { position: Coords }) => void;
   mouse: {
     position: Coords;
     delta: Coords | null;
@@ -40,8 +44,6 @@ interface AppState {
     delta: Coords | null;
   }) => void;
   setNodes: (newNodes: (oldNodes: NodeI[]) => NodeI[]) => void;
-  isRendererReady: boolean;
-  setIsRendererReady: (isReady: boolean) => void;
 }
 
 export const useAppState = create<AppState>((set, get) => ({
@@ -85,6 +87,20 @@ export const useAppState = create<AppState>((set, get) => ({
       },
     });
   },
+  cursor: {
+    position: new Coords(0, 0),
+  },
+  setCursor: ({ position }) => {
+    const tweenedPosition = get().cursor.position.clone();
+
+    gsap.to(tweenedPosition, {
+      duration: 0.25,
+      ...position,
+      onUpdate: () => {
+        set({ cursor: { position: tweenedPosition } });
+      },
+    });
+  },
   selectedItems: [],
   setSelectedItems: (items: Node[]) => {
     set({ selectedItems: items });
@@ -107,9 +123,5 @@ export const useAppState = create<AppState>((set, get) => ({
     const { scene } = get();
     const newNodes = nodesFn(scene.nodes);
     set({ scene: { ...scene, nodes: newNodes } });
-  },
-  isRendererReady: false,
-  setIsRendererReady: (isReady) => {
-    set({ isRendererReady: isReady });
   },
 }));

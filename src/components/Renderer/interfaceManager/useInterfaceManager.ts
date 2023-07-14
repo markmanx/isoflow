@@ -1,13 +1,12 @@
 import {
-  useState, useCallback, useEffect, useRef,
+  useCallback, useEffect, useRef,
 } from 'react';
 import { Tool } from 'paper';
-import { useAppState } from '../useAppState';
+import { useAppState, AppState } from '../useAppState';
 import { Coords } from '../../../utils/Coords';
+import { selectReducer } from './selectReducer';
 
-enum MOUSE_EV {
-  'MOUSE_MOVE' = 'MOUSE_MOVE',
-}
+export type PartialAppState = Pick<AppState, 'mouse' | 'cursor' | 'scroll' | 'gridSize'>;
 
 const MOUSE_EVENTS = new Map([
   ['mousemove', 'MOUSE_MOVE'],
@@ -17,57 +16,14 @@ const MOUSE_EVENTS = new Map([
   ['mouseleave', 'MOUSE_LEAVE'],
 ]);
 
-interface Mouse {
-  position: Coords;
-  delta: Coords | null;
-}
-
-export type Mode = {
-  entry: (mouse: Mouse) => void;
-  exit: () => void;
-  name: string;
-} & Partial<{
-  [key in keyof typeof MOUSE_EV]: (mouse: Mouse) => void;
-}>;
-
 export const useInterfaceManager = () => {
   const tool = useRef<paper.Tool>();
-  const [currentMode, setCurrentMode] = useState<Mode | null>(null);
   const mouse = useAppState((state) => state.mouse);
   const setMouse = useAppState((state) => state.setMouse);
-
-  const activateMode = useCallback(
-    (mode: (() => Mode) | null, initCallback?: (mode: Mode) => void) => {
-      if (mode === null) {
-        currentMode?.exit();
-        return;
-      }
-
-      if (currentMode?.name === mode().name) return;
-
-      setCurrentMode((prevMode) => {
-        if (prevMode) {
-          prevMode.exit();
-        }
-
-        const initializedMode = mode();
-
-        initCallback?.(initializedMode);
-
-        return initializedMode;
-      });
-    },
-    [currentMode],
-  );
-
-  const sendEvent = useCallback(
-    (type: MOUSE_EV) => {
-      if (!currentMode) return;
-
-      currentMode[type]?.({ position: new Coords(0, 0), delta: null });
-    },
-    [currentMode],
-  );
+  const cursor = useAppState((state) => state.cursor);
+  const setCursor = useAppState((state) => state.setCursor);
+  const gridSize = useAppState((state) => state.gridSize);
+  const scroll = useAppState((state) => state.scroll);
 
   const onMouseEvent = useCallback(
     (event: paper.ToolEvent) => {
@@ -75,20 +31,20 @@ export const useInterfaceManager = () => {
 
       if (!type) return;
 
-      const mouseProxy = {
+      const newMouse = {
         position: new Coords(event.point.x, event.point.y),
         delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null,
       };
 
-      setMouse({ position: mouseProxy.position, delta: mouseProxy.delta ?? null });
-      sendEvent(type as MOUSE_EV);
-    },
-    [sendEvent, setMouse],
-  );
+      const newState = selectReducer({ type: 'MOUSE_MOVE', payload: { mouse: newMouse } }, {
+        mouse, cursor, gridSize, scroll,
+      });
 
-  const destroy = useCallback(() => {
-    activateMode(null);
-  }, [activateMode]);
+      setMouse(newState.mouse);
+      setCursor(newState.cursor);
+    },
+    [mouse, setMouse, cursor, setCursor, gridSize, scroll],
+  );
 
   useEffect(() => {
     tool.current = new Tool();
@@ -103,11 +59,5 @@ export const useInterfaceManager = () => {
     };
   }, [onMouseEvent]);
 
-  return {
-    activateMode,
-    currentMode,
-    setCurrentMode,
-    mouse,
-    destroy,
-  };
+  return {};
 };

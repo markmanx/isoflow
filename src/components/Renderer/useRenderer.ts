@@ -52,5 +52,6 @@ export const useRenderer = () => {
     grid,
     nodeManager,
     loadScene,
+    cursor,
   };
 };
