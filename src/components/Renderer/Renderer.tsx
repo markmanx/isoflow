@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import Paper from 'paper';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
@@ -9,44 +10,35 @@ import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
 
 export const Renderer = () => {
-  const containerRef = useRef<HTMLCanvasElement>(null);
   const renderer = useRenderer();
   const interfaceManager = useInterfaceManager();
   const scene = useAppState((state) => state.scene);
   const isRendererReady = useAppState((state) => state.isRendererReady);
   const zoom = useAppState((state) => state.zoom);
   const scroll = useAppState((state) => state.scroll);
+  const { activeLayer } = Paper.project;
   // const setZoom = useAppState((state) => state.setZoom);
   // const setScroll = useAppState((state) => state.setScroll);
   // const setGridSize = useAppState((state) => state.setGridSize);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    renderer.init(containerRef.current);
+    renderer.init();
     interfaceManager.activateMode(Select);
 
     return () => {
-      if (renderer.activeLayer.current) gsap.killTweensOf(renderer.activeLayer.current.view);
-      renderer.destroy();
+      if (activeLayer) gsap.killTweensOf(activeLayer.view);
       interfaceManager.destroy();
     };
-  }, [renderer.init, interfaceManager.activateMode, renderer.destroy, interfaceManager.destroy]);
+  }, [renderer.init, interfaceManager.activateMode, interfaceManager.destroy]);
 
   useEffect(() => {
-    if (!isRendererReady || !renderer.activeLayer.current?.view) return;
+    if (!activeLayer.view || !isRendererReady) return;
 
-    gsap.killTweensOf(renderer.activeLayer.current.view);
-    gsap.to(renderer.activeLayer.current.view, {
-      duration: 0.25,
-      zoom,
-    });
+    activeLayer.view.zoom = zoom;
   }, [zoom, isRendererReady]);
 
   useEffect(() => {
-    if (!isRendererReady || !renderer.activeLayer.current?.view || !renderer.container.current) return;
-
-    const { center: viewCenter } = renderer.activeLayer.current.view.bounds;
+    const { center: viewCenter } = activeLayer.view.bounds;
 
     const newPosition = new Coords(
       scroll.position.x + viewCenter.x,
@@ -61,6 +53,59 @@ export const Renderer = () => {
   //     setGridSize(new Coords(10, 10));
   //   }, 5000);
   // }, [setGridSize]);
+
+  return (
+    <>
+      {scene.nodes.map((node) => (
+        <Node
+          key={node.id}
+          {...node}
+          parentContainer={renderer.nodeManager.container as paper.Group}
+        />
+      ))}
+    </>
+  );
+};
+
+const render = () => {
+  if (Paper.view) {
+    if (global.requestAnimationFrame) {
+      const raf = global.requestAnimationFrame(render);
+
+      return raf;
+    }
+
+    Paper.view.update();
+  }
+};
+
+export const Initialiser = () => {
+  const [isReady, setIsReady] = useState(false);
+  const containerRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    setIsReady(false);
+
+    if (!containerRef.current) return;
+
+    Paper.settings = {
+      insertItems: false,
+      applyMatrix: false,
+    };
+
+    Paper.setup(containerRef.current);
+
+    const rafId = render();
+
+    setIsReady(true);
+
+    return () => {
+      setIsReady(false);
+      if (rafId) cancelAnimationFrame(rafId);
+
+      Paper.projects.forEach((project) => project.remove());
+    };
+  }, []);
 
   return (
     <Box
@@ -83,13 +128,17 @@ export const Renderer = () => {
           height: '100%',
         }}
       />
-      {isRendererReady && scene.nodes.map((node) => (
-        <Node
-          key={node.id}
-          {...node}
-          parentContainer={renderer.nodeManager.container as paper.Group}
-        />
-      ))}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {isReady && <Renderer />}
+      </Box>
     </Box>
   );
 };

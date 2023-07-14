@@ -1,7 +1,7 @@
 import {
-  useCallback, useRef, useEffect, useState,
+  useCallback, useRef,
 } from 'react';
-import Paper, { Path, Point, Group } from 'paper';
+import { Path, Point, Group } from 'paper';
 import { applyProjectionMatrix } from './utils/projection';
 import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from './constants';
 import { useAppState } from './useAppState';
@@ -46,11 +46,11 @@ export const drawGrid = (width: number, height: number) => {
 };
 
 export const useGrid = () => {
-  const container = useRef<paper.Group | null>();
+  const container = useRef(new Group());
   const gridSize = useAppState((state) => state.gridSize);
 
   const init = useCallback(() => {
-    container.current = new Group();
+    container.current.removeChildren();
     const grid = drawGrid(gridSize.x, gridSize.y);
     container.current.addChild(grid);
 

@@ -58,7 +58,7 @@ export const useAppState = create<AppState>((set, get) => ({
   setGridSize: (size) => {
     set({ gridSize: size });
   },
-  zoom: 1,
+  zoom: 0.25,
   setZoom: (zoom) => {
     set({ zoom });
   },

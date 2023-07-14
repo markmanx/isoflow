@@ -6,7 +6,7 @@ import { NodeI } from '../../validation/SceneSchema';
 import { useAppState } from './useAppState';
 
 export const useNodeManager = () => {
-  const container = useRef<paper.Group>();
+  const container = useRef(new Group());
   const setNodes = useAppState((state) => state.setNodes);
 
   const createNode = useCallback(
@@ -33,19 +33,12 @@ export const useNodeManager = () => {
     [setNodes],
   );
 
-  const init = useCallback(() => {
-    container.current = new Group();
-
-    return container.current;
-  }, []);
-
   const destroy = useCallback(() => {
     // container.current?.remove();
     // setNodes(() => []);`
   }, []);
 
   return {
-    init,
     createNode,
     updateNode,
     container: container.current,

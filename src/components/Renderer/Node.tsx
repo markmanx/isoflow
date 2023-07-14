@@ -13,19 +13,19 @@ export const Node = ({
   position, iconId, parentContainer,
 }: NodeProps) => {
   const container = useRef(new Group());
-  const nodeIcon = useNodeIcon(iconId);
+  const nodeIcon = useNodeIcon();
 
   useEffect(() => {
-    if (!nodeIcon.container) return;
+    const nodeIconContainer = nodeIcon.init();
 
-    const containerProxy = container.current;
-    container.current.addChild(nodeIcon.container);
+    container.current.removeChildren();
+    container.current.addChild(nodeIconContainer);
     parentContainer.addChild(container.current);
+  }, [nodeIcon.init]);
 
-    return () => {
-      containerProxy.remove();
-    };
-  }, []);
+  useEffect(() => {
+    nodeIcon.update(iconId);
+  }, [iconId, nodeIcon.update]);
 
   useEffect(() => {
     container.current.position.set(position);

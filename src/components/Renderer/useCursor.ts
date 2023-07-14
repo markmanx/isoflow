@@ -5,11 +5,11 @@ import { useAppState } from './useAppState';
 import { applyProjectionMatrix } from './utils/projection';
 
 export const useCursor = () => {
-  const container = useRef<paper.Group>();
+  const container = useRef(new Group());
   const mouse = useAppState((state) => state.mouse);
 
   const init = useCallback(() => {
-    container.current = new Group();
+    container.current.removeChildren();
 
     const rectangle = new Shape.Rectangle({
       strokeCap: 'round',
