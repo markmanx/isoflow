@@ -3,7 +3,6 @@ import { Group, Shape } from 'paper';
 import gsap from 'gsap';
 import { TILE_SIZE, PIXEL_UNIT } from './constants';
 import { applyProjectionMatrix } from './utils/projection';
-import { clamp } from '../../utils';
 import { Coords } from '../../utils/Coords';
 
 export const useCursor = () => {
@@ -11,6 +10,7 @@ export const useCursor = () => {
 
   const init = useCallback(() => {
     container.current.removeChildren();
+    container.current.set({ pivot: [0, 0] });
 
     const rectangle = new Shape.Rectangle({
       strokeCap: 'round',
@@ -21,7 +21,8 @@ export const useCursor = () => {
       strokeWidth: 0,
       strokeColor: 'transparent',
       pivot: [0, 0],
-      dashArray: null,
+      position: [0, 0],
+      dashArray: null
     });
 
     container.current.addChild(rectangle);
@@ -32,16 +33,19 @@ export const useCursor = () => {
 
   const moveTo = useCallback((position: Coords) => {
     // For some reason, gsap doesn't like to tween x and y both to 0, so we clamp to just above 0.
-    const clampedPosition = new Coords(position.x === 0 ? 0.000001 : position.x, position.y === 0 ? 0.000001 : position.y);
+    const clampedPosition = new Coords(
+      position.x === 0 ? 0.000001 : position.x,
+      position.y === 0 ? 0.000001 : position.y
+    );
 
     gsap.to(container.current.position, {
       duration: 0.1,
-      ...clampedPosition,
+      ...clampedPosition
     });
   }, []);
 
   return {
     init,
-    moveTo,
+    moveTo
   };
 };

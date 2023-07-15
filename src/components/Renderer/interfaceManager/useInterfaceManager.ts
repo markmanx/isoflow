@@ -1,19 +1,20 @@
-import {
-  useCallback, useEffect, useRef,
-} from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Tool } from 'paper';
 import { useAppState, AppState } from '../useAppState';
 import { Coords } from '../../../utils/Coords';
 import { selectReducer } from './selectReducer';
 
-export type PartialAppState = Pick<AppState, 'mouse' | 'cursor' | 'scroll' | 'gridSize'>;
+export type PartialAppState = Pick<
+  AppState,
+  'mouse' | 'cursor' | 'scroll' | 'gridSize'
+>;
 
 const MOUSE_EVENTS = new Map([
   ['mousemove', 'MOUSE_MOVE'],
   ['mousedown', 'MOUSE_DOWN'],
   ['mouseup', 'MOUSE_UP'],
   ['mouseenter', 'MOUSE_ENTER'],
-  ['mouseleave', 'MOUSE_LEAVE'],
+  ['mouseleave', 'MOUSE_LEAVE']
 ]);
 
 export const useInterfaceManager = () => {
@@ -24,6 +25,7 @@ export const useInterfaceManager = () => {
   const setCursor = useAppState((state) => state.setCursor);
   const gridSize = useAppState((state) => state.gridSize);
   const scroll = useAppState((state) => state.scroll);
+  const setScroll = useAppState((state) => state.setScroll);
 
   const onMouseEvent = useCallback(
     (event: paper.ToolEvent) => {
@@ -33,17 +35,32 @@ export const useInterfaceManager = () => {
 
       const newMouse = {
         position: new Coords(event.point.x, event.point.y),
-        delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null,
+        delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null
       };
 
-      const newState = selectReducer({ type: 'MOUSE_MOVE', payload: { mouse: newMouse } }, {
-        mouse, cursor, gridSize, scroll,
-      });
+      const newState = selectReducer(
+        { type: 'MOUSE_MOVE', payload: { mouse: newMouse } },
+        {
+          mouse: {
+            position: mouse.position.clone(),
+            delta: mouse.delta?.clone() ?? null
+          },
+          cursor: {
+            position: cursor.position.clone()
+          },
+          gridSize: gridSize.clone(),
+          scroll: {
+            position: scroll.position.clone(),
+            offset: scroll.offset.clone()
+          }
+        }
+      );
 
       setMouse(newState.mouse);
       setCursor(newState.cursor);
+      setScroll(newState.scroll);
     },
-    [mouse, setMouse, cursor, setCursor, gridSize, scroll],
+    [mouse, setMouse, cursor, setCursor, gridSize, scroll, setScroll]
   );
 
   useEffect(() => {

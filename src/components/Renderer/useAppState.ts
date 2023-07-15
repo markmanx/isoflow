@@ -22,14 +22,14 @@ export interface AppState {
   };
   setScroll: ({
     position,
-    offset,
+    offset
   }: {
     position?: Coords;
     offset?: Coords;
   }) => void;
   cursor: {
     position: Coords;
-  },
+  };
   setCursor: ({ position }: { position: Coords }) => void;
   mouse: {
     position: Coords;
@@ -37,7 +37,7 @@ export interface AppState {
   };
   setMouse: ({
     position,
-    delta,
+    delta
   }: {
     position?: Coords;
     delta: Coords | null;
@@ -50,7 +50,7 @@ export const useAppState = create<AppState>((set, get) => ({
     nodes: [],
     connectors: [],
     groups: [],
-    icons: [],
+    icons: []
   },
   setScene: (scene) => {
     set({ scene });
@@ -65,15 +65,17 @@ export const useAppState = create<AppState>((set, get) => ({
   },
   scroll: {
     position: new Coords(0, 0),
-    offset: new Coords(0, 0),
+    offset: new Coords(0, 0)
   },
   setScroll: ({ position, offset }) => {
     const { position: oldPosition, offset: oldOffset } = get().scroll;
 
-    set({ scroll: { position: position ?? oldPosition, offset: offset ?? oldOffset } });
+    set({
+      scroll: { position: position ?? oldPosition, offset: offset ?? oldOffset }
+    });
   },
   cursor: {
-    position: new Coords(0, 0),
+    position: new Coords(0, 0)
   },
   setCursor: ({ position }) => {
     set({ cursor: { position } });
@@ -84,7 +86,7 @@ export const useAppState = create<AppState>((set, get) => ({
   },
   mouse: {
     position: new Coords(0, 0),
-    delta: null,
+    delta: null
   },
   setMouse: ({ position, delta }) => {
     const { mouse } = get();
@@ -92,13 +94,13 @@ export const useAppState = create<AppState>((set, get) => ({
     set({
       mouse: {
         position: position ?? mouse.position,
-        delta: delta ?? mouse.delta,
-      },
+        delta: delta ?? mouse.delta
+      }
     });
   },
   setNodes: (nodesFn) => {
     const { scene } = get();
     const newNodes = nodesFn(scene.nodes);
     set({ scene: { ...scene, nodes: newNodes } });
-  },
+  }
 }));

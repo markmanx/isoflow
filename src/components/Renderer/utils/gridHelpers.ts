@@ -9,20 +9,24 @@ interface GetTileFromMouse {
   gridSize: Coords;
 }
 
-export const getTileFromMouse = ({ mouse, scroll, gridSize }: GetTileFromMouse) => {
+export const getTileFromMouse = ({
+  mouse,
+  scroll,
+  gridSize
+}: GetTileFromMouse) => {
   const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
   const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
   const canvasPosition = new Coords(
     mouse.x - (scroll.x + Paper.view.bounds.center.x),
-    mouse.y - (scroll.y + Paper.view.bounds.center.y) + halfH,
+    mouse.y - (scroll.y + Paper.view.bounds.center.y) + halfH
   );
 
   const row = Math.floor(
-    (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2,
+    (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2
   );
   const col = Math.floor(
-    (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2,
+    (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2
   );
 
   const halfRowNum = Math.floor(gridSize.x * 0.5);
@@ -30,7 +34,7 @@ export const getTileFromMouse = ({ mouse, scroll, gridSize }: GetTileFromMouse) 
 
   return new Coords(
     clamp(row, -halfRowNum, halfRowNum),
-    clamp(col, -halfColNum, halfColNum),
+    clamp(col, -halfColNum, halfColNum)
   );
 };
 
@@ -45,10 +49,19 @@ export const getTileBounds = (coords: Coords) => {
   const position = getTilePosition(coords);
 
   return {
-    left: new Coords(position.x - PROJECTED_TILE_DIMENSIONS.x * 0.5, position.y),
-    right: new Coords(position.x + PROJECTED_TILE_DIMENSIONS.x * 0.5, position.y),
+    left: new Coords(
+      position.x - PROJECTED_TILE_DIMENSIONS.x * 0.5,
+      position.y
+    ),
+    right: new Coords(
+      position.x + PROJECTED_TILE_DIMENSIONS.x * 0.5,
+      position.y
+    ),
     top: new Coords(position.x, position.y - PROJECTED_TILE_DIMENSIONS.y * 0.5),
-    bottom: new Coords(position.x, position.y + PROJECTED_TILE_DIMENSIONS.y * 0.5),
-    center: new Coords(position.x, position.y),
+    bottom: new Coords(
+      position.x,
+      position.y + PROJECTED_TILE_DIMENSIONS.y * 0.5
+    ),
+    center: new Coords(position.x, position.y)
   };
 };

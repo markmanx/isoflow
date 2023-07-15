@@ -1,6 +1,4 @@
-import {
-  useCallback, useRef,
-} from 'react';
+import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
 import gsap from 'gsap';
 import { useGrid } from './useGrid';
@@ -12,6 +10,7 @@ import { useCursor } from './useCursor';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
+  const innerContainer = useRef(new Group());
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const cursor = useCursor();
@@ -20,7 +19,7 @@ export const useRenderer = () => {
   const zoomTo = useCallback((zoom: number) => {
     gsap.to(Paper.project.activeLayer.view, {
       duration: 0.25,
-      zoom,
+      zoom
     });
   }, []);
 
@@ -29,30 +28,25 @@ export const useRenderer = () => {
       scene.nodes.forEach((node) => {
         nodeManager.createNode({
           ...node,
-          position: new Coords(node.position.x, node.position.y),
+          position: new Coords(node.position.x, node.position.y)
         });
       });
     },
-    [nodeManager.createNode],
+    [nodeManager.createNode]
   );
 
-  const init = useCallback(
-    () => {
-      const gridContainer = grid.init();
-      const cursorContainer = cursor.init();
+  const init = useCallback(() => {
+    const gridContainer = grid.init();
+    const cursorContainer = cursor.init();
 
-      container.current.addChild(gridContainer);
-      container.current.addChild(cursorContainer);
-      container.current.addChild(nodeManager.container);
-      Paper.project.activeLayer.addChild(container.current);
-      setScroll({ position: new Coords(0, 0) });
-    },
-    [
-      grid.init,
-      cursor.init,
-      setScroll,
-    ],
-  );
+    innerContainer.current.addChild(gridContainer);
+    innerContainer.current.addChild(cursorContainer);
+    innerContainer.current.addChild(nodeManager.container);
+    container.current.addChild(innerContainer.current);
+    container.current.set({ position: [0, 0] });
+    Paper.project.activeLayer.addChild(container.current);
+    setScroll({ position: new Coords(0, 0) });
+  }, [grid.init, cursor.init, setScroll]);
 
   return {
     init,
@@ -61,6 +55,6 @@ export const useRenderer = () => {
     zoomTo,
     nodeManager,
     loadScene,
-    cursor,
+    cursor
   };
 };

@@ -18,7 +18,6 @@ export const Renderer = () => {
   const { position: cursorPosition } = useAppState((state) => state.cursor);
   // const setZoom = useAppState((state) => state.setZoom);
   // const setScroll = useAppState((state) => state.setScroll);
-  // const setGridSize = useAppState((state) => state.setGridSize);
 
   useEffect(() => {
     renderer.init();
@@ -37,7 +36,7 @@ export const Renderer = () => {
 
     const newPosition = new Coords(
       scroll.position.x + viewCenter.x,
-      scroll.position.y + viewCenter.y,
+      scroll.position.y + viewCenter.y
     );
 
     renderer.container.current.position.set(newPosition.x, newPosition.y);
@@ -46,12 +45,6 @@ export const Renderer = () => {
   useEffect(() => {
     renderer.cursor.moveTo(cursorPosition);
   }, [cursorPosition, renderer.cursor.moveTo]);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setGridSize(new Coords(10, 10));
-  //   }, 5000);
-  // }, [setGridSize]);
 
   return (
     <>
@@ -89,7 +82,7 @@ export const Initialiser = () => {
 
     Paper.settings = {
       insertItems: false,
-      applyMatrix: false,
+      applyMatrix: false
     };
 
     Paper.setup(containerRef.current);
@@ -113,7 +106,7 @@ export const Initialiser = () => {
         top: 0,
         left: 0,
         width: '100%',
-        height: '100%',
+        height: '100%'
       }}
     >
       <Box
@@ -124,7 +117,7 @@ export const Initialiser = () => {
           top: 0,
           left: 0,
           width: '100%',
-          height: '100%',
+          height: '100%'
         }}
       />
       <Box
@@ -133,7 +126,7 @@ export const Initialiser = () => {
           top: 0,
           left: 0,
           width: '100%',
-          height: '100%',
+          height: '100%'
         }}
       >
         {isReady && <Renderer />}
