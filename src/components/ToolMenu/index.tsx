@@ -15,7 +15,8 @@ import { useZoom } from '../Renderer/useZoom';
 export const ToolMenu = observer(() => {
   const modeManager = useContext(modeManagerContext);
   const theme = useTheme();
-  const { incrementZoom, decrementZoom } = useZoom();
+  const { incrementZoom, decrementZoom, canIncrement, canDecrement } =
+    useZoom();
 
   return (
     <Card
@@ -24,7 +25,7 @@ export const ToolMenu = observer(() => {
         top: theme.spacing(4),
         right: theme.spacing(4),
         height: theme.customVars.toolMenu.height,
-        borderRadius: 2,
+        borderRadius: 2
       }}
     >
       <MenuItem
@@ -46,12 +47,14 @@ export const ToolMenu = observer(() => {
         Icon={ZoomInIcon}
         onClick={incrementZoom}
         size={theme.customVars.toolMenu.height}
+        disabled={canIncrement}
       />
       <MenuItem
         name="Zoom out"
         Icon={ZoomOutIcon}
         onClick={decrementZoom}
         size={theme.customVars.toolMenu.height}
+        disabled={canDecrement}
       />
     </Card>
   );
