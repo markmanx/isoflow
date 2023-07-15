@@ -7,9 +7,19 @@ interface Node {
   id: string;
 }
 
+type Mode =
+  | {
+      type: 'SELECT';
+    }
+  | {
+      type: 'PAN';
+    };
+
 export interface AppState {
   scene: SceneI;
   setScene: (scene: SceneI) => void;
+  mode: Mode;
+  setMode: (mode: Mode) => void;
   zoom: number;
   setZoom: (zoom: number) => void;
   selectedItems: Node[];
@@ -54,6 +64,10 @@ export const useAppState = create<AppState>((set, get) => ({
   },
   setScene: (scene) => {
     set({ scene });
+  },
+  mode: { type: 'SELECT' },
+  setMode: (mode: Mode) => {
+    set({ mode });
   },
   gridSize: new Coords(51, 51),
   setGridSize: (size) => {
