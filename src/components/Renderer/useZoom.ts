@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import { clamp } from '../../utils';
 import { useAppState } from './useAppState';
 

@@ -109,10 +109,9 @@ export const Initialiser = () => {
         height: '100%'
       }}
     >
-      <Box
-        component="canvas"
+      <canvas
         ref={containerRef}
-        sx={{
+        style={{
           position: 'absolute',
           top: 0,
           left: 0,
