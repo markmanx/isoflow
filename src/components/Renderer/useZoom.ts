@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import { clamp } from '../../utils';
 import { useAppState } from './useAppState';
 
@@ -14,16 +14,12 @@ export const useZoom = () => {
 
   const incrementZoom = useCallback(() => {
     const targetZoom = clamp(zoom + ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
-    setZoom(targetZoom);
-
-    return roundToOneDecimalPlace(targetZoom);
+    setZoom(roundToOneDecimalPlace(targetZoom));
   }, [zoom, setZoom]);
 
   const decrementZoom = useCallback(() => {
     const targetZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
-    setZoom(targetZoom);
-
-    return roundToOneDecimalPlace(targetZoom);
+    setZoom(roundToOneDecimalPlace(targetZoom));
   }, [zoom, setZoom]);
 
   const canIncrement = useMemo(() => zoom === MAX_ZOOM, [zoom]);

@@ -21,10 +21,11 @@
     },
     "rules": {
         "prettier/prettier": 2,
-        "import/prefer-default-export": "off",
-        "react/function-component-definition": "off",
-        "react/jsx-props-no-spreading": "off",
-        "consistent-return": "off",
-        "react/no-unused-prop-types": ["warn"]
+        "import/prefer-default-export": [0],
+        "react/function-component-definition": [0],
+        "react/jsx-props-no-spreading": [0],
+        "consistent-return": [0],
+        "react/no-unused-prop-types": ["warn"],
+        "react/require-default-props": [0]
     }
 }
