@@ -52,13 +52,12 @@ const reducers: {
       if (state.mouse.dragStart === null) return;
 
       state.scroll.position = mouse.delta
-        ? state.scroll.position.subtract(mouse.delta)
+        ? state.scroll.position.add(mouse.delta)
         : state.scroll.position;
     },
     mousedown: (state, mouse) => {
       state.mouse = mouse;
       state.mouse.dragStart = mouse.position;
-      console.log('MOUSEDOWN');
     },
     mouseup: (state, mouse) => {
       state.mouse = mouse;
@@ -114,7 +113,6 @@ export const useInterfaceManager = () => {
 
       let reducerAction: MouseReducerAction;
 
-      console.log(toolEvent.type);
       switch (toolEvent.type) {
         case 'mousedown':
           reducerAction = reducer.mousedown;

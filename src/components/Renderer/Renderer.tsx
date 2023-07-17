@@ -140,7 +140,8 @@ export const Initialiser = () => {
           height: '100%'
         }}
       />
-      <Box
+      {isReady && <Renderer />}
+      {/* <Box
         sx={{
           position: 'absolute',
           top: 0,
@@ -149,8 +150,7 @@ export const Initialiser = () => {
           height: '100%'
         }}
       >
-        {isReady && <Renderer />}
-      </Box>
+      </Box> */}
     </Box>
   );
 };
