@@ -21,24 +21,48 @@ export interface State {
   gridSize: Coords;
 }
 
+export type MouseReducerAction = (state: Draft<State>, payload: Mouse) => void;
+
 export interface MouseReducer {
-  mousemove: (state: Draft<State>, payload: Mouse) => void;
+  mousemove: MouseReducerAction;
+  mousedown: MouseReducerAction;
+  mouseup: MouseReducerAction;
 }
 
 const reducers: {
   [key in 'SELECT' | 'PAN']: MouseReducer;
 } = {
   SELECT: {
-    mousemove: (state, payload) => {
-      state.mouse = payload;
+    mousemove: (state, mouse) => {
+      state.mouse = mouse;
+    },
+    mousedown: (state, mouse) => {
+      state.mouse = mouse;
+      state.mouse.dragStart = mouse.position;
+    },
+    mouseup: (state, mouse) => {
+      state.mouse = mouse;
+      state.mouse.dragStart = null;
     }
   },
   PAN: {
-    mousemove: (state, payload) => {
-      state.mouse = payload;
-      state.scroll.position = payload.delta
-        ? state.scroll.position.subtract(payload.delta)
+    mousemove: (state, mouse) => {
+      state.mouse = mouse;
+
+      if (state.mouse.dragStart === null) return;
+
+      state.scroll.position = mouse.delta
+        ? state.scroll.position.subtract(mouse.delta)
         : state.scroll.position;
+    },
+    mousedown: (state, mouse) => {
+      state.mouse = mouse;
+      state.mouse.dragStart = mouse.position;
+      console.log('MOUSEDOWN');
+    },
+    mouseup: (state, mouse) => {
+      state.mouse = mouse;
+      state.mouse.dragStart = null;
     }
   }
 };
@@ -86,23 +110,32 @@ export const useInterfaceManager = () => {
 
   const onMouseEvent = useCallback(
     (toolEvent: paper.ToolEvent) => {
-      const newMouse = parseToolEvent(toolEvent, mouse);
-
-      mouseActions.set(newMouse);
-
       const reducer = reducers[mode.type];
+
+      let reducerAction: MouseReducerAction;
+
+      console.log(toolEvent.type);
+      switch (toolEvent.type) {
+        case 'mousedown':
+          reducerAction = reducer.mousedown;
+          break;
+        case 'mousemove':
+          reducerAction = reducer.mousemove;
+          break;
+        case 'mouseup':
+          reducerAction = reducer.mouseup;
+          break;
+        default:
+          return;
+      }
+
+      const newMouse = parseToolEvent(toolEvent, mouse);
       const newState = produce({ mouse, scroll, gridSize }, (draft) =>
-        reducer.mousemove(draft, newMouse)
+        reducerAction(draft, newMouse)
       );
 
       mouseActions.set(newState.mouse);
       scrollActions.setPosition(newState.scroll.position);
-
-      // if (!modeReducer) {
-      //   throw new Error(`Could not activate mode: ${toolEvent.type}`);
-      // }
-
-      // modeReducer[toolEvent.type]?.({ mouse });
     },
     [
       mode,
