@@ -48,11 +48,28 @@ export const useRenderer = () => {
     scrollActions.setPosition(new Coords(0, 0));
   }, [grid.init, cursor.init, scrollActions.setPosition]);
 
+  const scrollTo = useCallback((to: Coords) => {
+    const { center: viewCenter } = Paper.project.view.bounds;
+
+    const newPosition = {
+      x: to.x + viewCenter.x,
+      y: to.y + viewCenter.y
+    };
+
+    container.current.position.set(newPosition);
+
+    // gsap.to(container.current.position, {
+    //   duration: 0.1,
+    //   ...newPosition
+    // });
+  }, []);
+
   return {
     init,
     container,
     grid,
     zoomTo,
+    scrollTo,
     nodeManager,
     loadScene,
     cursor

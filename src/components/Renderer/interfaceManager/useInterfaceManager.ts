@@ -1,70 +1,118 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { produce, Draft } from 'immer';
 import { Tool } from 'paper';
-import { useAppState, AppState } from '../useAppState';
 import { Coords } from '../../../utils/Coords';
-import { selectReducer } from './selectReducer';
 import {
-  useScrollPosition,
-  useScrollActions
+  useScroll,
+  useScrollActions,
+  Scroll
 } from '../../../stores/useScrollStore';
+import { useMode } from '../../../stores/useModeStore';
+import {
+  useMouse,
+  useMouseActions,
+  Mouse
+} from '../../../stores/useMouseStore';
+import { useGridSize } from '../../../stores/useSceneStore';
 
-export type PartialAppState = Pick<
-  AppState,
-  'mouse' | 'cursor' | 'scroll' | 'gridSize'
->;
+export interface State {
+  mouse: Mouse;
+  scroll: Scroll;
+  gridSize: Coords;
+}
 
-const MOUSE_EVENTS = new Map([
-  ['mousemove', 'MOUSE_MOVE'],
-  ['mousedown', 'MOUSE_DOWN'],
-  ['mouseup', 'MOUSE_UP'],
-  ['mouseenter', 'MOUSE_ENTER'],
-  ['mouseleave', 'MOUSE_LEAVE']
-]);
+export interface MouseReducer {
+  mousemove: (state: Draft<State>, payload: Mouse) => void;
+}
+
+const reducers: {
+  [key in 'SELECT' | 'PAN']: MouseReducer;
+} = {
+  SELECT: {
+    mousemove: (state, payload) => {
+      state.mouse = payload;
+    }
+  },
+  PAN: {
+    mousemove: (state, payload) => {
+      state.mouse = payload;
+      state.scroll.position = payload.delta
+        ? state.scroll.position.subtract(payload.delta)
+        : state.scroll.position;
+    }
+  }
+};
+
+const parseToolEvent = (toolEvent: paper.ToolEvent, mouse: Mouse) => {
+  const position = new Coords(toolEvent.point.x, toolEvent.point.y);
+
+  let dragStart;
+
+  switch (toolEvent.type) {
+    case 'mousedown':
+      dragStart = position;
+      break;
+    case 'mouseup':
+      dragStart = null;
+      break;
+    default:
+      dragStart = mouse.dragStart;
+      break;
+  }
+
+  let delta: Coords | null = position.subtract(mouse.position);
+
+  if (delta.x === 0 && delta.y === 0) delta = null;
+
+  return {
+    position,
+    dragStart,
+    delta
+  };
+};
 
 export const useInterfaceManager = () => {
   const tool = useRef<paper.Tool>();
-  const mouse = useAppState((state) => state.mouse);
-  const setMouse = useAppState((state) => state.setMouse);
-  const cursor = useAppState((state) => state.cursor);
-  const setCursor = useAppState((state) => state.setCursor);
-  const gridSize = useAppState((state) => state.gridSize);
-  const scrollPosition = useScrollPosition();
+  const mode = useMode();
+  // const modeActions = useModeActions();
+  const gridSize = useGridSize();
+  const mouse = useMouse();
+  const mouseActions = useMouseActions();
+  // const cursor = useAppState((state) => state.cursor);
+  // const setCursor = useAppState((state) => state.setCursor);
+  // const gridSize = useAppState((state) => state.gridSize);
+  const scroll = useScroll();
   const scrollActions = useScrollActions();
 
   const onMouseEvent = useCallback(
-    (event: paper.ToolEvent) => {
-      const type = MOUSE_EVENTS.get(event.type);
+    (toolEvent: paper.ToolEvent) => {
+      const newMouse = parseToolEvent(toolEvent, mouse);
 
-      if (!type) return;
+      mouseActions.set(newMouse);
 
-      const newMouse = {
-        position: new Coords(event.point.x, event.point.y),
-        delta: event.delta ? new Coords(event.delta.x, event.delta.y) : null
-      };
-
-      const newState = selectReducer(
-        { type: 'MOUSE_MOVE', payload: { mouse: newMouse } },
-        {
-          mouse: {
-            position: mouse.position.clone(),
-            delta: mouse.delta?.clone() ?? null
-          },
-          cursor: {
-            position: cursor.position.clone()
-          },
-          gridSize: gridSize.clone(),
-          scroll: {
-            position: scrollPosition.clone(),
-            offset: scrollPosition.clone()
-          }
-        }
+      const reducer = reducers[mode.type];
+      const newState = produce({ mouse, scroll, gridSize }, (draft) =>
+        reducer.mousemove(draft, newMouse)
       );
 
-      setMouse(newState.mouse);
-      setCursor(newState.cursor);
-      scrollActions.setPosition(newState.scroll);
+      mouseActions.set(newState.mouse);
+      scrollActions.setPosition(newState.scroll.position);
+
+      // if (!modeReducer) {
+      //   throw new Error(`Could not activate mode: ${toolEvent.type}`);
+      // }
+
+      // modeReducer[toolEvent.type]?.({ mouse });
     },
-    [mouse, setMouse, cursor, setCursor, gridSize, scroll, setScroll]
+    [
+      mode,
+      mouse,
+      mouseActions.set,
+      scroll,
+      scrollActions.setPosition,
+      parseToolEvent,
+      gridSize
+    ]
   );
 
   useEffect(() => {

@@ -4,20 +4,26 @@ import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
+import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
 import { useZoom } from '../../stores/useZoomStore';
-import { useScrollPosition } from '../../stores/useScrollStore';
+import { useScroll } from '../../stores/useScrollStore';
 import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
+import { useGridSize } from '../../stores/useSceneStore';
+import { useMode } from '../../stores/useModeStore';
+import { useMouse } from '../../stores/useMouseStore';
 
 export const Renderer = () => {
   const renderer = useRenderer();
   const scene = useAppState((state) => state.scene);
+  const mode = useMode();
   const zoom = useZoom();
-  const scrollPosition = useScrollPosition();
+  const mouse = useMouse();
+  const gridSize = useGridSize();
+  const scroll = useScroll();
   const { activeLayer } = Paper.project;
   useInterfaceManager();
-  const { position: cursorPosition } = useAppState((state) => state.cursor);
 
   useEffect(() => {
     renderer.init();
@@ -35,16 +41,31 @@ export const Renderer = () => {
     const { center: viewCenter } = activeLayer.view.bounds;
 
     const newPosition = new Coords(
-      scrollPosition.x + viewCenter.x,
-      scrollPosition.y + viewCenter.y
+      scroll.position.x + viewCenter.x,
+      scroll.position.y + viewCenter.y
     );
 
     renderer.container.current.position.set(newPosition.x, newPosition.y);
-  }, [scrollPosition]);
+  }, [scroll.position]);
 
+  // Move cursor
   useEffect(() => {
-    renderer.cursor.moveTo(cursorPosition);
-  }, [cursorPosition, renderer.cursor.moveTo]);
+    if (mode.type !== 'SELECT') return;
+
+    const tile = getTileFromMouse({
+      gridSize,
+      mouse: mouse.position,
+      scroll: scroll.position
+    });
+
+    const tilePosition = getTilePosition(tile);
+    renderer.cursor.moveTo(tilePosition);
+  }, [mode, mouse.position, renderer.cursor.moveTo, gridSize, scroll.position]);
+
+  // Pan
+  useEffect(() => {
+    renderer.scrollTo(scroll.position);
+  }, [scroll.position]);
 
   return (
     <>

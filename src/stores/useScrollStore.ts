@@ -1,14 +1,17 @@
 import { create } from 'zustand';
 import { Coords } from '../utils/Coords';
 
-interface UseScrollStore {
+export interface Scroll {
   position: Coords;
   offset: Coords;
+}
+
+type UseScrollStore = Scroll & {
   actions: {
     setPosition: (position: Coords) => void;
     setOffset: (offset: Coords) => void;
   };
-}
+};
 
 const useScrollStore = create<UseScrollStore>((set) => ({
   position: new Coords(0, 0),
@@ -23,7 +26,6 @@ const useScrollStore = create<UseScrollStore>((set) => ({
   }
 }));
 
-export const useScrollPosition = () =>
-  useScrollStore((state) => state.position);
-export const useScrollOffset = () => useScrollStore((state) => state.offset);
+export const useScroll = () =>
+  useScrollStore(({ position, offset }) => ({ position, offset }));
 export const useScrollActions = () => useScrollStore((state) => state.actions);

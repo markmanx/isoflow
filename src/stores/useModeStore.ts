@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Mode =
+export type Mode =
   | {
       type: 'SELECT';
     }
