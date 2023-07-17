@@ -7,13 +7,18 @@ import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import { MenuItem } from '../MenuItem';
-import { useZoom } from '../Renderer/useZoom';
+import {
+  useZoom,
+  useZoomActions,
+  MIN_ZOOM,
+  MAX_ZOOM
+} from '../../stores/useZoomStore';
 import { useAppState } from '../Renderer/useAppState';
 
 export const ToolMenu = observer(() => {
   const theme = useTheme();
-  const { incrementZoom, decrementZoom, canIncrement, canDecrement } =
-    useZoom();
+  const zoom = useZoom();
+  const zoomActions = useZoomActions();
   const mode = useAppState((state) => state.mode);
   const setMode = useAppState((state) => state.setMode);
 
@@ -44,16 +49,16 @@ export const ToolMenu = observer(() => {
       <MenuItem
         name="Zoom in"
         Icon={ZoomInIcon}
-        onClick={incrementZoom}
+        onClick={zoomActions.increment}
         size={theme.customVars.toolMenu.height}
-        disabled={canIncrement}
+        disabled={zoom === MAX_ZOOM}
       />
       <MenuItem
         name="Zoom out"
         Icon={ZoomOutIcon}
-        onClick={decrementZoom}
+        onClick={zoomActions.decrement}
         size={theme.customVars.toolMenu.height}
-        disabled={canDecrement}
+        disabled={zoom === MIN_ZOOM}
       />
     </Card>
   );

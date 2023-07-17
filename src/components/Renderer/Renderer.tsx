@@ -5,13 +5,14 @@ import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
+import { useZoom } from '../../stores/useZoomStore';
 import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
 
 export const Renderer = () => {
   const renderer = useRenderer();
   const scene = useAppState((state) => state.scene);
-  const zoom = useAppState((state) => state.zoom);
+  const zoom = useZoom();
   const scroll = useAppState((state) => state.scroll);
   const { activeLayer } = Paper.project;
   useInterfaceManager();
