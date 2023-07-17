@@ -46,7 +46,7 @@ export const useRenderer = () => {
     container.current.set({ position: [0, 0] });
     Paper.project.activeLayer.addChild(container.current);
     scrollActions.setPosition(new Coords(0, 0));
-  }, [grid.init, cursor.init, setScroll]);
+  }, [grid.init, cursor.init, scrollActions.setPosition]);
 
   return {
     init,
