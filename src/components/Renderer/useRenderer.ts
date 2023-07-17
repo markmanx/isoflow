@@ -5,8 +5,8 @@ import { useGrid } from './useGrid';
 import { useNodeManager } from './useNodeManager';
 import { SceneI } from '../../validation/SceneSchema';
 import { Coords } from '../../utils/Coords';
-import { useAppState } from './useAppState';
 import { useCursor } from './useCursor';
+import { useScrollActions } from '../../stores/useScrollStore';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
@@ -14,7 +14,7 @@ export const useRenderer = () => {
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const cursor = useCursor();
-  const setScroll = useAppState((state) => state.setScroll);
+  const scrollActions = useScrollActions();
 
   const zoomTo = useCallback((zoom: number) => {
     gsap.to(Paper.project.activeLayer.view, {
@@ -45,7 +45,7 @@ export const useRenderer = () => {
     container.current.addChild(innerContainer.current);
     container.current.set({ position: [0, 0] });
     Paper.project.activeLayer.addChild(container.current);
-    setScroll({ position: new Coords(0, 0) });
+    scrollActions.setPosition(new Coords(0, 0));
   }, [grid.init, cursor.init, setScroll]);
 
   return {

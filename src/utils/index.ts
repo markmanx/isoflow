@@ -1,18 +1,20 @@
 import gsap from 'gsap';
 
-export const clamp = (num: number, min: number, max: number) => (num <= min ? min : num >= max ? max : num);
+export const clamp = (num: number, min: number, max: number) =>
+  num <= min ? min : num >= max ? max : num;
 
-export const getRandom = (min: number, max: number) => Math.floor(Math.random() * (max - min) + min);
+export const getRandom = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min) + min);
 
 export const tweenPosition = (
   item: paper.Item,
-  { x, y, duration }: { x: number; y: number; duration: number },
+  { x, y, duration }: { x: number; y: number; duration: number }
 ) => {
   // paperjs doesn't like it when you try to tween the position of an item directly,
   // so we have to use a proxy object
   const currPosition = {
     x: item.position.x,
-    y: item.position.y,
+    y: item.position.y
   };
 
   gsap.to(currPosition, {
@@ -22,6 +24,9 @@ export const tweenPosition = (
     y,
     onUpdate: () => {
       item.set({ position: currPosition });
-    },
+    }
   });
 };
+
+export const roundToOneDecimalPlace = (num: number) =>
+  Math.round(num * 10) / 10;

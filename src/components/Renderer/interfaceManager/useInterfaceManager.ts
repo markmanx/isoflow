@@ -3,6 +3,10 @@ import { Tool } from 'paper';
 import { useAppState, AppState } from '../useAppState';
 import { Coords } from '../../../utils/Coords';
 import { selectReducer } from './selectReducer';
+import {
+  useScrollPosition,
+  useScrollActions
+} from '../../../stores/useScrollStore';
 
 export type PartialAppState = Pick<
   AppState,
@@ -24,8 +28,8 @@ export const useInterfaceManager = () => {
   const cursor = useAppState((state) => state.cursor);
   const setCursor = useAppState((state) => state.setCursor);
   const gridSize = useAppState((state) => state.gridSize);
-  const scroll = useAppState((state) => state.scroll);
-  const setScroll = useAppState((state) => state.setScroll);
+  const scrollPosition = useScrollPosition();
+  const scrollActions = useScrollActions();
 
   const onMouseEvent = useCallback(
     (event: paper.ToolEvent) => {
@@ -50,15 +54,15 @@ export const useInterfaceManager = () => {
           },
           gridSize: gridSize.clone(),
           scroll: {
-            position: scroll.position.clone(),
-            offset: scroll.offset.clone()
+            position: scrollPosition.clone(),
+            offset: scrollPosition.clone()
           }
         }
       );
 
       setMouse(newState.mouse);
       setCursor(newState.cursor);
-      setScroll(newState.scroll);
+      scrollActions.setPosition(newState.scroll);
     },
     [mouse, setMouse, cursor, setCursor, gridSize, scroll, setScroll]
   );

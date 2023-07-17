@@ -1,11 +1,9 @@
 import { create } from 'zustand';
-import { clamp } from '../utils';
+import { clamp, roundToOneDecimalPlace } from '../utils';
 
 const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
-
-const roundToOneDecimalPlace = (num: number) => Math.round(num * 10) / 10;
 
 interface UseZoom {
   zoom: number;

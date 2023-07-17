@@ -6,6 +6,7 @@ import { useRenderer } from './useRenderer';
 import { Node } from './Node';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
 import { useZoom } from '../../stores/useZoomStore';
+import { useScrollPosition } from '../../stores/useScrollStore';
 import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
 
@@ -13,12 +14,10 @@ export const Renderer = () => {
   const renderer = useRenderer();
   const scene = useAppState((state) => state.scene);
   const zoom = useZoom();
-  const scroll = useAppState((state) => state.scroll);
+  const scrollPosition = useScrollPosition();
   const { activeLayer } = Paper.project;
   useInterfaceManager();
   const { position: cursorPosition } = useAppState((state) => state.cursor);
-  // const setZoom = useAppState((state) => state.setZoom);
-  // const setScroll = useAppState((state) => state.setScroll);
 
   useEffect(() => {
     renderer.init();
@@ -36,12 +35,12 @@ export const Renderer = () => {
     const { center: viewCenter } = activeLayer.view.bounds;
 
     const newPosition = new Coords(
-      scroll.position.x + viewCenter.x,
-      scroll.position.y + viewCenter.y
+      scrollPosition.x + viewCenter.x,
+      scrollPosition.y + viewCenter.y
     );
 
     renderer.container.current.position.set(newPosition.x, newPosition.y);
-  }, [scroll]);
+  }, [scrollPosition]);
 
   useEffect(() => {
     renderer.cursor.moveTo(cursorPosition);
