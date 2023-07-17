@@ -31,21 +31,29 @@ export const useCursor = () => {
     return container.current;
   }, []);
 
-  const moveTo = useCallback((position: Coords) => {
-    // For some reason, gsap doesn't like to tween x and y both to 0, so we clamp to just above 0.
-    const clampedPosition = new Coords(
-      position.x === 0 ? 0.000001 : position.x,
-      position.y === 0 ? 0.000001 : position.y
-    );
+  const moveTo = useCallback(
+    (position: Coords, opts?: { animationDuration?: number }) => {
+      // For some reason, gsap doesn't like to tween x and y both to 0, so we clamp to just above 0.
+      const clampedPosition = new Coords(
+        position.x === 0 ? 0.000001 : position.x,
+        position.y === 0 ? 0.000001 : position.y
+      );
 
-    gsap.to(container.current.position, {
-      duration: 0.1,
-      ...clampedPosition
-    });
+      gsap.to(container.current.position, {
+        duration: opts?.animationDuration || 0.1,
+        ...clampedPosition
+      });
+    },
+    []
+  );
+
+  const setVisible = useCallback((state: boolean) => {
+    container.current.visible = state;
   }, []);
 
   return {
     init,
-    moveTo
+    moveTo,
+    setVisible
   };
 };

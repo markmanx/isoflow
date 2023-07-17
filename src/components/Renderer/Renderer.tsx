@@ -67,6 +67,12 @@ export const Renderer = () => {
     renderer.scrollTo(scroll.position);
   }, [scroll.position]);
 
+  useEffect(() => {
+    const isCursorVisible = mode.type === 'SELECT';
+
+    renderer.cursor.setVisible(isCursorVisible);
+  }, [mode.type, mouse.position]);
+
   return (
     <>
       {scene.nodes.map((node) => (
