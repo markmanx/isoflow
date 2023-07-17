@@ -5,7 +5,7 @@ const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
 
-interface UseZoom {
+interface UseZoomStore {
   zoom: number;
   actions: {
     increment: () => void;
@@ -13,7 +13,7 @@ interface UseZoom {
   };
 }
 
-const useZoomStore = create<UseZoom>((set, get) => ({
+const useZoomStore = create<UseZoomStore>((set, get) => ({
   zoom: 1,
   actions: {
     increment: () => {

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Coords } from '../utils/Coords';
 
-interface UseScroll {
+interface UseScrollStore {
   position: Coords;
   offset: Coords;
   actions: {
@@ -10,14 +10,14 @@ interface UseScroll {
   };
 }
 
-const useScrollStore = create<UseScroll>((set) => ({
+const useScrollStore = create<UseScrollStore>((set) => ({
   position: new Coords(0, 0),
   offset: new Coords(0, 0),
   actions: {
-    setPosition: (position: Coords) => {
+    setPosition: (position) => {
       set({ position });
     },
-    setOffset: (offset: Coords) => {
+    setOffset: (offset) => {
       set({ offset });
     }
   }

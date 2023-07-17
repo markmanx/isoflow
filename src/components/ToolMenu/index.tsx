@@ -13,14 +13,14 @@ import {
   MIN_ZOOM,
   MAX_ZOOM
 } from '../../stores/useZoomStore';
-import { useAppState } from '../Renderer/useAppState';
+import { useMode, useModeActions } from '../../stores/useModeStore';
 
 export const ToolMenu = observer(() => {
   const theme = useTheme();
   const zoom = useZoom();
   const zoomActions = useZoomActions();
-  const mode = useAppState((state) => state.mode);
-  const setMode = useAppState((state) => state.setMode);
+  const mode = useMode();
+  const modeActions = useModeActions();
 
   return (
     <Card
@@ -35,14 +35,14 @@ export const ToolMenu = observer(() => {
       <MenuItem
         name="Select"
         Icon={NearMeIcon}
-        onClick={() => setMode({ type: 'SELECT' })}
+        onClick={() => modeActions.set({ type: 'SELECT' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'SELECT'}
       />
       <MenuItem
         name="Pan"
         Icon={PanToolIcon}
-        onClick={() => setMode({ type: 'PAN' })}
+        onClick={() => modeActions.set({ type: 'PAN' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'PAN'}
       />
