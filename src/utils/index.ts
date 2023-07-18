@@ -1,7 +1,18 @@
 import gsap from 'gsap';
+import { Coords } from './Coords';
 
 export const clamp = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num;
+
+export const nonZeroCoords = (coords: Coords) => {
+  // For some reason, gsap doesn't like to tween x and y both to 0, so we force 0 to be just above 0.
+  const newCoords = new Coords(
+    coords.x === 0 ? 0.000001 : coords.x,
+    coords.y === 0 ? 0.000001 : coords.y
+  );
+
+  return newCoords;
+};
 
 export const getRandom = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min) + min);

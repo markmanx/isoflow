@@ -1,8 +1,6 @@
-import {
-  useCallback, useRef,
-} from 'react';
+import { useCallback, useRef } from 'react';
 import { Group } from 'paper';
-import { NodeI } from '../../validation/SceneSchema';
+import { NodeSchemaI } from '../../validation/SceneSchema';
 import { useAppState } from './useAppState';
 
 export const useNodeManager = () => {
@@ -10,27 +8,27 @@ export const useNodeManager = () => {
   const setNodes = useAppState((state) => state.setNodes);
 
   const createNode = useCallback(
-    (node: NodeI) => {
+    (node: NodeSchemaI) => {
       setNodes((oldNodes) => [...oldNodes, node]);
     },
-    [setNodes],
+    [setNodes]
   );
 
   const updateNode = useCallback(
-    (id: string, updates: NodeI) => {
+    (id: string, updates: NodeSchemaI) => {
       setNodes((oldNodes) => {
-        const nodeIndex = oldNodes.findIndex((node) => node.id === id);
+        const NodeSchemaIndex = oldNodes.findIndex((node) => node.id === id);
 
-        if (nodeIndex === -1) return oldNodes;
+        if (NodeSchemaIndex === -1) return oldNodes;
 
         const newNodes = [...oldNodes];
-        const nodeToUpdate = { ...newNodes[nodeIndex], ...updates };
-        newNodes[nodeIndex] = nodeToUpdate;
+        const nodeToUpdate = { ...newNodes[NodeSchemaIndex], ...updates };
+        newNodes[NodeSchemaIndex] = nodeToUpdate;
 
         return newNodes;
       });
     },
-    [setNodes],
+    [setNodes]
   );
 
   const destroy = useCallback(() => {
@@ -42,6 +40,6 @@ export const useNodeManager = () => {
     createNode,
     updateNode,
     container: container.current,
-    destroy,
+    destroy
   };
 };

@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { TILE_SIZE, PIXEL_UNIT } from './constants';
 import { applyProjectionMatrix } from './utils/projection';
 import { Coords } from '../../utils/Coords';
+import { nonZeroCoords } from '../../utils';
 
 export const useCursor = () => {
   const container = useRef(new Group());
@@ -33,15 +34,17 @@ export const useCursor = () => {
 
   const moveTo = useCallback(
     (position: Coords, opts?: { animationDuration?: number }) => {
-      // For some reason, gsap doesn't like to tween x and y both to 0, so we clamp to just above 0.
-      const clampedPosition = new Coords(
-        position.x === 0 ? 0.000001 : position.x,
-        position.y === 0 ? 0.000001 : position.y
+      const tweenProxy = new Coords(
+        container.current.position.x,
+        container.current.position.y
       );
 
-      gsap.to(container.current.position, {
+      gsap.to(tweenProxy, {
         duration: opts?.animationDuration || 0.1,
-        ...clampedPosition
+        ...position,
+        onUpdate: () => {
+          container.current.position.set(tweenProxy);
+        }
       });
     },
     []

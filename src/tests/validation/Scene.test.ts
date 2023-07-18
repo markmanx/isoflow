@@ -1,9 +1,9 @@
 /* eslint-disable jest/no-conditional-expect */
 import {
   SceneSchema,
-  NodeI,
-  ConnectorI,
-  GroupI,
+  NodeSchemaI,
+  ConnectorSchemaI,
+  GroupSchemaI,
   findInvalidNode,
   findInvalidConnector,
   findInvalidGroup,
@@ -28,7 +28,7 @@ describe("scene validation works correctly", () => {
       iconId: "doesntExist",
       position: { x: -1, y: -1 },
     };
-    const nodes: NodeI[] = [...scene.nodes, invalidNode];
+    const nodes: NodeSchemaI[] = [...scene.nodes, invalidNode];
 
     const result = findInvalidNode(nodes, icons);
 
@@ -43,7 +43,7 @@ describe("scene validation works correctly", () => {
       to: "invalidNode",
       label: null,
     };
-    const connectors: ConnectorI[] = [...scene.connectors, invalidConnector];
+    const connectors: ConnectorSchemaI[] = [...scene.connectors, invalidConnector];
 
     const result = findInvalidConnector(connectors, nodes);
 
@@ -57,7 +57,7 @@ describe("scene validation works correctly", () => {
       label: null,
       nodes: ["invalidNode", "node1"],
     };
-    const groups: GroupI[] = [...scene.groups, invalidGroup];
+    const groups: GroupSchemaI[] = [...scene.groups, invalidGroup];
 
     const result = findInvalidGroup(groups, nodes);
 

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { SceneI, NodeI } from '../../validation/SceneSchema';
+import { SceneI, NodeSchemaI } from '../../validation/SceneSchema';
 import { Coords } from '../../utils/Coords';
 
 interface Node {
@@ -52,7 +52,7 @@ export interface AppState {
     position?: Coords;
     delta: Coords | null;
   }) => void;
-  setNodes: (newNodes: (oldNodes: NodeI[]) => NodeI[]) => void;
+  setNodes: (newNodes: (oldNodes: NodeSchemaI[]) => NodeSchemaI[]) => void;
 }
 
 export const useAppState = create<AppState>((set, get) => ({

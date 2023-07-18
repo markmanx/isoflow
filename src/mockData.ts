@@ -1,4 +1,4 @@
-import type { SceneI, IconI, NodeI } from "./validation/SceneSchema";
+import type { SceneI, IconI, NodeSchemaI } from "./validation/SceneSchema";
 
 export const icons: IconI[] = [
   {
@@ -50,7 +50,7 @@ export const icons: IconI[] = [
   },
 ];
 
-export const nodes: NodeI[] = [
+export const nodes: NodeSchemaI[] = [
   {
     id: "Node1",
     label: "Node 1",

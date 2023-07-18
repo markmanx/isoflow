@@ -68,11 +68,11 @@ export class Nodes {
 
   onDestroy(node: Node) {
     const id = node.id;
-    const nodeIndex = this.nodes.indexOf(node);
+    const NodeSchemaIndex = this.nodes.indexOf(node);
 
-    if (nodeIndex === -1) return;
+    if (NodeSchemaIndex === -1) return;
 
-    this.nodes.splice(nodeIndex, 1);
+    this.nodes.splice(NodeSchemaIndex, 1);
 
     this.ctx.emitEvent({
       type: "NODE_REMOVED",

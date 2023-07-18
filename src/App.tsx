@@ -10,6 +10,7 @@ import { ToolMenu } from "./components/ToolMenu";
 import { SceneI } from './validation/SceneSchema';
 import { ModeManagerProvider } from './contexts/ModeManagerContext';
 import { useAppState } from './components/Renderer/useAppState';
+import {useSceneActions} from './stores/useSceneStore';
 import { OnSceneChange } from './types';
 import { GlobalStyles } from './GlobalStyles';
 import { Initialiser as Renderer } from './components/Renderer/Renderer';
@@ -48,7 +49,7 @@ const App = observer(
   ({
     initialScene, width, height, onSceneChange,
   }: Props) => {
-    const setScene = useAppState((state) => state.setScene);
+    const sceneActions = useSceneActions();
     // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
 
     // useEffect(() => {
@@ -58,8 +59,8 @@ const App = observer(
     // }, [setOnSceneChange, onSceneChange]);
 
     useEffect(() => {
-      setScene(initialScene);
-    }, [initialScene, setScene]);
+      sceneActions.set(initialScene);
+    }, [initialScene, sceneActions.set]);
 
     return <InnerApp height={height} width={width} />;
   },

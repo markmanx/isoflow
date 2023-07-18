@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { NodeSchemaI } from '../validation/SceneSchema';
 
 export type Mode =
   | {
@@ -6,6 +7,10 @@ export type Mode =
     }
   | {
       type: 'PAN';
+    }
+  | {
+      type: 'DRAG_ITEMS';
+      nodes: NodeSchemaI[];
     };
 
 interface UseModeStore {

@@ -8,15 +8,14 @@ import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
 import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
 import { useZoom } from '../../stores/useZoomStore';
 import { useScroll } from '../../stores/useScrollStore';
-import { useAppState } from './useAppState';
 import { Coords } from '../../utils/Coords';
-import { useGridSize } from '../../stores/useSceneStore';
+import { useGridSize, useScene } from '../../stores/useSceneStore';
 import { useMode } from '../../stores/useModeStore';
 import { useMouse } from '../../stores/useMouseStore';
 
 export const Renderer = () => {
   const renderer = useRenderer();
-  const scene = useAppState((state) => state.scene);
+  const scene = useScene();
   const mode = useMode();
   const zoom = useZoom();
   const mouse = useMouse();
