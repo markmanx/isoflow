@@ -3,31 +3,31 @@ import { Coords } from '../utils/Coords';
 
 export interface Mouse {
   position: Coords;
-  dragStart: Coords | null;
+  mouseDownAt: Coords | null;
   delta: Coords | null;
 }
 
 type UseMouseStore = Mouse & {
   actions: {
-    set: ({ position, dragStart }: Mouse) => void;
+    set: ({ position, mouseDownAt }: Mouse) => void;
   };
 };
 
 const useMouseStore = create<UseMouseStore>((set) => ({
   position: new Coords(0, 0),
-  dragStart: null,
+  mouseDownAt: null,
   delta: null,
   actions: {
-    set: ({ position, dragStart, delta }) => {
-      set({ position, dragStart, delta });
+    set: ({ position, mouseDownAt, delta }) => {
+      set({ position, mouseDownAt, delta });
     }
   }
 }));
 
 export const useMouse = () =>
-  useMouseStore(({ position, dragStart, delta }) => ({
+  useMouseStore(({ position, mouseDownAt, delta }) => ({
     position,
-    dragStart,
+    mouseDownAt,
     delta
   }));
 export const useMouseActions = () => useMouseStore((state) => state.actions);

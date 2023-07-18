@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
 import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
-import { useInterfaceManager } from './interfaceManager/useInterfaceManager';
+import { useInteractionManager } from './interactionManager/useInteractionManager';
 import { useZoom } from '../../stores/useZoomStore';
 import { useScroll } from '../../stores/useScrollStore';
 import { Coords } from '../../utils/Coords';
@@ -22,7 +22,7 @@ export const Renderer = () => {
   const gridSize = useGridSize();
   const scroll = useScroll();
   const { activeLayer } = Paper.project;
-  useInterfaceManager();
+  useInteractionManager();
 
   useEffect(() => {
     renderer.init();

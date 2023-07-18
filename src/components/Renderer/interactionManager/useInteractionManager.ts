@@ -18,8 +18,8 @@ import {
   useSceneActions,
   useGridSize
 } from '../../../stores/useSceneStore';
-import { getTileFromMouse, getItemsFromTile } from '../utils/gridHelpers';
-import { SceneI, NodeSchemaI } from '../../../validation/SceneSchema';
+import { SceneI } from '../../../validation/SceneSchema';
+import { Select, DragItems, Pan } from './reducers';
 
 export interface State {
   mouse: Mouse;
@@ -29,105 +29,36 @@ export interface State {
   scene: SceneI;
 }
 
-export type MouseReducerAction = (state: Draft<State>, payload: Mouse) => void;
+type InteractionReducerAction = (state: Draft<State>) => void;
 
-export interface MouseReducer {
-  mousemove: MouseReducerAction;
-  mousedown: MouseReducerAction;
-  mouseup: MouseReducerAction;
-}
+export type InteractionReducer = {
+  mousemove: InteractionReducerAction;
+  mousedown: InteractionReducerAction;
+  mouseup: InteractionReducerAction;
+};
 
 const reducers: {
-  [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS']: MouseReducer;
+  [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS']: InteractionReducer;
 } = {
-  SELECT: {
-    mousemove: (state, mouse) => {
-      state.mouse = mouse;
-    },
-    mousedown: (state, mouse) => {
-      state.mouse.dragStart = mouse.position;
-
-      const tile = getTileFromMouse({
-        mouse: mouse.position,
-        gridSize: state.gridSize,
-        scroll: state.scroll.position
-      });
-
-      const tileItems = getItemsFromTile(tile, state.scene);
-
-      if (tileItems.length > 0) {
-        state.mode = { type: 'DRAG_ITEMS', nodes: tileItems };
-      }
-    },
-    mouseup: (state, mouse) => {
-      state.mouse = mouse;
-      state.mouse.dragStart = null;
-    }
-  },
-  DRAG_ITEMS: {
-    mousemove: (state, mouse) => {
-      if (state.mode.type !== 'DRAG_ITEMS') return;
-
-      const tile = getTileFromMouse({
-        mouse: mouse.position,
-        gridSize: state.gridSize,
-        scroll: state.scroll.position
-      });
-
-      state.mode.nodes.forEach((node) => {
-        const sceneNodeIndex = state.scene.nodes.findIndex(
-          (sceneNode) => sceneNode.id === node.id
-        );
-
-        if (sceneNodeIndex === -1) return;
-
-        state.scene.nodes[sceneNodeIndex].position = tile;
-      });
-
-      state.mouse = mouse;
-    },
-    mousedown: (state, mouse) => {},
-    mouseup: (state, mouse) => {
-      state.mouse = mouse;
-      state.mouse.dragStart = null;
-      state.mode = { type: 'SELECT' };
-    }
-  },
-  PAN: {
-    mousemove: (state, mouse) => {
-      state.mouse = mouse;
-
-      if (state.mouse.dragStart === null) return;
-
-      state.scroll.position = mouse.delta
-        ? state.scroll.position.add(mouse.delta)
-        : state.scroll.position;
-    },
-    mousedown: (state, mouse) => {
-      state.mouse = mouse;
-      state.mouse.dragStart = mouse.position;
-    },
-    mouseup: (state, mouse) => {
-      state.mouse = mouse;
-      state.mouse.dragStart = null;
-    }
-  }
+  SELECT: Select,
+  DRAG_ITEMS: DragItems,
+  PAN: Pan
 };
 
 const parseToolEvent = (toolEvent: paper.ToolEvent, mouse: Mouse) => {
   const position = new Coords(toolEvent.point.x, toolEvent.point.y);
 
-  let dragStart;
+  let mouseDownAt: Mouse['mouseDownAt'];
 
   switch (toolEvent.type) {
     case 'mousedown':
-      dragStart = position;
+      mouseDownAt = position;
       break;
     case 'mouseup':
-      dragStart = null;
+      mouseDownAt = null;
       break;
     default:
-      dragStart = mouse.dragStart;
+      mouseDownAt = mouse.mouseDownAt;
       break;
   }
 
@@ -137,12 +68,12 @@ const parseToolEvent = (toolEvent: paper.ToolEvent, mouse: Mouse) => {
 
   return {
     position,
-    dragStart,
+    mouseDownAt,
     delta
   };
 };
 
-export const useInterfaceManager = () => {
+export const useInteractionManager = () => {
   const tool = useRef<paper.Tool>();
   const mode = useMode();
   const modeActions = useModeActions();
@@ -161,7 +92,7 @@ export const useInterfaceManager = () => {
     (toolEvent: paper.ToolEvent) => {
       const reducer = reducers[mode.type];
 
-      let reducerAction: MouseReducerAction;
+      let reducerAction: InteractionReducerAction;
 
       switch (toolEvent.type) {
         case 'mousedown':
@@ -179,12 +110,12 @@ export const useInterfaceManager = () => {
 
       const newMouse = parseToolEvent(toolEvent, mouse);
       const newState = produce(
-        { mouse, scroll, gridSize, scene, mode },
-        (draft) => reducerAction(draft, newMouse)
+        { mouse: newMouse, scroll, gridSize, scene, mode },
+        (draft) => reducerAction(draft)
       );
 
-      mouseActions.set(newState.mouse);
       scrollActions.setPosition(newState.scroll.position);
+      mouseActions.set(newMouse);
       modeActions.set(newState.mode);
       sceneActions.set(newState.scene);
     },
@@ -205,8 +136,8 @@ export const useInterfaceManager = () => {
     tool.current.onMouseMove = onMouseEvent;
     tool.current.onMouseDown = onMouseEvent;
     tool.current.onMouseUp = onMouseEvent;
-    tool.current.onKeyDown = onMouseEvent;
-    tool.current.onKeyUp = onMouseEvent;
+    // tool.current.onKeyDown = onMouseEvent;
+    // tool.current.onKeyUp = onMouseEvent;
 
     return () => {
       tool.current?.remove();

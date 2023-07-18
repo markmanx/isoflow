@@ -7,7 +7,7 @@ import { CURSOR_TYPES } from '../renderer/elements/Cursor';
 import { Coords } from '../renderer/elements/Coords';
 
 export class Select extends ModeBase {
-  dragStartTile: Coords | null = null;
+  mouseDownAtTile: Coords | null = null;
 
   entry(mouse: Mouse) {
     this.ctx.renderer.unfocusAll();
@@ -39,11 +39,11 @@ export class Select extends ModeBase {
       });
     }
 
-    this.dragStartTile = null;
+    this.mouseDownAtTile = null;
   }
 
   MOUSE_DOWN(mouse: Mouse) {
-    this.dragStartTile = this.ctx.renderer.getTileFromMouse(mouse.position);
+    this.mouseDownAtTile = this.ctx.renderer.getTileFromMouse(mouse.position);
 
     const { renderer } = this.ctx;
     const tile = renderer.getTileFromMouse(mouse.position);
@@ -66,9 +66,9 @@ export class Select extends ModeBase {
       if (currentTile.isEqual(prevTile)) return;
     }
 
-    if (this.dragStartTile && !currentTile.isEqual(this.dragStartTile)) {
+    if (this.mouseDownAtTile && !currentTile.isEqual(this.mouseDownAtTile)) {
       this.ctx.activateMode(CreateLasso, (mode) => {
-        this.dragStartTile && mode.setStartTile(this.dragStartTile);
+        this.mouseDownAtTile && mode.setStartTile(this.mouseDownAtTile);
         mode.MOUSE_MOVE(mouse);
       });
 
