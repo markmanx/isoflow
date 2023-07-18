@@ -5,21 +5,22 @@ import { Coords } from '../../../utils/Coords';
 import {
   useScroll,
   useScrollActions,
-  Scroll
-} from '../../../stores/useScrollStore';
-import { useMode, useModeActions, Mode } from '../../../stores/useModeStore';
-import {
+  Scroll,
+  useMode,
+  useModeActions,
+  Mode,
   useMouse,
   useMouseActions,
-  Mouse
-} from '../../../stores/useMouseStore';
-import {
+  Mouse,
   useScene,
   useSceneActions,
-  useGridSize
-} from '../../../stores/useSceneStore';
+  useGridSize,
+  useUiState,
+  useUiStateActions,
+  UseUiStore
+} from '../../../stores';
 import { SceneI } from '../../../validation/SceneSchema';
-import { Select, DragItems, Pan } from './reducers';
+import { Select, DragItems, Pan, Cursor } from './reducers';
 import { getTileFromMouse } from '../utils/gridHelpers';
 
 export interface State {
@@ -28,6 +29,7 @@ export interface State {
   scroll: Scroll;
   gridSize: Coords;
   scene: SceneI;
+  uiState: Omit<UseUiStore, 'actions'>;
 }
 
 type InteractionReducerAction = (
@@ -39,11 +41,13 @@ export type InteractionReducer = {
   mousemove: InteractionReducerAction;
   mousedown: InteractionReducerAction;
   mouseup: InteractionReducerAction;
+  onTileOver: InteractionReducerAction;
 };
 
 const reducers: {
-  [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS']: InteractionReducer;
+  [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS' | 'CURSOR']: InteractionReducer;
 } = {
+  CURSOR: Cursor,
   SELECT: Select,
   DRAG_ITEMS: DragItems,
   PAN: Pan
@@ -81,6 +85,8 @@ export const useInteractionManager = () => {
   const tool = useRef<paper.Tool>();
   const mode = useMode();
   const modeActions = useModeActions();
+  const uiState = useUiState();
+  const uiStateActions = useUiStateActions();
   const gridSize = useGridSize();
   const mouse = useMouse();
   const mouseActions = useMouseActions();
@@ -112,19 +118,29 @@ export const useInteractionManager = () => {
       }
 
       const newMouse = parseToolEvent(toolEvent, mouse);
+      mouseActions.set(newMouse);
+
+      const prevTile = getTileFromMouse({
+        mouse: mouse.position,
+        gridSize,
+        scroll: scroll.position
+      });
       const tile = getTileFromMouse({
         mouse: newMouse.position,
         gridSize,
         scroll: scroll.position
       });
 
+      if (!prevTile.isEqual(tile)) {
+        reducerAction = reducer.onTileOver;
+      }
+
       const newState = produce(
-        { mouse: newMouse, scroll, gridSize, scene, mode },
+        { mouse: newMouse, scroll, gridSize, scene, mode, uiState },
         (draft) => reducerAction(draft, { tile })
       );
 
       scrollActions.setPosition(newState.scroll.position);
-      mouseActions.set(newMouse);
       modeActions.set(newState.mode);
       sceneActions.set(newState.scene);
     },

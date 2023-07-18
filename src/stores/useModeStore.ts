@@ -1,7 +1,10 @@
 import { create } from 'zustand';
-import { NodeSchemaI } from '../validation/SceneSchema';
+import type { Item } from './useUiStateStore';
 
 export type Mode =
+  | {
+      type: 'CURSOR';
+    }
   | {
       type: 'SELECT';
     }
@@ -10,7 +13,7 @@ export type Mode =
     }
   | {
       type: 'DRAG_ITEMS';
-      nodes: NodeSchemaI[];
+      items: Item[];
       hasMovedTile: boolean;
     };
 
@@ -22,7 +25,7 @@ interface UseModeStore {
 }
 
 const useModeStore = create<UseModeStore>((set) => ({
-  mode: { type: 'SELECT' },
+  mode: { type: 'CURSOR' },
   actions: {
     set: (mode) => {
       set({ mode });

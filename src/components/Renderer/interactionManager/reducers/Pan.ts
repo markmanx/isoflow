@@ -1,5 +1,4 @@
 import { InteractionReducer } from '../useInteractionManager';
-import { getTileFromMouse } from '../../utils/gridHelpers';
 
 export const Pan: InteractionReducer = {
   mousemove: (state) => {
@@ -9,6 +8,7 @@ export const Pan: InteractionReducer = {
       ? state.scroll.position.add(state.mouse.delta)
       : state.scroll.position;
   },
-  mousedown: (state) => {},
-  mouseup: (state) => {}
+  mousedown: () => {},
+  mouseup: () => {},
+  onTileOver: () => {}
 };

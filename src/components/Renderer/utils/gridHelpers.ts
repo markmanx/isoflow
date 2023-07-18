@@ -3,6 +3,7 @@ import { PROJECTED_TILE_DIMENSIONS } from '../constants';
 import { Coords } from '../../../utils/Coords';
 import { clamp } from '../../../utils';
 import { SceneI, NodeSchemaI } from '../../../validation/SceneSchema';
+import { Item } from '../../../stores';
 
 interface GetTileFromMouse {
   mouse: Coords;
@@ -67,8 +68,13 @@ export const getTileBounds = (coords: Coords) => {
   };
 };
 
-export const getItemsFromTile = (tile: Coords, scene: SceneI): NodeSchemaI[] =>
-  scene.nodes.filter((node) => {
-    const position = new Coords(node.position.x, node.position.y);
-    return position.isEqual(tile);
-  });
+export const getItemsFromTile = (tile: Coords, scene: SceneI): Item[] => {
+  const nodes = scene.nodes
+    .filter((node) => {
+      const position = new Coords(node.position.x, node.position.y);
+      return position.isEqual(tile);
+    })
+    .map((node) => ({ type: 'NODE', id: node.id })) as Item[];
+
+  return [...nodes];
+};

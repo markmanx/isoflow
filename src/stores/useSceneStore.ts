@@ -8,16 +8,19 @@ import {
 } from '../validation/SceneSchema';
 import { Coords } from '../utils/Coords';
 
-interface UseSceneStore {
+export interface Scene {
   nodes: NodeSchemaI[];
   connectors: ConnectorSchemaI[];
   groups: GroupSchemaI[];
   icons: IconI[];
   gridSize: Coords;
+}
+
+export type UseSceneStore = Scene & {
   actions: {
     set: (scene: SceneI) => void;
   };
-}
+};
 
 const useSceneStore = create<UseSceneStore>((set, get) => ({
   nodes: [],

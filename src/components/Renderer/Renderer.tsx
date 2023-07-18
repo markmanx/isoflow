@@ -49,7 +49,7 @@ export const Renderer = () => {
 
   // Move cursor
   useEffect(() => {
-    if (mode.type !== 'SELECT') return;
+    if (mode.type !== 'CURSOR') return;
 
     const tile = getTileFromMouse({
       gridSize,
@@ -67,7 +67,7 @@ export const Renderer = () => {
   }, [scroll.position]);
 
   useEffect(() => {
-    const isCursorVisible = mode.type === 'SELECT';
+    const isCursorVisible = mode.type === 'CURSOR';
 
     renderer.cursor.setVisible(isCursorVisible);
   }, [mode.type, mouse.position]);

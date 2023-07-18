@@ -35,9 +35,9 @@ export const ToolMenu = observer(() => {
       <MenuItem
         name="Select"
         Icon={NearMeIcon}
-        onClick={() => modeActions.set({ type: 'SELECT' })}
+        onClick={() => modeActions.set({ type: 'CURSOR' })}
         size={theme.customVars.toolMenu.height}
-        isActive={mode.type === 'SELECT'}
+        isActive={mode.type === 'CURSOR'}
       />
       <MenuItem
         name="Pan"
