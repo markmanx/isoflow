@@ -20,6 +20,7 @@ import {
 } from '../../../stores/useSceneStore';
 import { SceneI } from '../../../validation/SceneSchema';
 import { Select, DragItems, Pan } from './reducers';
+import { getTileFromMouse } from '../utils/gridHelpers';
 
 export interface State {
   mouse: Mouse;
@@ -29,7 +30,10 @@ export interface State {
   scene: SceneI;
 }
 
-type InteractionReducerAction = (state: Draft<State>) => void;
+type InteractionReducerAction = (
+  state: Draft<State>,
+  payload: { tile: Coords }
+) => void;
 
 export type InteractionReducer = {
   mousemove: InteractionReducerAction;
@@ -91,7 +95,6 @@ export const useInteractionManager = () => {
   const onMouseEvent = useCallback(
     (toolEvent: paper.ToolEvent) => {
       const reducer = reducers[mode.type];
-
       let reducerAction: InteractionReducerAction;
 
       switch (toolEvent.type) {
@@ -109,9 +112,15 @@ export const useInteractionManager = () => {
       }
 
       const newMouse = parseToolEvent(toolEvent, mouse);
+      const tile = getTileFromMouse({
+        mouse: newMouse.position,
+        gridSize,
+        scroll: scroll.position
+      });
+
       const newState = produce(
         { mouse: newMouse, scroll, gridSize, scene, mode },
-        (draft) => reducerAction(draft)
+        (draft) => reducerAction(draft, { tile })
       );
 
       scrollActions.setPosition(newState.scroll.position);

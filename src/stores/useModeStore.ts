@@ -11,6 +11,7 @@ export type Mode =
   | {
       type: 'DRAG_ITEMS';
       nodes: NodeSchemaI[];
+      hasMovedTile: boolean;
     };
 
 interface UseModeStore {

@@ -1,19 +1,17 @@
 import { InteractionReducer } from '../useInteractionManager';
-import { getTileFromMouse, getItemsFromTile } from '../../utils/gridHelpers';
+import { getItemsFromTile } from '../../utils/gridHelpers';
 
 export const Select: InteractionReducer = {
   mousemove: (state) => {},
-  mousedown: (state) => {
-    const tile = getTileFromMouse({
-      mouse: state.mouse.position,
-      gridSize: state.gridSize,
-      scroll: state.scroll.position
-    });
-
+  mousedown: (state, { tile }) => {
     const tileItems = getItemsFromTile(tile, state.scene);
 
     if (tileItems.length > 0) {
-      state.mode = { type: 'DRAG_ITEMS', nodes: tileItems };
+      state.mode = {
+        type: 'DRAG_ITEMS',
+        nodes: tileItems,
+        hasMovedTile: false
+      };
     }
   },
   mouseup: (state) => {}
