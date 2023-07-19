@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { Path, Point, Group } from 'paper';
 import { applyProjectionMatrix } from './utils/projection';
-import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from './constants';
+import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from './utils/constants';
 import { useAppState } from './useAppState';
 
 const LINE_STYLE = {

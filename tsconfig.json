@@ -11,11 +11,7 @@
     "strict": true
   },
   "include": [
-    "src/components/Renderer/**/*.ts",
-    "src/components/Renderer/**/*.tsx",
-    "src/components/ToolMenu/**/*.tsx",
-    "src/stores/**/*.ts",
-    // "src/**/*.ts",
-    // "src/**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
 }
