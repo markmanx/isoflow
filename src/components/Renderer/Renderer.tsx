@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import Paper from 'paper';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
@@ -19,7 +19,9 @@ import {
   useMode,
   useMouse,
   useUiState,
-  useSceneActions
+  useSceneStore,
+  useSceneActions,
+  useUiStateStore
 } from '../../stores';
 import { NodeSchemaI } from '../../validation/SceneSchema';
 
@@ -108,38 +110,33 @@ const render = () => {
 };
 
 const NodeContextMenu = (node: NodeSchemaI) => {
-  const [positionProxy, setPositionProxy] = useState<Coords>();
+  const container = useRef<HTMLDivElement>();
   const scrollPosition = useScrollPosition();
   const zoom = useZoom();
 
-  const tweenTo = useCallback(
-    (to: Coords) => {
-      const screenPosition = getTileScreenPosition(
-        new Coords(to.x, to.y),
-        scrollPosition,
-        zoom
-      );
-
-      setPositionProxy(screenPosition);
-    },
-    [scrollPosition, zoom]
-  );
-
   useEffect(() => {
-    tweenTo(new Coords(node.position.x, node.position.y));
-    console.log('YO');
-  }, [tweenTo, node.position]);
+    if (!container.current) return;
 
-  if (!positionProxy) return null;
+    const screenPosition = getTileScreenPosition(
+      new Coords(node.position.x, node.position.y),
+      scrollPosition,
+      zoom
+    );
+
+    gsap.to(container.current, {
+      duration: 0.1,
+      left: screenPosition.x,
+      top: screenPosition.y
+    });
+  }, [node.position, scrollPosition, zoom]);
 
   return (
     <Box
+      ref={container}
       sx={{
         position: 'absolute',
         width: 100,
         height: 100,
-        left: positionProxy.x,
-        top: positionProxy.y,
         bgcolor: 'primary.main'
       }}
     >
@@ -149,8 +146,21 @@ const NodeContextMenu = (node: NodeSchemaI) => {
 };
 
 const DomOverlay = () => {
-  const { selectedItems } = useUiState();
-  const sceneActions = useSceneActions();
+  const selectedItems = useUiStateStore((state) => state.selectedItems);
+  const nodes = useSceneStore((state) => state.nodes);
+  const selectedNodes = useMemo(
+    () =>
+      selectedItems.map((item) => {
+        if (item.type === 'NODE') {
+          const node = nodes.find((n) => n.id === item.id);
+
+          if (!node) return null;
+
+          return node;
+        }
+      }),
+    [selectedItems, nodes]
+  );
 
   return (
     <Box
@@ -162,14 +172,10 @@ const DomOverlay = () => {
         height: 0
       }}
     >
-      {selectedItems.map((item) => {
-        if (item.type === 'NODE') {
-          const node = sceneActions.getNodeById(item.id);
+      {selectedNodes.map((node) => {
+        if (!node) return;
 
-          if (!node) return null;
-
-          return <NodeContextMenu key={item.id} {...node} />;
-        }
+        return <NodeContextMenu key={node.id} {...node} />;
       })}
     </Box>
   );

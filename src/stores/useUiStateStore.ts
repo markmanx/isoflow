@@ -19,7 +19,7 @@ export type UseUiStore = {
   };
 };
 
-const useUiStateStore = create<UseUiStore>((set) => ({
+export const useUiStateStore = create<UseUiStore>((set) => ({
   selectedItems: [],
   actions: {
     setSelectedItems: (items) => {

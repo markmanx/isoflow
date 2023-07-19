@@ -23,7 +23,7 @@ export type UseSceneStore = Scene & {
   };
 };
 
-const useSceneStore = create<UseSceneStore>((set, get) => ({
+export const useSceneStore = create<UseSceneStore>((set, get) => ({
   nodes: [],
   connectors: [],
   groups: [],
