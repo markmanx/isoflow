@@ -1,8 +1,8 @@
 import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import gsap from 'gsap';
-import { TILE_SIZE, PIXEL_UNIT } from './utils/constants';
-import { applyProjectionMatrix } from './utils/projection';
+import { TILE_SIZE, PIXEL_UNIT } from '../../utils/constants';
+import { applyProjectionMatrix } from '../../utils/projection';
 import { Coords } from '../../utils/Coords';
 
 export const useCursor = () => {

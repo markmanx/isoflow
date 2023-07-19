@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { Group, Raster } from 'paper';
 import { useScene } from '../../stores/useSceneStore';
-import { PROJECTED_TILE_DIMENSIONS } from './utils/constants';
+import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
 
 const NODE_IMG_PADDING = 0;
 

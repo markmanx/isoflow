@@ -1,52 +1,49 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Paper from 'paper';
-import { Box } from '@mui/material';
 import gsap from 'gsap';
+import { Box } from '@mui/material';
+import { Coords } from 'src/utils/Coords';
+import { useUiStateStore, useSceneStore } from 'src/stores';
+import { useInteractionManager } from 'src/interaction/useInteractionManager';
+import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
-import { Node } from './Node';
+import { Node } from './components/node/Node';
 import {
   getTileFromMouse,
   getTilePosition,
   getTileScreenPosition
 } from './utils/gridHelpers';
-import { useInteractionManager } from './interactionManager/useInteractionManager';
-import { Coords } from '../../utils/Coords';
-import {
-  useZoom,
-  useScrollPosition,
-  useGridSize,
-  useScene,
-  useMode,
-  useMouse,
-  useUiState,
-  useSceneStore,
-  useSceneActions,
-  useUiStateStore
-} from '../../stores';
-import { NodeSchemaI } from '../../validation/SceneSchema';
 
-export const Renderer = () => {
+const InitialisedRenderer = () => {
   const renderer = useRenderer();
-  const scene = useScene();
-  const mode = useMode();
-  const zoom = useZoom();
-  const mouse = useMouse();
-  const gridSize = useGridSize();
-  const scrollPosition = useScrollPosition();
+  const scene = useSceneStore(({ nodes }) => ({ nodes }));
+  const gridSize = useSceneStore((state) => state.gridSize);
+  const mode = useUiStateStore((state) => state.mode);
+  const zoom = useUiStateStore((state) => state.zoom);
+  const mouse = useUiStateStore((state) => state.mouse);
+  const scroll = useUiStateStore((state) => state.scroll);
   const { activeLayer } = Paper.project;
   useInteractionManager();
 
+  const {
+    init: initRenderer,
+    zoomTo,
+    container: rendererContainer,
+    scrollTo
+  } = renderer;
+  const { position: scrollPosition } = scroll;
+
   useEffect(() => {
-    renderer.init();
+    initRenderer();
 
     return () => {
       if (activeLayer) gsap.killTweensOf(activeLayer.view);
     };
-  }, [renderer.init]);
+  }, [initRenderer, activeLayer]);
 
   useEffect(() => {
-    renderer.zoomTo(zoom);
-  }, [zoom, renderer.zoomTo]);
+    zoomTo(zoom);
+  }, [zoom, zoomTo]);
 
   useEffect(() => {
     const { center: viewCenter } = activeLayer.view.bounds;
@@ -56,10 +53,9 @@ export const Renderer = () => {
       scrollPosition.y + viewCenter.y
     );
 
-    renderer.container.current.position.set(newPosition.x, newPosition.y);
-  }, [scrollPosition]);
+    rendererContainer.current.position.set(newPosition.x, newPosition.y);
+  }, [scrollPosition, rendererContainer, activeLayer.view.bounds]);
 
-  // Move cursor
   useEffect(() => {
     if (mode.type !== 'CURSOR') return;
 
@@ -71,18 +67,24 @@ export const Renderer = () => {
 
     const tilePosition = getTilePosition(tile);
     renderer.cursor.moveTo(tilePosition);
-  }, [mode, mouse.position, renderer.cursor.moveTo, gridSize, scrollPosition]);
+  }, [
+    mode,
+    mouse.position,
+    renderer.cursor.moveTo,
+    gridSize,
+    scrollPosition,
+    renderer.cursor
+  ]);
 
-  // Pan
   useEffect(() => {
-    renderer.scrollTo(scrollPosition);
-  }, [scrollPosition]);
+    scrollTo(scrollPosition);
+  }, [scrollPosition, scrollTo]);
 
   useEffect(() => {
     const isCursorVisible = mode.type === 'CURSOR';
 
     renderer.cursor.setVisible(isCursorVisible);
-  }, [mode.type, mouse.position]);
+  }, [mode.type, mouse.position, renderer.cursor]);
 
   return (
     <>
@@ -97,150 +99,44 @@ export const Renderer = () => {
   );
 };
 
-const render = () => {
-  if (Paper.view) {
-    if (global.requestAnimationFrame) {
-      const raf = global.requestAnimationFrame(render);
+// const NodeContextMenu = (node: NodeSchemaI) => {
+//   const container = useRef<HTMLDivElement>();
+//   const scrollPosition = useScrollPosition();
+//   const zoom = useZoom();
 
-      return raf;
-    }
+//   useEffect(() => {
+//     if (!container.current) return;
 
-    Paper.view.update();
-  }
-};
+//     const screenPosition = getTileScreenPosition(
+//       new Coords(node.position.x, node.position.y),
+//       scrollPosition,
+//       zoom
+//     );
 
-const NodeContextMenu = (node: NodeSchemaI) => {
-  const container = useRef<HTMLDivElement>();
-  const scrollPosition = useScrollPosition();
-  const zoom = useZoom();
+//     gsap.to(container.current, {
+//       duration: 0.1,
+//       left: screenPosition.x,
+//       top: screenPosition.y
+//     });
+//   }, [node.position, scrollPosition, zoom]);
 
-  useEffect(() => {
-    if (!container.current) return;
+//   return (
+//     <Box
+//       ref={container}
+//       sx={{
+//         position: 'absolute',
+//         width: 100,
+//         height: 100,
+//         bgcolor: 'primary.main'
+//       }}
+//     >
+//       {node.id}
+//     </Box>
+//   );
+// };
 
-    const screenPosition = getTileScreenPosition(
-      new Coords(node.position.x, node.position.y),
-      scrollPosition,
-      zoom
-    );
-
-    gsap.to(container.current, {
-      duration: 0.1,
-      left: screenPosition.x,
-      top: screenPosition.y
-    });
-  }, [node.position, scrollPosition, zoom]);
-
-  return (
-    <Box
-      ref={container}
-      sx={{
-        position: 'absolute',
-        width: 100,
-        height: 100,
-        bgcolor: 'primary.main'
-      }}
-    >
-      {node.id}
-    </Box>
-  );
-};
-
-const DomOverlay = () => {
-  const selectedItems = useUiStateStore((state) => state.selectedItems);
-  const nodes = useSceneStore((state) => state.nodes);
-  const selectedNodes = useMemo(
-    () =>
-      selectedItems.map((item) => {
-        if (item.type === 'NODE') {
-          const node = nodes.find((n) => n.id === item.id);
-
-          if (!node) return null;
-
-          return node;
-        }
-      }),
-    [selectedItems, nodes]
-  );
-
-  return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0
-      }}
-    >
-      {selectedNodes.map((node) => {
-        if (!node) return;
-
-        return <NodeContextMenu key={node.id} {...node} />;
-      })}
-    </Box>
-  );
-};
-
-export const Initialiser = () => {
-  const [isReady, setIsReady] = useState(false);
-  const containerRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    setIsReady(false);
-
-    if (!containerRef.current) return;
-
-    Paper.settings = {
-      insertItems: false,
-      applyMatrix: false
-    };
-
-    Paper.setup(containerRef.current);
-
-    const rafId = render();
-
-    setIsReady(true);
-
-    return () => {
-      setIsReady(false);
-      if (rafId) cancelAnimationFrame(rafId);
-
-      Paper.projects.forEach((project) => project.remove());
-    };
-  }, []);
-
-  return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%'
-      }}
-    >
-      <canvas
-        ref={containerRef}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%'
-        }}
-      />
-      {isReady && <Renderer />}
-      {isReady && <DomOverlay />}
-      {/* <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%'
-        }}
-      >
-      </Box> */}
-    </Box>
-  );
-};
+export const Renderer = () => (
+  <Initialiser>
+    <InitialisedRenderer />
+  </Initialiser>
+);

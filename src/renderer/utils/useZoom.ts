@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { clamp } from '../../utils';
-import { useAppState } from './useAppState';
+import { clamp } from 'src/utils';
 
 const ZOOM_INCREMENT = 0.2;
 const MIN_ZOOM = 0.2;

@@ -1,26 +1,23 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-import { useTheme } from '@mui/material';
-import Card from '@mui/material/Card';
-import PanToolIcon from '@mui/icons-material/PanTool';
-import ZoomInIcon from '@mui/icons-material/ZoomIn';
-import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import NearMeIcon from '@mui/icons-material/NearMe';
-import { MenuItem } from '../MenuItem';
+import { Card, useTheme } from '@mui/material';
 import {
-  useZoom,
-  useZoomActions,
+  PanTool as PanToolIcon,
+  ZoomIn as ZoomInIcon,
+  ZoomOut as ZoomOutIcon,
+  NearMe as NearMeIcon
+} from '@mui/icons-material';
+import {
+  useUiStateStore,
   MIN_ZOOM,
   MAX_ZOOM
-} from '../../stores/useZoomStore';
-import { useMode, useModeActions } from '../../stores/useModeStore';
+} from 'src/stores/useUiStateStore';
+import { MenuItem } from '../MenuItem';
 
-export const ToolMenu = observer(() => {
+export const ToolMenu = () => {
   const theme = useTheme();
-  const zoom = useZoom();
-  const zoomActions = useZoomActions();
-  const mode = useMode();
-  const modeActions = useModeActions();
+  const zoom = useUiStateStore((state) => state.zoom);
+  const mode = useUiStateStore((state) => state.mode);
+  const uiStateStoreActions = useUiStateStore((state) => state.actions);
 
   return (
     <Card
@@ -35,31 +32,31 @@ export const ToolMenu = observer(() => {
       <MenuItem
         name="Select"
         Icon={NearMeIcon}
-        onClick={() => modeActions.set({ type: 'CURSOR' })}
+        onClick={() => uiStateStoreActions.setMode({ type: 'CURSOR' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'CURSOR'}
       />
       <MenuItem
         name="Pan"
         Icon={PanToolIcon}
-        onClick={() => modeActions.set({ type: 'PAN' })}
+        onClick={() => uiStateStoreActions.setMode({ type: 'PAN' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'PAN'}
       />
       <MenuItem
         name="Zoom in"
         Icon={ZoomInIcon}
-        onClick={zoomActions.increment}
+        onClick={uiStateStoreActions.incrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MAX_ZOOM}
       />
       <MenuItem
         name="Zoom out"
         Icon={ZoomOutIcon}
-        onClick={zoomActions.decrement}
+        onClick={uiStateStoreActions.decrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MIN_ZOOM}
       />
     </Card>
   );
-});
+};

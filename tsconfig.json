@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "paths": {
+      "src/*": [
+        "./src/*"
+      ],
+    },
     "outDir": "./dist",
     "noImplicitAny": true,
     "module": "es6",
@@ -8,7 +13,8 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
   },
   "include": [
     "src/**/*.ts",

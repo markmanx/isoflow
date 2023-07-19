@@ -1,5 +1,7 @@
 import gsap from 'gsap';
-import { Coords } from './Coords';
+import { Coords } from 'src/utils/Coords';
+import type { NodeInput } from 'src/validation/SceneSchema';
+import type { Node } from 'src/stores/useSceneStore';
 
 export const clamp = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num;
@@ -41,3 +43,16 @@ export const tweenPosition = (
 
 export const roundToOneDecimalPlace = (num: number) =>
   Math.round(num * 10) / 10;
+
+export const nodeInputToNode = (nodeInput: NodeInput): Node => {
+  const node: Node = {
+    id: nodeInput.id,
+    label: nodeInput.label,
+    iconId: nodeInput.iconId,
+    position: Coords.fromObject(nodeInput.position),
+    isSelected: false,
+    type: 'NODE'
+  };
+
+  return node;
+};

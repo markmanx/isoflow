@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material';
 
 interface CustomThemeVars {
   sideNav: {
@@ -12,7 +12,7 @@ interface CustomThemeVars {
   };
 }
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Theme {
     customVars: CustomThemeVars;
   }
@@ -24,55 +24,55 @@ declare module "@mui/material/styles" {
 
 const customVars: CustomThemeVars = {
   sideNav: {
-    width: 60,
+    width: 60
   },
   toolMenu: {
-    height: 55,
+    height: 55
   },
   diagramPalette: {
-    purple: "#cabffa",
-  },
+    purple: '#cabffa'
+  }
 };
 
 export const theme = createTheme({
   customVars,
   typography: {
     h5: {
-      fontSize: "1.3rem",
-      lineHeight: 1.2,
-    },
+      fontSize: '1.3rem',
+      lineHeight: 1.2
+    }
   },
   palette: {
-    mode: "dark",
+    mode: 'dark',
     secondary: {
-      main: "#df004c",
-    },
+      main: '#df004c'
+    }
   },
   components: {
     MuiToolbar: {
       styleOverrides: {
         root: {
-          backgroundColor: "white",
-        },
-      },
+          backgroundColor: 'white'
+        }
+      }
     },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        variant: "contained",
+        variant: 'contained',
         disableRipple: true,
-        disableTouchRipple: true,
+        disableTouchRipple: true
       },
       styleOverrides: {
         root: {
-          textTransform: "none",
-        },
-      },
+          textTransform: 'none'
+        }
+      }
     },
     MuiTextField: {
       defaultProps: {
-        variant: "standard",
-      },
-    },
-  },
+        variant: 'standard'
+      }
+    }
+  }
 });

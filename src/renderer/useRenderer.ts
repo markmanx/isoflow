@@ -1,11 +1,11 @@
 import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
 import gsap from 'gsap';
-import { useGrid } from './useGrid';
-import { useNodeManager } from './useNodeManager';
+import { useGrid } from './components/grid/useGrid';
+import { useNodeManager } from '../../useNodeManager';
 import { SceneI } from '../../validation/SceneSchema';
 import { Coords } from '../../utils/Coords';
-import { useCursor } from './useCursor';
+import { useCursor } from './components/cursor/useCursor';
 import { useScrollActions } from '../../stores/useScrollStore';
 
 export const useRenderer = () => {
@@ -57,11 +57,6 @@ export const useRenderer = () => {
     };
 
     container.current.position.set(newPosition);
-
-    // gsap.to(container.current.position, {
-    //   duration: 0.1,
-    //   ...newPosition
-    // });
   }, []);
 
   return {

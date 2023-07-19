@@ -1,5 +1,5 @@
 import { InteractionReducer } from '../useInteractionManager';
-import { getItemsFromTile } from '../../utils/gridHelpers';
+import { getItemsFromTile } from '../../renderer/utils/gridHelpers';
 
 export const Cursor: InteractionReducer = {
   mousemove: () => {},

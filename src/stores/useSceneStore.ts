@@ -1,50 +1,37 @@
 import { create } from 'zustand';
-import {
-  NodeSchemaI,
-  ConnectorSchemaI,
-  GroupSchemaI,
-  IconI,
-  SceneI
-} from '../validation/SceneSchema';
+import { IconInput } from '../validation/SceneSchema';
 import { Coords } from '../utils/Coords';
 
+export interface Node {
+  type: 'NODE';
+  id: string;
+  iconId: string;
+  label?: string;
+  position: Coords;
+  isSelected: boolean;
+}
+
 export interface Scene {
-  nodes: NodeSchemaI[];
-  connectors: ConnectorSchemaI[];
-  groups: GroupSchemaI[];
-  icons: IconI[];
+  nodes: Node[];
+  icons: IconInput[];
   gridSize: Coords;
 }
 
+export interface SceneActions {
+  set: (scene: Scene) => void;
+}
+
 export type UseSceneStore = Scene & {
-  actions: {
-    set: (scene: SceneI) => void;
-    getNodeById: (id: string) => NodeSchemaI | undefined;
-  };
+  actions: SceneActions;
 };
 
-export const useSceneStore = create<UseSceneStore>((set, get) => ({
+export const useSceneStore = create<UseSceneStore>((set) => ({
   nodes: [],
-  connectors: [],
-  groups: [],
   icons: [],
   gridSize: new Coords(51, 51),
   actions: {
     set: (scene) => {
       set(scene);
-    },
-    getNodeById: (id: string) => get().nodes.find((node) => node.id === id)
+    }
   }
 }));
-
-export const useScene = () =>
-  useSceneStore(
-    ({ nodes, connectors, groups, icons }): SceneI => ({
-      nodes,
-      connectors,
-      groups,
-      icons
-    })
-  );
-export const useGridSize = () => useSceneStore((state) => state.gridSize);
-export const useSceneActions = () => useSceneStore((state) => state.actions);

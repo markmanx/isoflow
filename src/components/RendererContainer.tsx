@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import { useGlobalState } from '../hooks/useGlobalState';
 import { modeManagerContext } from '../contexts/ModeManagerContext';
 import { Select } from '../modes/Select';
-import { Renderer } from '../renderer/Renderer';
+import { Renderer } from '../renderer/components/renderer/Renderer';
 import { Coords } from '../renderer/elements/Coords';
 import {
   PROJECTED_TILE_WIDTH,

@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Group } from 'paper';
 import gsap from 'gsap';
-import { useNodeIcon } from './useNodeIcon';
-import { getTilePosition } from './utils/gridHelpers';
-import { Coords } from '../../utils/Coords';
+import { Coords } from 'src/utils/Coords';
+import { useNodeIcon } from '../useNodeIcon';
+import { getTilePosition } from '../utils/gridHelpers';
 
 export interface NodeProps {
   id: string;

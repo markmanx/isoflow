@@ -1,12 +1,12 @@
-import React, { useCallback } from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import GlobalStyles from "@mui/material/GlobalStyles";
-import { mockScene } from "./mockData";
-import { OnSceneChange } from "./types";
+import React, { useCallback } from 'react';
+import ReactDOM from 'react-dom/client';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import App from './App';
+import { mockScene } from './mockData';
+import { OnSceneChange } from './types';
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 
 const DataLayer = () => {
@@ -17,8 +17,8 @@ const DataLayer = () => {
       <GlobalStyles
         styles={{
           body: {
-            margin: 0,
-          },
+            margin: 0
+          }
         }}
       />
       <App

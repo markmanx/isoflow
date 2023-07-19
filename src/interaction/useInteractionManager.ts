@@ -20,7 +20,7 @@ import {
 } from '../../../stores';
 import { SceneI } from '../../../validation/SceneSchema';
 import { Select, DragItems, Pan, Cursor } from './reducers';
-import { getTileFromMouse } from '../utils/gridHelpers';
+import { getTileFromMouse } from '../renderer/utils/gridHelpers';
 
 export interface State {
   mouse: Mouse;

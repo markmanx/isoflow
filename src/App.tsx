@@ -1,21 +1,18 @@
-import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { theme } from './theme';
-// import { SideNav } from "./components/SideNav";
-// import { Sidebar } from "./components/Sidebars";
-import { ToolMenu } from "./components/ToolMenu";
-// import { ContextMenu } from "./components/ContextMenus";
-import { SceneI } from './validation/SceneSchema';
-import { useAppState } from './components/Renderer/useAppState';
-import {useSceneActions} from './stores/useSceneStore';
-import { OnSceneChange } from './types';
-import { GlobalStyles } from './GlobalStyles';
-import { Initialiser as Renderer } from './components/Renderer/Renderer';
+import { Box } from '@mui/material';
+import { theme } from 'src/styles/theme';
+import { ToolMenu } from 'src/components/ToolMenu';
+import { SceneInput } from 'src/validation/SceneSchema';
+import { useSceneStore, Scene } from 'src/stores/useSceneStore';
+import { OnSceneChange } from 'src/types';
+import { GlobalStyles } from 'src/styles/GlobalStyles';
+import { Renderer } from 'src/renderer/Renderer';
+import { nodeInputToNode } from 'src/utils';
+import { Coords } from 'src/utils/Coords';
 
 interface Props {
-  initialScene: SceneI;
+  initialScene: SceneInput;
   onSceneChange?: OnSceneChange;
   width?: number | string;
   height: number | string;
@@ -25,44 +22,44 @@ const InnerApp = React.memo(
   ({ height, width }: Pick<Props, 'height' | 'width'>) => (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-        <Box
-          sx={{
-            width: width ?? '100%',
-            height,
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          <Renderer />
-          {/* <ContextMenu /> */}
-          {/* <Sidebar /> */}
-          {/* <SideNav /> */}
-          <ToolMenu />
-        </Box>
+      <Box
+        sx={{
+          width: width ?? '100%',
+          height,
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <Renderer />
+        {/* <ContextMenu /> */}
+        {/* <Sidebar /> */}
+        {/* <SideNav /> */}
+        <ToolMenu />
+      </Box>
     </ThemeProvider>
-  ),
-);
-const App = observer(
-  ({
-    initialScene, width, height, onSceneChange,
-  }: Props) => {
-    const sceneActions = useSceneActions();
-    // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
-
-    // useEffect(() => {
-    //   if (!onSceneChange) return;
-
-    //   setOnSceneChange(onSceneChange);
-    // }, [setOnSceneChange, onSceneChange]);
-
-    useEffect(() => {
-      sceneActions.set(initialScene);
-    }, [initialScene, sceneActions.set]);
-
-    return <InnerApp height={height} width={width} />;
-  },
+  )
 );
 
-type Scene = SceneI;
+const App = ({ initialScene, width, height, onSceneChange }: Props) => {
+  const sceneActions = useSceneStore((state) => state.actions);
+  // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
+
+  // useEffect(() => {
+  //   if (!onSceneChange) return;
+
+  //   setOnSceneChange(onSceneChange);
+  // }, [setOnSceneChange, onSceneChange]);
+
+  useEffect(() => {
+    const nodes = initialScene.nodes.map((nodeInput) =>
+      nodeInputToNode(nodeInput)
+    );
+
+    sceneActions.set({ ...initialScene, nodes, gridSize: new Coords(51, 51) });
+  }, [initialScene, sceneActions]);
+
+  return <InnerApp height={height} width={width} />;
+};
+
 export { Scene, OnSceneChange };
 export default App;

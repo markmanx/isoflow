@@ -1,5 +1,5 @@
 import Paper from 'paper';
-import { PROJECTED_TILE_DIMENSIONS } from './constants';
+import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
 import { Coords } from '../../../utils/Coords';
 import { clamp } from '../../../utils';
 import { SceneI } from '../../../validation/SceneSchema';

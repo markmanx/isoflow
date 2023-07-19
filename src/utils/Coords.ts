@@ -52,4 +52,8 @@ export class Coords {
   clone() {
     return new Coords(this.x, this.y);
   }
+
+  static fromObject({ x, y }: { x: number; y: number }) {
+    return new Coords(x, y);
+  }
 }
