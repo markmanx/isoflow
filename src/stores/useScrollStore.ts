@@ -26,6 +26,6 @@ const useScrollStore = create<UseScrollStore>((set) => ({
   }
 }));
 
-export const useScroll = () =>
-  useScrollStore(({ position, offset }) => ({ position, offset }));
+export const useScrollPosition = () =>
+  useScrollStore(({ position }) => position);
 export const useScrollActions = () => useScrollStore((state) => state.actions);

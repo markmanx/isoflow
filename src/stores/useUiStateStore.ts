@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
+export interface NodeItem {
+  type: 'NODE';
+  id: string;
+}
+
 export type Item =
-  | {
-      type: 'NODE';
-      id: string;
-    }
+  | NodeItem
   | {
       type: 'CONNECTOR';
       id: string;

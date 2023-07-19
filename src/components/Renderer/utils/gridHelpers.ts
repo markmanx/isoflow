@@ -2,8 +2,8 @@ import Paper from 'paper';
 import { PROJECTED_TILE_DIMENSIONS } from '../constants';
 import { Coords } from '../../../utils/Coords';
 import { clamp } from '../../../utils';
-import { SceneI, NodeSchemaI } from '../../../validation/SceneSchema';
-import { Item } from '../../../stores';
+import { SceneI } from '../../../validation/SceneSchema';
+import { Item, Scroll } from '../../../stores';
 
 interface GetTileFromMouse {
   mouse: Coords;
@@ -77,4 +77,36 @@ export const getItemsFromTile = (tile: Coords, scene: SceneI): Item[] => {
     .map((node) => ({ type: 'NODE', id: node.id })) as Item[];
 
   return [...nodes];
+};
+
+export const getTileScreenPosition = (
+  position: Coords,
+  scrollPosition: Coords,
+  zoom: number
+) => {
+  const { width: viewW, height: viewH } = Paper.view.bounds;
+  const { offsetLeft: offsetX, offsetTop: offsetY } =
+    Paper.project.view.element;
+  const tilePosition = getTileBounds(position).center;
+  const container = Paper.project.activeLayer.children[0];
+  const globalItemsGroupPosition = container.globalToLocal([0, 0]);
+  const screenPosition = new Coords(
+    (tilePosition.x +
+      scrollPosition.x +
+      globalItemsGroupPosition.x +
+      container.position.x +
+      viewW * 0.5) *
+      zoom +
+      offsetX,
+
+    (tilePosition.y +
+      scrollPosition.y +
+      globalItemsGroupPosition.y +
+      container.position.y +
+      viewH * 0.5) *
+      zoom +
+      offsetY
+  );
+
+  return screenPosition;
 };

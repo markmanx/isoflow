@@ -19,6 +19,7 @@ export interface Scene {
 export type UseSceneStore = Scene & {
   actions: {
     set: (scene: SceneI) => void;
+    getNodeById: (id: string) => NodeSchemaI | undefined;
   };
 };
 
@@ -31,7 +32,8 @@ const useSceneStore = create<UseSceneStore>((set, get) => ({
   actions: {
     set: (scene) => {
       set(scene);
-    }
+    },
+    getNodeById: (id: string) => get().nodes.find((node) => node.id === id)
   }
 }));
 

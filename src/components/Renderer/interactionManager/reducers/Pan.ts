@@ -4,9 +4,9 @@ export const Pan: InteractionReducer = {
   mousemove: (state) => {
     if (state.mouse.mouseDownAt === null) return;
 
-    state.scroll.position = state.mouse.delta
-      ? state.scroll.position.add(state.mouse.delta)
-      : state.scroll.position;
+    state.scroll = state.mouse.delta
+      ? state.scroll.add(state.mouse.delta)
+      : state.scroll;
   },
   mousedown: () => {},
   mouseup: () => {},

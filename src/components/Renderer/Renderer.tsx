@@ -1,17 +1,27 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import Paper from 'paper';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { useRenderer } from './useRenderer';
 import { Node } from './Node';
-import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
+import {
+  getTileFromMouse,
+  getTilePosition,
+  getTileScreenPosition
+} from './utils/gridHelpers';
 import { useInteractionManager } from './interactionManager/useInteractionManager';
-import { useZoom } from '../../stores/useZoomStore';
-import { useScroll } from '../../stores/useScrollStore';
 import { Coords } from '../../utils/Coords';
-import { useGridSize, useScene } from '../../stores/useSceneStore';
-import { useMode } from '../../stores/useModeStore';
-import { useMouse } from '../../stores/useMouseStore';
+import {
+  useZoom,
+  useScrollPosition,
+  useGridSize,
+  useScene,
+  useMode,
+  useMouse,
+  useUiState,
+  useSceneActions
+} from '../../stores';
+import { NodeSchemaI } from '../../validation/SceneSchema';
 
 export const Renderer = () => {
   const renderer = useRenderer();
@@ -20,7 +30,7 @@ export const Renderer = () => {
   const zoom = useZoom();
   const mouse = useMouse();
   const gridSize = useGridSize();
-  const scroll = useScroll();
+  const scrollPosition = useScrollPosition();
   const { activeLayer } = Paper.project;
   useInteractionManager();
 
@@ -40,12 +50,12 @@ export const Renderer = () => {
     const { center: viewCenter } = activeLayer.view.bounds;
 
     const newPosition = new Coords(
-      scroll.position.x + viewCenter.x,
-      scroll.position.y + viewCenter.y
+      scrollPosition.x + viewCenter.x,
+      scrollPosition.y + viewCenter.y
     );
 
     renderer.container.current.position.set(newPosition.x, newPosition.y);
-  }, [scroll.position]);
+  }, [scrollPosition]);
 
   // Move cursor
   useEffect(() => {
@@ -54,17 +64,17 @@ export const Renderer = () => {
     const tile = getTileFromMouse({
       gridSize,
       mouse: mouse.position,
-      scroll: scroll.position
+      scroll: scrollPosition
     });
 
     const tilePosition = getTilePosition(tile);
     renderer.cursor.moveTo(tilePosition);
-  }, [mode, mouse.position, renderer.cursor.moveTo, gridSize, scroll.position]);
+  }, [mode, mouse.position, renderer.cursor.moveTo, gridSize, scrollPosition]);
 
   // Pan
   useEffect(() => {
-    renderer.scrollTo(scroll.position);
-  }, [scroll.position]);
+    renderer.scrollTo(scrollPosition);
+  }, [scrollPosition]);
 
   useEffect(() => {
     const isCursorVisible = mode.type === 'CURSOR';
@@ -95,6 +105,74 @@ const render = () => {
 
     Paper.view.update();
   }
+};
+
+const NodeContextMenu = (node: NodeSchemaI) => {
+  const [positionProxy, setPositionProxy] = useState<Coords>();
+  const scrollPosition = useScrollPosition();
+  const zoom = useZoom();
+
+  const tweenTo = useCallback(
+    (to: Coords) => {
+      const screenPosition = getTileScreenPosition(
+        new Coords(to.x, to.y),
+        scrollPosition,
+        zoom
+      );
+
+      setPositionProxy(screenPosition);
+    },
+    [scrollPosition, zoom]
+  );
+
+  useEffect(() => {
+    tweenTo(new Coords(node.position.x, node.position.y));
+    console.log('YO');
+  }, [tweenTo, node.position]);
+
+  if (!positionProxy) return null;
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        left: positionProxy.x,
+        top: positionProxy.y,
+        bgcolor: 'primary.main'
+      }}
+    >
+      {node.id}
+    </Box>
+  );
+};
+
+const DomOverlay = () => {
+  const { selectedItems } = useUiState();
+  const sceneActions = useSceneActions();
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0
+      }}
+    >
+      {selectedItems.map((item) => {
+        if (item.type === 'NODE') {
+          const node = sceneActions.getNodeById(item.id);
+
+          if (!node) return null;
+
+          return <NodeContextMenu key={item.id} {...node} />;
+        }
+      })}
+    </Box>
+  );
 };
 
 export const Initialiser = () => {
@@ -146,6 +224,7 @@ export const Initialiser = () => {
         }}
       />
       {isReady && <Renderer />}
+      {isReady && <DomOverlay />}
       {/* <Box
         sx={{
           position: 'absolute',

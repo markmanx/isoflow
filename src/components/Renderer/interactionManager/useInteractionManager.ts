@@ -3,9 +3,8 @@ import { produce, Draft } from 'immer';
 import { Tool } from 'paper';
 import { Coords } from '../../../utils/Coords';
 import {
-  useScroll,
+  useScrollPosition,
   useScrollActions,
-  Scroll,
   useMode,
   useModeActions,
   Mode,
@@ -26,7 +25,7 @@ import { getTileFromMouse } from '../utils/gridHelpers';
 export interface State {
   mouse: Mouse;
   mode: Mode;
-  scroll: Scroll;
+  scroll: Coords;
   gridSize: Coords;
   scene: SceneI;
   uiState: Omit<UseUiStore, 'actions'>;
@@ -93,7 +92,7 @@ export const useInteractionManager = () => {
   // const cursor = useAppState((state) => state.cursor);
   // const setCursor = useAppState((state) => state.setCursor);
   // const gridSize = useAppState((state) => state.gridSize);
-  const scroll = useScroll();
+  const scrollPosition = useScrollPosition();
   const scrollActions = useScrollActions();
   const scene = useScene();
   const sceneActions = useSceneActions();
@@ -123,12 +122,12 @@ export const useInteractionManager = () => {
       const prevTile = getTileFromMouse({
         mouse: mouse.position,
         gridSize,
-        scroll: scroll.position
+        scroll: scrollPosition
       });
       const tile = getTileFromMouse({
         mouse: newMouse.position,
         gridSize,
-        scroll: scroll.position
+        scroll: scrollPosition
       });
 
       if (!prevTile.isEqual(tile)) {
@@ -136,23 +135,32 @@ export const useInteractionManager = () => {
       }
 
       const newState = produce(
-        { mouse: newMouse, scroll, gridSize, scene, mode, uiState },
+        {
+          mouse: newMouse,
+          scroll: scrollPosition,
+          gridSize,
+          scene,
+          mode,
+          uiState
+        },
         (draft) => reducerAction(draft, { tile })
       );
 
-      scrollActions.setPosition(newState.scroll.position);
+      scrollActions.setPosition(newState.scroll);
       modeActions.set(newState.mode);
       sceneActions.set(newState.scene);
+      uiStateActions.setSelectedItems(newState.uiState.selectedItems);
     },
     [
       mode,
       mouse,
       mouseActions.set,
-      scroll,
+      scrollPosition,
       scrollActions.setPosition,
       parseToolEvent,
       gridSize,
-      scene
+      scene,
+      uiState
     ]
   );
 
