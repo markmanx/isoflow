@@ -13,6 +13,10 @@ export const Cursor: InteractionReducer = {
         hasMovedTile: false
       };
     }
+
+    if (tileItems.length === 0) {
+      state.uiState.selectedItems = [];
+    }
   },
   mouseup: () => {},
   onTileOver: () => {}
