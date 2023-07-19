@@ -11,14 +11,18 @@ export interface Node {
   isSelected: boolean;
 }
 
-export interface Scene {
+export interface SceneItems {
   nodes: Node[];
+}
+
+export type Scene = SceneItems & {
   icons: IconInput[];
   gridSize: Coords;
-}
+};
 
 export interface SceneActions {
   set: (scene: Scene) => void;
+  setItems: (elements: SceneItems) => void;
 }
 
 export type UseSceneStore = Scene & {
@@ -32,6 +36,9 @@ export const useSceneStore = create<UseSceneStore>((set) => ({
   actions: {
     set: (scene) => {
       set(scene);
+    },
+    setItems: (items: SceneItems) => {
+      set({ nodes: items.nodes });
     }
   }
 }));

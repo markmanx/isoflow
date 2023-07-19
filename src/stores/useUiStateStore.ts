@@ -47,7 +47,6 @@ export type Item =
 
 export interface UiState {
   mode: Mode;
-  selectedItems: Item[];
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
@@ -55,7 +54,6 @@ export interface UiState {
 
 export interface UiStateActions {
   setMode: (mode: Mode) => void;
-  setSelectedItems: (items: Item[]) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
   setScroll: (scroll: Scroll) => void;
@@ -77,14 +75,10 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     mouseDownAt: null,
     delta: null
   },
-  selectedItems: [],
   zoom: 1,
   actions: {
     setMode: (mode) => {
       set({ mode });
-    },
-    setSelectedItems: (items) => {
-      set({ selectedItems: items });
     },
     incrementZoom: () => {
       const { zoom } = get();

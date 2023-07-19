@@ -1,12 +1,12 @@
-import { InteractionReducer } from '../useInteractionManager';
+import { InteractionReducer } from '../useToolEventToMouseEvent';
 
 export const Pan: InteractionReducer = {
-  mousemove: (state) => {
-    if (state.mouse.mouseDownAt === null) return;
+  mousemove: (draftState) => {
+    if (draftState.mouse.mouseDownAt === null) return;
 
-    state.scroll = state.mouse.delta
-      ? state.scroll.add(state.mouse.delta)
-      : state.scroll;
+    draftState.scroll = draftState.mouse.delta
+      ? draftState.scroll.add(draftState.mouse.delta)
+      : draftState.scroll;
   },
   mousedown: () => {},
   mouseup: () => {},

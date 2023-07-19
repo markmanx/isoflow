@@ -1,8 +1,8 @@
-import { InteractionReducer } from '../useInteractionManager';
+import { InteractionReducer } from '../useToolEventToMouseEvent';
 
 export const Select: InteractionReducer = {
   mousemove: () => {},
   mousedown: () => {},
-  mouseup: (state) => {},
-  onTileOver: (state, { tile }) => {}
+  mouseup: () => {},
+  onTileOver: () => {}
 };

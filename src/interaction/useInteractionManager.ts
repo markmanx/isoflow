@@ -1,47 +1,15 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { produce, Draft } from 'immer';
+import { produce } from 'immer';
 import { Tool } from 'paper';
-import { Coords } from '../../../utils/Coords';
-import {
-  useScrollPosition,
-  useScrollActions,
-  useMode,
-  useModeActions,
-  Mode,
-  useMouse,
-  useMouseActions,
-  Mouse,
-  useScene,
-  useSceneActions,
-  useGridSize,
-  useUiState,
-  useUiStateActions,
-  UseUiStore
-} from '../../../stores';
-import { SceneI } from '../../../validation/SceneSchema';
-import { Select, DragItems, Pan, Cursor } from './reducers';
-import { getTileFromMouse } from '../renderer/utils/gridHelpers';
-
-export interface State {
-  mouse: Mouse;
-  mode: Mode;
-  scroll: Coords;
-  gridSize: Coords;
-  scene: SceneI;
-  uiState: Omit<UseUiStore, 'actions'>;
-}
-
-type InteractionReducerAction = (
-  state: Draft<State>,
-  payload: { tile: Coords }
-) => void;
-
-export type InteractionReducer = {
-  mousemove: InteractionReducerAction;
-  mousedown: InteractionReducerAction;
-  mouseup: InteractionReducerAction;
-  onTileOver: InteractionReducerAction;
-};
+import { useSceneStore } from 'src/stores/useSceneStore';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { getTileFromMouse } from 'src/renderer/utils/gridHelpers';
+import { toolEventToMouseEvent } from './utils';
+import { Select } from './reducers/Select';
+import { DragItems } from './reducers/DragItems';
+import { Pan } from './reducers/Pan';
+import { Cursor } from './reducers/Cursor';
+import type { InteractionReducer, InteractionReducerAction } from './types';
 
 const reducers: {
   [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS' | 'CURSOR']: InteractionReducer;
@@ -52,50 +20,15 @@ const reducers: {
   PAN: Pan
 };
 
-const parseToolEvent = (toolEvent: paper.ToolEvent, mouse: Mouse) => {
-  const position = new Coords(toolEvent.point.x, toolEvent.point.y);
-
-  let mouseDownAt: Mouse['mouseDownAt'];
-
-  switch (toolEvent.type) {
-    case 'mousedown':
-      mouseDownAt = position;
-      break;
-    case 'mouseup':
-      mouseDownAt = null;
-      break;
-    default:
-      mouseDownAt = mouse.mouseDownAt;
-      break;
-  }
-
-  let delta: Coords | null = position.subtract(mouse.position);
-
-  if (delta.x === 0 && delta.y === 0) delta = null;
-
-  return {
-    position,
-    mouseDownAt,
-    delta
-  };
-};
-
 export const useInteractionManager = () => {
   const tool = useRef<paper.Tool>();
-  const mode = useMode();
-  const modeActions = useModeActions();
-  const uiState = useUiState();
-  const uiStateActions = useUiStateActions();
-  const gridSize = useGridSize();
-  const mouse = useMouse();
-  const mouseActions = useMouseActions();
-  // const cursor = useAppState((state) => state.cursor);
-  // const setCursor = useAppState((state) => state.setCursor);
-  // const gridSize = useAppState((state) => state.gridSize);
-  const scrollPosition = useScrollPosition();
-  const scrollActions = useScrollActions();
-  const scene = useScene();
-  const sceneActions = useSceneActions();
+  const mode = useUiStateStore((state) => state.mode);
+  const mouse = useUiStateStore((state) => state.mouse);
+  const scroll = useUiStateStore((state) => state.scroll);
+  const scene = useSceneStore(({ nodes }) => ({ nodes }));
+  const uiStateActions = useUiStateStore((state) => state.actions);
+  const gridSize = useSceneStore((state) => state.gridSize);
+  const sceneActions = useSceneStore((state) => state.actions);
 
   const onMouseEvent = useCallback(
     (toolEvent: paper.ToolEvent) => {
@@ -116,18 +49,22 @@ export const useInteractionManager = () => {
           return;
       }
 
-      const newMouse = parseToolEvent(toolEvent, mouse);
-      mouseActions.set(newMouse);
+      // Update mouse position
+      const newMouse = toolEventToMouseEvent({ toolEvent, mouse });
+      uiStateActions.setMouse(newMouse);
 
+      // Detect when a new tile is hovered over, and use it to trigger an `onTileOver`
+      // function on the reducer.  This is a common occurence for triggering events like moving
+      // the cursor from one tile to the next
       const prevTile = getTileFromMouse({
-        mouse: mouse.position,
+        mousePosition: mouse.position,
         gridSize,
-        scroll: scrollPosition
+        scroll
       });
       const tile = getTileFromMouse({
-        mouse: newMouse.position,
+        mousePosition: newMouse.position,
         gridSize,
-        scroll: scrollPosition
+        scroll
       });
 
       if (!prevTile.isEqual(tile)) {
@@ -136,32 +73,20 @@ export const useInteractionManager = () => {
 
       const newState = produce(
         {
-          mouse: newMouse,
-          scroll: scrollPosition,
-          gridSize,
           scene,
+          mouse,
           mode,
-          uiState
+          scroll,
+          gridSize
         },
         (draft) => reducerAction(draft, { tile })
       );
 
-      scrollActions.setPosition(newState.scroll);
-      modeActions.set(newState.mode);
-      sceneActions.set(newState.scene);
-      uiStateActions.setSelectedItems(newState.uiState.selectedItems);
+      uiStateActions.setScroll(newState.scroll);
+      uiStateActions.setMode(newState.mode);
+      sceneActions.setItems(newState.scene);
     },
-    [
-      mode,
-      mouse,
-      mouseActions.set,
-      scrollPosition,
-      scrollActions.setPosition,
-      parseToolEvent,
-      gridSize,
-      scene,
-      uiState
-    ]
+    [mode, mouse, scroll, gridSize, uiStateActions, sceneActions, scene]
   );
 
   useEffect(() => {
@@ -176,6 +101,4 @@ export const useInteractionManager = () => {
       tool.current?.remove();
     };
   }, [onMouseEvent]);
-
-  return {};
 };

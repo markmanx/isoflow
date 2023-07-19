@@ -1,18 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Paper from 'paper';
 import gsap from 'gsap';
-import { Box } from '@mui/material';
 import { Coords } from 'src/utils/Coords';
-import { useUiStateStore, useSceneStore } from 'src/stores';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
 import { Node } from './components/node/Node';
-import {
-  getTileFromMouse,
-  getTilePosition,
-  getTileScreenPosition
-} from './utils/gridHelpers';
+import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
@@ -61,8 +57,8 @@ const InitialisedRenderer = () => {
 
     const tile = getTileFromMouse({
       gridSize,
-      mouse: mouse.position,
-      scroll: scrollPosition
+      mousePosition: mouse.position,
+      scroll
     });
 
     const tilePosition = getTilePosition(tile);
@@ -73,7 +69,8 @@ const InitialisedRenderer = () => {
     renderer.cursor.moveTo,
     gridSize,
     scrollPosition,
-    renderer.cursor
+    renderer.cursor,
+    scroll
   ]);
 
   useEffect(() => {

@@ -1,34 +1,52 @@
-import { InteractionReducer } from '../useInteractionManager';
-import { getItemsFromTile } from '../../renderer/utils/gridHelpers';
+import { getItemsByTile } from 'src/renderer/utils/gridHelpers';
+import { InteractionReducer } from '../types';
 
 export const DragItems: InteractionReducer = {
   mousemove: () => {},
   mousedown: () => {},
-  mouseup: (state, { tile }) => {
-    if (state.mode.type !== 'DRAG_ITEMS') return;
+  mouseup: (draftState, { tile }) => {
+    if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
-    if (!state.mode.hasMovedTile) {
-      // select the item if it's been clicked but not dragged
-      state.uiState.selectedItems = getItemsFromTile(tile, state.scene);
+    if (!draftState.mode.hasMovedTile) {
+      // Set the item to a selected state if the item has been clicked in place,
+      // but not dragged
+      const itemsAtTile = getItemsByTile({
+        tile,
+        sceneItems: draftState.scene
+      });
+
+      if (itemsAtTile.length > 0) {
+        const firstItem = itemsAtTile[0];
+
+        if (firstItem.type === 'NODE') {
+          const nodeIndex = draftState.scene.nodes.findIndex(
+            (sceneNode) => sceneNode.id === firstItem.id
+          );
+
+          if (nodeIndex === -1) return;
+
+          draftState.scene.nodes[nodeIndex].isSelected = true;
+        }
+      }
     }
 
-    state.mode = { type: 'CURSOR' };
+    draftState.mode = { type: 'CURSOR' };
   },
-  onTileOver: (state, { tile }) => {
-    if (state.mode.type !== 'DRAG_ITEMS') return;
+  onTileOver: (draftState, { tile }) => {
+    if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
-    state.mode.items.forEach((item) => {
+    draftState.mode.items.forEach((item) => {
       if (item.type === 'NODE') {
-        const sceneNodeIndex = state.scene.nodes.findIndex(
+        const nodeIndex = draftState.scene.nodes.findIndex(
           (sceneNode) => sceneNode.id === item.id
         );
 
-        if (sceneNodeIndex === -1) return;
+        if (nodeIndex === -1) return;
 
-        state.scene.nodes[sceneNodeIndex].position = tile;
+        draftState.scene.nodes[nodeIndex].position = tile;
       }
     });
 
-    state.mode.hasMovedTile = true;
+    draftState.mode.hasMovedTile = true;
   }
 };

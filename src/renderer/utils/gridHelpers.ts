@@ -1,18 +1,18 @@
 import Paper from 'paper';
-import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
-import { Coords } from '../../../utils/Coords';
-import { clamp } from '../../../utils';
-import { SceneI } from '../../../validation/SceneSchema';
-import { Item, Scroll } from '../../../stores';
+import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
+import { Coords } from 'src/utils/Coords';
+import { clamp } from 'src/utils';
+import { SceneItems } from 'src/stores/useSceneStore';
+import { Scroll } from 'src/stores/useUiStateStore';
 
 interface GetTileFromMouse {
-  mouse: Coords;
-  scroll: Coords;
+  mousePosition: Coords;
+  scroll: Scroll;
   gridSize: Coords;
 }
 
 export const getTileFromMouse = ({
-  mouse,
+  mousePosition,
   scroll,
   gridSize
 }: GetTileFromMouse) => {
@@ -20,8 +20,8 @@ export const getTileFromMouse = ({
   const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
   const canvasPosition = new Coords(
-    mouse.x - (scroll.x + Paper.view.bounds.center.x),
-    mouse.y - (scroll.y + Paper.view.bounds.center.y) + halfH
+    mousePosition.x - (scroll.position.x + Paper.view.bounds.center.x),
+    mousePosition.y - (scroll.position.y + Paper.view.bounds.center.y) + halfH
   );
 
   const row = Math.floor(
@@ -68,15 +68,15 @@ export const getTileBounds = (coords: Coords) => {
   };
 };
 
-export const getItemsFromTile = (tile: Coords, scene: SceneI): Item[] => {
-  const nodes = scene.nodes
-    .filter((node) => {
-      const position = new Coords(node.position.x, node.position.y);
-      return position.isEqual(tile);
-    })
-    .map((node) => ({ type: 'NODE', id: node.id })) as Item[];
+interface GetItemsByTile {
+  tile: Coords;
+  sceneItems: SceneItems;
+}
 
-  return [...nodes];
+export const getItemsByTile = ({ tile, sceneItems }: GetItemsByTile) => {
+  const nodes = sceneItems.nodes.filter((node) => node.position.isEqual(tile));
+
+  return nodes;
 };
 
 export const getTileScreenPosition = (
