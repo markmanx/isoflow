@@ -76,14 +76,20 @@ interface GetItemsByTile {
 export const getItemsByTile = ({ tile, sceneItems }: GetItemsByTile) => {
   const nodes = sceneItems.nodes.filter((node) => node.position.isEqual(tile));
 
-  return nodes;
+  return { nodes };
 };
 
-export const getTileScreenPosition = (
-  position: Coords,
-  scrollPosition: Coords,
-  zoom: number
-) => {
+interface GetTileScreenPosition {
+  position: Coords;
+  scrollPosition: Coords;
+  zoom: number;
+}
+
+export const getTileScreenPosition = ({
+  position,
+  scrollPosition,
+  zoom
+}: GetTileScreenPosition) => {
   const { width: viewW, height: viewH } = Paper.view.bounds;
   const { offsetLeft: offsetX, offsetTop: offsetY } =
     Paper.project.view.element;

@@ -16,8 +16,8 @@ export const ContextMenuItem = ({ onClick, icon, label }: Props) => (
       p: 0,
       '&:not(:last-child)': {
         borderBottom: '1px solid',
-        borderBottomColor: 'grey.800',
-      },
+        borderBottomColor: 'grey.800'
+      }
     }}
   >
     <ListItemButton onClick={onClick} sx={{ py: 0.5, px: 2 }}>
@@ -28,8 +28,8 @@ export const ContextMenuItem = ({ onClick, icon, label }: Props) => (
           color: 'grey.400',
           svg: {
             maxWidth: 18,
-            maxHeight: 18,
-          },
+            maxHeight: 18
+          }
         }}
       >
         {icon}

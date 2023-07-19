@@ -15,18 +15,16 @@ export const DragItems: InteractionReducer = {
         sceneItems: draftState.scene
       });
 
-      if (itemsAtTile.length > 0) {
-        const firstItem = itemsAtTile[0];
+      if (itemsAtTile.nodes.length > 0) {
+        const firstNode = itemsAtTile.nodes[0];
 
-        if (firstItem.type === 'NODE') {
-          const nodeIndex = draftState.scene.nodes.findIndex(
-            (sceneNode) => sceneNode.id === firstItem.id
-          );
+        const nodeIndex = draftState.scene.nodes.findIndex(
+          (sceneNode) => sceneNode.id === firstNode.id
+        );
 
-          if (nodeIndex === -1) return;
+        if (nodeIndex === -1) return;
 
-          draftState.scene.nodes[nodeIndex].isSelected = true;
-        }
+        draftState.scene.nodes[nodeIndex].isSelected = true;
       }
     }
 
@@ -35,16 +33,14 @@ export const DragItems: InteractionReducer = {
   onTileOver: (draftState, { tile }) => {
     if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
-    draftState.mode.items.forEach((item) => {
-      if (item.type === 'NODE') {
-        const nodeIndex = draftState.scene.nodes.findIndex(
-          (sceneNode) => sceneNode.id === item.id
-        );
+    draftState.mode.items.nodes.forEach((node) => {
+      const nodeIndex = draftState.scene.nodes.findIndex(
+        (sceneNode) => sceneNode.id === node.id
+      );
 
-        if (nodeIndex === -1) return;
+      if (nodeIndex === -1) return;
 
-        draftState.scene.nodes[nodeIndex].position = tile;
-      }
+      draftState.scene.nodes[nodeIndex].position = tile;
     });
 
     draftState.mode.hasMovedTile = true;

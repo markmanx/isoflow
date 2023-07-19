@@ -1,10 +1,25 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
+import { Node } from 'src/stores/useSceneStore';
 
 const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
+
+export enum SidebarTypeEnum {
+  SINGLE_NODE = 'SINGLE_NODE',
+  PROJECT_SETTINGS = 'PROJECT_SETTINGS'
+}
+
+export type Sidebar =
+  | {
+      type: SidebarTypeEnum.SINGLE_NODE;
+      nodeId: string;
+    }
+  | {
+      type: SidebarTypeEnum.PROJECT_SETTINGS;
+    };
 
 export type Mode =
   | {
@@ -18,7 +33,9 @@ export type Mode =
     }
   | {
       type: 'DRAG_ITEMS';
-      items: Item[];
+      items: {
+        nodes: Pick<Node, 'id' | 'type'>[];
+      };
       hasMovedTile: boolean;
     };
 
@@ -33,20 +50,9 @@ export interface Scroll {
   offset: Coords;
 }
 
-export interface NodeItem {
-  type: 'NODE';
-  id: string;
-}
-
-export type Item =
-  | NodeItem
-  | {
-      type: 'CONNECTOR';
-      id: string;
-    };
-
 export interface UiState {
   mode: Mode;
+  sidebar: Sidebar | null;
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
@@ -58,6 +64,7 @@ export interface UiStateActions {
   decrementZoom: () => void;
   setScroll: (scroll: Scroll) => void;
   setMouse: (mouse: Mouse) => void;
+  setSidebar: (sidebar: Sidebar | null) => void;
 }
 
 export type UseUiStateStore = UiState & {
@@ -66,6 +73,7 @@ export type UseUiStateStore = UiState & {
 
 export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
   mode: { type: 'CURSOR' },
+  sidebar: null,
   scroll: {
     position: new Coords(0, 0),
     offset: new Coords(0, 0)
@@ -95,6 +103,9 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     },
     setMouse: ({ position, delta, mouseDownAt }) => {
       set({ mouse: { position, delta, mouseDownAt } });
+    },
+    setSidebar: (sidebar) => {
+      set({ sidebar });
     }
   }
 }));

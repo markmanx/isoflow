@@ -11,6 +11,8 @@ export interface Node {
   isSelected: boolean;
 }
 
+export type Icon = IconInput;
+
 export interface SceneItems {
   nodes: Node[];
 }

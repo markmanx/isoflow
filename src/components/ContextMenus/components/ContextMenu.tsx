@@ -1,16 +1,17 @@
 import React from 'react';
 import { List, Box, Card } from '@mui/material';
 import { keyframes } from '@emotion/react';
+import { Coords } from 'src/utils/Coords';
 
 interface Props {
   children: React.ReactNode;
-  position: { x: number; y: number };
+  position: Coords;
 }
 
 const COLOR = 'grey.900';
 const ARROW = {
   size: 11,
-  top: 8,
+  top: 8
 };
 const ANIMATIONS = {
   in: keyframes`
@@ -22,7 +23,7 @@ const ANIMATIONS = {
     opacity: 1;
     transform: translateX(0);
   }
-  `,
+  `
 };
 
 export const ContextMenu = ({ position, children }: Props) => (
@@ -31,7 +32,7 @@ export const ContextMenu = ({ position, children }: Props) => (
       position: 'absolute',
       top: position.y - 20,
       left: position.x + ARROW.size * 2,
-      animation: `${ANIMATIONS.in} 0.2s ease-in-out`,
+      animation: `${ANIMATIONS.in} 0.2s ease-in-out`
     }}
   >
     <Box
@@ -44,7 +45,7 @@ export const ContextMenu = ({ position, children }: Props) => (
         borderTop: `${ARROW.size}px solid transparent`,
         borderBottom: `${ARROW.size}px solid transparent`,
         borderRight: `${ARROW.size}px solid`,
-        borderRightColor: COLOR,
+        borderRightColor: COLOR
       }}
     />
     <Card sx={{ borderRadius: 2 }}>

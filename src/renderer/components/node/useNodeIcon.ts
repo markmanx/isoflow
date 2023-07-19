@@ -1,13 +1,13 @@
 import { useRef, useCallback } from 'react';
 import { Group, Raster } from 'paper';
-import { useScene } from '../../stores/useSceneStore';
+import { useSceneStore } from 'src/stores/useSceneStore';
 import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
 
 const NODE_IMG_PADDING = 0;
 
 export const useNodeIcon = () => {
   const container = useRef(new Group());
-  const { icons } = useScene();
+  const icons = useSceneStore((state) => state.icons);
 
   const update = useCallback(
     async (iconId: string) => {

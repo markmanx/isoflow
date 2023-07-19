@@ -1,4 +1,4 @@
-import { Coords } from '../../../utils/Coords';
+import { Coords } from 'src/utils/Coords';
 
 export const TILE_SIZE = 72;
 export const PROJECTED_TILE_DIMENSIONS = new Coords(

@@ -5,15 +5,14 @@ import { theme } from 'src/styles/theme';
 import { ToolMenu } from 'src/components/ToolMenu';
 import { SceneInput } from 'src/validation/SceneSchema';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
-import { OnSceneChange } from 'src/types';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
 import { nodeInputToNode } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
+import { SideNav } from 'src/components/SideNav/SideNav';
 
 interface Props {
   initialScene: SceneInput;
-  onSceneChange?: OnSceneChange;
   width?: number | string;
   height: number | string;
 }
@@ -33,14 +32,14 @@ const InnerApp = React.memo(
         <Renderer />
         {/* <ContextMenu /> */}
         {/* <Sidebar /> */}
-        {/* <SideNav /> */}
+        <SideNav />
         <ToolMenu />
       </Box>
     </ThemeProvider>
   )
 );
 
-const App = ({ initialScene, width, height, onSceneChange }: Props) => {
+const App = ({ initialScene, width, height }: Props) => {
   const sceneActions = useSceneStore((state) => state.actions);
   // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
 
@@ -61,5 +60,5 @@ const App = ({ initialScene, width, height, onSceneChange }: Props) => {
   return <InnerApp height={height} width={width} />;
 };
 
-export { Scene, OnSceneChange };
+export { Scene };
 export default App;

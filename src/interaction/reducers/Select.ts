@@ -1,4 +1,4 @@
-import { InteractionReducer } from '../useToolEventToMouseEvent';
+import { InteractionReducer } from '../types';
 
 export const Select: InteractionReducer = {
   mousemove: () => {},

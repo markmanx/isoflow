@@ -1,31 +1,16 @@
-import React from "react";
-import { useGlobalState } from "../../hooks/useGlobalState";
-import { ContextMenu } from "./ContextMenu";
-import { ContextMenuItem } from "./ContextMenuItem";
-import { Coords } from "../../renderer/elements/Coords";
-import { Add } from "@mui/icons-material";
+import React from 'react';
+import { Add as AddIcon } from '@mui/icons-material';
+import { Coords } from 'src/utils/Coords';
+import { ContextMenu } from './components/ContextMenu';
+import { ContextMenuItem } from './components/ContextMenuItem';
 
 interface Props {
-  tile: Coords;
+  onAddNode: () => void;
+  position: Coords;
 }
 
-export const TileContextMenu = ({ tile }: Props) => {
-  const renderer = useGlobalState((state) => state.renderer);
-  const icons = useGlobalState((state) => state.initialScene.icons);
-  const position = renderer.getTileScreenPosition(tile);
-
-  return (
-    <ContextMenu position={position}>
-      <ContextMenuItem
-        onClick={() =>
-          renderer.sceneElements.nodes.addNode({
-            position: tile,
-            iconId: icons[0].id,
-          })
-        }
-        icon={<Add />}
-        label="Add node"
-      />
-    </ContextMenu>
-  );
-};
+export const TileContextMenu = ({ onAddNode, position }: Props) => (
+  <ContextMenu position={position}>
+    <ContextMenuItem onClick={onAddNode} icon={<AddIcon />} label="Add node" />
+  </ContextMenu>
+);

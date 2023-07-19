@@ -1,29 +1,28 @@
-import React from "react";
-import { useMemo } from "react";
-import Grid from "@mui/material/Grid";
-import { IconCategory } from "./IconCategory";
-import { IconI } from "../../../../validation/SceneSchema";
+import React, { useMemo } from 'react';
+import Grid from '@mui/material/Grid';
+import { Icon } from 'src/stores/useSceneStore';
+import { IconCategory } from './IconCategory';
 
 interface Props {
-  icons: IconI[];
-  onClick: (icon: IconI) => void;
+  icons: Icon[];
+  onClick: (icon: Icon) => void;
 }
 
 export const Icons = ({ icons, onClick }: Props) => {
   const categorisedIcons = useMemo(() => {
-    const _categories: { name?: string; icons: IconI[] }[] = [];
+    const cats: { name?: string; icons: Icon[] }[] = [];
 
     icons.forEach((icon) => {
-      const category = _categories.find((cat) => cat.name === icon.category);
+      const category = cats.find((cat) => cat.name === icon.category);
 
       if (!category) {
-        _categories.push({ name: icon.category, icons: [icon] });
+        cats.push({ name: icon.category, icons: [icon] });
       } else {
         category.icons.push(icon);
       }
     });
 
-    return _categories.sort((a, b) => {
+    return cats.sort((a, b) => {
       if (a.name === undefined) {
         return -1;
       }

@@ -1,15 +1,15 @@
 import { useCallback, useRef } from 'react';
 import { Path, Point, Group } from 'paper';
+import { useSceneStore } from 'src/stores/useSceneStore';
 import { applyProjectionMatrix } from '../../utils/projection';
-import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from '../utils/constants';
-import { useAppState } from '../../useAppState';
+import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from '../../utils/constants';
 
 const LINE_STYLE = {
   color: 'rgba(0, 0, 0, 0.15)',
   width: PIXEL_UNIT * 1
 };
 
-export const drawGrid = (width: number, height: number) => {
+const drawGrid = (width: number, height: number) => {
   const container = new Group();
 
   for (let x = 0; x <= width; x += 1) {
@@ -51,7 +51,7 @@ export const drawGrid = (width: number, height: number) => {
 
 export const useGrid = () => {
   const container = useRef(new Group());
-  const gridSize = useAppState((state) => state.gridSize);
+  const gridSize = useSceneStore((state) => state.gridSize);
 
   const init = useCallback(() => {
     container.current.removeChildren();

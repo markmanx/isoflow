@@ -1,12 +1,11 @@
 import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
 import gsap from 'gsap';
+import { Coords } from 'src/utils/Coords';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useGrid } from './components/grid/useGrid';
-import { useNodeManager } from '../../useNodeManager';
-import { SceneI } from '../../validation/SceneSchema';
-import { Coords } from '../../utils/Coords';
+import { useNodeManager } from './useNodeManager';
 import { useCursor } from './components/cursor/useCursor';
-import { useScrollActions } from '../../stores/useScrollStore';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
@@ -14,7 +13,11 @@ export const useRenderer = () => {
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const cursor = useCursor();
-  const scrollActions = useScrollActions();
+  const uiStateActions = useUiStateStore((state) => state.actions);
+
+  const { setScroll } = uiStateActions;
+  const { init: initGrid } = grid;
+  const { init: initCursor } = cursor;
 
   const zoomTo = useCallback((zoom: number) => {
     gsap.to(Paper.project.activeLayer.view, {
@@ -23,21 +26,9 @@ export const useRenderer = () => {
     });
   }, []);
 
-  const loadScene = useCallback(
-    (scene: SceneI) => {
-      scene.nodes.forEach((node) => {
-        nodeManager.createNode({
-          ...node,
-          position: new Coords(node.position.x, node.position.y)
-        });
-      });
-    },
-    [nodeManager.createNode]
-  );
-
   const init = useCallback(() => {
-    const gridContainer = grid.init();
-    const cursorContainer = cursor.init();
+    const gridContainer = initGrid();
+    const cursorContainer = initCursor();
 
     innerContainer.current.addChild(gridContainer);
     innerContainer.current.addChild(cursorContainer);
@@ -45,8 +36,11 @@ export const useRenderer = () => {
     container.current.addChild(innerContainer.current);
     container.current.set({ position: [0, 0] });
     Paper.project.activeLayer.addChild(container.current);
-    scrollActions.setPosition(new Coords(0, 0));
-  }, [grid.init, cursor.init, scrollActions.setPosition]);
+    setScroll({
+      position: new Coords(0, 0),
+      offset: new Coords(0, 0)
+    });
+  }, [initGrid, initCursor, setScroll, nodeManager.container]);
 
   const scrollTo = useCallback((to: Coords) => {
     const { center: viewCenter } = Paper.project.view.bounds;
@@ -66,7 +60,6 @@ export const useRenderer = () => {
     zoomTo,
     scrollTo,
     nodeManager,
-    loadScene,
     cursor
   };
 };

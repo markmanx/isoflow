@@ -1,11 +1,10 @@
-import React from "react";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { Header } from "../../Sidebar/Header";
-import { Section } from "../../Sidebar/Section";
-import { Sidebar } from "../../Sidebar";
+import React, { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import { Header } from '../../Sidebar/Header';
+import { Section } from '../../Sidebar/Section';
+import { Sidebar } from '../../Sidebar';
 
 interface Props {
   onClose: () => void;
@@ -16,16 +15,16 @@ interface Values {
   notes?: string;
 }
 
-export const ProjectSettings = ({ onClose }: Props) => {
+export const ProjectSettingsSidebar = ({ onClose }: Props) => {
   const { register, handleSubmit } = useForm<Values>({
     defaultValues: {
-      name: "",
-      notes: "",
-    },
+      name: '',
+      notes: ''
+    }
   });
 
   const onSubmit = useCallback((values: Values) => {
-    // console.log(values);
+    console.log(values);
   }, []);
 
   return (
@@ -34,11 +33,11 @@ export const ProjectSettings = ({ onClose }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
-              <TextField {...register("name")} label="Name" fullWidth />
+              <TextField {...register('name')} label="Name" fullWidth />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                {...register("notes")}
+                {...register('notes')}
                 label="Notes"
                 variant="outlined"
                 rows={12}

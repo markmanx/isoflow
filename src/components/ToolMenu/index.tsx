@@ -11,7 +11,7 @@ import {
   MIN_ZOOM,
   MAX_ZOOM
 } from 'src/stores/useUiStateStore';
-import { MenuItem } from '../MenuItem';
+import { IconButton } from '../IconButton/IconButton';
 
 export const ToolMenu = () => {
   const theme = useTheme();
@@ -29,30 +29,30 @@ export const ToolMenu = () => {
         borderRadius: 2
       }}
     >
-      <MenuItem
+      <IconButton
         name="Select"
-        Icon={NearMeIcon}
+        Icon={<NearMeIcon />}
         onClick={() => uiStateStoreActions.setMode({ type: 'CURSOR' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'CURSOR'}
       />
-      <MenuItem
+      <IconButton
         name="Pan"
-        Icon={PanToolIcon}
+        Icon={<PanToolIcon />}
         onClick={() => uiStateStoreActions.setMode({ type: 'PAN' })}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'PAN'}
       />
-      <MenuItem
+      <IconButton
         name="Zoom in"
-        Icon={ZoomInIcon}
+        Icon={<ZoomInIcon />}
         onClick={uiStateStoreActions.incrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MAX_ZOOM}
       />
-      <MenuItem
+      <IconButton
         name="Zoom out"
-        Icon={ZoomOutIcon}
+        Icon={<ZoomOutIcon />}
         onClick={uiStateStoreActions.decrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MIN_ZOOM}

@@ -96,42 +96,6 @@ const InitialisedRenderer = () => {
   );
 };
 
-// const NodeContextMenu = (node: NodeSchemaI) => {
-//   const container = useRef<HTMLDivElement>();
-//   const scrollPosition = useScrollPosition();
-//   const zoom = useZoom();
-
-//   useEffect(() => {
-//     if (!container.current) return;
-
-//     const screenPosition = getTileScreenPosition(
-//       new Coords(node.position.x, node.position.y),
-//       scrollPosition,
-//       zoom
-//     );
-
-//     gsap.to(container.current, {
-//       duration: 0.1,
-//       left: screenPosition.x,
-//       top: screenPosition.y
-//     });
-//   }, [node.position, scrollPosition, zoom]);
-
-//   return (
-//     <Box
-//       ref={container}
-//       sx={{
-//         position: 'absolute',
-//         width: 100,
-//         height: 100,
-//         bgcolor: 'primary.main'
-//       }}
-//     >
-//       {node.id}
-//     </Box>
-//   );
-// };
-
 export const Renderer = () => (
   <Initialiser>
     <InitialisedRenderer />

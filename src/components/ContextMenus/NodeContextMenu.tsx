@@ -1,30 +1,25 @@
 import React from 'react';
-import { ArrowRightAlt, Delete } from '@mui/icons-material';
-import { useGlobalState } from '../../hooks/useGlobalState';
-import { ContextMenu } from './ContextMenu';
-import { ContextMenuItem } from './ContextMenuItem';
-import { Node } from '../../renderer/elements/Node';
+import {
+  ArrowRightAlt as ConnectIcon,
+  Delete as DeleteIcon
+} from '@mui/icons-material';
+import { Coords } from 'src/utils/Coords';
+import { ContextMenu } from './components/ContextMenu';
+import { ContextMenuItem } from './components/ContextMenuItem';
 
 interface Props {
-  node: Node;
+  onConnect: () => void;
+  onRemove: () => void;
+  position: Coords;
 }
 
-export const NodeContextMenu = ({ node }: Props) => {
-  const renderer = useGlobalState((state) => state.renderer);
-  const position = renderer.getTileScreenPosition(node.position);
-
-  return (
-    <ContextMenu position={position}>
-      <ContextMenuItem
-        onClick={() => {}}
-        icon={<ArrowRightAlt />}
-        label="Connect"
-      />
-      <ContextMenuItem
-        onClick={node.destroy}
-        icon={<Delete />}
-        label="Remove"
-      />
-    </ContextMenu>
-  );
-};
+export const NodeContextMenu = ({ onConnect, onRemove, position }: Props) => (
+  <ContextMenu position={position}>
+    <ContextMenuItem
+      onClick={onConnect}
+      icon={<ConnectIcon />}
+      label="Connect"
+    />
+    <ContextMenuItem onClick={onRemove} icon={<DeleteIcon />} label="Remove" />
+  </ContextMenu>
+);

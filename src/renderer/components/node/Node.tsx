@@ -2,11 +2,10 @@ import { useEffect, useRef } from 'react';
 import { Group } from 'paper';
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
-import { useNodeIcon } from '../useNodeIcon';
-import { getTilePosition } from '../utils/gridHelpers';
+import { useNodeIcon } from './useNodeIcon';
+import { getTilePosition } from '../../utils/gridHelpers';
 
 export interface NodeProps {
-  id: string;
   position: { x: number; y: number };
   iconId: string;
   parentContainer: paper.Group;
@@ -16,17 +15,19 @@ export const Node = ({ position, iconId, parentContainer }: NodeProps) => {
   const container = useRef(new Group());
   const nodeIcon = useNodeIcon();
 
+  const { init: initNodeIcon, update: updateNodeIcon } = nodeIcon;
+
   useEffect(() => {
-    const nodeIconContainer = nodeIcon.init();
+    const nodeIconContainer = initNodeIcon();
 
     container.current.removeChildren();
     container.current.addChild(nodeIconContainer);
     parentContainer.addChild(container.current);
-  }, [nodeIcon.init]);
+  }, [initNodeIcon, parentContainer]);
 
   useEffect(() => {
-    nodeIcon.update(iconId);
-  }, [iconId, nodeIcon.update]);
+    updateNodeIcon(iconId);
+  }, [iconId, updateNodeIcon]);
 
   useEffect(() => {
     const oldPosition = new Coords(

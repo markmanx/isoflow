@@ -9,7 +9,7 @@ export const Cursor: InteractionReducer = {
       sceneItems: draftState.scene
     });
 
-    if (itemsAtTile.length > 0) {
+    if (itemsAtTile.nodes.length > 0) {
       draftState.mode = {
         type: 'DRAG_ITEMS',
         items: itemsAtTile,

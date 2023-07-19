@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-import Button from '@mui/material/Button';
+import { Button, Box } from '@mui/material';
 import Tooltip, { TooltipProps } from '@mui/material/Tooltip';
-import { SvgIconComponent } from '@mui/icons-material';
 
 interface Props {
   name: string;
-  Icon: SvgIconComponent;
+  Icon: React.ReactNode;
   isActive?: boolean;
   onClick: () => void;
   size: number;
@@ -13,7 +12,7 @@ interface Props {
   disabled?: boolean;
 }
 
-export const MenuItem = ({
+export const IconButton = ({
   name,
   Icon,
   onClick,
@@ -57,7 +56,15 @@ export const MenuItem = ({
           m: 0
         }}
       >
-        <Icon sx={{ color: iconColor }} />
+        <Box
+          sx={{
+            svg: {
+              color: iconColor
+            }
+          }}
+        >
+          {Icon}
+        </Box>
       </Button>
     </Tooltip>
   );

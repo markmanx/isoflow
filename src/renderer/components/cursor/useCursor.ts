@@ -1,9 +1,9 @@
 import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import gsap from 'gsap';
+import { Coords } from 'src/utils/Coords';
 import { TILE_SIZE, PIXEL_UNIT } from '../../utils/constants';
 import { applyProjectionMatrix } from '../../utils/projection';
-import { Coords } from '../../utils/Coords';
 
 export const useCursor = () => {
   const container = useRef(new Group());
