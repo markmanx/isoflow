@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import type { NodeInput } from 'src/validation/SceneSchema';
-import type { Node } from 'src/stores/useSceneStore';
+import { Node, SceneItemTypeEnum } from 'src/stores/useSceneStore';
 
 export const clamp = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num;
@@ -51,7 +51,7 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
     iconId: nodeInput.iconId,
     position: Coords.fromObject(nodeInput.position),
     isSelected: false,
-    type: 'NODE'
+    type: SceneItemTypeEnum.NODE
   };
 
   return node;

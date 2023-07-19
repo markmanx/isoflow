@@ -9,6 +9,7 @@ import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
 import { Node } from './components/node/Node';
 import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
+import { DomOverlay } from './components/domOverlay/DomOverlay';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
@@ -99,5 +100,6 @@ const InitialisedRenderer = () => {
 export const Renderer = () => (
   <Initialiser>
     <InitialisedRenderer />
+    <DomOverlay />
   </Initialiser>
 );

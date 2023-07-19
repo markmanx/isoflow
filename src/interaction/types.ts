@@ -1,5 +1,5 @@
 import { Draft } from 'immer';
-import { Mouse, Mode, Scroll } from 'src/stores/useUiStateStore';
+import { Mouse, Mode, Scroll, ContextMenu } from 'src/stores/useUiStateStore';
 import { SceneItems } from 'src/stores/useSceneStore';
 import { Coords } from 'src/utils/Coords';
 
@@ -9,6 +9,7 @@ export interface State {
   scroll: Scroll;
   gridSize: Coords;
   scene: SceneItems;
+  contextMenu: ContextMenu;
 }
 
 export type InteractionReducerAction = (

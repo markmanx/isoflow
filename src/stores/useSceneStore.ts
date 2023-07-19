@@ -1,9 +1,19 @@
 import { create } from 'zustand';
+import { Draft, produce } from 'immer';
 import { IconInput } from '../validation/SceneSchema';
 import { Coords } from '../utils/Coords';
 
+export enum SceneItemTypeEnum {
+  NODE = 'NODE'
+}
+
+export interface SceneItem {
+  id: string;
+  type: SceneItemTypeEnum;
+}
+
 export interface Node {
-  type: 'NODE';
+  type: SceneItemTypeEnum.NODE;
   id: string;
   iconId: string;
   label?: string;
@@ -25,13 +35,15 @@ export type Scene = SceneItems & {
 export interface SceneActions {
   set: (scene: Scene) => void;
   setItems: (elements: SceneItems) => void;
+  updateNode: (id: string, updates: Partial<Node>) => void;
+  getNodeById: (id: string) => Node | undefined;
 }
 
 export type UseSceneStore = Scene & {
   actions: SceneActions;
 };
 
-export const useSceneStore = create<UseSceneStore>((set) => ({
+export const useSceneStore = create<UseSceneStore>((set, get) => ({
   nodes: [],
   icons: [],
   gridSize: new Coords(51, 51),
@@ -41,6 +53,24 @@ export const useSceneStore = create<UseSceneStore>((set) => ({
     },
     setItems: (items: SceneItems) => {
       set({ nodes: items.nodes });
+    },
+    getNodeById: (id: string) => {
+      const { nodes } = get();
+      return nodes.find((node) => node.id === id);
+    },
+    updateNode: (id, updates) => {
+      const { nodes } = get();
+      const nodeIndex = nodes.findIndex((node) => node.id === id);
+
+      if (nodeIndex === -1) {
+        return;
+      }
+
+      const newNodes = produce(nodes, (draftState) => {
+        draftState[nodeIndex] = { ...draftState[nodeIndex], ...updates };
+      });
+
+      set({ nodes: newNodes });
     }
   }
 }));

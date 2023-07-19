@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
-import { Node } from 'src/stores/useSceneStore';
+import { Node, SceneItem } from 'src/stores/useSceneStore';
 
 const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
@@ -39,6 +39,8 @@ export type Mode =
       hasMovedTile: boolean;
     };
 
+export type ContextMenu = SceneItem | null;
+
 export interface Mouse {
   position: Coords;
   mouseDownAt: Coords | null;
@@ -53,6 +55,7 @@ export interface Scroll {
 export interface UiState {
   mode: Mode;
   sidebar: Sidebar | null;
+  contextMenu: ContextMenu;
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
@@ -65,6 +68,7 @@ export interface UiStateActions {
   setScroll: (scroll: Scroll) => void;
   setMouse: (mouse: Mouse) => void;
   setSidebar: (sidebar: Sidebar | null) => void;
+  setContextMenu: (contextMenu: SceneItem | null) => void;
 }
 
 export type UseUiStateStore = UiState & {
@@ -74,6 +78,7 @@ export type UseUiStateStore = UiState & {
 export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
   mode: { type: 'CURSOR' },
   sidebar: null,
+  contextMenu: null,
   scroll: {
     position: new Coords(0, 0),
     offset: new Coords(0, 0)
@@ -106,6 +111,9 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     },
     setSidebar: (sidebar) => {
       set({ sidebar });
+    },
+    setContextMenu: (contextMenu) => {
+      set({ contextMenu });
     }
   }
 }));
