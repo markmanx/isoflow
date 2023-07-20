@@ -1,5 +1,11 @@
 import { Draft } from 'immer';
-import { Mouse, Mode, Scroll, ContextMenu } from 'src/stores/useUiStateStore';
+import {
+  Mouse,
+  Mode,
+  Scroll,
+  ContextMenu,
+  Sidebar
+} from 'src/stores/useUiStateStore';
 import { SceneItems } from 'src/stores/useSceneStore';
 import { Coords } from 'src/utils/Coords';
 
@@ -10,6 +16,7 @@ export interface State {
   gridSize: Coords;
   scene: SceneItems;
   contextMenu: ContextMenu;
+  sidebar: Sidebar;
 }
 
 export type InteractionReducerAction = (

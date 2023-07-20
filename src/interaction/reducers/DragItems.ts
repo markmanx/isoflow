@@ -1,4 +1,5 @@
 import { getItemsByTile } from 'src/renderer/utils/gridHelpers';
+import { SidebarTypeEnum } from 'src/stores/useUiStateStore';
 import { InteractionReducer } from '../types';
 
 export const DragItems: InteractionReducer = {
@@ -43,6 +44,10 @@ export const DragItems: InteractionReducer = {
 
         draftState.scene.nodes[nodeIndex].isSelected = true;
         draftState.contextMenu = draftState.scene.nodes[nodeIndex];
+        draftState.sidebar = {
+          type: SidebarTypeEnum.SINGLE_NODE,
+          nodeId: draftState.scene.nodes[nodeIndex].id
+        };
       }
     }
 

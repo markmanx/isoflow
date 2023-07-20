@@ -24,9 +24,10 @@ export const useInteractionManager = () => {
   const mode = useUiStateStore((state) => state.mode);
   const mouse = useUiStateStore((state) => state.mouse);
   const scroll = useUiStateStore((state) => state.scroll);
+  const sidebar = useUiStateStore((state) => state.sidebar);
   const contextMenu = useUiStateStore((state) => state.contextMenu);
-  const scene = useSceneStore(({ nodes }) => ({ nodes }));
   const uiStateActions = useUiStateStore((state) => state.actions);
+  const scene = useSceneStore(({ nodes }) => ({ nodes }));
   const gridSize = useSceneStore((state) => state.gridSize);
   const sceneActions = useSceneStore((state) => state.actions);
 
@@ -65,7 +66,8 @@ export const useInteractionManager = () => {
           mode,
           scroll,
           gridSize,
-          contextMenu
+          contextMenu,
+          sidebar
         },
         (draft) => reducerAction(draft, { prevMouse })
       );
@@ -73,14 +75,16 @@ export const useInteractionManager = () => {
       uiStateActions.setMouse(newMouse);
       uiStateActions.setScroll(newState.scroll);
       uiStateActions.setMode(newState.mode);
-      sceneActions.setItems(newState.scene);
       uiStateActions.setContextMenu(newState.contextMenu);
+      uiStateActions.setSidebar(newState.sidebar);
+      sceneActions.setItems(newState.scene);
     },
     [
       mode,
       mouse,
       scroll,
       gridSize,
+      sidebar,
       uiStateActions,
       sceneActions,
       scene,

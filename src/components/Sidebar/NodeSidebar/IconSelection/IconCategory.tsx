@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import { Icon as IconInterface } from 'src/stores/useSceneStore';
 import { Icon } from './Icon';
-import { Section } from '../../../Sidebar/Section';
+import { Section } from '../../components/Section';
 
 interface Props {
   name?: string;

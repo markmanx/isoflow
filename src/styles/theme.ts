@@ -1,8 +1,9 @@
 import { createTheme } from '@mui/material';
 
 interface CustomThemeVars {
-  sideNav: {
-    width: number;
+  appPadding: {
+    x: number;
+    y: number;
   };
   toolMenu: {
     height: number;
@@ -23,8 +24,9 @@ declare module '@mui/material/styles' {
 }
 
 const customVars: CustomThemeVars = {
-  sideNav: {
-    width: 60
+  appPadding: {
+    x: 60,
+    y: 60
   },
   toolMenu: {
     height: 55

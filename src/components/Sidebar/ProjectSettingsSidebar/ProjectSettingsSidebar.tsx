@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import { Header } from '../../Sidebar/Header';
-import { Section } from '../../Sidebar/Section';
-import { Sidebar } from '../../Sidebar';
+import { Header } from '../components/Header';
+import { Section } from '../components/Section';
+import { Sidebar } from '../components/Sidebar';
 
 interface Props {
   onClose: () => void;

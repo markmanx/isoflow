@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { useSceneStore } from 'src/stores/useSceneStore';
-import { Sidebar } from '../../Sidebar';
+import { Sidebar } from '../components/Sidebar';
 import { Icons } from './IconSelection/IconSelection';
-import { Header } from '../../Sidebar/Header';
+import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 
 interface Props {

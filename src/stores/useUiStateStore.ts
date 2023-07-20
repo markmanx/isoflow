@@ -19,7 +19,8 @@ export type Sidebar =
     }
   | {
       type: SidebarTypeEnum.PROJECT_SETTINGS;
-    };
+    }
+  | null;
 
 export type Mode =
   | {

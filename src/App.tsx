@@ -9,7 +9,7 @@ import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
 import { nodeInputToNode } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
-import { SideNav } from 'src/components/SideNav/SideNav';
+import { SidebarManager } from './components/Sidebar/SidebarManager';
 
 interface Props {
   initialScene: SceneInput;
@@ -30,9 +30,7 @@ const InnerApp = React.memo(
         }}
       >
         <Renderer />
-        {/* <ContextMenu /> */}
-        {/* <Sidebar /> */}
-        <SideNav />
+        <SidebarManager />
         <ToolMenu />
       </Box>
     </ThemeProvider>

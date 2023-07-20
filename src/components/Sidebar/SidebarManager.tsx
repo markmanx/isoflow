@@ -34,7 +34,7 @@ export const SidebarManager = () => {
           width: '400px',
           height: '100%',
           top: 0,
-          left: theme.customVars.sideNav.width,
+          left: theme.customVars.appPadding.x,
           borderRadius: 0
         }}
       >
