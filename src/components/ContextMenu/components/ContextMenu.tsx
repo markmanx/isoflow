@@ -59,7 +59,8 @@ export const ContextMenu = ({ position, children }: Props) => {
         position: 'absolute',
         opacity: 0,
         marginLeft: '15px',
-        marginTop: '-20px'
+        marginTop: '-20px',
+        whiteSpace: 'nowrap'
       }}
     >
       <Box

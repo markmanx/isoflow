@@ -20,7 +20,10 @@ export const Cursor: InteractionReducer = {
         ...node,
         isSelected: false
       }));
-      draftState.contextMenu = null;
+      draftState.contextMenu = {
+        type: 'EMPTY_TILE',
+        position: draftState.mouse.tile
+      };
     }
   },
   mouseup: () => {}

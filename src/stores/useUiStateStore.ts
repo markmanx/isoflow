@@ -39,7 +39,13 @@ export type Mode =
       hasMovedTile: boolean;
     };
 
-export type ContextMenu = SceneItem | null;
+export type ContextMenu =
+  | SceneItem
+  | {
+      type: 'EMPTY_TILE';
+      position: Coords;
+    }
+  | null;
 
 export interface Mouse {
   position: Coords;
@@ -69,7 +75,7 @@ export interface UiStateActions {
   setScroll: (scroll: Scroll) => void;
   setMouse: (mouse: Mouse) => void;
   setSidebar: (sidebar: Sidebar | null) => void;
-  setContextMenu: (contextMenu: SceneItem | null) => void;
+  setContextMenu: (contextMenu: ContextMenu) => void;
 }
 
 export type UseUiStateStore = UiState & {

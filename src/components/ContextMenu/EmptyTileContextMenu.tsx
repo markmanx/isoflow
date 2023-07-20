@@ -9,7 +9,7 @@ interface Props {
   position: Coords;
 }
 
-export const TileContextMenu = ({ onAddNode, position }: Props) => (
+export const EmptyTileContextMenu = ({ onAddNode, position }: Props) => (
   <ContextMenu position={position}>
     <ContextMenuItem onClick={onAddNode} icon={<AddIcon />} label="Add node" />
   </ContextMenu>

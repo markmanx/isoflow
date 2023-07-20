@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import { Group, Raster } from 'paper';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
@@ -6,11 +6,14 @@ import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
 const NODE_IMG_PADDING = 0;
 
 export const useNodeIcon = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const container = useRef(new Group());
   const icons = useSceneStore((state) => state.icons);
 
   const update = useCallback(
     async (iconId: string) => {
+      setIsLoaded(false);
+
       const icon = icons.find((_icon) => _icon.id === iconId);
 
       if (!icon) return;
@@ -36,6 +39,7 @@ export const useNodeIcon = () => {
         };
 
         iconRaster.source = icon.url;
+        setIsLoaded(true);
       });
     },
     [icons]
@@ -51,6 +55,7 @@ export const useNodeIcon = () => {
   return {
     container: container.current,
     update,
-    init
+    init,
+    isLoaded
   };
 };

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { Draft, produce } from 'immer';
+import { v4 as uuid } from 'uuid';
+import { produce } from 'immer';
 import { IconInput } from '../validation/SceneSchema';
 import { Coords } from '../utils/Coords';
 
@@ -37,6 +38,7 @@ export interface SceneActions {
   setItems: (elements: SceneItems) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   getNodeById: (id: string) => Node | undefined;
+  createNode: (position: Coords) => void;
 }
 
 export type UseSceneStore = Scene & {
@@ -71,6 +73,18 @@ export const useSceneStore = create<UseSceneStore>((set, get) => ({
       });
 
       set({ nodes: newNodes });
+    },
+    createNode: (position) => {
+      const { nodes, icons } = get();
+      const newNode: Node = {
+        id: uuid(),
+        type: SceneItemTypeEnum.NODE,
+        iconId: icons[0].id,
+        position,
+        isSelected: false
+      };
+
+      set({ nodes: [...nodes, newNode] });
     }
   }
 }));

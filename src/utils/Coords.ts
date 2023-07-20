@@ -53,6 +53,10 @@ export class Coords {
     return new Coords(this.x, this.y);
   }
 
+  toString() {
+    return `x: ${this.x}, y: ${this.y}`;
+  }
+
   static fromObject({ x, y }: { x: number; y: number }) {
     return new Coords(x, y);
   }
