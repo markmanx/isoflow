@@ -6,8 +6,8 @@ import {
   findInvalidNode,
   findInvalidConnector,
   findInvalidGroup
-} from 'src/validation/SceneSchema';
-import { scene } from '../fixtures/scene';
+} from '../SceneSchema';
+import { scene } from '../../tests/fixtures/scene';
 
 describe('scene validation works correctly', () => {
   test('scene fixture is valid', () => {
