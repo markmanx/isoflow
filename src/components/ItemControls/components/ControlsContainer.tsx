@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const Sidebar = ({ header, children }: Props) => (
+export const ControlsContainer = ({ header, children }: Props) => (
   <Box
     sx={{
       height: '100%',

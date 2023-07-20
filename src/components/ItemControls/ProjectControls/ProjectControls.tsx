@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import { Header } from '../components/Header';
 import { Section } from '../components/Section';
-import { Sidebar } from '../components/Sidebar';
+import { ControlsContainer } from '../components/ControlsContainer';
 
 interface Props {
   onClose: () => void;
@@ -15,7 +15,7 @@ interface Values {
   notes?: string;
 }
 
-export const ProjectSettingsSidebar = ({ onClose }: Props) => {
+export const ProjectControls = ({ onClose }: Props) => {
   const { register, handleSubmit } = useForm<Values>({
     defaultValues: {
       name: '',
@@ -28,7 +28,9 @@ export const ProjectSettingsSidebar = ({ onClose }: Props) => {
   }, []);
 
   return (
-    <Sidebar header={<Header title="Project settings" onClose={onClose} />}>
+    <ControlsContainer
+      header={<Header title="Project settings" onClose={onClose} />}
+    >
       <Section>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>
@@ -48,6 +50,6 @@ export const ProjectSettingsSidebar = ({ onClose }: Props) => {
           </Grid>
         </form>
       </Section>
-    </Sidebar>
+    </ControlsContainer>
   );
 };

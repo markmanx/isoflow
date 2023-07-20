@@ -4,7 +4,7 @@ import {
   Mode,
   Scroll,
   ContextMenu,
-  Sidebar
+  ItemControls
 } from 'src/stores/useUiStateStore';
 import { SceneItems } from 'src/stores/useSceneStore';
 import { Coords } from 'src/utils/Coords';
@@ -16,7 +16,7 @@ export interface State {
   gridSize: Coords;
   scene: SceneItems;
   contextMenu: ContextMenu;
-  sidebar: Sidebar;
+  itemControls: ItemControls;
 }
 
 export type InteractionReducerAction = (

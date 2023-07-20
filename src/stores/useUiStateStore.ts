@@ -12,7 +12,7 @@ export enum SidebarTypeEnum {
   PROJECT_SETTINGS = 'PROJECT_SETTINGS'
 }
 
-export type Sidebar =
+export type ItemControls =
   | {
       type: SidebarTypeEnum.SINGLE_NODE;
       nodeId: string;
@@ -62,7 +62,7 @@ export interface Scroll {
 
 export interface UiState {
   mode: Mode;
-  sidebar: Sidebar | null;
+  itemControls: ItemControls;
   contextMenu: ContextMenu;
   zoom: number;
   scroll: Scroll;
@@ -75,7 +75,7 @@ export interface UiStateActions {
   decrementZoom: () => void;
   setScroll: (scroll: Scroll) => void;
   setMouse: (mouse: Mouse) => void;
-  setSidebar: (sidebar: Sidebar | null) => void;
+  setSidebar: (itemControls: ItemControls) => void;
   setContextMenu: (contextMenu: ContextMenu) => void;
 }
 
@@ -85,7 +85,7 @@ export type UseUiStateStore = UiState & {
 
 export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
   mode: { type: 'CURSOR' },
-  sidebar: null,
+  itemControls: null,
   contextMenu: null,
   scroll: {
     position: new Coords(0, 0),
@@ -118,8 +118,8 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     setMouse: ({ position, delta, mouseDownAt, tile }) => {
       set({ mouse: { position, delta, mouseDownAt, tile } });
     },
-    setSidebar: (sidebar) => {
-      set({ sidebar });
+    setSidebar: (itemControls) => {
+      set({ itemControls });
     },
     setContextMenu: (contextMenu) => {
       set({ contextMenu });

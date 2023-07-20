@@ -44,7 +44,7 @@ export const DragItems: InteractionReducer = {
 
         draftState.scene.nodes[nodeIndex].isSelected = true;
         draftState.contextMenu = draftState.scene.nodes[nodeIndex];
-        draftState.sidebar = {
+        draftState.itemControls = {
           type: SidebarTypeEnum.SINGLE_NODE,
           nodeId: draftState.scene.nodes[nodeIndex].id
         };

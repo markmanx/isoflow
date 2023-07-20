@@ -3,31 +3,36 @@ import { useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import Slide from '@mui/material/Slide';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { NodeSidebar } from './NodeSidebar/NodeSidebar';
-import { ProjectSettingsSidebar } from './ProjectSettingsSidebar/ProjectSettingsSidebar';
+import { NodeControls } from './NodeControls/NodeControls';
+import { ProjectControls } from './ProjectControls/ProjectControls';
 
-export const SidebarManager = () => {
+export const ItemControlsManager = () => {
   const theme = useTheme();
-  const sidebar = useUiStateStore((state) => state.sidebar);
+  const itemControls = useUiStateStore((state) => state.itemControls);
   const uiStateActions = useUiStateStore((state) => state.actions);
 
   const onClose = useCallback(() => {
     uiStateActions.setSidebar(null);
   }, [uiStateActions]);
 
-  const Sidebar = useMemo(() => {
-    switch (sidebar?.type) {
+  const Controls = useMemo(() => {
+    switch (itemControls?.type) {
       case 'SINGLE_NODE':
-        return <NodeSidebar onClose={onClose} />;
+        return <NodeControls onClose={onClose} />;
       case 'PROJECT_SETTINGS':
-        return <ProjectSettingsSidebar onClose={onClose} />;
+        return <ProjectControls onClose={onClose} />;
       default:
         return null;
     }
-  }, [sidebar, onClose]);
+  }, [itemControls, onClose]);
 
   return (
-    <Slide direction="right" in={sidebar !== null} mountOnEnter unmountOnExit>
+    <Slide
+      direction="right"
+      in={itemControls !== null}
+      mountOnEnter
+      unmountOnExit
+    >
       <Card
         sx={{
           position: 'absolute',
@@ -38,7 +43,7 @@ export const SidebarManager = () => {
           borderRadius: 0
         }}
       >
-        {Sidebar}
+        {Controls}
       </Card>
     </Slide>
   );

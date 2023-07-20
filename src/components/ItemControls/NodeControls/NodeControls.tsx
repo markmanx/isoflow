@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { useSceneStore } from 'src/stores/useSceneStore';
-import { Sidebar } from '../components/Sidebar';
+import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from './IconSelection/IconSelection';
 import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
@@ -10,7 +10,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const NodeSidebar = ({ onClose }: Props) => {
+export const NodeControls = ({ onClose }: Props) => {
   const [tab, setTab] = useState(0);
   const icons = useSceneStore((state) => state.icons);
 
@@ -19,7 +19,7 @@ export const NodeSidebar = ({ onClose }: Props) => {
   };
 
   return (
-    <Sidebar
+    <ControlsContainer
       header={
         <Box>
           <Header title="Node" onClose={onClose} />{' '}
@@ -32,6 +32,6 @@ export const NodeSidebar = ({ onClose }: Props) => {
     >
       {tab === 0 && <NodeSettings />}
       {tab === 1 && <Icons icons={icons} onClick={() => {}} />}
-    </Sidebar>
+    </ControlsContainer>
   );
 };
