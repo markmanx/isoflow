@@ -20,6 +20,7 @@ export const Cursor: InteractionReducer = {
         ...node,
         isSelected: false
       }));
+      draftState.contextMenu = null;
     }
   },
   mouseup: () => {},

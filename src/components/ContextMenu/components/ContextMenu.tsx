@@ -1,7 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { List, Box, Card } from '@mui/material';
-import { keyframes } from '@emotion/react';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { getTileScreenPosition } from 'src/renderer/utils/gridHelpers';
@@ -18,6 +17,7 @@ const ARROW = {
 };
 
 export const ContextMenu = ({ position, children }: Props) => {
+  const [firstDisplay, setFirstDisplay] = useState(false);
   const container = useRef<HTMLDivElement>();
   const scroll = useUiStateStore((state) => state.scroll);
   const zoom = useUiStateStore((state) => state.zoom);
@@ -34,17 +34,29 @@ export const ContextMenu = ({ position, children }: Props) => {
     });
 
     gsap.to(container.current, {
-      duration: 0.1,
+      duration: firstDisplay ? 0.1 : 0,
       left: screenPosition.x + ARROW.size * 2,
       top: screenPosition.y - 25
     });
-  }, [position, scrollPosition, zoom]);
+
+    if (firstDisplay) {
+      gsap.to(container.current, {
+        duration: 0.2,
+        opacity: 1,
+        marginLeft: 0
+      });
+    }
+
+    setFirstDisplay(true);
+  }, [position, scrollPosition, zoom, firstDisplay]);
 
   return (
     <Box
       ref={container}
       sx={{
-        position: 'absolute'
+        position: 'absolute',
+        opacity: 0,
+        marginLeft: '20px'
       }}
     >
       <Box

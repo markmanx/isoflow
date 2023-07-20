@@ -56,7 +56,7 @@ export const DomOverlay = () => {
       }}
     >
       {contextMenu?.type === 'NODE' && (
-        <NodeContextMenu nodeId={contextMenu.id} />
+        <NodeContextMenu key={contextMenu.id} nodeId={contextMenu.id} />
       )}
     </Box>
   );
