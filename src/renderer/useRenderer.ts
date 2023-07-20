@@ -1,6 +1,5 @@
 import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
-import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useGrid } from './components/grid/useGrid';
