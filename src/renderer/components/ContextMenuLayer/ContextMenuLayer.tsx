@@ -5,7 +5,7 @@ import { NodeContextMenu } from 'src/components/ContextMenu/NodeContextMenu';
 import { EmptyTileContextMenu } from 'src/components/ContextMenu/EmptyTileContextMenu';
 import { useSceneStore } from 'src/stores/useSceneStore';
 
-export const DomOverlay = () => {
+export const ContextMenuLayer = () => {
   const contextMenu = useUiStateStore((state) => state.contextMenu);
   const sceneActions = useSceneStore((state) => state.actions);
 
