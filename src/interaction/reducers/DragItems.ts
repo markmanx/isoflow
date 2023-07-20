@@ -42,6 +42,7 @@ export const DragItems: InteractionReducer = {
       if (nodeIndex === -1) return;
 
       draftState.scene.nodes[nodeIndex].position = tile;
+      draftState.contextMenu = null;
     });
 
     draftState.mode.hasMovedTile = true;
