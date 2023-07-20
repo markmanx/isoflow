@@ -4,6 +4,7 @@ import { List, Box, Card } from '@mui/material';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { getTileScreenPosition } from 'src/renderer/utils/gridHelpers';
+import { useSceneStore } from 'src/stores/useSceneStore';
 
 interface Props {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export const ContextMenu = ({ position, children }: Props) => {
   const container = useRef<HTMLDivElement>();
   const scroll = useUiStateStore((state) => state.scroll);
   const zoom = useUiStateStore((state) => state.zoom);
+  const gridSize = useSceneStore((state) => state.gridSize);
 
   const { position: scrollPosition } = scroll;
 
@@ -43,14 +45,12 @@ export const ContextMenu = ({ position, children }: Props) => {
       // The context menu subtly slides in from the left when it is first displayed.
       gsap.to(container.current, {
         duration: 0.2,
-        opacity: 1,
-        marginLeft: '30px',
-        marginTop: '-20px'
+        opacity: 1
       });
     }
 
     setFirstDisplay(true);
-  }, [position, scrollPosition, zoom, firstDisplay]);
+  }, [position, scrollPosition, zoom, firstDisplay, gridSize]);
 
   return (
     <Box
@@ -58,7 +58,8 @@ export const ContextMenu = ({ position, children }: Props) => {
       sx={{
         position: 'absolute',
         opacity: 0,
-        marginLeft: '20px'
+        marginLeft: '15px',
+        marginTop: '-20px'
       }}
     >
       <Box

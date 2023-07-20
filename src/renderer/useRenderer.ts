@@ -20,10 +20,7 @@ export const useRenderer = () => {
   const { init: initCursor } = cursor;
 
   const zoomTo = useCallback((zoom: number) => {
-    gsap.to(Paper.project.activeLayer.view, {
-      duration: 0.25,
-      zoom
-    });
+    Paper.project.activeLayer.view.zoom = zoom;
   }, []);
 
   const init = useCallback(() => {
