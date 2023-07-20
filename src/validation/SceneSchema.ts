@@ -1,74 +1,75 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-export const IconSchema = z.object({
+export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
   url: z.string(),
-  category: z.string().optional(),
+  category: z.string().optional()
 });
 
-export const NodeSchema = z.object({
+export const nodeInput = z.object({
   id: z.string(),
   label: z.string().optional(),
   iconId: z.string(),
   position: z.object({
     x: z.number(),
-    y: z.number(),
-  }),
+    y: z.number()
+  })
 });
 
-export const ConnectorSchema = z.object({
+export const connectorInput = z.object({
   id: z.string(),
   label: z.string().nullable(),
   from: z.string(),
-  to: z.string(),
+  to: z.string()
 });
 
-export const GroupSchema = z.object({
+export const groupInput = z.object({
   id: z.string(),
   label: z.string().nullable(),
-  nodes: z.array(z.string()),
+  nodes: z.array(z.string())
 });
 
-export type IconI = z.infer<typeof IconSchema>;
-export type NodeI = z.infer<typeof NodeSchema>;
-export type ConnectorI = z.infer<typeof ConnectorSchema>;
-export type GroupI = z.infer<typeof GroupSchema>;
+export type IconInput = z.infer<typeof iconInput>;
+export type NodeInput = z.infer<typeof nodeInput>;
+export type ConnectorInput = z.infer<typeof connectorInput>;
+export type GroupInput = z.infer<typeof groupInput>;
 
-export const findInvalidNode = (nodes: NodeI[], icons: IconI[]) => {
-  return nodes.find((node) => {
+export const findInvalidNode = (nodes: NodeInput[], icons: IconInput[]) =>
+  nodes.find((node) => {
     const validIcon = icons.find((icon) => node.iconId === icon.id);
-    return !Boolean(validIcon);
+    return !validIcon;
   });
-};
 
 export const findInvalidConnector = (
-  connectors: ConnectorI[],
-  nodes: NodeI[]
-) => {
-  return connectors.find((con) => {
+  connectors: ConnectorInput[],
+  nodes: NodeInput[]
+) =>
+  connectors.find((con) => {
     const fromNode = nodes.find((node) => con.from === node.id);
     const toNode = nodes.find((node) => con.to === node.id);
 
     return Boolean(!fromNode || !toNode);
   });
-};
 
-export const findInvalidGroup = (groups: GroupI[], nodes: NodeI[]) => {
-  return groups.find((grp) => {
-    return grp.nodes.find((grpNodeId) => {
-      const validNode = nodes.find((node) => node.id === grpNodeId);
+export const findInvalidGroup = (groups: GroupInput[], nodes: NodeInput[]) =>
+  groups.find((grp) =>
+    grp.nodes.find((grpNodeSchemaId) => {
+      const validNode = nodes.find((node) => node.id === grpNodeSchemaId);
       return Boolean(!validNode);
-    });
-  });
-};
+    })
+  );
 
-export const SceneSchema = z
+export const sceneInput = z
   .object({
-    icons: z.array(IconSchema),
-    nodes: z.array(NodeSchema),
-    connectors: z.array(ConnectorSchema),
-    groups: z.array(GroupSchema),
+    icons: z.array(iconInput),
+    nodes: z.array(nodeInput),
+    connectors: z.array(connectorInput),
+    groups: z.array(groupInput),
+    gridSize: z.object({
+      x: z.number(),
+      y: z.number()
+    })
   })
   .superRefine((scene, ctx) => {
     const invalidNode = findInvalidNode(scene.nodes, scene.icons);
@@ -76,8 +77,8 @@ export const SceneSchema = z
     if (invalidNode) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["nodes", invalidNode.id],
-        message: "Invalid node found in scene",
+        path: ['nodes', invalidNode.id],
+        message: 'Invalid node found in scene'
       });
 
       return;
@@ -91,8 +92,8 @@ export const SceneSchema = z
     if (invalidConnector) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["connectors", invalidConnector.id],
-        message: "Invalid connector found in scene",
+        path: ['connectors', invalidConnector.id],
+        message: 'Invalid connector found in scene'
       });
 
       return;
@@ -103,10 +104,10 @@ export const SceneSchema = z
     if (invalidGroup) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ["groups", invalidGroup.id],
-        message: "Invalid group found in scene",
+        path: ['groups', invalidGroup.id],
+        message: 'Invalid group found in scene'
       });
     }
   });
 
-export type SceneI = z.infer<typeof SceneSchema>;
+export type SceneInput = z.infer<typeof sceneInput>;

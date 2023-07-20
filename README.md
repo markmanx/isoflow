@@ -26,7 +26,7 @@ Migration to open-source: ██░░░░░░░░░
 - [x] Set up automated publishing to NPM registry
 - [ ] Migrate private JS project to public Typescript project
   - [x] Pan / Select / Zoom modes
-  - [x] Display icons in sidebar
+  - [x] Display icons in itemControls
   - [ ] Node controls
   - [ ] Group controls
   - [ ] Connector controls

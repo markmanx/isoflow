@@ -1,15 +1,14 @@
-import { Matrix, Point } from "paper";
+import { Matrix, Point } from 'paper';
 
-export const getProjectionMatrix = (x: number, y: number) => {
-  return new Matrix([
+export const getProjectionMatrix = (x: number, y: number) =>
+  new Matrix([
     Math.sqrt(2) / 2,
     Math.sqrt(6) / 6,
     -(Math.sqrt(2) / 2),
     Math.sqrt(6) / 6,
     x - (Math.sqrt(2) / 2) * (x - y),
-    y - (Math.sqrt(6) / 6) * (x + y - 2),
+    y - (Math.sqrt(6) / 6) * (x + y - 2)
   ]);
-};
 
 export const applyProjectionMatrix = (
   item: paper.Item,

@@ -1,59 +1,62 @@
-import React from "react";
-import { observer } from "mobx-react";
-import { useContext } from "react";
-import { useTheme } from "@mui/material";
-import Card from "@mui/material/Card";
-import { MenuItem } from "../MenuItem";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-import NearMeIcon from "@mui/icons-material/NearMe";
-import { useZoom } from "../../hooks/useZoom";
-import { modeManagerContext } from "../../contexts/ModeManagerContext";
-import { Select } from "../../modes/Select";
-import { Pan } from "../../modes/Pan";
+import React from 'react';
+import { Card, useTheme } from '@mui/material';
+import {
+  PanTool as PanToolIcon,
+  ZoomIn as ZoomInIcon,
+  ZoomOut as ZoomOutIcon,
+  NearMe as NearMeIcon
+} from '@mui/icons-material';
+import {
+  useUiStateStore,
+  MIN_ZOOM,
+  MAX_ZOOM
+} from 'src/stores/useUiStateStore';
+import { IconButton } from '../IconButton/IconButton';
 
-export const ToolMenu = observer(() => {
-  const modeManager = useContext(modeManagerContext);
+export const ToolMenu = () => {
   const theme = useTheme();
-  const { incrementZoom, decrementZoom } = useZoom();
+  const zoom = useUiStateStore((state) => state.zoom);
+  const mode = useUiStateStore((state) => state.mode);
+  const uiStateStoreActions = useUiStateStore((state) => state.actions);
 
   return (
     <Card
       sx={{
-        position: "absolute",
+        position: 'absolute',
         top: theme.spacing(4),
         right: theme.spacing(4),
         height: theme.customVars.toolMenu.height,
-        borderRadius: 2,
+        borderRadius: 2
       }}
     >
-      <MenuItem
+      <IconButton
         name="Select"
-        Icon={NearMeIcon}
-        onClick={() => modeManager.activateMode(Select)}
+        Icon={<NearMeIcon />}
+        onClick={() => uiStateStoreActions.setMode({ type: 'CURSOR' })}
         size={theme.customVars.toolMenu.height}
-        isActive={modeManager.currentMode?.instance instanceof Select}
+        isActive={mode.type === 'CURSOR'}
       />
-      <MenuItem
+      <IconButton
         name="Pan"
-        Icon={PanToolIcon}
-        onClick={() => modeManager.activateMode(Pan)}
+        Icon={<PanToolIcon />}
+        onClick={() => uiStateStoreActions.setMode({ type: 'PAN' })}
         size={theme.customVars.toolMenu.height}
-        isActive={modeManager.currentMode?.instance instanceof Pan}
+        isActive={mode.type === 'PAN'}
       />
-      <MenuItem
+      <IconButton
         name="Zoom in"
-        Icon={ZoomInIcon}
-        onClick={incrementZoom}
+        Icon={<ZoomInIcon />}
+        onClick={uiStateStoreActions.incrementZoom}
         size={theme.customVars.toolMenu.height}
+        disabled={zoom === MAX_ZOOM}
       />
-      <MenuItem
+      <IconButton
         name="Zoom out"
-        Icon={ZoomOutIcon}
-        onClick={decrementZoom}
+        Icon={<ZoomOutIcon />}
+        onClick={uiStateStoreActions.decrementZoom}
         size={theme.customVars.toolMenu.height}
+        disabled={zoom === MIN_ZOOM}
       />
     </Card>
   );
-});
+};
