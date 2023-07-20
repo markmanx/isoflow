@@ -43,6 +43,7 @@ export type ContextMenu = SceneItem | null;
 
 export interface Mouse {
   position: Coords;
+  tile: Coords;
   mouseDownAt: Coords | null;
   delta: Coords | null;
 }
@@ -85,6 +86,7 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
   },
   mouse: {
     position: new Coords(0, 0),
+    tile: new Coords(0, 0),
     mouseDownAt: null,
     delta: null
   },
@@ -106,8 +108,8 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     setScroll: ({ position, offset }) => {
       set({ scroll: { position, offset: offset ?? get().scroll.offset } });
     },
-    setMouse: ({ position, delta, mouseDownAt }) => {
-      set({ mouse: { position, delta, mouseDownAt } });
+    setMouse: ({ position, delta, mouseDownAt, tile }) => {
+      set({ mouse: { position, delta, mouseDownAt, tile } });
     },
     setSidebar: (sidebar) => {
       set({ sidebar });

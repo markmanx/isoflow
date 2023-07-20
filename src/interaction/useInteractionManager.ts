@@ -3,7 +3,6 @@ import { produce } from 'immer';
 import { Tool } from 'paper';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { getTileFromMouse } from 'src/renderer/utils/gridHelpers';
 import { toolEventToMouseEvent } from './utils';
 import { Select } from './reducers/Select';
 import { DragItems } from './reducers/DragItems';
@@ -50,40 +49,28 @@ export const useInteractionManager = () => {
           return;
       }
 
+      const prevMouse = { ...mouse };
       // Update mouse position
-      const newMouse = toolEventToMouseEvent({ toolEvent, mouse });
-      uiStateActions.setMouse(newMouse);
-
-      // Detect when a new tile is hovered over, and use it to trigger an `onTileOver`
-      // function on the reducer.  This is a common occurence for triggering events like moving
-      // the cursor from one tile to the next
-      const prevTile = getTileFromMouse({
-        mousePosition: mouse.position,
+      const newMouse = toolEventToMouseEvent({
+        toolEvent,
+        mouse,
         gridSize,
         scroll
       });
-      const tile = getTileFromMouse({
-        mousePosition: newMouse.position,
-        gridSize,
-        scroll
-      });
-
-      if (!prevTile.isEqual(tile)) {
-        reducerAction = reducer.onTileOver;
-      }
 
       const newState = produce(
         {
           scene,
-          mouse,
+          mouse: newMouse,
           mode,
           scroll,
           gridSize,
           contextMenu
         },
-        (draft) => reducerAction(draft, { tile })
+        (draft) => reducerAction(draft, { prevMouse })
       );
 
+      uiStateActions.setMouse(newMouse);
       uiStateActions.setScroll(newState.scroll);
       uiStateActions.setMode(newState.mode);
       sceneActions.setItems(newState.scene);

@@ -5,6 +5,9 @@ import { clamp } from 'src/utils';
 import { SceneItems } from 'src/stores/useSceneStore';
 import { Scroll } from 'src/stores/useUiStateStore';
 
+const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
+const halfH = PROJECTED_TILE_DIMENSIONS.y * 0.5;
+
 interface GetTileFromMouse {
   mousePosition: Coords;
   scroll: Scroll;
@@ -16,9 +19,6 @@ export const getTileFromMouse = ({
   scroll,
   gridSize
 }: GetTileFromMouse) => {
-  const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
-  const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
-
   const canvasPosition = new Coords(
     mousePosition.x - (scroll.position.x + Paper.view.bounds.center.x),
     mousePosition.y - (scroll.position.y + Paper.view.bounds.center.y) + halfH
@@ -40,12 +40,8 @@ export const getTileFromMouse = ({
   );
 };
 
-export const getTilePosition = ({ x, y }: Coords) => {
-  const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
-  const halfH = PROJECTED_TILE_DIMENSIONS.y * 0.5;
-
-  return new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
-};
+export const getTilePosition = ({ x, y }: Coords) =>
+  new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
 
 export const getTileBounds = (coords: Coords) => {
   const position = getTilePosition(coords);

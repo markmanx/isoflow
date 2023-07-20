@@ -2,16 +2,33 @@ import { getItemsByTile } from 'src/renderer/utils/gridHelpers';
 import { InteractionReducer } from '../types';
 
 export const DragItems: InteractionReducer = {
-  mousemove: () => {},
+  mousemove: (draftState, { prevMouse }) => {
+    if (draftState.mode.type !== 'DRAG_ITEMS') return;
+
+    if (!prevMouse.tile.isEqual(draftState.mouse.tile)) {
+      draftState.mode.items.nodes.forEach((node) => {
+        const nodeIndex = draftState.scene.nodes.findIndex(
+          (sceneNode) => sceneNode.id === node.id
+        );
+
+        if (nodeIndex === -1) return;
+
+        draftState.scene.nodes[nodeIndex].position = draftState.mouse.tile;
+        draftState.contextMenu = null;
+      });
+
+      draftState.mode.hasMovedTile = true;
+    }
+  },
   mousedown: () => {},
-  mouseup: (draftState, { tile }) => {
+  mouseup: (draftState) => {
     if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
     if (!draftState.mode.hasMovedTile) {
       // Set the item to a selected state if the item has been clicked in place,
       // but not dragged
       const itemsAtTile = getItemsByTile({
-        tile,
+        tile: draftState.mouse.tile,
         sceneItems: draftState.scene
       });
 
@@ -30,21 +47,5 @@ export const DragItems: InteractionReducer = {
     }
 
     draftState.mode = { type: 'CURSOR' };
-  },
-  onTileOver: (draftState, { tile }) => {
-    if (draftState.mode.type !== 'DRAG_ITEMS') return;
-
-    draftState.mode.items.nodes.forEach((node) => {
-      const nodeIndex = draftState.scene.nodes.findIndex(
-        (sceneNode) => sceneNode.id === node.id
-      );
-
-      if (nodeIndex === -1) return;
-
-      draftState.scene.nodes[nodeIndex].position = tile;
-      draftState.contextMenu = null;
-    });
-
-    draftState.mode.hasMovedTile = true;
   }
 };

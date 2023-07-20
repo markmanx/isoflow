@@ -35,15 +35,17 @@ export const ContextMenu = ({ position, children }: Props) => {
 
     gsap.to(container.current, {
       duration: firstDisplay ? 0.1 : 0,
-      left: screenPosition.x + ARROW.size * 2,
-      top: screenPosition.y - 25
+      x: screenPosition.x,
+      y: screenPosition.y
     });
 
     if (firstDisplay) {
+      // The context menu subtly slides in from the left when it is first displayed.
       gsap.to(container.current, {
         duration: 0.2,
         opacity: 1,
-        marginLeft: 0
+        marginLeft: '30px',
+        marginTop: '-20px'
       });
     }
 

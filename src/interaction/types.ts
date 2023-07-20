@@ -14,12 +14,11 @@ export interface State {
 
 export type InteractionReducerAction = (
   state: Draft<State>,
-  payload: { tile: Coords }
+  payload: { prevMouse: Mouse }
 ) => void;
 
 export type InteractionReducer = {
   mousemove: InteractionReducerAction;
   mousedown: InteractionReducerAction;
   mouseup: InteractionReducerAction;
-  onTileOver: InteractionReducerAction;
 };

@@ -9,6 +9,5 @@ export const Pan: InteractionReducer = {
       : draftState.scroll.position;
   },
   mousedown: () => {},
-  mouseup: () => {},
-  onTileOver: () => {}
+  mouseup: () => {}
 };

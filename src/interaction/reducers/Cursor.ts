@@ -3,9 +3,9 @@ import { getItemsByTile } from '../../renderer/utils/gridHelpers';
 
 export const Cursor: InteractionReducer = {
   mousemove: () => {},
-  mousedown: (draftState, { tile }) => {
+  mousedown: (draftState) => {
     const itemsAtTile = getItemsByTile({
-      tile,
+      tile: draftState.mouse.tile,
       sceneItems: draftState.scene
     });
 
@@ -23,6 +23,5 @@ export const Cursor: InteractionReducer = {
       draftState.contextMenu = null;
     }
   },
-  mouseup: () => {},
-  onTileOver: () => {}
+  mouseup: () => {}
 };
