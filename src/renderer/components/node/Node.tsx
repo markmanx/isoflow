@@ -43,15 +43,15 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
     updateHeight: updateLabelHeight,
     setVisible: setLabelConnectorVisible
   } = labelConnector;
-  const { init: initNodeTile } = nodeTile;
+  const { init: initNodeTile, updateColor } = nodeTile;
 
   useEffect(() => {
     const nodeIconContainer = initNodeIcon();
     const labelConnectorContainer = initLabelConnector();
-    const nodeColorContainer = initNodeTile();
+    const nodeTileContainer = initNodeTile();
 
     groupRef.current.removeChildren();
-    groupRef.current.addChild(nodeColorContainer);
+    groupRef.current.addChild(nodeTileContainer);
     groupRef.current.addChild(labelConnectorContainer);
     groupRef.current.addChild(nodeIconContainer);
     groupRef.current.pivot = nodeIconContainer.bounds.bottomCenter;
@@ -111,6 +111,10 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
   useEffect(() => {
     updateLabelHeight(node.labelHeight);
   }, [node.labelHeight, updateLabelHeight]);
+
+  useEffect(() => {
+    updateColor(node.color);
+  }, [node.color, updateColor]);
 
   if (!node.label) return null;
 

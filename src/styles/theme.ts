@@ -9,7 +9,7 @@ interface CustomThemeVars {
     height: number;
   };
   diagramPalette: {
-    purple: string;
+    [key in string]: string;
   };
 }
 
@@ -23,7 +23,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-const customVars: CustomThemeVars = {
+export const customVars: CustomThemeVars = {
   appPadding: {
     x: 40,
     y: 40
@@ -32,7 +32,18 @@ const customVars: CustomThemeVars = {
     height: 55
   },
   diagramPalette: {
-    purple: '#cabffa'
+    green: '#53b435',
+    blue: '#4a82f7',
+    teal: '#5a9f9f',
+    salmon: '#e08079',
+    orange: '#e58b48',
+    white: '#ffffff',
+    pink: '#e1034c',
+    purple: '#5155ad',
+    lightPurple: '#8441fc',
+    lightBlue: '#f4f6fe',
+    yellow: '#ffdc73',
+    red: '#d62727'
   }
 };
 

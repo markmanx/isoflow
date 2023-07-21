@@ -16,7 +16,8 @@ export const NodeLabel = ({ label }: Props) => (
       maxHeight: 150,
       borderRadius: 2,
       overflow: 'hidden',
-      p: 1.5
+      py: 1,
+      px: 1.5
     }}
   >
     <MarkdownEditor readOnly value={label} />
