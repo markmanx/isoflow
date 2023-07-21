@@ -75,25 +75,24 @@ export const getItemsByTile = ({ tile, sceneItems }: GetItemsByTile) => {
   return { nodes };
 };
 
-interface GetTileScreenPosition {
+interface CanvasCoordsToScreenCoords {
   position: Coords;
   scrollPosition: Coords;
   zoom: number;
 }
 
-export const getTileScreenPosition = ({
+export const canvasCoordsToScreenCoords = ({
   position,
   scrollPosition,
   zoom
-}: GetTileScreenPosition) => {
+}: CanvasCoordsToScreenCoords) => {
   const { width: viewW, height: viewH } = Paper.view.bounds;
   const { offsetLeft: offsetX, offsetTop: offsetY } =
     Paper.project.view.element;
-  const tilePosition = getTileBounds(position).center;
   const container = Paper.project.activeLayer.children[0];
   const globalItemsGroupPosition = container.globalToLocal([0, 0]);
-  const screenPosition = new Coords(
-    (tilePosition.x +
+  const onScreenPosition = new Coords(
+    (position.x +
       scrollPosition.x +
       globalItemsGroupPosition.x +
       container.position.x +
@@ -101,7 +100,7 @@ export const getTileScreenPosition = ({
       zoom +
       offsetX,
 
-    (tilePosition.y +
+    (position.y +
       scrollPosition.y +
       globalItemsGroupPosition.y +
       container.position.y +
@@ -110,5 +109,25 @@ export const getTileScreenPosition = ({
       offsetY
   );
 
-  return screenPosition;
+  return onScreenPosition;
+};
+
+type GetTileScreenPosition = CanvasCoordsToScreenCoords & {
+  origin?: 'center' | 'top' | 'bottom' | 'left' | 'right';
+};
+
+export const getTileScreenPosition = ({
+  position,
+  scrollPosition,
+  zoom,
+  origin = 'center'
+}: GetTileScreenPosition) => {
+  const tilePosition = getTileBounds(position)[origin];
+  const onScreenPosition = canvasCoordsToScreenCoords({
+    position: tilePosition,
+    scrollPosition,
+    zoom
+  });
+
+  return onScreenPosition;
 };

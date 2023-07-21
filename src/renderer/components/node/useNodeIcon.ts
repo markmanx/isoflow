@@ -1,5 +1,5 @@
 import { useRef, useCallback, useState } from 'react';
-import { Group, Raster } from 'paper';
+import { Group, Raster, Point } from 'paper';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { PROJECTED_TILE_DIMENSIONS } from '../../utils/constants';
 
@@ -13,6 +13,7 @@ export const useNodeIcon = () => {
   const update = useCallback(
     async (iconId: string) => {
       setIsLoaded(false);
+      container.current.removeChildren();
 
       const icon = icons.find((_icon) => _icon.id === iconId);
 
@@ -31,9 +32,12 @@ export const useNodeIcon = () => {
 
           const raster = iconRaster.rasterize();
 
-          container.current.removeChildren();
           container.current.addChild(raster);
           container.current.pivot = iconRaster.bounds.bottomCenter;
+          container.current.position = new Point(
+            0,
+            PROJECTED_TILE_DIMENSIONS.y * 0.5
+          );
 
           resolve(null);
         };

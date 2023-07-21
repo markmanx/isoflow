@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 
 interface Props {
   header: React.ReactNode;
@@ -9,6 +9,7 @@ interface Props {
 export const ControlsContainer = ({ header, children }: Props) => (
   <Box
     sx={{
+      position: 'relative',
       height: '100%',
       width: '100%',
       display: 'flex',
@@ -20,16 +21,7 @@ export const ControlsContainer = ({ header, children }: Props) => (
       sx={{
         width: '100%',
         overflowY: 'scroll',
-        flexGrow: 1,
-        '*::-webkit-scrollbar': {
-          width: '0.4em'
-        },
-        '*::-webkit-scrollbar-track': {
-          '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-        },
-        '*::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(0,0,0,.1)'
-        }
+        flexGrow: 1
       }}
     >
       <Box sx={{ width: '100%', pb: 6 }}>{children}</Box>

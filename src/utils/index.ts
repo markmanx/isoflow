@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import type { NodeInput } from 'src/validation/SceneSchema';
 import { Node, SceneItemTypeEnum } from 'src/stores/useSceneStore';
+import { NODE_DEFAULTS } from 'src/utils/defaults';
 
 export const clamp = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num;
@@ -47,7 +48,8 @@ export const roundToOneDecimalPlace = (num: number) =>
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   const node: Node = {
     id: nodeInput.id,
-    label: nodeInput.label,
+    label: nodeInput.label ?? NODE_DEFAULTS.label,
+    labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
     iconId: nodeInput.iconId,
     position: Coords.fromObject(nodeInput.position),
     isSelected: false,

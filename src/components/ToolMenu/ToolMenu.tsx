@@ -23,8 +23,8 @@ export const ToolMenu = () => {
     <Card
       sx={{
         position: 'absolute',
-        top: theme.spacing(4),
-        right: theme.spacing(4),
+        top: theme.customVars.appPadding.y,
+        right: theme.customVars.appPadding.x,
         height: theme.customVars.toolMenu.height,
         borderRadius: 2
       }}

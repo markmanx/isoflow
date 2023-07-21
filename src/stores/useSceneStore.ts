@@ -1,6 +1,8 @@
+import { useCallback } from 'react';
 import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
+import { NODE_DEFAULTS } from 'src/utils/defaults';
 import { IconInput } from '../validation/SceneSchema';
 import { Coords } from '../utils/Coords';
 
@@ -17,7 +19,8 @@ export interface Node {
   type: SceneItemTypeEnum.NODE;
   id: string;
   iconId: string;
-  label?: string;
+  label: string;
+  labelHeight: number;
   position: Coords;
   isSelected: boolean;
 }
@@ -37,7 +40,6 @@ export interface SceneActions {
   set: (scene: Scene) => void;
   setItems: (elements: SceneItems) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
-  getNodeById: (id: string) => Node | undefined;
   createNode: (position: Coords) => void;
 }
 
@@ -56,10 +58,6 @@ export const useSceneStore = create<UseSceneStore>((set, get) => ({
     setItems: (items: SceneItems) => {
       set({ nodes: items.nodes });
     },
-    getNodeById: (id: string) => {
-      const { nodes } = get();
-      return nodes.find((node) => node.id === id);
-    },
     updateNode: (id, updates) => {
       const { nodes } = get();
       const nodeIndex = nodes.findIndex((node) => node.id === id);
@@ -77,6 +75,7 @@ export const useSceneStore = create<UseSceneStore>((set, get) => ({
     createNode: (position) => {
       const { nodes, icons } = get();
       const newNode: Node = {
+        ...NODE_DEFAULTS,
         id: uuid(),
         type: SceneItemTypeEnum.NODE,
         iconId: icons[0].id,
@@ -88,3 +87,14 @@ export const useSceneStore = create<UseSceneStore>((set, get) => ({
     }
   }
 }));
+
+export const useNodeHooks = () => {
+  const nodes = useSceneStore((state) => state.nodes);
+
+  const useGetNodeById = useCallback(
+    (id: string) => nodes.find((node) => node.id === id),
+    [nodes]
+  );
+
+  return { useGetNodeById };
+};

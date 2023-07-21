@@ -11,9 +11,13 @@ interface Props {
 }
 
 export const Section = ({ children, py, px, title }: Props) => (
-  <Box py={py ?? 3} px={px ?? 2}>
+  <Box py={py ?? 3} px={px ?? 3}>
     <Stack>
-      {title && <Typography fontWeight={600}>{title}</Typography>}
+      {title && (
+        <Typography variant="body2" color="text.secondary" pb={0.5}>
+          {title}
+        </Typography>
+      )}
       {children}
     </Stack>
   </Box>

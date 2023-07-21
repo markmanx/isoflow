@@ -10,6 +10,7 @@ export const iconInput = z.object({
 export const nodeInput = z.object({
   id: z.string(),
   label: z.string().optional(),
+  labelHeight: z.number().optional(),
   iconId: z.string(),
   position: z.object({
     x: z.number(),

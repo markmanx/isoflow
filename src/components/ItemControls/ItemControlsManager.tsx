@@ -1,50 +1,36 @@
-import React, { useMemo, useCallback } from 'react';
-import { useTheme } from '@mui/material';
-import Card from '@mui/material/Card';
-import Slide from '@mui/material/Slide';
+import React, { useMemo } from 'react';
+import { Card, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ProjectControls } from './ProjectControls/ProjectControls';
 
 export const ItemControlsManager = () => {
-  const theme = useTheme();
   const itemControls = useUiStateStore((state) => state.itemControls);
-  const uiStateActions = useUiStateStore((state) => state.actions);
-
-  const onClose = useCallback(() => {
-    uiStateActions.setSidebar(null);
-  }, [uiStateActions]);
+  const theme = useTheme();
 
   const Controls = useMemo(() => {
     switch (itemControls?.type) {
       case 'SINGLE_NODE':
-        return <NodeControls onClose={onClose} />;
+        return <NodeControls nodeId={itemControls.nodeId} />;
       case 'PROJECT_SETTINGS':
-        return <ProjectControls onClose={onClose} />;
+        return <ProjectControls />;
       default:
         return null;
     }
-  }, [itemControls, onClose]);
+  }, [itemControls]);
 
   return (
-    <Slide
-      direction="right"
-      in={itemControls !== null}
-      mountOnEnter
-      unmountOnExit
+    <Card
+      sx={{
+        position: 'absolute',
+        width: '325px',
+        maxHeight: `calc(100% - ${theme.customVars.appPadding.y * 2}px)`,
+        left: theme.customVars.appPadding.x,
+        top: theme.customVars.appPadding.y,
+        borderRadius: 2
+      }}
     >
-      <Card
-        sx={{
-          position: 'absolute',
-          width: '400px',
-          height: '100%',
-          top: 0,
-          left: theme.customVars.appPadding.x,
-          borderRadius: 0
-        }}
-      >
-        {Controls}
-      </Card>
-    </Slide>
+      {Controls}
+    </Card>
   );
 };

@@ -24,6 +24,7 @@ export const Cursor: InteractionReducer = {
         type: 'EMPTY_TILE',
         position: draftState.mouse.tile
       };
+      draftState.itemControls = null;
     }
   },
   mouseup: () => {}

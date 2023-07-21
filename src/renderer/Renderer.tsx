@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from 'paper';
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
@@ -13,6 +13,7 @@ import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
+  const [isReady, setIsReady] = useState(false);
   const scene = useSceneStore(({ nodes }) => ({ nodes }));
   const gridSize = useSceneStore((state) => state.gridSize);
   const mode = useUiStateStore((state) => state.mode);
@@ -32,6 +33,7 @@ const InitialisedRenderer = () => {
 
   useEffect(() => {
     initRenderer();
+    setIsReady(true);
 
     return () => {
       if (activeLayer) gsap.killTweensOf(activeLayer.view);
@@ -84,12 +86,14 @@ const InitialisedRenderer = () => {
     renderer.cursor.setVisible(isCursorVisible);
   }, [mode.type, mouse.position, renderer.cursor]);
 
+  if (!isReady) return null;
+
   return (
     <>
       {scene.nodes.map((node) => (
         <Node
           key={node.id}
-          {...node}
+          node={node}
           parentContainer={renderer.nodeManager.container as paper.Group}
         />
       ))}

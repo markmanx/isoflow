@@ -6,16 +6,12 @@ import { Header } from '../components/Header';
 import { Section } from '../components/Section';
 import { ControlsContainer } from '../components/ControlsContainer';
 
-interface Props {
-  onClose: () => void;
-}
-
 interface Values {
   name?: string;
   notes?: string;
 }
 
-export const ProjectControls = ({ onClose }: Props) => {
+export const ProjectControls = () => {
   const { register, handleSubmit } = useForm<Values>({
     defaultValues: {
       name: '',
@@ -28,9 +24,7 @@ export const ProjectControls = ({ onClose }: Props) => {
   }, []);
 
   return (
-    <ControlsContainer
-      header={<Header title="Project settings" onClose={onClose} />}
-    >
+    <ControlsContainer header={<Header title="Project settings" />}>
       <Section>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={4}>

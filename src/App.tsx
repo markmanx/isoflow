@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
-import { ToolMenu } from 'src/components/ToolMenu';
+import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
 import { SceneInput } from 'src/validation/SceneSchema';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';

@@ -1,55 +1,128 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Group } from 'paper';
+import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { Node as NodeInterface } from 'src/stores/useSceneStore';
 import { useNodeIcon } from './useNodeIcon';
-import { getTilePosition } from '../../utils/gridHelpers';
+import { NodeLabel } from './NodeLabel';
+import { useNodeTile } from './useNodeTile';
+import {
+  getTilePosition,
+  getTileScreenPosition
+} from '../../utils/gridHelpers';
+import { useLabelConnector } from './useLabelConnector';
 
 export interface NodeProps {
-  position: Coords;
-  iconId: string;
+  node: NodeInterface;
   parentContainer: paper.Group;
 }
 
-export const Node = ({ position, iconId, parentContainer }: NodeProps) => {
+const isEmptyLabel = (label: string) => label === '<p><br></p>' || label === '';
+
+export const Node = ({ node, parentContainer }: NodeProps) => {
   const [isFirstDisplay, setIsFirstDisplay] = useState(true);
-  const container = useRef(new Group());
+  const groupRef = useRef(new Group());
+  const labelRef = useRef<HTMLDivElement>();
   const nodeIcon = useNodeIcon();
+  const labelConnector = useLabelConnector();
+  const nodeTile = useNodeTile();
+  const scroll = useUiStateStore((state) => state.scroll);
+  const zoom = useUiStateStore((state) => state.zoom);
+  const mode = useUiStateStore((state) => state.mode);
+  const [labelSize, setLabelSize] = useState({ width: 0, height: 0 });
 
   const {
     init: initNodeIcon,
     update: updateNodeIcon,
     isLoaded: isIconLoaded
   } = nodeIcon;
+  const {
+    init: initLabelConnector,
+    updateHeight: updateLabelHeight,
+    setVisible: setLabelConnectorVisible
+  } = labelConnector;
+  const { init: initNodeTile } = nodeTile;
 
   useEffect(() => {
     const nodeIconContainer = initNodeIcon();
+    const labelConnectorContainer = initLabelConnector();
+    const nodeColorContainer = initNodeTile();
 
-    container.current.removeChildren();
-    container.current.addChild(nodeIconContainer);
-    parentContainer.addChild(container.current);
-  }, [initNodeIcon, parentContainer]);
+    groupRef.current.removeChildren();
+    groupRef.current.addChild(nodeColorContainer);
+    groupRef.current.addChild(labelConnectorContainer);
+    groupRef.current.addChild(nodeIconContainer);
+    groupRef.current.pivot = nodeIconContainer.bounds.bottomCenter;
+    parentContainer.addChild(groupRef.current);
+  }, [initNodeIcon, parentContainer, initLabelConnector, initNodeTile]);
 
   useEffect(() => {
-    updateNodeIcon(iconId);
-  }, [iconId, updateNodeIcon]);
+    updateNodeIcon(node.iconId);
+  }, [node.iconId, updateNodeIcon]);
 
   useEffect(() => {
     if (!isIconLoaded) return;
 
-    const tweenValues = Coords.fromObject(container.current.position);
-    const endState = getTilePosition(position);
+    const tweenValues = Coords.fromObject(groupRef.current.position);
+    const endState = getTilePosition(node.position);
 
     gsap.to(tweenValues, {
       duration: isFirstDisplay ? 0 : 0.1,
       ...endState,
       onUpdate: () => {
-        container.current.position.set(tweenValues);
+        groupRef.current.position.set(tweenValues);
       }
     });
 
     if (isFirstDisplay) setIsFirstDisplay(false);
-  }, [position, isFirstDisplay, isIconLoaded]);
+  }, [node.position, isFirstDisplay, isIconLoaded]);
 
-  return null;
+  useEffect(() => {
+    if (!labelRef.current) return;
+
+    const screenPosition = getTileScreenPosition({
+      position: node.position,
+      scrollPosition: scroll.position,
+      zoom,
+      origin: 'top'
+    });
+
+    gsap.to(labelRef.current, {
+      duration: mode.type === 'PAN' ? 0 : 0.1,
+      left: screenPosition.x - labelSize.width * 0.5,
+      top: screenPosition.y - labelSize.height - node.labelHeight * zoom,
+      scale: zoom
+    });
+  }, [node.position, node.labelHeight, zoom, scroll.position, mode, labelSize]);
+
+  useEffect(() => {
+    setLabelConnectorVisible(!isEmptyLabel(node.label));
+
+    if (!labelRef.current) return;
+
+    setLabelSize({
+      width: labelRef.current.clientWidth ?? 0,
+      height: labelRef.current.clientHeight ?? 0
+    });
+  }, [node.label, setLabelConnectorVisible]);
+
+  useEffect(() => {
+    updateLabelHeight(node.labelHeight);
+  }, [node.labelHeight, updateLabelHeight]);
+
+  if (!node.label) return null;
+
+  return (
+    <Box
+      ref={labelRef}
+      sx={{
+        position: 'absolute',
+        transformOrigin: 'bottom center'
+      }}
+    >
+      <NodeLabel label={node.label} />
+    </Box>
+  );
 };

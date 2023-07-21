@@ -25,8 +25,8 @@ declare module '@mui/material/styles' {
 
 const customVars: CustomThemeVars = {
   appPadding: {
-    x: 60,
-    y: 60
+    x: 40,
+    y: 40
   },
   toolMenu: {
     height: 55
