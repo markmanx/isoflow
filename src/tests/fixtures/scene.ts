@@ -2,8 +2,8 @@ import { SceneInput } from 'src/validation/SceneSchema';
 
 export const scene: SceneInput = {
   gridSize: {
-    x: 10,
-    y: 10
+    width: 10,
+    height: 10
   },
   icons: [
     {

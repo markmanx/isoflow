@@ -7,12 +7,12 @@ import { SceneInput } from 'src/validation/SceneSchema';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
-import { nodeInputToNode } from 'src/utils';
-import { Coords } from 'src/utils/Coords';
+import { sceneInputtoScene, sceneToSceneInput } from 'src/utils';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 
 interface Props {
   initialScene: SceneInput;
+  onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
   width?: number | string;
   height: number | string;
 }
@@ -37,26 +37,30 @@ const InnerApp = React.memo(
   )
 );
 
-const App = ({ initialScene, width, height }: Props) => {
+const App = ({ initialScene, width, height, onSceneUpdated }: Props) => {
   const sceneActions = useSceneStore((state) => state.actions);
-  // const setOnSceneChange = useAppState((state) => state.setOnSceneChange);
-
-  // useEffect(() => {
-  //   if (!onSceneChange) return;
-
-  //   setOnSceneChange(onSceneChange);
-  // }, [setOnSceneChange, onSceneChange]);
 
   useEffect(() => {
-    const nodes = initialScene.nodes.map((nodeInput) =>
-      nodeInputToNode(nodeInput)
-    );
-
-    sceneActions.set({ ...initialScene, nodes, gridSize: new Coords(51, 51) });
+    const convertedInput = sceneInputtoScene(initialScene);
+    sceneActions.set(convertedInput);
   }, [initialScene, sceneActions]);
+
+  useSceneStore.subscribe((scene, prevScene) => {
+    if (!onSceneUpdated) return;
+
+    onSceneUpdated(sceneToSceneInput(scene), sceneToSceneInput(prevScene));
+  });
 
   return <InnerApp height={height} width={width} />;
 };
 
-export { Scene };
+const useIsoflow = () => {
+  const updateNode = useSceneStore((state) => state.actions.updateNode);
+
+  return {
+    updateNode
+  };
+};
+
+export { Scene, SceneInput, useIsoflow };
 export default App;

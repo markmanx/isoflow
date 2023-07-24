@@ -42,6 +42,10 @@ export const DragItems: InteractionReducer = {
 
         if (nodeIndex === -1) return;
 
+        draftState.scene.nodes = draftState.scene.nodes.map((node) => ({
+          ...node,
+          isSelected: false
+        }));
         draftState.scene.nodes[nodeIndex].isSelected = true;
         draftState.contextMenu = draftState.scene.nodes[nodeIndex];
         draftState.itemControls = {

@@ -22,21 +22,24 @@ export const useRenderer = () => {
     Paper.project.activeLayer.view.zoom = zoom;
   }, []);
 
-  const init = useCallback(() => {
-    const gridContainer = initGrid();
-    const cursorContainer = initCursor();
+  const init = useCallback(
+    (gridSize: Coords) => {
+      const gridContainer = initGrid(gridSize);
+      const cursorContainer = initCursor();
 
-    innerContainer.current.addChild(gridContainer);
-    innerContainer.current.addChild(cursorContainer);
-    innerContainer.current.addChild(nodeManager.container);
-    container.current.addChild(innerContainer.current);
-    container.current.set({ position: [0, 0] });
-    Paper.project.activeLayer.addChild(container.current);
-    setScroll({
-      position: new Coords(0, 0),
-      offset: new Coords(0, 0)
-    });
-  }, [initGrid, initCursor, setScroll, nodeManager.container]);
+      innerContainer.current.addChild(gridContainer);
+      innerContainer.current.addChild(cursorContainer);
+      innerContainer.current.addChild(nodeManager.container);
+      container.current.addChild(innerContainer.current);
+      container.current.set({ position: [0, 0] });
+      Paper.project.activeLayer.addChild(container.current);
+      setScroll({
+        position: new Coords(0, 0),
+        offset: new Coords(0, 0)
+      });
+    },
+    [initGrid, initCursor, setScroll, nodeManager.container]
+  );
 
   const scrollTo = useCallback((to: Coords) => {
     const { center: viewCenter } = Paper.project.view.bounds;

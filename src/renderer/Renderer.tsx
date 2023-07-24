@@ -32,13 +32,14 @@ const InitialisedRenderer = () => {
   const { position: scrollPosition } = scroll;
 
   useEffect(() => {
-    initRenderer();
+    console.log('init renderer');
+    initRenderer(gridSize);
     setIsReady(true);
 
     return () => {
       if (activeLayer) gsap.killTweensOf(activeLayer.view);
     };
-  }, [initRenderer, activeLayer]);
+  }, [initRenderer, activeLayer, gridSize.toString()]);
 
   useEffect(() => {
     zoomTo(zoom);

@@ -1,9 +1,9 @@
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import chroma from 'chroma-js';
-import type { NodeInput } from 'src/validation/SceneSchema';
-import { Node, SceneItemTypeEnum } from 'src/stores/useSceneStore';
-import { NODE_DEFAULTS } from 'src/utils/defaults';
+import type { NodeInput, SceneInput } from 'src/validation/SceneSchema';
+import { Node, SceneItemTypeEnum, Scene } from 'src/stores/useSceneStore';
+import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/defaults';
 
 export const clamp = (num: number, min: number, max: number) =>
   num <= min ? min : num >= max ? max : num; // eslint-disable-line no-nested-ternary
@@ -59,6 +59,40 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   };
 
   return node;
+};
+
+export const sceneInputtoScene = (sceneInput: SceneInput) => {
+  const scene = {
+    ...sceneInput,
+    nodes: sceneInput.nodes.map((nodeInput) => nodeInputToNode(nodeInput)),
+    icons: sceneInput.icons,
+    gridSize: sceneInput.gridSize
+      ? new Coords(sceneInput.gridSize.width, sceneInput.gridSize.height)
+      : Coords.fromObject(GRID_DEFAULTS.size)
+  };
+
+  return scene;
+};
+
+export const sceneToSceneInput = (scene: Scene) => {
+  const nodes: SceneInput['nodes'] = scene.nodes.map((node) => ({
+    id: node.id,
+    position: node.position.toObject(),
+    label: node.label,
+    labelHeight: node.labelHeight,
+    color: node.color,
+    iconId: node.iconId
+  }));
+
+  const sceneInput: SceneInput = {
+    nodes,
+    connectors: [],
+    groups: [],
+    icons: scene.icons,
+    gridSize: { width: scene.gridSize.x, height: scene.gridSize.y }
+  };
+
+  return sceneInput;
 };
 
 export const getColorVariant = (

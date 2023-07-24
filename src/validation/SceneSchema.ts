@@ -68,10 +68,12 @@ export const sceneInput = z
     nodes: z.array(nodeInput),
     connectors: z.array(connectorInput),
     groups: z.array(groupInput),
-    gridSize: z.object({
-      x: z.number(),
-      y: z.number()
-    })
+    gridSize: z
+      .object({
+        width: z.number(),
+        height: z.number()
+      })
+      .optional()
   })
   .superRefine((scene, ctx) => {
     const invalidNode = findInvalidNode(scene.nodes, scene.icons);

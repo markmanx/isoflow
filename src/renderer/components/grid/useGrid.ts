@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { Path, Point, Group } from 'paper';
-import { useSceneStore } from 'src/stores/useSceneStore';
+import { Coords } from 'src/utils/Coords';
 import { applyProjectionMatrix } from '../../utils/projection';
 import { TILE_SIZE, PIXEL_UNIT, SCALING_CONST } from '../../utils/constants';
 
@@ -51,15 +51,14 @@ const drawGrid = (width: number, height: number) => {
 
 export const useGrid = () => {
   const container = useRef(new Group());
-  const gridSize = useSceneStore((state) => state.gridSize);
 
-  const init = useCallback(() => {
+  const init = useCallback((gridSize: Coords) => {
     container.current.removeChildren();
     const grid = drawGrid(gridSize.x, gridSize.y);
     container.current.addChild(grid);
 
     return container.current;
-  }, [gridSize]);
+  }, []);
 
   return {
     init,

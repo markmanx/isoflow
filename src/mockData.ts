@@ -72,7 +72,7 @@ export const mockScene: SceneInput = {
   connectors: [],
   groups: [],
   gridSize: {
-    x: 51,
-    y: 51
+    width: 51,
+    height: 51
   }
 };

@@ -43,7 +43,7 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
     updateHeight: updateLabelHeight,
     setVisible: setLabelConnectorVisible
   } = labelConnector;
-  const { init: initNodeTile, updateColor } = nodeTile;
+  const { init: initNodeTile, updateColor, setActive } = nodeTile;
 
   useEffect(() => {
     const nodeIconContainer = initNodeIcon();
@@ -115,6 +115,10 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
   useEffect(() => {
     updateColor(node.color);
   }, [node.color, updateColor]);
+
+  useEffect(() => {
+    setActive(node.isSelected);
+  }, [setActive, node.isSelected]);
 
   if (!node.label) return null;
 
