@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
-import { Node, SceneItem } from 'src/stores/useSceneStore';
+import { SortedSceneItems, SceneItem } from 'src/stores/useSceneStore';
 
 const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
@@ -22,23 +22,45 @@ export type ItemControls =
     }
   | null;
 
-export type Mode =
-  | {
-      type: 'CURSOR';
-    }
-  | {
-      type: 'SELECT';
-    }
-  | {
-      type: 'PAN';
-    }
-  | {
-      type: 'DRAG_ITEMS';
-      items: {
-        nodes: Pick<Node, 'id' | 'type'>[];
-      };
-      hasMovedTile: boolean;
-    };
+export interface Mouse {
+  position: {
+    screen: Coords;
+    tile: Coords;
+  };
+  mousedown: {
+    screen: Coords;
+    tile: Coords;
+  } | null;
+  delta: {
+    screen: Coords;
+    tile: Coords;
+  } | null;
+}
+
+export interface CursorMode {
+  type: 'CURSOR';
+  mousedownItems: SortedSceneItems | null;
+}
+
+export interface PanMode {
+  type: 'PAN';
+}
+
+export interface CreateLassoMode {
+  type: 'LASSO'; // TODO: Put these into an enum
+  selection: {
+    startTile: Coords;
+    endTile: Coords;
+  };
+  isDragging: boolean;
+}
+
+export interface DragItemsMode {
+  type: 'DRAG_ITEMS';
+  items: SortedSceneItems;
+}
+
+export type Mode = CursorMode | PanMode | DragItemsMode | CreateLassoMode;
 
 export type ContextMenu =
   | SceneItem
@@ -47,13 +69,6 @@ export type ContextMenu =
       position: Coords;
     }
   | null;
-
-export interface Mouse {
-  position: Coords;
-  tile: Coords;
-  mouseDownAt: Coords | null;
-  delta: Coords | null;
-}
 
 export interface Scroll {
   position: Coords;
@@ -74,9 +89,9 @@ export interface UiStateActions {
   incrementZoom: () => void;
   decrementZoom: () => void;
   setScroll: (scroll: Scroll) => void;
-  setMouse: (mouse: Mouse) => void;
   setSidebar: (itemControls: ItemControls) => void;
   setContextMenu: (contextMenu: ContextMenu) => void;
+  setMouse: (mouse: Mouse) => void;
 }
 
 export type UseUiStateStore = UiState & {
@@ -84,18 +99,20 @@ export type UseUiStateStore = UiState & {
 };
 
 export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
-  mode: { type: 'CURSOR' },
+  mode: {
+    type: 'CURSOR',
+    mousedownItems: null
+  },
+  mouse: {
+    position: { screen: new Coords(0, 0), tile: new Coords(0, 0) },
+    mousedown: null,
+    delta: null
+  },
   itemControls: null,
   contextMenu: null,
   scroll: {
     position: new Coords(0, 0),
     offset: new Coords(0, 0)
-  },
-  mouse: {
-    position: new Coords(0, 0),
-    tile: new Coords(0, 0),
-    mouseDownAt: null,
-    delta: null
   },
   zoom: 1,
   actions: {
@@ -115,14 +132,14 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
     setScroll: ({ position, offset }) => {
       set({ scroll: { position, offset: offset ?? get().scroll.offset } });
     },
-    setMouse: ({ position, delta, mouseDownAt, tile }) => {
-      set({ mouse: { position, delta, mouseDownAt, tile } });
-    },
     setSidebar: (itemControls) => {
       set({ itemControls });
     },
     setContextMenu: (contextMenu) => {
       set({ contextMenu });
+    },
+    setMouse: (mouse) => {
+      set({ mouse });
     }
   }
 }));

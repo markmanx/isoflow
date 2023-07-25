@@ -4,26 +4,24 @@ import { Tool } from 'paper';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { toolEventToMouseEvent } from './utils';
-import { Select } from './reducers/Select';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
-import type { InteractionReducer, InteractionReducerAction } from './types';
+import { Lasso } from './reducers/Lasso';
+import type { InteractionReducer } from './types';
 
-const reducers: {
-  [key in 'SELECT' | 'PAN' | 'DRAG_ITEMS' | 'CURSOR']: InteractionReducer;
-} = {
+const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
-  SELECT: Select,
   DRAG_ITEMS: DragItems,
-  PAN: Pan
+  PAN: Pan,
+  LASSO: Lasso
 };
 
 export const useInteractionManager = () => {
   const tool = useRef<paper.Tool>();
   const mode = useUiStateStore((state) => state.mode);
-  const mouse = useUiStateStore((state) => state.mouse);
   const scroll = useUiStateStore((state) => state.scroll);
+  const mouse = useUiStateStore((state) => state.mouse);
   const itemControls = useUiStateStore((state) => state.itemControls);
   const contextMenu = useUiStateStore((state) => state.contextMenu);
   const uiStateActions = useUiStateStore((state) => state.actions);
@@ -32,47 +30,37 @@ export const useInteractionManager = () => {
   const sceneActions = useSceneStore((state) => state.actions);
 
   const onMouseEvent = useCallback(
-    (toolEvent: paper.ToolEvent) => {
+    (
+      eventType: 'mousedown' | 'mousemove' | 'mouseup',
+      toolEvent: paper.ToolEvent
+    ) => {
       const reducer = reducers[mode.type];
-      let reducerAction: InteractionReducerAction;
 
-      switch (toolEvent.type) {
-        case 'mousedown':
-          reducerAction = reducer.mousedown;
-          break;
-        case 'mousemove':
-          reducerAction = reducer.mousemove;
-          break;
-        case 'mouseup':
-          reducerAction = reducer.mouseup;
-          break;
-        default:
-          return;
-      }
+      if (!reducer) return;
 
-      const prevMouse = { ...mouse };
-      // Update mouse position
-      const newMouse = toolEventToMouseEvent({
+      const reducerAction = reducer[eventType];
+
+      const nextMouse = toolEventToMouseEvent({
         toolEvent,
-        mouse,
         gridSize,
-        scroll
+        scroll,
+        prevMouse: mouse
       });
 
       const newState = produce(
         {
           scene,
-          mouse: newMouse,
+          mouse: nextMouse,
           mode,
           scroll,
           gridSize,
           contextMenu,
           itemControls
         },
-        (draft) => reducerAction(draft, { prevMouse })
+        (draft) => reducerAction(draft)
       );
 
-      uiStateActions.setMouse(newMouse);
+      uiStateActions.setMouse(nextMouse);
       uiStateActions.setScroll(newState.scroll);
       uiStateActions.setMode(newState.mode);
       uiStateActions.setContextMenu(newState.contextMenu);
@@ -81,8 +69,8 @@ export const useInteractionManager = () => {
     },
     [
       mode,
-      mouse,
       scroll,
+      mouse,
       gridSize,
       itemControls,
       uiStateActions,
@@ -94,11 +82,12 @@ export const useInteractionManager = () => {
 
   useEffect(() => {
     tool.current = new Tool();
-    tool.current.onMouseMove = onMouseEvent;
-    tool.current.onMouseDown = onMouseEvent;
-    tool.current.onMouseUp = onMouseEvent;
-    // tool.current.onKeyDown = onMouseEvent;
-    // tool.current.onKeyUp = onMouseEvent;
+    tool.current.onMouseMove = (ev: paper.ToolEvent) =>
+      onMouseEvent('mousemove', ev);
+    tool.current.onMouseDown = (ev: paper.ToolEvent) =>
+      onMouseEvent('mousedown', ev);
+    tool.current.onMouseUp = (ev: paper.ToolEvent) =>
+      onMouseEvent('mouseup', ev);
 
     return () => {
       tool.current?.remove();

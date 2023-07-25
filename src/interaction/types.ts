@@ -1,28 +1,25 @@
 import { Draft } from 'immer';
 import {
-  Mouse,
   Mode,
   Scroll,
   ContextMenu,
-  ItemControls
+  ItemControls,
+  Mouse
 } from 'src/stores/useUiStateStore';
-import { SceneItems } from 'src/stores/useSceneStore';
+import { SortedSceneItems } from 'src/stores/useSceneStore';
 import { Coords } from 'src/utils/Coords';
 
 export interface State {
-  mouse: Mouse;
   mode: Mode;
+  mouse: Mouse;
   scroll: Scroll;
   gridSize: Coords;
-  scene: SceneItems;
+  scene: SortedSceneItems;
   contextMenu: ContextMenu;
   itemControls: ItemControls;
 }
 
-export type InteractionReducerAction = (
-  state: Draft<State>,
-  payload: { prevMouse: Mouse }
-) => void;
+export type InteractionReducerAction = (state: Draft<State>) => void;
 
 export type InteractionReducer = {
   mousemove: InteractionReducerAction;

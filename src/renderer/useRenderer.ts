@@ -2,13 +2,15 @@ import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { useGrid } from './components/grid/useGrid';
+import { useGrid } from './components/Grid/useGrid';
 import { useNodeManager } from './useNodeManager';
-import { useCursor } from './components/cursor/useCursor';
+import { useCursor } from './components/Cursor/useCursor';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
   const innerContainer = useRef(new Group());
+  // TODO: Store layers in a giant ref object called layers?  layers = { lasso: new Group(), grid: new Group() etc }
+  const lassoContainer = useRef(new Group());
   const grid = useGrid();
   const nodeManager = useNodeManager();
   const cursor = useCursor();
@@ -29,6 +31,7 @@ export const useRenderer = () => {
 
       innerContainer.current.addChild(gridContainer);
       innerContainer.current.addChild(cursorContainer);
+      innerContainer.current.addChild(lassoContainer.current);
       innerContainer.current.addChild(nodeManager.container);
       container.current.addChild(innerContainer.current);
       container.current.set({ position: [0, 0] });
@@ -59,6 +62,7 @@ export const useRenderer = () => {
     zoomTo,
     scrollTo,
     nodeManager,
-    cursor
+    cursor,
+    lassoContainer
   };
 };

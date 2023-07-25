@@ -64,4 +64,8 @@ export class Coords {
   static fromObject({ x, y }: { x: number; y: number }) {
     return new Coords(x, y);
   }
+
+  static zero() {
+    return new Coords(0, 0);
+  }
 }

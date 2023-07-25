@@ -32,7 +32,9 @@ export const ToolMenu = () => {
       <IconButton
         name="Select"
         Icon={<NearMeIcon />}
-        onClick={() => uiStateStoreActions.setMode({ type: 'CURSOR' })}
+        onClick={() =>
+          uiStateStoreActions.setMode({ type: 'CURSOR', mousedownItems: null })
+        }
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'CURSOR'}
       />

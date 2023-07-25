@@ -12,7 +12,7 @@ const DataLayer = () => {
   const { updateNode } = useIsoflow();
 
   const onSceneUpdated = useCallback((scene: SceneInput) => {
-    console.log(scene);
+    // console.log(scene);
   }, []);
 
   useEffect(() => {

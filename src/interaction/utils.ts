@@ -2,49 +2,104 @@ import { Coords } from 'src/utils/Coords';
 import { Mouse, Scroll } from 'src/stores/useUiStateStore';
 import { getTileFromMouse } from 'src/renderer/utils/gridHelpers';
 
-interface ToolEventToMouseEvent {
+interface GetMousePositionFromToolEvent {
   toolEvent: paper.ToolEvent;
-  mouse: Mouse;
   gridSize: Coords;
   scroll: Scroll;
 }
 
-export const toolEventToMouseEvent = ({
+const getMousePositionFromToolEvent = ({
   toolEvent,
-  mouse,
   gridSize,
   scroll
-}: ToolEventToMouseEvent) => {
-  const position = Coords.fromObject(toolEvent.point);
-
-  let mouseDownAt: Mouse['mouseDownAt'];
-
-  switch (toolEvent.type) {
-    case 'mousedown':
-      mouseDownAt = position;
-      break;
-    case 'mouseup':
-      mouseDownAt = null;
-      break;
-    default:
-      mouseDownAt = mouse.mouseDownAt;
-      break;
-  }
-
-  let delta: Coords | null = position.subtract(mouse.position);
-
-  if (delta.x === 0 && delta.y === 0) delta = null;
-
+}: GetMousePositionFromToolEvent): Mouse['position'] => {
+  const screenPosition = Coords.fromObject(toolEvent.point);
   const tile = getTileFromMouse({
-    mousePosition: position,
+    mousePosition: screenPosition,
     gridSize,
     scroll
   });
 
   return {
-    tile,
+    screen: screenPosition,
+    tile
+  };
+};
+
+interface GetDeltaFromToolEvent {
+  currentPosition: Mouse['position'];
+  prevPosition: Mouse['position'];
+}
+
+const getDeltaFromToolEvent = ({
+  currentPosition,
+  prevPosition
+}: GetDeltaFromToolEvent) => {
+  const delta = currentPosition.screen.subtract(prevPosition.screen);
+
+  if (delta.isEqual(Coords.zero())) {
+    return null;
+  }
+
+  return {
+    screen: delta,
+    tile: currentPosition.tile.subtract(prevPosition.tile)
+  };
+};
+
+interface GetMousedownFromToolEvent {
+  toolEvent: paper.ToolEvent;
+  currentTile: Coords;
+  prevMouse: Mouse;
+}
+
+const getMousedownFromToolEvent = ({
+  toolEvent,
+  currentTile,
+  prevMouse
+}: GetMousedownFromToolEvent) => {
+  if (toolEvent.type === 'mousedown') {
+    return {
+      screen: Coords.fromObject(toolEvent.point),
+      tile: currentTile
+    };
+  }
+
+  if (toolEvent.type === 'mousemove') {
+    return prevMouse.mousedown;
+  }
+
+  return null;
+};
+
+type ToolEventToMouseEvent = GetMousePositionFromToolEvent & {
+  prevMouse: Mouse;
+};
+
+export const toolEventToMouseEvent = ({
+  toolEvent,
+  gridSize,
+  scroll,
+  prevMouse
+}: ToolEventToMouseEvent): Mouse => {
+  const position = getMousePositionFromToolEvent({
+    toolEvent,
+    gridSize,
+    scroll
+  });
+  const delta = getDeltaFromToolEvent({
+    currentPosition: position,
+    prevPosition: prevMouse.position
+  });
+  const mousedown = getMousedownFromToolEvent({
+    toolEvent,
+    currentTile: position.tile,
+    prevMouse
+  });
+
+  return {
     position,
-    mouseDownAt,
-    delta
+    delta,
+    mousedown
   };
 };

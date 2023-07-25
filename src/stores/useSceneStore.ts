@@ -10,11 +10,6 @@ export enum SceneItemTypeEnum {
   NODE = 'NODE'
 }
 
-export interface SceneItem {
-  id: string;
-  type: SceneItemTypeEnum;
-}
-
 export interface Node {
   type: SceneItemTypeEnum.NODE;
   id: string;
@@ -28,18 +23,23 @@ export interface Node {
 
 export type Icon = IconInput;
 
-export interface SceneItems {
+export interface SceneItem {
+  id: string;
+  type: SceneItemTypeEnum;
+}
+
+export interface SortedSceneItems {
   nodes: Node[];
 }
 
-export type Scene = SceneItems & {
+export type Scene = SortedSceneItems & {
   icons: IconInput[];
   gridSize: Coords;
 };
 
 export interface SceneActions {
   set: (scene: Scene) => void;
-  setItems: (elements: SceneItems) => void;
+  setItems: (elements: SortedSceneItems) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   createNode: (position: Coords) => void;
 }
@@ -56,7 +56,7 @@ export const useSceneStore = create<UseSceneStore>((set, get) => ({
     set: (scene) => {
       set(scene);
     },
-    setItems: (items: SceneItems) => {
+    setItems: (items: SortedSceneItems) => {
       set({ nodes: items.nodes });
     },
     updateNode: (id, updates) => {

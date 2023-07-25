@@ -2,11 +2,13 @@ import { InteractionReducer } from '../types';
 
 export const Pan: InteractionReducer = {
   mousemove: (draftState) => {
-    if (draftState.mouse.mouseDownAt === null) return;
+    if (draftState.mode.type !== 'PAN') return;
 
-    draftState.scroll.position = draftState.mouse.delta
-      ? draftState.scroll.position.add(draftState.mouse.delta)
-      : draftState.scroll.position;
+    if (draftState.mouse.mousedown !== null) {
+      draftState.scroll.position = draftState.mouse.delta?.screen
+        ? draftState.scroll.position.add(draftState.mouse.delta.screen)
+        : draftState.scroll.position;
+    }
   },
   mousedown: () => {},
   mouseup: () => {}

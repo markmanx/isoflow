@@ -2,7 +2,7 @@ import Paper from 'paper';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { Coords } from 'src/utils/Coords';
 import { clamp } from 'src/utils';
-import { SceneItems } from 'src/stores/useSceneStore';
+import { SortedSceneItems } from 'src/stores/useSceneStore';
 import { Scroll } from 'src/stores/useUiStateStore';
 
 const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
@@ -66,11 +66,16 @@ export const getTileBounds = (coords: Coords) => {
 
 interface GetItemsByTile {
   tile: Coords;
-  sceneItems: SceneItems;
+  sortedSceneItems: SortedSceneItems;
 }
 
-export const getItemsByTile = ({ tile, sceneItems }: GetItemsByTile) => {
-  const nodes = sceneItems.nodes.filter((node) => node.position.isEqual(tile));
+export const getItemsByTile = ({
+  tile,
+  sortedSceneItems
+}: GetItemsByTile): SortedSceneItems => {
+  const nodes = sortedSceneItems.nodes.filter((node) =>
+    node.position.isEqual(tile)
+  );
 
   return { nodes };
 };
@@ -130,4 +135,67 @@ export const getTileScreenPosition = ({
   });
 
   return onScreenPosition;
+};
+
+export const sortByPosition = (items: Coords[]) => {
+  const xSorted = [...items];
+  const ySorted = [...items];
+  xSorted.sort((a, b) => a.x - b.x);
+  ySorted.sort((a, b) => a.y - b.y);
+
+  const highest = {
+    byX: xSorted[xSorted.length - 1],
+    byY: ySorted[ySorted.length - 1]
+  };
+  const lowest = { byX: xSorted[0], byY: ySorted[0] };
+
+  const lowX = lowest.byX.x;
+  const highX = highest.byX.x;
+  const lowY = lowest.byY.y;
+  const highY = highest.byY.y;
+
+  return {
+    byX: xSorted,
+    byY: ySorted,
+    highest,
+    lowest,
+    lowX,
+    lowY,
+    highX,
+    highY
+  };
+};
+
+export const getGridSubset = (tiles: Coords[]) => {
+  const { lowX, lowY, highX, highY } = sortByPosition(tiles);
+
+  const subset = [];
+
+  for (let x = lowX; x < highX + 1; x += 1) {
+    for (let y = lowY; y < highY + 1; y += 1) {
+      subset.push(new Coords(x, y));
+    }
+  }
+
+  return subset;
+};
+
+export const isWithinBounds = (tile: Coords, bounds: Coords[]) => {
+  const { lowX, lowY, highX, highY } = sortByPosition(bounds);
+
+  return tile.x >= lowX && tile.x <= highX && tile.y >= lowY && tile.y <= highY;
+};
+
+export const getBoundingBox = (
+  tiles: Coords[],
+  offset: Coords = new Coords(0, 0)
+) => {
+  const { lowX, lowY, highX, highY } = sortByPosition(tiles);
+
+  return [
+    new Coords(lowX - offset.x, lowY - offset.y),
+    new Coords(highX + offset.x, lowY - offset.y),
+    new Coords(highX + offset.x, highY + offset.y),
+    new Coords(lowX - offset.x, highY + offset.y)
+  ];
 };

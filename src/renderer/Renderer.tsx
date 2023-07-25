@@ -7,9 +7,10 @@ import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
-import { Node } from './components/node/Node';
-import { getTileFromMouse, getTilePosition } from './utils/gridHelpers';
+import { Node } from './components/Node/Node';
+import { getTilePosition } from './utils/gridHelpers';
 import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
+import { Lasso } from './components/Lasso/Lasso';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
@@ -32,7 +33,6 @@ const InitialisedRenderer = () => {
   const { position: scrollPosition } = scroll;
 
   useEffect(() => {
-    console.log('init renderer');
     initRenderer(gridSize);
     setIsReady(true);
 
@@ -59,17 +59,13 @@ const InitialisedRenderer = () => {
   useEffect(() => {
     if (mode.type !== 'CURSOR') return;
 
-    const tile = getTileFromMouse({
-      gridSize,
-      mousePosition: mouse.position,
-      scroll
-    });
+    const { tile } = mouse.position;
 
     const tilePosition = getTilePosition(tile);
     renderer.cursor.moveTo(tilePosition);
   }, [
     mode,
-    mouse.position,
+    mouse,
     renderer.cursor.moveTo,
     gridSize,
     scrollPosition,
@@ -85,12 +81,19 @@ const InitialisedRenderer = () => {
     const isCursorVisible = mode.type === 'CURSOR';
 
     renderer.cursor.setVisible(isCursorVisible);
-  }, [mode.type, mouse.position, renderer.cursor]);
+  }, [mode.type, renderer.cursor]);
 
   if (!isReady) return null;
 
   return (
     <>
+      {mode.type === 'LASSO' && (
+        <Lasso
+          parentContainer={renderer.lassoContainer.current as paper.Group}
+          startTile={mode.selection.startTile}
+          endTile={mode.selection.endTile}
+        />
+      )}
       {scene.nodes.map((node) => (
         <Node
           key={node.id}
