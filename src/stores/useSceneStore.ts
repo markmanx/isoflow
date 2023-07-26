@@ -9,6 +9,7 @@ import { Coords } from '../utils/Coords';
 // TODO: Move all types into a types file for easier access and less mental load over where to look
 export enum SceneItemTypeEnum {
   NODE = 'NODE',
+  CONNECTOR = 'CONNECTOR',
   GROUP = 'GROUP'
 }
 
@@ -21,6 +22,13 @@ export interface Node {
   labelHeight: number;
   position: Coords;
   isSelected: boolean;
+}
+
+export interface Connector {
+  type: SceneItemTypeEnum.CONNECTOR;
+  id: string;
+  from: string;
+  to: string;
 }
 
 export interface Group {
@@ -41,6 +49,7 @@ export interface SortedSceneItems {
   // TODO: Decide on whether to make a Map instead of an array for easier lookup
   nodes: Node[];
   groups: Group[];
+  connectors: Connector[];
 }
 
 // TODO: This typing is super confusing to work with
@@ -64,6 +73,7 @@ export type UseSceneStore = Scene & {
 export const useSceneStore = create<UseSceneStore>((set, get) => {
   return {
     nodes: [],
+    connectors: [],
     groups: [],
     icons: [],
     gridSize: new Coords(51, 51),
