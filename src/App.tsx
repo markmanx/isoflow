@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
 import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
-import { SceneInput } from 'src/validation/SceneSchema';
+import { SceneInput } from 'src/validation/SceneInput';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
@@ -18,27 +18,31 @@ interface Props {
 }
 
 const InnerApp = React.memo(
-  ({ height, width }: Pick<Props, 'height' | 'width'>) => (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Box
-        sx={{
-          width: width ?? '100%',
-          height,
-          position: 'relative',
-          overflow: 'hidden'
-        }}
-      >
-        <Renderer />
-        <ItemControlsManager />
-        <ToolMenu />
-      </Box>
-    </ThemeProvider>
-  )
+  ({ height, width }: Pick<Props, 'height' | 'width'>) => {
+    return (
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Box
+          sx={{
+            width: width ?? '100%',
+            height,
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
+          <Renderer />
+          <ItemControlsManager />
+          <ToolMenu />
+        </Box>
+      </ThemeProvider>
+    );
+  }
 );
 
 const App = ({ initialScene, width, height, onSceneUpdated }: Props) => {
-  const sceneActions = useSceneStore((state) => state.actions);
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
 
   useEffect(() => {
     const convertedInput = sceneInputtoScene(initialScene);
@@ -55,7 +59,9 @@ const App = ({ initialScene, width, height, onSceneUpdated }: Props) => {
 };
 
 const useIsoflow = () => {
-  const updateNode = useSceneStore((state) => state.actions.updateNode);
+  const updateNode = useSceneStore((state) => {
+    return state.actions.updateNode;
+  });
 
   return {
     updateNode

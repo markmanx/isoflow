@@ -5,6 +5,7 @@ import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useGrid } from './components/Grid/useGrid';
 import { useNodeManager } from './useNodeManager';
 import { useCursor } from './components/Cursor/useCursor';
+import { useGroupManager } from './useGroupManager';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
@@ -13,8 +14,11 @@ export const useRenderer = () => {
   const lassoContainer = useRef(new Group());
   const grid = useGrid();
   const nodeManager = useNodeManager();
+  const groupManager = useGroupManager();
   const cursor = useCursor();
-  const uiStateActions = useUiStateStore((state) => state.actions);
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
+  });
 
   const { setScroll } = uiStateActions;
   const { init: initGrid } = grid;
@@ -30,6 +34,7 @@ export const useRenderer = () => {
       const cursorContainer = initCursor();
 
       innerContainer.current.addChild(gridContainer);
+      innerContainer.current.addChild(groupManager.container);
       innerContainer.current.addChild(cursorContainer);
       innerContainer.current.addChild(lassoContainer.current);
       innerContainer.current.addChild(nodeManager.container);
@@ -62,6 +67,7 @@ export const useRenderer = () => {
     zoomTo,
     scrollTo,
     nodeManager,
+    groupManager,
     cursor,
     lassoContainer
   };

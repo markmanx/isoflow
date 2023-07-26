@@ -1,4 +1,7 @@
+// TODO: Rename to config.ts
 import { customVars } from '../styles/theme';
+
+export const DEFAULT_COLOR = customVars.diagramPalette.blue;
 
 export const GRID_DEFAULTS = {
   size: {
@@ -10,5 +13,5 @@ export const GRID_DEFAULTS = {
 export const NODE_DEFAULTS = {
   label: '',
   labelHeight: 100,
-  color: customVars.diagramPalette.blue
+  color: DEFAULT_COLOR
 };

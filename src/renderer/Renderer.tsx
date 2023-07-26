@@ -11,16 +11,29 @@ import { Node } from './components/Node/Node';
 import { getTilePosition } from './utils/gridHelpers';
 import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
 import { Lasso } from './components/Lasso/Lasso';
+import { Group } from './components/Group/Group';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
   const [isReady, setIsReady] = useState(false);
-  const scene = useSceneStore(({ nodes }) => ({ nodes }));
-  const gridSize = useSceneStore((state) => state.gridSize);
-  const mode = useUiStateStore((state) => state.mode);
-  const zoom = useUiStateStore((state) => state.zoom);
-  const mouse = useUiStateStore((state) => state.mouse);
-  const scroll = useUiStateStore((state) => state.scroll);
+  const scene = useSceneStore(({ nodes, groups }) => {
+    return { nodes, groups };
+  });
+  const gridSize = useSceneStore((state) => {
+    return state.gridSize;
+  });
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const mouse = useUiStateStore((state) => {
+    return state.mouse;
+  });
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
   const { activeLayer } = Paper.project;
   useInteractionManager();
 
@@ -94,20 +107,33 @@ const InitialisedRenderer = () => {
           endTile={mode.selection.endTile}
         />
       )}
-      {scene.nodes.map((node) => (
-        <Node
-          key={node.id}
-          node={node}
-          parentContainer={renderer.nodeManager.container as paper.Group}
-        />
-      ))}
+      {scene.groups.map((group) => {
+        return (
+          <Group
+            key={group.id}
+            group={group}
+            parentContainer={renderer.groupManager.container as paper.Group}
+          />
+        );
+      })}
+      {scene.nodes.map((node) => {
+        return (
+          <Node
+            key={node.id}
+            node={node}
+            parentContainer={renderer.nodeManager.container as paper.Group}
+          />
+        );
+      })}
     </>
   );
 };
 
-export const Renderer = () => (
-  <Initialiser>
-    <InitialisedRenderer />
-    <ContextMenuLayer />
-  </Initialiser>
-);
+export const Renderer = () => {
+  return (
+    <Initialiser>
+      <InitialisedRenderer />
+      <ContextMenuLayer />
+    </Initialiser>
+  );
+};

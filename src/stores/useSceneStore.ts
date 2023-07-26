@@ -3,11 +3,13 @@ import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
 import { NODE_DEFAULTS } from 'src/utils/defaults';
-import { IconInput } from '../validation/SceneSchema';
+import { IconInput } from '../validation/SceneInput';
 import { Coords } from '../utils/Coords';
 
+// TODO: Move all types into a types file for easier access and less mental load over where to look
 export enum SceneItemTypeEnum {
-  NODE = 'NODE'
+  NODE = 'NODE',
+  GROUP = 'GROUP'
 }
 
 export interface Node {
@@ -21,6 +23,12 @@ export interface Node {
   isSelected: boolean;
 }
 
+export interface Group {
+  type: SceneItemTypeEnum.GROUP;
+  id: string;
+  nodeIds: string[];
+}
+
 export type Icon = IconInput;
 
 export interface SceneItem {
@@ -28,10 +36,14 @@ export interface SceneItem {
   type: SceneItemTypeEnum;
 }
 
+// TODO: Is this needed, or do we just expost a getNodesFromTile() function?
 export interface SortedSceneItems {
+  // TODO: Decide on whether to make a Map instead of an array for easier lookup
   nodes: Node[];
+  groups: Group[];
 }
 
+// TODO: This typing is super confusing to work with
 export type Scene = SortedSceneItems & {
   icons: IconInput[];
   gridSize: Coords;
@@ -48,52 +60,64 @@ export type UseSceneStore = Scene & {
   actions: SceneActions;
 };
 
-export const useSceneStore = create<UseSceneStore>((set, get) => ({
-  nodes: [],
-  icons: [],
-  gridSize: new Coords(51, 51),
-  actions: {
-    set: (scene) => {
-      set(scene);
-    },
-    setItems: (items: SortedSceneItems) => {
-      set({ nodes: items.nodes });
-    },
-    updateNode: (id, updates) => {
-      const { nodes } = get();
-      const nodeIndex = nodes.findIndex((node) => node.id === id);
+// TODO: Optimise lookup time by having a store of tile coords and what items they contain
+export const useSceneStore = create<UseSceneStore>((set, get) => {
+  return {
+    nodes: [],
+    groups: [],
+    icons: [],
+    gridSize: new Coords(51, 51),
+    actions: {
+      set: (scene) => {
+        set(scene);
+      },
+      setItems: (items: SortedSceneItems) => {
+        set({ nodes: items.nodes });
+      },
+      updateNode: (id, updates) => {
+        const { nodes } = get();
+        const nodeIndex = nodes.findIndex((node) => {
+          return node.id === id;
+        });
 
-      if (nodeIndex === -1) {
-        return;
+        if (nodeIndex === -1) {
+          return;
+        }
+
+        const newNodes = produce(nodes, (draftState) => {
+          draftState[nodeIndex] = { ...draftState[nodeIndex], ...updates };
+        });
+
+        set({ nodes: newNodes });
+      },
+      createNode: (position) => {
+        const { nodes, icons } = get();
+        const newNode: Node = {
+          ...NODE_DEFAULTS,
+          id: uuid(),
+          type: SceneItemTypeEnum.NODE,
+          iconId: icons[0].id,
+          position,
+          isSelected: false
+        };
+
+        set({ nodes: [...nodes, newNode] });
       }
-
-      const newNodes = produce(nodes, (draftState) => {
-        draftState[nodeIndex] = { ...draftState[nodeIndex], ...updates };
-      });
-
-      set({ nodes: newNodes });
-    },
-    createNode: (position) => {
-      const { nodes, icons } = get();
-      const newNode: Node = {
-        ...NODE_DEFAULTS,
-        id: uuid(),
-        type: SceneItemTypeEnum.NODE,
-        iconId: icons[0].id,
-        position,
-        isSelected: false
-      };
-
-      set({ nodes: [...nodes, newNode] });
     }
-  }
-}));
+  };
+});
 
 export const useNodeHooks = () => {
-  const nodes = useSceneStore((state) => state.nodes);
+  const nodes = useSceneStore((state) => {
+    return state.nodes;
+  });
 
   const useGetNodeById = useCallback(
-    (id: string) => nodes.find((node) => node.id === id),
+    (id: string) => {
+      return nodes.find((node) => {
+        return node.id === id;
+      });
+    },
     [nodes]
   );
 

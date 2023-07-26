@@ -2,7 +2,7 @@ import Paper from 'paper';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { Coords } from 'src/utils/Coords';
 import { clamp } from 'src/utils';
-import { SortedSceneItems } from 'src/stores/useSceneStore';
+import { SortedSceneItems, Node } from 'src/stores/useSceneStore';
 import { Scroll } from 'src/stores/useUiStateStore';
 
 const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
@@ -40,8 +40,9 @@ export const getTileFromMouse = ({
   );
 };
 
-export const getTilePosition = ({ x, y }: Coords) =>
-  new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
+export const getTilePosition = ({ x, y }: Coords) => {
+  return new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
+};
 
 export const getTileBounds = (coords: Coords) => {
   const position = getTilePosition(coords);
@@ -69,15 +70,27 @@ interface GetItemsByTile {
   sortedSceneItems: SortedSceneItems;
 }
 
+// TODO: Acheive better performance with more granular functions e.g. getNodesByTile, or even getFirstNodeByTile
 export const getItemsByTile = ({
   tile,
   sortedSceneItems
-}: GetItemsByTile): SortedSceneItems => {
-  const nodes = sortedSceneItems.nodes.filter((node) =>
-    node.position.isEqual(tile)
-  );
+}: GetItemsByTile): { nodes: Node[] } => {
+  const nodes = sortedSceneItems.nodes.filter((node) => {
+    return node.position.isEqual(tile);
+  });
 
   return { nodes };
+};
+
+interface GetItemsByTileV2 {
+  tile: Coords;
+  sceneItems: Node[];
+}
+
+export const getItemsByTileV2 = ({ tile, sceneItems }: GetItemsByTileV2) => {
+  return sceneItems.filter((item) => {
+    return item.position.isEqual(tile);
+  });
 };
 
 interface CanvasCoordsToScreenCoords {
@@ -137,11 +150,15 @@ export const getTileScreenPosition = ({
   return onScreenPosition;
 };
 
-export const sortByPosition = (items: Coords[]) => {
-  const xSorted = [...items];
-  const ySorted = [...items];
-  xSorted.sort((a, b) => a.x - b.x);
-  ySorted.sort((a, b) => a.y - b.y);
+export const sortByPosition = (tiles: Coords[]) => {
+  const xSorted = [...tiles];
+  const ySorted = [...tiles];
+  xSorted.sort((a, b) => {
+    return a.x - b.x;
+  });
+  ySorted.sort((a, b) => {
+    return a.y - b.y;
+  });
 
   const highest = {
     byX: xSorted[xSorted.length - 1],
@@ -166,6 +183,7 @@ export const sortByPosition = (items: Coords[]) => {
   };
 };
 
+// Returns a complete set of tiles that form a grid area (takes in any number of tiles to use points to encapsulate)
 export const getGridSubset = (tiles: Coords[]) => {
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
@@ -186,10 +204,16 @@ export const isWithinBounds = (tile: Coords, bounds: Coords[]) => {
   return tile.x >= lowX && tile.x <= highX && tile.y >= lowY && tile.y <= highY;
 };
 
+// Returns the four corners of a grid that encapsulates all tiles
+// passed in (at least 1 tile needed)
 export const getBoundingBox = (
   tiles: Coords[],
   offset: Coords = new Coords(0, 0)
 ) => {
+  if (tiles.length === 0) {
+    return null;
+  }
+
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
   return [

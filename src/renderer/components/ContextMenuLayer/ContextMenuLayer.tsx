@@ -6,8 +6,12 @@ import { EmptyTileContextMenu } from 'src/components/ContextMenu/EmptyTileContex
 import { useSceneStore } from 'src/stores/useSceneStore';
 
 export const ContextMenuLayer = () => {
-  const contextMenu = useUiStateStore((state) => state.contextMenu);
-  const sceneActions = useSceneStore((state) => state.actions);
+  const contextMenu = useUiStateStore((state) => {
+    return state.contextMenu;
+  });
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
 
   return (
     <Box
@@ -25,7 +29,9 @@ export const ContextMenuLayer = () => {
       {contextMenu?.type === 'EMPTY_TILE' && (
         <EmptyTileContextMenu
           key={contextMenu.position.toString()}
-          onAddNode={() => sceneActions.createNode(contextMenu.position)}
+          onAddNode={() => {
+            return sceneActions.createNode(contextMenu.position);
+          }}
           position={contextMenu.position}
         />
       )}

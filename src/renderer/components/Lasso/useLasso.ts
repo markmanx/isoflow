@@ -1,5 +1,6 @@
 import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
+import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import { TILE_SIZE, PIXEL_UNIT } from 'src/renderer/utils/constants';
 import {
@@ -17,6 +18,10 @@ export const useLasso = () => {
     if (!shapeRef.current) return;
 
     const boundingBox = getBoundingBox([startTile, endTile]);
+
+    // TODO: Enforce at least one node being passed to this getBoundingBox() to prevent null returns
+    if (!boundingBox) return;
+
     const lassoStartTile = boundingBox[3];
     const lassoScreenPosition = getTileBounds(lassoStartTile).left;
     const sorted = sortByPosition(boundingBox);
@@ -55,6 +60,14 @@ export const useLasso = () => {
       dashArray: [5, 10],
       pivot: [0, 0]
     });
+
+    gsap
+      .fromTo(
+        shapeRef.current,
+        { dashOffset: 0 },
+        { dashOffset: PIXEL_UNIT * 10, ease: 'none', duration: 0.25 }
+      )
+      .repeat(-1);
 
     containerRef.current.addChild(shapeRef.current);
     applyProjectionMatrix(containerRef.current);

@@ -6,7 +6,7 @@ import {
   findInvalidNode,
   findInvalidConnector,
   findInvalidGroup
-} from '../SceneSchema';
+} from '../SceneInput';
 import { scene } from '../../tests/fixtures/scene';
 
 describe('scene validation works correctly', () => {

@@ -1,3 +1,4 @@
+// TODO: Split into individual files
 import { z } from 'zod';
 
 export const iconInput = z.object({
@@ -29,7 +30,7 @@ export const connectorInput = z.object({
 export const groupInput = z.object({
   id: z.string(),
   label: z.string().nullable(),
-  nodes: z.array(z.string())
+  nodeIds: z.array(z.string())
 });
 
 export type IconInput = z.infer<typeof iconInput>;
@@ -37,30 +38,41 @@ export type NodeInput = z.infer<typeof nodeInput>;
 export type ConnectorInput = z.infer<typeof connectorInput>;
 export type GroupInput = z.infer<typeof groupInput>;
 
-export const findInvalidNode = (nodes: NodeInput[], icons: IconInput[]) =>
-  nodes.find((node) => {
-    const validIcon = icons.find((icon) => node.iconId === icon.id);
+export const findInvalidNode = (nodes: NodeInput[], icons: IconInput[]) => {
+  return nodes.find((node) => {
+    const validIcon = icons.find((icon) => {
+      return node.iconId === icon.id;
+    });
     return !validIcon;
   });
+};
 
 export const findInvalidConnector = (
   connectors: ConnectorInput[],
   nodes: NodeInput[]
-) =>
-  connectors.find((con) => {
-    const fromNode = nodes.find((node) => con.from === node.id);
-    const toNode = nodes.find((node) => con.to === node.id);
+) => {
+  return connectors.find((con) => {
+    const fromNode = nodes.find((node) => {
+      return con.from === node.id;
+    });
+    const toNode = nodes.find((node) => {
+      return con.to === node.id;
+    });
 
     return Boolean(!fromNode || !toNode);
   });
+};
 
-export const findInvalidGroup = (groups: GroupInput[], nodes: NodeInput[]) =>
-  groups.find((grp) =>
-    grp.nodes.find((grpNodeSchemaId) => {
-      const validNode = nodes.find((node) => node.id === grpNodeSchemaId);
+export const findInvalidGroup = (groups: GroupInput[], nodes: NodeInput[]) => {
+  return groups.find((grp) => {
+    return grp.nodeIds.find((nodeId) => {
+      const validNode = nodes.find((node) => {
+        return node.id === nodeId;
+      });
       return Boolean(!validNode);
-    })
-  );
+    });
+  });
+};
 
 export const sceneInput = z
   .object({

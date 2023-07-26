@@ -27,6 +27,7 @@
         "consistent-return": [0],
         "react/no-unused-prop-types": ["warn"],
         "react/require-default-props": [0],
-        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draftState"] }]
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draftState"] }],
+        "arrow-body-style": ["error", "always"]
     }
 }

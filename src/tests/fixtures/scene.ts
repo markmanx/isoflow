@@ -1,4 +1,4 @@
-import { SceneInput } from 'src/validation/SceneSchema';
+import { SceneInput } from 'src/validation/SceneInput';
 
 export const scene: SceneInput = {
   gridSize: {

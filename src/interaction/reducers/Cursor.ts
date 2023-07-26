@@ -9,32 +9,32 @@ export const Cursor: InteractionReducer = {
 
     if (
       draftState.mouse.delta === null ||
-      !draftState.mouse.delta.tile.isEqual(Coords.fromObject({ x: 0, y: 0 }))
-    ) {
-      // User has moved tile since the last mousedown event
-      if (
-        draftState.mode.mousedownItems &&
-        draftState.mode.mousedownItems.nodes.length > 0
-      ) {
-        // User's last mousedown action was on a scene item
+      draftState.mouse.delta?.tile.isEqual(Coords.zero())
+    )
+      return;
+    // User has moved tile since the last event
+
+    if (draftState.mode.mousedown) {
+      // User is in mousedown mode
+      if (draftState.mode.mousedown.items.nodes.length > 0) {
+        // User's last mousedown action was on a node
         draftState.mode = {
           type: 'DRAG_ITEMS',
-          items: draftState.mode.mousedownItems
+          items: draftState.mode.mousedown.items
         };
+
+        return;
       }
 
-      // WIP: Lasso selection
-      // if (draftState.mode.mousedownItems?.nodes.length === 0) {
-      //   // User's last mousedown action was on an empty tile
-      //   draftState.mode = {
-      //     type: 'LASSO',
-      //     selection: {
-      //       startTile: draftState.mouse.position.tile,
-      //       endTile: draftState.mouse.position.tile
-      //     },
-      //     isDragging: false
-      //   };
-      // }
+      draftState.mode = {
+        type: 'LASSO',
+        selection: {
+          startTile: draftState.mode.mousedown.tile,
+          endTile: draftState.mouse.position.tile,
+          items: []
+        },
+        isDragging: false
+      };
     }
   },
   mousedown: (draftState) => {
@@ -45,25 +45,30 @@ export const Cursor: InteractionReducer = {
       sortedSceneItems: draftState.scene
     });
 
-    draftState.mode.mousedownItems = itemsAtTile;
+    draftState.mode.mousedown = {
+      items: itemsAtTile,
+      tile: draftState.mouse.position.tile
+    };
   },
   mouseup: (draftState) => {
     if (draftState.mode.type !== 'CURSOR') return;
 
-    draftState.scene.nodes = draftState.scene.nodes.map((node) => ({
-      ...node,
-      isSelected: false
-    }));
+    draftState.scene.nodes = draftState.scene.nodes.map((node) => {
+      return {
+        ...node,
+        isSelected: false
+      };
+    });
 
-    if (draftState.mode.mousedownItems !== null) {
+    if (draftState.mode.mousedown !== null) {
       // User's last mousedown action was on a scene item
-      const mousedownNode = draftState.mode.mousedownItems.nodes[0];
+      const mousedownNode = draftState.mode.mousedown.items.nodes[0];
 
       if (mousedownNode) {
         // The user's last mousedown action was on a node
-        const nodeIndex = draftState.scene.nodes.findIndex(
-          (node) => node.id === mousedownNode.id
-        );
+        const nodeIndex = draftState.scene.nodes.findIndex((node) => {
+          return node.id === mousedownNode.id;
+        });
 
         if (nodeIndex === -1) return;
 
@@ -73,7 +78,7 @@ export const Cursor: InteractionReducer = {
           type: SidebarTypeEnum.SINGLE_NODE,
           nodeId: draftState.scene.nodes[nodeIndex].id
         };
-        draftState.mode.mousedownItems = null;
+        draftState.mode.mousedown = null;
 
         return;
       }
@@ -84,7 +89,7 @@ export const Cursor: InteractionReducer = {
         position: draftState.mouse.position.tile
       };
       draftState.itemControls = null;
-      draftState.mode.mousedownItems = null;
+      draftState.mode.mousedown = null;
     }
   }
 };

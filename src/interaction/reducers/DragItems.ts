@@ -25,6 +25,6 @@ export const DragItems: InteractionReducer = {
   },
   mousedown: () => {},
   mouseup: (draftState) => {
-    draftState.mode = { type: 'CURSOR', mousedownItems: null };
+    draftState.mode = { type: 'CURSOR', mousedown: null };
   }
 };

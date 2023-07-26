@@ -15,11 +15,11 @@ export const useNodeTile = () => {
 
     tileRef.current.set({
       fillColor: color,
-      strokeColor: getColorVariant(color, 'dark', 2)
+      strokeColor: getColorVariant(color, 'dark', { grade: 2 })
     });
 
     highlightRef.current.set({
-      strokeColor: getColorVariant(color, 'dark', 2)
+      strokeColor: getColorVariant(color, 'dark', { grade: 2 })
     });
   }, []);
 

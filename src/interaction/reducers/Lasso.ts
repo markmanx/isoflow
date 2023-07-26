@@ -1,5 +1,8 @@
 import { Coords } from 'src/utils/Coords';
-import { isWithinBounds } from 'src/renderer/utils/gridHelpers';
+import {
+  isWithinBounds,
+  getItemsByTileV2
+} from 'src/renderer/utils/gridHelpers';
 import { InteractionReducer } from '../types';
 
 export const Lasso: InteractionReducer = {
@@ -7,35 +10,38 @@ export const Lasso: InteractionReducer = {
     if (draftState.mode.type !== 'LASSO') return;
 
     if (draftState.mouse.mousedown === null) return;
-    // User has moused down (they are in dragging mode)
+    // User is in mousedown mode
 
     if (
       draftState.mouse.delta === null ||
       draftState.mouse.delta.tile.isEqual(Coords.zero())
     )
       return;
-    // User has moved tile since the last mousedown event
+    // User has moved tile since they moused down
 
     if (!draftState.mode.isDragging) {
-      // User is creating the selection (not dragging)
+      const { mousedown } = draftState.mouse;
+      const items = draftState.scene.nodes.filter((node) => {
+        return node.position.isEqual(mousedown.tile);
+      });
+
+      // User is creating a selection
       draftState.mode.selection = {
         startTile: draftState.mouse.mousedown.tile,
-        endTile: draftState.mouse.position.tile
+        endTile: draftState.mouse.position.tile,
+        items
       };
 
       return;
     }
 
     if (draftState.mode.isDragging) {
-      // User is dragging the selection
-      draftState.mode.selection = {
-        startTile: draftState.mode.selection.startTile.add(
-          draftState.mouse.delta.tile
-        ),
-        endTile: draftState.mode.selection.endTile.add(
-          draftState.mouse.delta.tile
-        )
-      };
+      // User is dragging an existing selection
+      draftState.mode.selection.startTile =
+        draftState.mode.selection.startTile.add(draftState.mouse.delta.tile);
+      draftState.mode.selection.endTile = draftState.mode.selection.endTile.add(
+        draftState.mouse.delta.tile
+      );
     }
   },
   mousedown: (draftState) => {
@@ -50,7 +56,7 @@ export const Lasso: InteractionReducer = {
       if (!isWithinSelection) {
         draftState.mode = {
           type: 'CURSOR',
-          mousedownItems: null
+          mousedown: null
         };
 
         return;
@@ -65,7 +71,7 @@ export const Lasso: InteractionReducer = {
 
     draftState.mode = {
       type: 'CURSOR',
-      mousedownItems: null
+      mousedown: null
     };
   },
   mouseup: () => {}

@@ -42,7 +42,9 @@ export const Initialiser = ({ children }: Props) => {
       setIsReady(false);
       if (rafId) cancelAnimationFrame(rafId);
 
-      Paper.projects.forEach((project) => project.remove());
+      Paper.projects.forEach((project) => {
+        return project.remove();
+      });
     };
   }, []);
 

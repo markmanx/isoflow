@@ -19,15 +19,33 @@ const reducers: { [k in string]: InteractionReducer } = {
 
 export const useInteractionManager = () => {
   const tool = useRef<paper.Tool>();
-  const mode = useUiStateStore((state) => state.mode);
-  const scroll = useUiStateStore((state) => state.scroll);
-  const mouse = useUiStateStore((state) => state.mouse);
-  const itemControls = useUiStateStore((state) => state.itemControls);
-  const contextMenu = useUiStateStore((state) => state.contextMenu);
-  const uiStateActions = useUiStateStore((state) => state.actions);
-  const scene = useSceneStore(({ nodes }) => ({ nodes }));
-  const gridSize = useSceneStore((state) => state.gridSize);
-  const sceneActions = useSceneStore((state) => state.actions);
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
+  const mouse = useUiStateStore((state) => {
+    return state.mouse;
+  });
+  const itemControls = useUiStateStore((state) => {
+    return state.itemControls;
+  });
+  const contextMenu = useUiStateStore((state) => {
+    return state.contextMenu;
+  });
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
+  });
+  const scene = useSceneStore(({ nodes, groups }) => {
+    return { nodes, groups };
+  });
+  const gridSize = useSceneStore((state) => {
+    return state.gridSize;
+  });
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
 
   const onMouseEvent = useCallback(
     (
@@ -57,7 +75,9 @@ export const useInteractionManager = () => {
           contextMenu,
           itemControls
         },
-        (draft) => reducerAction(draft)
+        (draft) => {
+          return reducerAction(draft);
+        }
       );
 
       uiStateActions.setMouse(nextMouse);
@@ -82,12 +102,15 @@ export const useInteractionManager = () => {
 
   useEffect(() => {
     tool.current = new Tool();
-    tool.current.onMouseMove = (ev: paper.ToolEvent) =>
-      onMouseEvent('mousemove', ev);
-    tool.current.onMouseDown = (ev: paper.ToolEvent) =>
-      onMouseEvent('mousedown', ev);
-    tool.current.onMouseUp = (ev: paper.ToolEvent) =>
-      onMouseEvent('mouseup', ev);
+    tool.current.onMouseMove = (ev: paper.ToolEvent) => {
+      return onMouseEvent('mousemove', ev);
+    };
+    tool.current.onMouseDown = (ev: paper.ToolEvent) => {
+      return onMouseEvent('mousedown', ev);
+    };
+    tool.current.onMouseUp = (ev: paper.ToolEvent) => {
+      return onMouseEvent('mouseup', ev);
+    };
 
     return () => {
       tool.current?.remove();

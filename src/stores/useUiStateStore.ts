@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
-import { SortedSceneItems, SceneItem } from 'src/stores/useSceneStore';
+import { SortedSceneItems, SceneItem, Node } from 'src/stores/useSceneStore';
 
+// TODO: Move into the defaults file
 const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
@@ -37,30 +38,35 @@ export interface Mouse {
   } | null;
 }
 
+// TODO: Extract modes into own file for simplicity
 export interface CursorMode {
   type: 'CURSOR';
-  mousedownItems: SortedSceneItems | null;
+  mousedown: {
+    items: { nodes: Node[] };
+    tile: Coords;
+  } | null;
 }
 
 export interface PanMode {
   type: 'PAN';
 }
 
-export interface CreateLassoMode {
+export interface LassoMode {
   type: 'LASSO'; // TODO: Put these into an enum
   selection: {
     startTile: Coords;
     endTile: Coords;
+    items: Node[];
   };
   isDragging: boolean;
 }
 
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';
-  items: SortedSceneItems;
+  items: { nodes: Node[] };
 }
 
-export type Mode = CursorMode | PanMode | DragItemsMode | CreateLassoMode;
+export type Mode = CursorMode | PanMode | DragItemsMode | LassoMode;
 
 export type ContextMenu =
   | SceneItem
@@ -98,48 +104,50 @@ export type UseUiStateStore = UiState & {
   actions: UiStateActions;
 };
 
-export const useUiStateStore = create<UseUiStateStore>((set, get) => ({
-  mode: {
-    type: 'CURSOR',
-    mousedownItems: null
-  },
-  mouse: {
-    position: { screen: new Coords(0, 0), tile: new Coords(0, 0) },
-    mousedown: null,
-    delta: null
-  },
-  itemControls: null,
-  contextMenu: null,
-  scroll: {
-    position: new Coords(0, 0),
-    offset: new Coords(0, 0)
-  },
-  zoom: 1,
-  actions: {
-    setMode: (mode) => {
-      set({ mode });
+export const useUiStateStore = create<UseUiStateStore>((set, get) => {
+  return {
+    mode: {
+      type: 'CURSOR',
+      mousedown: null
     },
-    incrementZoom: () => {
-      const { zoom } = get();
-      const targetZoom = clamp(zoom + ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
-      set({ zoom: roundToOneDecimalPlace(targetZoom) });
+    mouse: {
+      position: { screen: new Coords(0, 0), tile: new Coords(0, 0) },
+      mousedown: null,
+      delta: null
     },
-    decrementZoom: () => {
-      const { zoom } = get();
-      const targetZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
-      set({ zoom: roundToOneDecimalPlace(targetZoom) });
+    itemControls: null,
+    contextMenu: null,
+    scroll: {
+      position: new Coords(0, 0),
+      offset: new Coords(0, 0)
     },
-    setScroll: ({ position, offset }) => {
-      set({ scroll: { position, offset: offset ?? get().scroll.offset } });
-    },
-    setSidebar: (itemControls) => {
-      set({ itemControls });
-    },
-    setContextMenu: (contextMenu) => {
-      set({ contextMenu });
-    },
-    setMouse: (mouse) => {
-      set({ mouse });
+    zoom: 1,
+    actions: {
+      setMode: (mode) => {
+        set({ mode });
+      },
+      incrementZoom: () => {
+        const { zoom } = get();
+        const targetZoom = clamp(zoom + ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
+        set({ zoom: roundToOneDecimalPlace(targetZoom) });
+      },
+      decrementZoom: () => {
+        const { zoom } = get();
+        const targetZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
+        set({ zoom: roundToOneDecimalPlace(targetZoom) });
+      },
+      setScroll: ({ position, offset }) => {
+        set({ scroll: { position, offset: offset ?? get().scroll.offset } });
+      },
+      setSidebar: (itemControls) => {
+        set({ itemControls });
+      },
+      setContextMenu: (contextMenu) => {
+        set({ contextMenu });
+      },
+      setMouse: (mouse) => {
+        set({ mouse });
+      }
     }
-  }
-}));
+  };
+});

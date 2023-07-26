@@ -1,12 +1,22 @@
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import chroma from 'chroma-js';
-import type { NodeInput, SceneInput } from 'src/validation/SceneSchema';
-import { Node, SceneItemTypeEnum, Scene } from 'src/stores/useSceneStore';
+import type {
+  NodeInput,
+  SceneInput,
+  GroupInput
+} from 'src/validation/SceneInput';
+import {
+  Node,
+  Group,
+  SceneItemTypeEnum,
+  Scene
+} from 'src/stores/useSceneStore';
 import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/defaults';
 
-export const clamp = (num: number, min: number, max: number) =>
-  num <= min ? min : num >= max ? max : num; // eslint-disable-line no-nested-ternary
+export const clamp = (num: number, min: number, max: number) => {
+  return num <= min ? min : num >= max ? max : num;
+}; // eslint-disable-line no-nested-ternary
 
 export const nonZeroCoords = (coords: Coords) => {
   // For some reason, gsap doesn't like to tween x and y both to 0, so we force 0 to be just above 0.
@@ -18,8 +28,9 @@ export const nonZeroCoords = (coords: Coords) => {
   return newCoords;
 };
 
-export const getRandom = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min) + min);
+export const getRandom = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
 
 export const tweenPosition = (
   item: paper.Item,
@@ -43,28 +54,44 @@ export const tweenPosition = (
   });
 };
 
-export const roundToOneDecimalPlace = (num: number) =>
-  Math.round(num * 10) / 10;
+export const roundToOneDecimalPlace = (num: number) => {
+  return Math.round(num * 10) / 10;
+};
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
-  const node: Node = {
+  return {
+    type: SceneItemTypeEnum.NODE,
     id: nodeInput.id,
     label: nodeInput.label ?? NODE_DEFAULTS.label,
     labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
     color: nodeInput.color ?? NODE_DEFAULTS.color,
     iconId: nodeInput.iconId,
     position: Coords.fromObject(nodeInput.position),
-    isSelected: false,
-    type: SceneItemTypeEnum.NODE
+    isSelected: false
   };
+};
 
-  return node;
+export const groupInputToGroup = (groupInput: GroupInput): Group => {
+  return {
+    type: SceneItemTypeEnum.GROUP,
+    id: groupInput.id,
+    nodeIds: groupInput.nodeIds
+  };
 };
 
 export const sceneInputtoScene = (sceneInput: SceneInput) => {
+  const nodes = sceneInput.nodes.map((nodeInput) => {
+    return nodeInputToNode(nodeInput);
+  });
+
+  const groups = sceneInput.groups.map((groupInput) => {
+    return groupInputToGroup(groupInput);
+  });
+
   const scene = {
     ...sceneInput,
-    nodes: sceneInput.nodes.map((nodeInput) => nodeInputToNode(nodeInput)),
+    nodes,
+    groups,
     icons: sceneInput.icons,
     gridSize: sceneInput.gridSize
       ? new Coords(sceneInput.gridSize.width, sceneInput.gridSize.height)
@@ -75,14 +102,16 @@ export const sceneInputtoScene = (sceneInput: SceneInput) => {
 };
 
 export const sceneToSceneInput = (scene: Scene) => {
-  const nodes: SceneInput['nodes'] = scene.nodes.map((node) => ({
-    id: node.id,
-    position: node.position.toObject(),
-    label: node.label,
-    labelHeight: node.labelHeight,
-    color: node.color,
-    iconId: node.iconId
-  }));
+  const nodes: SceneInput['nodes'] = scene.nodes.map((node) => {
+    return {
+      id: node.id,
+      position: node.position.toObject(),
+      label: node.label,
+      labelHeight: node.labelHeight,
+      color: node.color,
+      iconId: node.iconId
+    };
+  });
 
   const sceneInput: SceneInput = {
     nodes,
@@ -95,23 +124,28 @@ export const sceneToSceneInput = (scene: Scene) => {
   return sceneInput;
 };
 
+interface GetColorVariantOpts {
+  alpha?: number;
+  grade?: number;
+}
+
 export const getColorVariant = (
   color: string,
   variant: 'light' | 'dark',
-  grade?: number
+  { alpha = 1, grade = 0 }: GetColorVariantOpts
 ) => {
   switch (variant) {
     case 'light':
       return chroma(color)
         .brighten(grade ?? 1)
-        .saturate(2)
-        .hex();
+        .alpha(alpha)
+        .css();
     case 'dark':
       return chroma(color)
         .darken(grade ?? 1)
-        .saturate(2)
-        .hex();
+        .alpha(alpha)
+        .css();
     default:
-      return color;
+      return chroma(color).alpha(alpha).css();
   }
 };
