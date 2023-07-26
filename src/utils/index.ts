@@ -2,15 +2,17 @@ import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import chroma from 'chroma-js';
 import type {
-  NodeInput,
   SceneInput,
+  NodeInput,
+  ConnectorInput,
   GroupInput
 } from 'src/validation/SceneInput';
 import {
-  Node,
-  Group,
   SceneItemTypeEnum,
-  Scene
+  Scene,
+  Node,
+  Connector,
+  Group
 } from 'src/stores/useSceneStore';
 import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/defaults';
 
@@ -79,6 +81,17 @@ export const groupInputToGroup = (groupInput: GroupInput): Group => {
   };
 };
 
+export const connectorInputToConnector = (
+  connectorInput: ConnectorInput
+): Connector => {
+  return {
+    type: SceneItemTypeEnum.CONNECTOR,
+    id: connectorInput.id,
+    from: connectorInput.from,
+    to: connectorInput.to
+  };
+};
+
 export const sceneInputtoScene = (sceneInput: SceneInput) => {
   const nodes = sceneInput.nodes.map((nodeInput) => {
     return nodeInputToNode(nodeInput);
@@ -88,10 +101,15 @@ export const sceneInputtoScene = (sceneInput: SceneInput) => {
     return groupInputToGroup(groupInput);
   });
 
+  const connectors = sceneInput.connectors.map((connectorInput) => {
+    return connectorInputToConnector(connectorInput);
+  });
+
   const scene = {
     ...sceneInput,
     nodes,
     groups,
+    connectors,
     icons: sceneInput.icons,
     gridSize: sceneInput.gridSize
       ? new Coords(sceneInput.gridSize.width, sceneInput.gridSize.height)
