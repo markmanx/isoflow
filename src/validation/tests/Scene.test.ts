@@ -54,10 +54,10 @@ describe('scene validation works correctly', () => {
 
   test('finds invalid groups in scene', () => {
     const { nodes } = scene;
-    const invalidGroup = {
+    const invalidGroup: GroupInput = {
       id: 'invalidGroup',
       label: null,
-      nodes: ['invalidNode', 'node1']
+      nodeIds: ['invalidNode', 'node1']
     };
     const groups: GroupInput[] = [...scene.groups, invalidGroup];
 
