@@ -15,7 +15,7 @@ import {
   Connector,
   Group
 } from 'src/stores/useSceneStore';
-import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/defaults';
+import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/config';
 
 export const clamp = (num: number, min: number, max: number) => {
   // eslint-disable-next-line no-nested-ternary

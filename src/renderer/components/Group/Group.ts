@@ -4,7 +4,7 @@ import {
   useSceneStore,
   Node
 } from 'src/stores/useSceneStore';
-import { DEFAULT_COLOR } from 'src/utils/defaults';
+import { DEFAULT_COLOR } from 'src/utils/config';
 import { getColorVariant } from 'src/utils';
 import { useGroup } from './useGroup';
 
