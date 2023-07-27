@@ -18,17 +18,16 @@ import {
 import { NODE_DEFAULTS, GRID_DEFAULTS } from 'src/utils/defaults';
 
 export const clamp = (num: number, min: number, max: number) => {
+  // eslint-disable-next-line no-nested-ternary
   return num <= min ? min : num >= max ? max : num;
-}; // eslint-disable-line no-nested-ternary
+};
 
 export const nonZeroCoords = (coords: Coords) => {
   // For some reason, gsap doesn't like to tween x and y both to 0, so we force 0 to be just above 0.
-  const newCoords = new Coords(
+  return new Coords(
     coords.x === 0 ? 0.000001 : coords.x,
     coords.y === 0 ? 0.000001 : coords.y
   );
-
-  return newCoords;
 };
 
 export const getRandom = (min: number, max: number) => {
@@ -94,7 +93,7 @@ export const connectorInputToConnector = (
   };
 };
 
-export const sceneInputtoScene = (sceneInput: SceneInput) => {
+export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
   const nodes = sceneInput.nodes.map((nodeInput) => {
     return nodeInputToNode(nodeInput);
   });
@@ -107,7 +106,7 @@ export const sceneInputtoScene = (sceneInput: SceneInput) => {
     return connectorInputToConnector(connectorInput);
   });
 
-  const scene = {
+  return {
     ...sceneInput,
     nodes,
     groups,
@@ -116,12 +115,10 @@ export const sceneInputtoScene = (sceneInput: SceneInput) => {
     gridSize: sceneInput.gridSize
       ? new Coords(sceneInput.gridSize.width, sceneInput.gridSize.height)
       : Coords.fromObject(GRID_DEFAULTS.size)
-  };
-
-  return scene;
+  } as Scene;
 };
 
-export const sceneToSceneInput = (scene: Scene) => {
+export const sceneToSceneInput = (scene: Scene): SceneInput => {
   const nodes: SceneInput['nodes'] = scene.nodes.map((node) => {
     return {
       id: node.id,
@@ -133,15 +130,13 @@ export const sceneToSceneInput = (scene: Scene) => {
     };
   });
 
-  const sceneInput: SceneInput = {
+  return {
     nodes,
     connectors: [],
     groups: [],
     icons: scene.icons,
     gridSize: { width: scene.gridSize.x, height: scene.gridSize.y }
-  };
-
-  return sceneInput;
+  } as SceneInput;
 };
 
 interface GetColorVariantOpts {
