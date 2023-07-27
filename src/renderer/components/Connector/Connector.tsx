@@ -11,7 +11,7 @@ interface ConnectorProps {
 }
 
 export const Connector = ({ parentContainer, connector }: ConnectorProps) => {
-  const { init, updateFromTo } = useConnector();
+  const { init, updateFromTo, updateColor } = useConnector();
   const gridSize = useSceneStore((state) => {
     return state.gridSize;
   });
@@ -24,6 +24,10 @@ export const Connector = ({ parentContainer, connector }: ConnectorProps) => {
 
     parentContainer.addChild(container);
   }, [parentContainer, init]);
+
+  useEffect(() => {
+    updateColor(connector.color);
+  }, [connector, updateColor]);
 
   useEffect(() => {
     const fromNode = nodes.find((node) => {

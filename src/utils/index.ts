@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
+import { customVars } from 'src/styles/theme';
 import chroma from 'chroma-js';
 import type {
   SceneInput,
@@ -87,6 +88,7 @@ export const connectorInputToConnector = (
   return {
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
+    color: connectorInput.color ?? customVars.diagramPalette.blue,
     from: connectorInput.from,
     to: connectorInput.to
   };

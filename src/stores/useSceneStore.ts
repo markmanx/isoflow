@@ -27,6 +27,7 @@ export interface Node {
 export interface Connector {
   type: SceneItemTypeEnum.CONNECTOR;
   id: string;
+  color: string;
   from: string;
   to: string;
 }

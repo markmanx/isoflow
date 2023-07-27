@@ -8,6 +8,14 @@ export const useConnector = () => {
   const containerRef = useRef(new Group());
   const pathRef = useRef<paper.Path>();
 
+  const updateColor = useCallback((color: string) => {
+    if (!pathRef.current) return;
+
+    pathRef.current.set({
+      strokeColor: color
+    });
+  }, []);
+
   const updateFromTo = useCallback(
     (gridSize: Coords, from: Coords, to: Coords) => {
       if (!pathRef.current) return;
@@ -30,7 +38,6 @@ export const useConnector = () => {
     containerRef.current.removeChildren();
 
     pathRef.current = new Path({
-      strokeColor: 'black',
       strokeWidth: 5
     });
 
@@ -41,6 +48,7 @@ export const useConnector = () => {
 
   return {
     init,
+    updateColor,
     updateFromTo
   };
 };

@@ -23,6 +23,7 @@ export const nodeInput = z.object({
 export const connectorInput = z.object({
   id: z.string(),
   label: z.string().nullable(),
+  color: z.string().optional(),
   from: z.string(),
   to: z.string()
 });
