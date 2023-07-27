@@ -11,13 +11,14 @@ import { Node } from './components/Node/Node';
 import { getTilePosition } from './utils/gridHelpers';
 import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
 import { Lasso } from './components/Lasso/Lasso';
+import { Connector } from './components/Connector/Connector';
 import { Group } from './components/Group/Group';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
   const [isReady, setIsReady] = useState(false);
-  const scene = useSceneStore(({ nodes, groups }) => {
-    return { nodes, groups };
+  const scene = useSceneStore(({ nodes, connectors, groups }) => {
+    return { nodes, connectors, groups };
   });
   const gridSize = useSceneStore((state) => {
     return state.gridSize;
@@ -107,12 +108,21 @@ const InitialisedRenderer = () => {
           endTile={mode.selection.endTile}
         />
       )}
+      {scene.connectors.map((connector) => {
+        return (
+          <Connector
+            key={connector.id}
+            connector={connector}
+            parentContainer={renderer.connectorManager.container as paper.Group}
+          />
+        );
+      })}
       {scene.groups.map((group) => {
         return (
           <Group
             key={group.id}
-            group={group}
             parentContainer={renderer.groupManager.container as paper.Group}
+            group={group}
           />
         );
       })}

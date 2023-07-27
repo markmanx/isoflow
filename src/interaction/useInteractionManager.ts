@@ -37,8 +37,8 @@ export const useInteractionManager = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const scene = useSceneStore(({ nodes, groups }) => {
-    return { nodes, groups };
+  const scene = useSceneStore(({ nodes, connectors, groups }) => {
+    return { nodes, connectors, groups };
   });
   const gridSize = useSceneStore((state) => {
     return state.gridSize;

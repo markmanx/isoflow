@@ -6,6 +6,7 @@ import { useGrid } from './components/Grid/useGrid';
 import { useNodeManager } from './useNodeManager';
 import { useCursor } from './components/Cursor/useCursor';
 import { useGroupManager } from './useGroupManager';
+import { useConnectorManager } from './useConnectorManager';
 
 export const useRenderer = () => {
   const container = useRef(new Group());
@@ -14,6 +15,7 @@ export const useRenderer = () => {
   const lassoContainer = useRef(new Group());
   const grid = useGrid();
   const nodeManager = useNodeManager();
+  const connectorManager = useConnectorManager();
   const groupManager = useGroupManager();
   const cursor = useCursor();
   const uiStateActions = useUiStateStore((state) => {
@@ -30,6 +32,8 @@ export const useRenderer = () => {
 
   const init = useCallback(
     (gridSize: Coords) => {
+      // TODO: Grid and Cursor should be initialised in their JSX components (create if they don't exist)
+      // to be inline with other initialisation patterns
       const gridContainer = initGrid(gridSize);
       const cursorContainer = initCursor();
 
@@ -37,6 +41,7 @@ export const useRenderer = () => {
       innerContainer.current.addChild(groupManager.container);
       innerContainer.current.addChild(cursorContainer);
       innerContainer.current.addChild(lassoContainer.current);
+      innerContainer.current.addChild(connectorManager.container);
       innerContainer.current.addChild(nodeManager.container);
       container.current.addChild(innerContainer.current);
       container.current.set({ position: [0, 0] });
@@ -46,7 +51,13 @@ export const useRenderer = () => {
         offset: new Coords(0, 0)
       });
     },
-    [initGrid, initCursor, setScroll, nodeManager.container]
+    [
+      initGrid,
+      initCursor,
+      setScroll,
+      nodeManager.container,
+      groupManager.container
+    ]
   );
 
   const scrollTo = useCallback((to: Coords) => {
@@ -68,7 +79,8 @@ export const useRenderer = () => {
     scrollTo,
     nodeManager,
     groupManager,
-    cursor,
-    lassoContainer
+    lassoContainer,
+    connectorManager,
+    cursor
   };
 };

@@ -3,6 +3,10 @@ import { customVars } from '../styles/theme';
 
 export const DEFAULT_COLOR = customVars.diagramPalette.blue;
 
+export const CONNECTOR_DEFAULTS = {
+  width: 4
+};
+
 export const GRID_DEFAULTS = {
   size: {
     x: 51,

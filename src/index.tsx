@@ -5,9 +5,10 @@ import ReactDOM from 'react-dom/client';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import type {
   SceneInput,
+  NodeInput,
+  ConnectorInput,
   IconInput,
-  GroupInput,
-  NodeInput
+  GroupInput
 } from 'src/validation/SceneInput';
 import Isoflow, { useIsoflow } from './App';
 
@@ -58,6 +59,15 @@ const icons: IconInput[] = [
     name: 'Diamond',
     url: 'https://isoflow.io/static/assets/icons/networking/diamond.svg',
     category: 'Generic'
+  }
+];
+
+const connectors: ConnectorInput[] = [
+  {
+    id: 'Connector1',
+    label: 'Connector 1',
+    from: 'Node1',
+    to: 'Node2'
   }
 ];
 
@@ -124,7 +134,7 @@ const DataLayer = () => {
         initialScene={{
           icons,
           nodes,
-          connectors: [],
+          connectors,
           groups,
           gridSize: {
             width: 51,
