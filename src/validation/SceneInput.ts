@@ -1,5 +1,4 @@
 // TODO: Split into individual files
-import { Grid } from 'pathfinding';
 import { z } from 'zod';
 
 export const iconInput = z.object({
@@ -138,5 +137,5 @@ export type SceneInput = {
   nodes: NodeInput[];
   connectors: ConnectorInput[];
   groups: GroupInput[];
-  gridSize: GridSizeInput;
+  gridSize?: GridSizeInput;
 };

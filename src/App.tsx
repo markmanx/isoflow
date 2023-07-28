@@ -3,7 +3,13 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
 import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
-import { SceneInput } from 'src/validation/SceneInput';
+import {
+  SceneInput,
+  IconInput,
+  NodeInput,
+  ConnectorInput,
+  GroupInput
+} from 'src/validation/SceneInput';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
@@ -14,7 +20,7 @@ interface Props {
   initialScene: SceneInput;
   onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
   width?: number | string;
-  height: number | string;
+  height?: number | string;
 }
 
 const InnerApp = React.memo(
@@ -39,7 +45,7 @@ const InnerApp = React.memo(
   }
 );
 
-const App = ({ initialScene, width, height, onSceneUpdated }: Props) => {
+const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -68,5 +74,13 @@ const useIsoflow = () => {
   };
 };
 
-export { Scene, SceneInput, useIsoflow };
+export {
+  Scene,
+  SceneInput,
+  IconInput,
+  NodeInput,
+  GroupInput,
+  ConnectorInput,
+  useIsoflow
+};
 export default App;
