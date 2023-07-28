@@ -20,7 +20,7 @@ root.render(
         }
       }}
     />
-    <ThemeProvider theme={createTheme({ ...themeConfig, palette: undefined })}>
+    <ThemeProvider theme={createTheme({ ...themeConfig, palette: {} })}>
       <Examples />
     </ThemeProvider>
   </React.StrictMode>
