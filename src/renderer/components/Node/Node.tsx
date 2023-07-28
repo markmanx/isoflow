@@ -19,7 +19,9 @@ export interface NodeProps {
   parentContainer: paper.Group;
 }
 
-const isEmptyLabel = (label: string) => label === '<p><br></p>' || label === '';
+const isEmptyLabel = (label: string) => {
+  return label === '<p><br></p>' || label === '';
+};
 
 export const Node = ({ node, parentContainer }: NodeProps) => {
   const [isFirstDisplay, setIsFirstDisplay] = useState(true);
@@ -28,9 +30,15 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
   const nodeIcon = useNodeIcon();
   const labelConnector = useLabelConnector();
   const nodeTile = useNodeTile();
-  const scroll = useUiStateStore((state) => state.scroll);
-  const zoom = useUiStateStore((state) => state.zoom);
-  const mode = useUiStateStore((state) => state.mode);
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
   const [labelSize, setLabelSize] = useState({ width: 0, height: 0 });
 
   const {
@@ -120,7 +128,7 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
     setActive(node.isSelected);
   }, [setActive, node.isSelected]);
 
-  if (!node.label) return null;
+  if (!node.label && !node.labelElement) return null;
 
   return (
     <Box
@@ -131,6 +139,7 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
       }}
     >
       <NodeLabel label={node.label} />
+      {node.labelElement}
     </Box>
   );
 };

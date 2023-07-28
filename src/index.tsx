@@ -20,45 +20,10 @@ const icons: IconInput[] = [
     category: 'Networking'
   },
   {
-    id: 'pyramid',
-    name: 'Pyramid',
-    url: 'https://isoflow.io/static/assets/icons/networking/pyramid.svg',
+    id: 'server',
+    name: 'Server',
+    url: 'https://isoflow.io/static/assets/icons/networking/server.svg',
     category: 'Networking'
-  },
-  {
-    id: 'sphere',
-    name: 'Sphere',
-    url: 'https://isoflow.io/static/assets/icons/networking/sphere.svg',
-    category: 'Networking'
-  },
-  {
-    id: 'diamond',
-    name: 'Diamond',
-    url: 'https://isoflow.io/static/assets/icons/networking/diamond.svg',
-    category: 'Networking'
-  },
-  {
-    id: 'cube',
-    name: 'Cube',
-    url: 'https://isoflow.io/static/assets/icons/networking/cube.svg'
-  },
-  {
-    id: 'pyramid',
-    name: 'Pyramid',
-    url: 'https://isoflow.io/static/assets/icons/networking/pyramid.svg',
-    category: 'Generic'
-  },
-  {
-    id: 'sphere',
-    name: 'Sphere',
-    url: 'https://isoflow.io/static/assets/icons/networking/sphere.svg',
-    category: 'Generic'
-  },
-  {
-    id: 'diamond',
-    name: 'Diamond',
-    url: 'https://isoflow.io/static/assets/icons/networking/diamond.svg',
-    category: 'Generic'
   }
 ];
 
@@ -79,27 +44,6 @@ const groups: GroupInput[] = [
   }
 ];
 
-const nodes: NodeInput[] = [
-  {
-    id: 'Node1',
-    label: 'Node 1',
-    iconId: 'block',
-    position: {
-      x: 0,
-      y: 0
-    }
-  },
-  {
-    id: 'Node2',
-    label: 'Node 2',
-    iconId: 'pyramid',
-    position: {
-      x: 3,
-      y: 0
-    }
-  }
-];
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -111,15 +55,15 @@ const DataLayer = () => {
     // console.log(scene);
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      updateNode('Node1', { label: Date.now().toString() });
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     updateNode('Node1', { label: Date.now().toString() });
+  //   }, 1000);
 
-    return () => {
-      clearInterval(timer);
-    };
-  }, [updateNode]);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [updateNode]);
 
   return (
     <>
@@ -133,7 +77,26 @@ const DataLayer = () => {
       <Isoflow
         initialScene={{
           icons,
-          nodes,
+          nodes: [
+            {
+              id: 'Node1',
+              labelElement: <>Node</>,
+              iconId: 'block',
+              position: {
+                x: 0,
+                y: 0
+              }
+            },
+            {
+              id: 'Node2',
+              label: 'Node 2',
+              iconId: 'server',
+              position: {
+                x: 3,
+                y: 0
+              }
+            }
+          ],
           connectors,
           groups,
           gridSize: {
