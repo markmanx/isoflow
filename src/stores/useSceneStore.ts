@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
-import { NODE_DEFAULTS } from 'src/utils/defaults';
+import { NODE_DEFAULTS } from 'src/utils/config';
 import { IconInput } from '../validation/SceneInput';
 import { Coords } from '../utils/Coords';
 

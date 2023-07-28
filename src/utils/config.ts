@@ -1,4 +1,3 @@
-// TODO: Rename to config.ts
 import { customVars } from '../styles/theme';
 
 export const DEFAULT_COLOR = customVars.diagramPalette.blue;
