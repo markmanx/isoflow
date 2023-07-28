@@ -12,7 +12,11 @@ export const CustomNode = () => {
         nodes: [
           {
             id: 'Node1',
-            labelElement: <>Node</>,
+            labelElement: (
+              <>
+                This is a custom label. You can display whatever you want here
+              </>
+            ),
             iconId: 'block',
             position: {
               x: 0,

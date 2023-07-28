@@ -1,11 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Box, Select, MenuItem, useTheme } from '@mui/material';
 import { BasicEditor } from './BasicEditor/BasicEditor';
 import { CustomNode } from './CustomNode/CustomNode';
 
 const examples = [
   { name: 'Basic Editor', component: BasicEditor },
-  { name: 'Custom Node', component: CustomNode }
+  { name: 'Custom Node Label', component: CustomNode }
 ];
 
 export const Examples = () => {
