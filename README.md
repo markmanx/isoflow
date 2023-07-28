@@ -98,6 +98,19 @@ To deploy:
 
 ## Contributions
 
+### Branching Strategy:
+
+Branches are named using the following convention:
+
+- `feature/` for new feature implementations
+- `fix/` for broken code / build / bug fixes
+- `chore/` non-breaking & non-fixing code changes such as linting, formatting, etc.
+
+#### Commit / PR Strategy:
+
+- Commits are to be squashed prior to merge
+- PRs are to target a singular issue in order to keep the commit history clean and easy to follow
+
 See [good first issues](https://github.com/markmanx/isoflow/contribute).
 
 ## License
