@@ -120,16 +120,17 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
         transformOrigin: 'bottom center'
       }}
     >
-      <LabelContainer
-        labelHeight={node.labelHeight}
-        parentContainer={labelConnectorContainer.current}
-        ref={labelRef}
-      >
-        {node.labelElement !== undefined && node.labelElement}
-        {!node.labelElement && node.label && (
-          <MarkdownLabel label={node.label} />
-        )}
-      </LabelContainer>
+      {(node.labelElement || node.label) && (
+        <LabelContainer
+          labelHeight={node.labelHeight}
+          parentContainer={labelConnectorContainer.current}
+        >
+          {node.labelElement !== undefined && node.labelElement}
+          {!node.labelElement && node.label && (
+            <MarkdownLabel label={node.label} />
+          )}
+        </LabelContainer>
+      )}
     </Box>
   );
 };
