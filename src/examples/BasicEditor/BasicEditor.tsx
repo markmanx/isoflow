@@ -11,6 +11,7 @@ export const BasicEditor = () => {
         groups: [],
         nodes: []
       }}
+      height="100%"
     />
   );
 };

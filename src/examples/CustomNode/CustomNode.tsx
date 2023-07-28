@@ -21,6 +21,7 @@ export const CustomNode = () => {
           }
         ]
       }}
+      height="100%"
     />
   );
 };
