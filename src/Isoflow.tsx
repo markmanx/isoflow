@@ -14,6 +14,7 @@ import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';
 import { sceneInputtoScene, sceneToSceneInput } from 'src/utils';
+import { DefaultLabelContainer } from 'src/renderer/components/Node/DefaultLabelContainer';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 
 interface Props {
@@ -86,7 +87,8 @@ export {
   NodeInput,
   GroupInput,
   ConnectorInput,
-  useIsoflow
+  useIsoflow,
+  DefaultLabelContainer
 };
 
 export default Isoflow;

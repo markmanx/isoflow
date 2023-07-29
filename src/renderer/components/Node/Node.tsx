@@ -6,7 +6,7 @@ import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { Node as NodeInterface } from 'src/stores/useSceneStore';
 import { useNodeIcon } from './useNodeIcon';
-import { LabelContainer } from './LabelContainer';
+import { DefaultLabelContainer } from './DefaultLabelContainer';
 import { useNodeTile } from './useNodeTile';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 import {
@@ -121,13 +121,13 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
       }}
     >
       {(node.labelElement || node.label) && (
-        <LabelContainer
+        <DefaultLabelContainer
           labelHeight={node.labelHeight}
           parentContainer={labelConnectorContainer.current}
         >
           {node.label && <MarkdownLabel label={node.label} />}
           {node.labelElement !== undefined && node.labelElement}
-        </LabelContainer>
+        </DefaultLabelContainer>
       )}
     </Box>
   );

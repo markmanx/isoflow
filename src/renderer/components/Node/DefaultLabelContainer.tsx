@@ -9,7 +9,7 @@ interface Props {
 }
 
 // TODO: Rename all `parentContainer` to `groupContainer`
-export const LabelContainer = ({
+export const DefaultLabelContainer = ({
   children,
   labelHeight,
   parentContainer
