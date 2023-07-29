@@ -45,7 +45,12 @@ const InnerApp = React.memo(
   }
 );
 
-const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
+const Isoflow = ({
+  initialScene,
+  width,
+  height = 500,
+  onSceneUpdated
+}: Props) => {
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -83,4 +88,5 @@ export {
   ConnectorInput,
   useIsoflow
 };
-export default App;
+
+export default Isoflow;

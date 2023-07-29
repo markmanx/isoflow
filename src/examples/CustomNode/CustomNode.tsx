@@ -1,5 +1,5 @@
 import React from 'react';
-import Isoflow from 'src/App';
+import Isoflow from 'src/Isoflow';
 import { icons } from '../icons';
 
 export const CustomNode = () => {

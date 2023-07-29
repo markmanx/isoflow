@@ -1,4 +1,4 @@
-import { IconInput } from 'src/App';
+import { IconInput } from 'src/Isoflow';
 
 export const icons: IconInput[] = [
   {
