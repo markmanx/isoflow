@@ -1,6 +1,6 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
   AreaChart,
