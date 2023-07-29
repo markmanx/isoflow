@@ -88,6 +88,11 @@ const Isoflow = dynamic(() => import("isoflow"), {
 3. `npm run start`
 4. Visit `localhost:3000` in your browser
 
+## Codesandbox
+
+You can preview the latest version of Isoflow on Codesandbox [here](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).
+The sandbox is always synced with the Github repo.  You can make changes by forking the template.
+
 ## To deploy to npm
 
 CI is sensitive to any tag pushed to `main` branch. It will build and deploy the app to NPM.
