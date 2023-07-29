@@ -7,7 +7,7 @@
 
 A highly customizable React component for building interactive network diagrams.
 
-Coming soon under the MIT licence | Use it now on [isoflow.io](https://isoflow.io)
+MIT licence | Source available on [Github](https://github.com/markmanx/isoflow) | Use it now on [isoflow.io](https://isoflow.io)
 
 </div>
 
