@@ -125,10 +125,8 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
           labelHeight={node.labelHeight}
           parentContainer={labelConnectorContainer.current}
         >
+          {node.label && <MarkdownLabel label={node.label} />}
           {node.labelElement !== undefined && node.labelElement}
-          {!node.labelElement && node.label && (
-            <MarkdownLabel label={node.label} />
-          )}
         </LabelContainer>
       )}
     </Box>

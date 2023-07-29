@@ -1,6 +1,46 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
+import { Box, Stack, Typography } from '@mui/material';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  AreaChart,
+  Area,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
 import { icons } from '../icons';
+import graphData from './graphData';
+
+const CustomLabel = () => {
+  return (
+    <Box
+      sx={{
+        width: '300px',
+        height: '125px',
+        pt: 2
+      }}
+    >
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          data={graphData}
+          margin={{
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <YAxis width={25} />
+          <Tooltip />
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+        </AreaChart>
+      </ResponsiveContainer>
+    </Box>
+  );
+};
 
 export const CustomNode = () => {
   return (
@@ -12,11 +52,8 @@ export const CustomNode = () => {
         nodes: [
           {
             id: 'Node1',
-            labelElement: (
-              <>
-                This is a custom label. You can display whatever you want here
-              </>
-            ),
+            label: 'Requests per minute',
+            labelElement: <CustomLabel />,
             iconId: 'block',
             position: {
               x: 0,
