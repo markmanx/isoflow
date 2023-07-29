@@ -1,6 +1,6 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
   AreaChart,
@@ -14,6 +14,8 @@ import { icons } from '../icons';
 import graphData from './graphData';
 
 const CustomLabel = () => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -35,7 +37,11 @@ const CustomLabel = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <YAxis width={25} />
           <Tooltip />
-          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Area
+            type="monotone"
+            dataKey="uv"
+            fill={theme.customVars.diagramPalette.blue}
+          />
         </AreaChart>
       </ResponsiveContainer>
     </Box>
