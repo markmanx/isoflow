@@ -1,0 +1,24 @@
+{
+  "setupTasks": [
+    {
+      "name": "Install dependencies",
+      "command": "npm i"
+    }
+  ],
+  "tasks": {
+    "start": {
+      "name": "Start Isoflow",
+      "command": "npm run start",
+      "runAtStart": true,
+      "preview": {
+        "port": 3000,
+        "prLink": "direct"
+      }
+    },
+    "test": {
+      "name": "Run tests",
+      "command": "npm run test",
+      "runAtStart": false
+    }
+  }
+}
