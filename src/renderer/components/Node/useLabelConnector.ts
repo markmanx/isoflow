@@ -20,10 +20,6 @@ export const useLabelConnector = () => {
     );
   }, []);
 
-  const setVisible = useCallback((state: boolean) => {
-    containerRef.current.visible = state;
-  }, []);
-
   const init = useCallback(() => {
     containerRef.current.removeChildren();
 
@@ -42,10 +38,14 @@ export const useLabelConnector = () => {
     return containerRef.current;
   }, [theme.palette.grey]);
 
+  const destroy = useCallback(() => {
+    return containerRef.current.remove();
+  }, []);
+
   return {
     containerRef,
     init,
     updateHeight,
-    setVisible
+    destroy
   };
 };

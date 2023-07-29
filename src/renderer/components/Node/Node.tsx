@@ -6,31 +6,35 @@ import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { Node as NodeInterface } from 'src/stores/useSceneStore';
 import { useNodeIcon } from './useNodeIcon';
-import { NodeLabel } from './NodeLabel';
+import { DefaultLabelContainer } from './DefaultLabelContainer';
 import { useNodeTile } from './useNodeTile';
+import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 import {
   getTilePosition,
   getTileScreenPosition
 } from '../../utils/gridHelpers';
-import { useLabelConnector } from './useLabelConnector';
 
 export interface NodeProps {
   node: NodeInterface;
   parentContainer: paper.Group;
 }
 
-const isEmptyLabel = (label: string) => label === '<p><br></p>' || label === '';
-
 export const Node = ({ node, parentContainer }: NodeProps) => {
   const [isFirstDisplay, setIsFirstDisplay] = useState(true);
   const groupRef = useRef(new Group());
   const labelRef = useRef<HTMLDivElement>();
+  const labelConnectorContainer = useRef(new Group());
   const nodeIcon = useNodeIcon();
-  const labelConnector = useLabelConnector();
   const nodeTile = useNodeTile();
-  const scroll = useUiStateStore((state) => state.scroll);
-  const zoom = useUiStateStore((state) => state.zoom);
-  const mode = useUiStateStore((state) => state.mode);
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
   const [labelSize, setLabelSize] = useState({ width: 0, height: 0 });
 
   const {
@@ -38,25 +42,19 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
     update: updateNodeIcon,
     isLoaded: isIconLoaded
   } = nodeIcon;
-  const {
-    init: initLabelConnector,
-    updateHeight: updateLabelHeight,
-    setVisible: setLabelConnectorVisible
-  } = labelConnector;
   const { init: initNodeTile, updateColor, setActive } = nodeTile;
 
   useEffect(() => {
     const nodeIconContainer = initNodeIcon();
-    const labelConnectorContainer = initLabelConnector();
     const nodeTileContainer = initNodeTile();
 
     groupRef.current.removeChildren();
     groupRef.current.addChild(nodeTileContainer);
-    groupRef.current.addChild(labelConnectorContainer);
+    groupRef.current.addChild(labelConnectorContainer.current);
     groupRef.current.addChild(nodeIconContainer);
     groupRef.current.pivot = nodeIconContainer.bounds.bottomCenter;
     parentContainer.addChild(groupRef.current);
-  }, [initNodeIcon, parentContainer, initLabelConnector, initNodeTile]);
+  }, [initNodeIcon, parentContainer, initNodeTile]);
 
   useEffect(() => {
     updateNodeIcon(node.iconId);
@@ -98,19 +96,13 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
   }, [node.position, node.labelHeight, zoom, scroll.position, mode, labelSize]);
 
   useEffect(() => {
-    setLabelConnectorVisible(!isEmptyLabel(node.label));
-
     if (!labelRef.current) return;
 
     setLabelSize({
       width: labelRef.current.clientWidth ?? 0,
       height: labelRef.current.clientHeight ?? 0
     });
-  }, [node.label, setLabelConnectorVisible]);
-
-  useEffect(() => {
-    updateLabelHeight(node.labelHeight);
-  }, [node.labelHeight, updateLabelHeight]);
+  }, [node.label, node.labelElement]);
 
   useEffect(() => {
     updateColor(node.color);
@@ -120,8 +112,6 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
     setActive(node.isSelected);
   }, [setActive, node.isSelected]);
 
-  if (!node.label) return null;
-
   return (
     <Box
       ref={labelRef}
@@ -130,7 +120,15 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
         transformOrigin: 'bottom center'
       }}
     >
-      <NodeLabel label={node.label} />
+      {(node.labelElement || node.label) && (
+        <DefaultLabelContainer
+          labelHeight={node.labelHeight}
+          parentContainer={labelConnectorContainer.current}
+        >
+          {node.label && <MarkdownLabel label={node.label} />}
+          {node.labelElement !== undefined && node.labelElement}
+        </DefaultLabelContainer>
+      )}
     </Box>
   );
 };

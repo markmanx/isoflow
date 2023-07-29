@@ -34,10 +34,20 @@ export const groupInput = z.object({
   nodeIds: z.array(z.string())
 });
 
+export const gridSizeInput = z
+  .object({
+    width: z.number(),
+    height: z.number()
+  })
+  .optional();
+
 export type IconInput = z.infer<typeof iconInput>;
-export type NodeInput = z.infer<typeof nodeInput>;
+export type NodeInput = z.infer<typeof nodeInput> & {
+  labelElement?: React.ReactNode;
+};
 export type ConnectorInput = z.infer<typeof connectorInput>;
 export type GroupInput = z.infer<typeof groupInput>;
+export type GridSizeInput = z.infer<typeof gridSizeInput>;
 
 export const findInvalidNode = (nodes: NodeInput[], icons: IconInput[]) => {
   return nodes.find((node) => {
@@ -81,12 +91,7 @@ export const sceneInput = z
     nodes: z.array(nodeInput),
     connectors: z.array(connectorInput),
     groups: z.array(groupInput),
-    gridSize: z
-      .object({
-        width: z.number(),
-        height: z.number()
-      })
-      .optional()
+    gridSize: gridSizeInput
   })
   .superRefine((scene, ctx) => {
     const invalidNode = findInvalidNode(scene.nodes, scene.icons);
@@ -127,4 +132,10 @@ export const sceneInput = z
     }
   });
 
-export type SceneInput = z.infer<typeof sceneInput>;
+export type SceneInput = {
+  icons: IconInput[];
+  nodes: NodeInput[];
+  connectors: ConnectorInput[];
+  groups: GroupInput[];
+  gridSize?: GridSizeInput;
+};

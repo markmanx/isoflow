@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme, ThemeOptions } from '@mui/material';
 
 interface CustomThemeVars {
   appPadding: {
@@ -47,7 +47,7 @@ export const customVars: CustomThemeVars = {
   }
 };
 
-export const theme = createTheme({
+export const themeConfig: ThemeOptions = {
   customVars,
   typography: {
     h5: {
@@ -88,4 +88,6 @@ export const theme = createTheme({
       }
     }
   }
-});
+};
+
+export const theme = createTheme(themeConfig);
