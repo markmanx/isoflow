@@ -2,7 +2,6 @@ import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { useGrid } from './components/Grid/useGrid';
 import { useNodeManager } from './useNodeManager';
 import { useCursor } from './components/Cursor/useCursor';
 import { useGroupManager } from './useGroupManager';
@@ -13,7 +12,6 @@ export const useRenderer = () => {
   const innerContainer = useRef(new Group());
   // TODO: Store layers in a giant ref object called layers?  layers = { lasso: new Group(), grid: new Group() etc }
   const lassoContainer = useRef(new Group());
-  const grid = useGrid();
   const nodeManager = useNodeManager();
   const connectorManager = useConnectorManager();
   const groupManager = useGroupManager();
@@ -23,42 +21,31 @@ export const useRenderer = () => {
   });
 
   const { setScroll } = uiStateActions;
-  const { init: initGrid } = grid;
   const { init: initCursor } = cursor;
 
   const zoomTo = useCallback((zoom: number) => {
     Paper.project.activeLayer.view.zoom = zoom;
   }, []);
 
-  const init = useCallback(
-    (gridSize: Coords) => {
-      // TODO: Grid and Cursor should be initialised in their JSX components (create if they don't exist)
-      // to be inline with other initialisation patterns
-      const gridContainer = initGrid(gridSize);
-      const cursorContainer = initCursor();
+  const init = useCallback(() => {
+    // TODO: Grid and Cursor should be initialised in their JSX components (create if they don't exist)
+    // to be inline with other initialisation patterns
+    const cursorContainer = initCursor();
 
-      // innerContainer.current.addChild(gridContainer);
-      innerContainer.current.addChild(groupManager.container);
-      innerContainer.current.addChild(cursorContainer);
-      innerContainer.current.addChild(lassoContainer.current);
-      innerContainer.current.addChild(connectorManager.container);
-      innerContainer.current.addChild(nodeManager.container);
-      container.current.addChild(innerContainer.current);
-      container.current.set({ position: [0, 0] });
-      Paper.project.activeLayer.addChild(container.current);
-      setScroll({
-        position: new Coords(0, 0),
-        offset: new Coords(0, 0)
-      });
-    },
-    [
-      initGrid,
-      initCursor,
-      setScroll,
-      nodeManager.container,
-      groupManager.container
-    ]
-  );
+    // innerContainer.current.addChild(gridContainer);
+    innerContainer.current.addChild(groupManager.container);
+    innerContainer.current.addChild(cursorContainer);
+    innerContainer.current.addChild(lassoContainer.current);
+    innerContainer.current.addChild(connectorManager.container);
+    innerContainer.current.addChild(nodeManager.container);
+    container.current.addChild(innerContainer.current);
+    container.current.set({ position: [0, 0] });
+    Paper.project.activeLayer.addChild(container.current);
+    setScroll({
+      position: new Coords(0, 0),
+      offset: new Coords(0, 0)
+    });
+  }, [initCursor, setScroll, nodeManager.container, groupManager.container]);
 
   const scrollTo = useCallback((to: Coords) => {
     const { center: viewCenter } = Paper.project.view.bounds;
@@ -74,7 +61,6 @@ export const useRenderer = () => {
   return {
     init,
     container,
-    grid,
     zoomTo,
     scrollTo,
     nodeManager,

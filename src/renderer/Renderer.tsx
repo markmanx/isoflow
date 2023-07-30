@@ -49,7 +49,7 @@ const InitialisedRenderer = () => {
   const { position: scrollPosition } = scroll;
 
   useEffect(() => {
-    initRenderer(gridSize);
+    initRenderer();
     setIsReady(true);
 
     return () => {
