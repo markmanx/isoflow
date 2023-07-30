@@ -49,6 +49,10 @@ export class Coords {
     return new Coords(this.x, this.y + operand);
   }
 
+  multiply(operand: Coords) {
+    return new Coords(this.x * operand.x, this.y * operand.y);
+  }
+
   clone() {
     return new Coords(this.x, this.y);
   }

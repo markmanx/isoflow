@@ -5,16 +5,16 @@ import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { TILE_SIZE } from './utils/constants';
+import { TILE_SIZE, PROJECTED_TILE_DIMENSIONS } from './utils/constants';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
 import { Node } from './components/Node/Node';
-import { getTilePosition } from './utils/gridHelpers';
 import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
 import { Lasso } from './components/Lasso/Lasso';
 import { Connector } from './components/Connector/Connector';
 import { Group } from './components/Group/Group';
 import { Grid } from './components/Grid/Grid';
+import { Cursor } from './components/Cursor/Cursor';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
@@ -73,38 +73,31 @@ const InitialisedRenderer = () => {
   }, [scrollPosition, rendererContainer, activeLayer.view.bounds]);
 
   useEffect(() => {
-    if (mode.type !== 'CURSOR') return;
-
-    const { tile } = mouse.position;
-
-    const tilePosition = getTilePosition(tile);
-    renderer.cursor.moveTo(tilePosition);
-  }, [
-    mode,
-    mouse,
-    renderer.cursor.moveTo,
-    gridSize,
-    scrollPosition,
-    renderer.cursor,
-    scroll
-  ]);
-
-  useEffect(() => {
     scrollTo(scrollPosition);
   }, [scrollPosition, scrollTo]);
 
-  useEffect(() => {
-    const isCursorVisible = mode.type === 'CURSOR';
-
-    renderer.cursor.setVisible(isCursorVisible);
-  }, [mode.type, renderer.cursor]);
-
   if (!isReady) return null;
+
+  const getTilePosition = (x: number, y: number) => {
+    const halfH = TILE_SIZE * 0.5;
+    const halfW = TILE_SIZE * 0.5;
+
+    const editorWidth = window.innerWidth;
+    const editorHeight = window.innerHeight;
+
+    const position = {
+      x: editorWidth * 0.5,
+      y: editorHeight * 0.5
+    };
+
+    return position;
+  };
 
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
-      {mode.type === 'LASSO' && (
+      <Cursor tile={getTilePosition(0, 0)} tileSize={TILE_SIZE} />
+      {/* {mode.type === 'LASSO' && (
         <Lasso
           parentContainer={renderer.lassoContainer.current as paper.Group}
           startTile={mode.selection.startTile}
@@ -137,7 +130,7 @@ const InitialisedRenderer = () => {
             parentContainer={renderer.nodeManager.container as paper.Group}
           />
         );
-      })}
+      })} */}
     </>
   );
 };

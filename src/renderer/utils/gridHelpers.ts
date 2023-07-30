@@ -25,7 +25,8 @@ export const getTileFromMouse = ({
   );
 
   const row = Math.floor(
-    (canvasPosition.x / halfW + canvasPosition.y / halfH) / 2
+    ((mousePosition.x - scroll.position.x) / halfW + canvasPosition.y / halfH) /
+      2
   );
   const col = Math.floor(
     (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2

@@ -3,7 +3,6 @@ import Paper, { Group } from 'paper';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useNodeManager } from './useNodeManager';
-import { useCursor } from './components/Cursor/useCursor';
 import { useGroupManager } from './useGroupManager';
 import { useConnectorManager } from './useConnectorManager';
 
@@ -15,13 +14,11 @@ export const useRenderer = () => {
   const nodeManager = useNodeManager();
   const connectorManager = useConnectorManager();
   const groupManager = useGroupManager();
-  const cursor = useCursor();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
 
   const { setScroll } = uiStateActions;
-  const { init: initCursor } = cursor;
 
   const zoomTo = useCallback((zoom: number) => {
     Paper.project.activeLayer.view.zoom = zoom;
@@ -30,11 +27,9 @@ export const useRenderer = () => {
   const init = useCallback(() => {
     // TODO: Grid and Cursor should be initialised in their JSX components (create if they don't exist)
     // to be inline with other initialisation patterns
-    const cursorContainer = initCursor();
 
     // innerContainer.current.addChild(gridContainer);
     innerContainer.current.addChild(groupManager.container);
-    innerContainer.current.addChild(cursorContainer);
     innerContainer.current.addChild(lassoContainer.current);
     innerContainer.current.addChild(connectorManager.container);
     innerContainer.current.addChild(nodeManager.container);
@@ -45,7 +40,7 @@ export const useRenderer = () => {
       position: new Coords(0, 0),
       offset: new Coords(0, 0)
     });
-  }, [initCursor, setScroll, nodeManager.container, groupManager.container]);
+  }, [setScroll, nodeManager.container, groupManager.container]);
 
   const scrollTo = useCallback((to: Coords) => {
     const { center: viewCenter } = Paper.project.view.bounds;
@@ -66,7 +61,6 @@ export const useRenderer = () => {
     nodeManager,
     groupManager,
     lassoContainer,
-    connectorManager,
-    cursor
+    connectorManager
   };
 };
