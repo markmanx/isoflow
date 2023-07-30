@@ -37,7 +37,7 @@ export const useRenderer = () => {
       const gridContainer = initGrid(gridSize);
       const cursorContainer = initCursor();
 
-      innerContainer.current.addChild(gridContainer);
+      // innerContainer.current.addChild(gridContainer);
       innerContainer.current.addChild(groupManager.container);
       innerContainer.current.addChild(cursorContainer);
       innerContainer.current.addChild(lassoContainer.current);

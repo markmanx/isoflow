@@ -5,6 +5,7 @@ import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
+import { TILE_SIZE } from './utils/constants';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
 import { Node } from './components/Node/Node';
@@ -13,6 +14,7 @@ import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer
 import { Lasso } from './components/Lasso/Lasso';
 import { Connector } from './components/Connector/Connector';
 import { Group } from './components/Group/Group';
+import { Grid } from './components/Grid/Grid';
 
 const InitialisedRenderer = () => {
   const renderer = useRenderer();
@@ -101,6 +103,7 @@ const InitialisedRenderer = () => {
 
   return (
     <>
+      <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
       {mode.type === 'LASSO' && (
         <Lasso
           parentContainer={renderer.lassoContainer.current as paper.Group}
