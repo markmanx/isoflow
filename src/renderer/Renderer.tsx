@@ -43,10 +43,6 @@ const InitialisedRenderer = () => {
   });
   useInteractionManager();
 
-  useEffect(() => {
-    console.log(scroll.position);
-  }, [scroll]);
-
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
