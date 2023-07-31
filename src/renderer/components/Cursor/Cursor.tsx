@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Box, useTheme } from '@mui/material';
-import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { getCSSMatrix } from 'src/renderer/utils/projection';
 
 interface Props {
@@ -10,30 +10,24 @@ interface Props {
 
 export const Cursor = ({ position, tileSize }: Props) => {
   const theme = useTheme();
+  const ref = useRef<SVGElement>();
 
-  // return (
-  //   <svg
-  //     style={{
-  //       position: 'absolute',
-  //       left: position.x,
-  //       top: position.y
-  //     }}
-  //     width={tileSize}
-  //     height={tileSize}
-  //     transform={`translate(
-  //       ${-tileSize * 0.5}, ${-tileSize * 0.5})`}
-  //   >
-  //     <rect width={tileSize} height={tileSize} fill="red" />
-  //   </svg>
-  // );
+  useEffect(() => {
+    if (!ref.current) return;
+
+    gsap.to(ref.current, {
+      duration: 0.05,
+      left: position.x,
+      top: position.y
+    });
+  }, [position]);
 
   return (
     <Box
+      ref={ref}
       component="svg"
       sx={{
         position: 'absolute',
-        left: position.x,
-        top: position.y,
         transform: `translate(${-tileSize * 0.5}px, ${
           -tileSize * 0.5
         }px) ${getCSSMatrix()}`
@@ -45,7 +39,8 @@ export const Cursor = ({ position, tileSize }: Props) => {
         width={tileSize}
         height={tileSize}
         fill={theme.palette.primary.main}
-        opacity={0.5}
+        opacity={0.7}
+        rx={10}
       />
     </Box>
   );
