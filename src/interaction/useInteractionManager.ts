@@ -3,7 +3,6 @@ import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore, Mouse } from 'src/stores/useUiStateStore';
 import { Coords } from 'src/utils/Coords';
-import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { screenToIso } from 'src/utils';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
@@ -51,7 +50,15 @@ export const useInteractionManager = () => {
     (e: MouseEvent) => {
       const reducer = reducers[mode.type];
 
-      if (!reducer || e.type !== 'mousemove') return;
+      if (
+        !reducer ||
+        !(
+          e.type === 'mousemove' ||
+          e.type === 'mouseup' ||
+          e.type === 'mousedown'
+        )
+      )
+        return;
 
       const reducerAction = reducer[e.type];
 
@@ -60,7 +67,13 @@ export const useInteractionManager = () => {
           screen: new Coords(e.clientX, e.clientY),
           tile: Coords.fromObject(screenToIso({ x: e.clientX, y: e.clientY }))
         },
-        delta: null,
+        delta: {
+          screen: new Coords(
+            e.clientX - mouse.position.screen.x,
+            e.clientY - mouse.position.screen.y
+          ),
+          tile: Coords.zero()
+        },
         mousedown: null
       };
 
@@ -100,9 +113,13 @@ export const useInteractionManager = () => {
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseEvent);
+    window.addEventListener('mousedown', onMouseEvent);
+    window.addEventListener('mouseup', onMouseEvent);
 
     return () => {
       window.removeEventListener('mousemove', onMouseEvent);
+      window.removeEventListener('mousedown', onMouseEvent);
+      window.removeEventListener('mouseup', onMouseEvent);
     };
   }, [onMouseEvent]);
 };

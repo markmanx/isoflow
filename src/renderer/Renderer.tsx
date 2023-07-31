@@ -43,6 +43,10 @@ const InitialisedRenderer = () => {
   });
   useInteractionManager();
 
+  useEffect(() => {
+    console.log(scroll.position);
+  }, [scroll]);
+
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
@@ -54,6 +58,7 @@ const InitialisedRenderer = () => {
         return (
           <NodeV2
             key={node.id}
+            position={getTilePosition(node.position)}
             iconUrl={
               icons.find((icon) => {
                 return icon.id === node.iconId;

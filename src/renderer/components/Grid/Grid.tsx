@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { getCSSMatrix } from 'src/renderer/utils/projection';
 import { useWindowSize } from 'src/hooks/useWindowSize';
 
@@ -31,7 +32,7 @@ export const Grid = ({ tileSize: _tileSize, scroll }: Props) => {
           height: '300%',
           left: '-100%',
           top: '-100%',
-          transform: `translateZ(0) ${getCSSMatrix()}`
+          transform: `${getCSSMatrix()}`
         }}
       >
         <Box component="svg" width="100%" height="100%">
