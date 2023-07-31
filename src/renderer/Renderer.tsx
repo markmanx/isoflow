@@ -5,7 +5,7 @@ import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { clamp } from 'src/utils';
+import { clamp, getTilePosition } from 'src/utils';
 import { TILE_SIZE, PROJECTED_TILE_DIMENSIONS } from './utils/constants';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
@@ -79,78 +79,11 @@ const InitialisedRenderer = () => {
 
   if (!isReady) return null;
 
-  const screenToIso = ({ x, y }: { x: number; y: number }) => {
-    const editorWidth = window.innerWidth;
-    const editorHeight = window.innerHeight;
-    const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
-    const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
-
-    // The origin is the center of the project.
-    const projectPosition = {
-      x: x - editorWidth * 0.5,
-      y: y - editorHeight * 0.5
-    };
-
-    const tile = {
-      x: Math.floor(
-        (projectPosition.x + halfW) / PROJECTED_TILE_DIMENSIONS.x -
-          projectPosition.y / PROJECTED_TILE_DIMENSIONS.y
-      ),
-      y: -Math.floor(
-        (projectPosition.y + halfH) / PROJECTED_TILE_DIMENSIONS.y +
-          projectPosition.x / PROJECTED_TILE_DIMENSIONS.x
-      )
-    };
-
-    return tile;
-
-    // const canvasPosition = new Coords(
-    //   x - scroll.position.x + editorWidth * 0.5,
-    //   y -
-    //     scroll.position.y +
-    //     editorHeight * 0.5 +
-    //     PROJECTED_TILE_DIMENSIONS.y * 0.5
-    // );
-
-    // const row = Math.floor(
-    //   (((x - scroll.position.x) / PROJECTED_TILE_DIMENSIONS.x) * 0.5 +
-    //     (canvasPosition.y / PROJECTED_TILE_DIMENSIONS.y) * 0.5) /
-    //     2
-    // );
-    // const col = Math.floor(
-    //   ((canvasPosition.y / PROJECTED_TILE_DIMENSIONS.y) * 0.5 -
-    //     (canvasPosition.x / PROJECTED_TILE_DIMENSIONS.x) * 0.5) /
-    //     2
-    // );
-
-    // const halfRowNum = Math.floor(gridSize.x * 0.5);
-    // const halfColNum = Math.floor(gridSize.y * 0.5);
-
-    // return new Coords(
-    //   clamp(row, -halfRowNum, halfRowNum),
-    //   clamp(col, -halfColNum, halfColNum)
-    // );
-  };
-
-  const getTilePosition = ({ x, y }: { x: number; y: number }) => {
-    const editorWidth = window.innerWidth;
-    const editorHeight = window.innerHeight;
-    const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
-    const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
-
-    const position = {
-      x: editorWidth * 0.5 + (halfW * x - halfW * y),
-      y: editorHeight * 0.5 - (halfH * x + halfH * y)
-    };
-
-    return position;
-  };
-
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
       <Cursor
-        position={getTilePosition(screenToIso(mouse.position.screen))}
+        position={getTilePosition(mouse.position.tile)}
         tileSize={TILE_SIZE}
       />
       {/* {mode.type === 'LASSO' && (

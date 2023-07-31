@@ -4,6 +4,7 @@ import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore, Mouse } from 'src/stores/useUiStateStore';
 import { Coords } from 'src/utils/Coords';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
+import { screenToIso } from 'src/utils';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
@@ -54,22 +55,10 @@ export const useInteractionManager = () => {
 
       const reducerAction = reducer[e.type];
 
-      const halfH = PROJECTED_TILE_DIMENSIONS.x * 0.5;
-      const halfW = PROJECTED_TILE_DIMENSIONS.y * 0.5;
-      const mousePosition = new Coords(e.clientX, e.clientY);
-      const canvasPosition = new Coords(
-        mousePosition.x - scroll.position.x - window.innerWidth * 0.5,
-        mousePosition.y - scroll.position.y - window.innerHeight * 0.5
-      );
-      const tile = new Coords(
-        Math.floor((canvasPosition.x / halfW + canvasPosition.y / halfH) / 2),
-        (canvasPosition.y / halfH - canvasPosition.x / halfW) / 2
-      );
-
       const nextMouse: Mouse = {
         position: {
           screen: new Coords(e.clientX, e.clientY),
-          tile
+          tile: Coords.fromObject(screenToIso({ x: e.clientX, y: e.clientY }))
         },
         delta: null,
         mousedown: null

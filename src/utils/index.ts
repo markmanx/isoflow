@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import { customVars } from 'src/styles/theme';
 import chroma from 'chroma-js';
+import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import type {
   SceneInput,
   NodeInput,
@@ -164,4 +165,44 @@ export const getColorVariant = (
     default:
       return chroma(color).alpha(alpha).css();
   }
+};
+
+export const screenToIso = ({ x, y }: { x: number; y: number }) => {
+  const editorWidth = window.innerWidth;
+  const editorHeight = window.innerHeight;
+  const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
+  const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
+
+  // The origin is the center of the project.
+  const projectPosition = {
+    x: x - editorWidth * 0.5,
+    y: y - editorHeight * 0.5
+  };
+
+  const tile = {
+    x: Math.floor(
+      (projectPosition.x + halfW) / PROJECTED_TILE_DIMENSIONS.x -
+        projectPosition.y / PROJECTED_TILE_DIMENSIONS.y
+    ),
+    y: -Math.floor(
+      (projectPosition.y + halfH) / PROJECTED_TILE_DIMENSIONS.y +
+        projectPosition.x / PROJECTED_TILE_DIMENSIONS.x
+    )
+  };
+
+  return tile;
+};
+
+export const getTilePosition = ({ x, y }: { x: number; y: number }) => {
+  const editorWidth = window.innerWidth;
+  const editorHeight = window.innerHeight;
+  const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
+  const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
+
+  const position = {
+    x: editorWidth * 0.5 + (halfW * x - halfW * y),
+    y: editorHeight * 0.5 - (halfH * x + halfH * y)
+  };
+
+  return position;
 };
