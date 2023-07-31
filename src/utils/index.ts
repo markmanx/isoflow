@@ -193,16 +193,39 @@ export const screenToIso = ({ x, y }: { x: number; y: number }) => {
   return tile;
 };
 
-export const getTilePosition = ({ x, y }: { x: number; y: number }) => {
+export enum OriginEnum {
+  CENTER = 'CENTER',
+  TOP = 'TOP',
+  BOTTOM = 'BOTTOM',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT'
+}
+
+export const getTilePosition = (
+  { x, y }: { x: number; y: number },
+  origin: OriginEnum = OriginEnum.CENTER
+) => {
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
   const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
   const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
-  const position = {
+  const position = Coords.fromObject({
     x: editorWidth * 0.5 + (halfW * x - halfW * y),
-    y: editorHeight * 0.5 - (halfH * x + halfH * y)
-  };
+    y: editorHeight * 0.5 - (halfH * x + halfH * y) + halfH
+  });
 
-  return position;
+  switch (origin) {
+    case OriginEnum.TOP:
+      return position.add(Coords.fromObject({ x: 0, y: -halfH }));
+    case OriginEnum.BOTTOM:
+      return position.add(Coords.fromObject({ x: 0, y: halfH }));
+    case OriginEnum.LEFT:
+      return position.add(Coords.fromObject({ x: -halfW, y: 0 }));
+    case OriginEnum.RIGHT:
+      return position.add(Coords.fromObject({ x: halfW, y: 0 }));
+    case OriginEnum.CENTER:
+    default:
+      return position;
+  }
 };

@@ -3,9 +3,9 @@ import Paper from 'paper';
 import gsap from 'gsap';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { OriginEnum, clamp, getTilePosition } from 'src/utils';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { clamp, getTilePosition } from 'src/utils';
 import { TILE_SIZE, PROJECTED_TILE_DIMENSIONS } from './utils/constants';
 import { Initialiser } from './Initialiser';
 import { useRenderer } from './useRenderer';
@@ -47,14 +47,14 @@ const InitialisedRenderer = () => {
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
       <Cursor
-        position={getTilePosition(mouse.position.tile)}
+        position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
         tileSize={TILE_SIZE}
       />
       {scene.nodes.map((node) => {
         return (
           <NodeV2
             key={node.id}
-            position={getTilePosition(node.position)}
+            position={getTilePosition(node.position, OriginEnum.BOTTOM)}
             iconUrl={
               icons.find((icon) => {
                 return icon.id === node.iconId;

@@ -62,19 +62,31 @@ export const useInteractionManager = () => {
 
       const reducerAction = reducer[e.type];
 
+      const newPosition: Mouse['position'] = {
+        screen: new Coords(e.clientX, e.clientY),
+        tile: Coords.fromObject(screenToIso({ x: e.clientX, y: e.clientY }))
+      };
+
+      const newDelta: Mouse['delta'] = {
+        screen: newPosition.screen.subtract(mouse.position.screen),
+        tile: newPosition.tile.subtract(mouse.position.tile)
+      };
+
+      const getMousedown = (): Mouse['mousedown'] => {
+        switch (e.type) {
+          case 'mousedown':
+            return newPosition;
+          case 'mousemove':
+            return mouse.mousedown;
+          default:
+            return null;
+        }
+      };
+
       const nextMouse: Mouse = {
-        position: {
-          screen: new Coords(e.clientX, e.clientY),
-          tile: Coords.fromObject(screenToIso({ x: e.clientX, y: e.clientY }))
-        },
-        delta: {
-          screen: new Coords(
-            e.clientX - mouse.position.screen.x,
-            e.clientY - mouse.position.screen.y
-          ),
-          tile: Coords.zero()
-        },
-        mousedown: null
+        position: newPosition,
+        delta: newDelta,
+        mousedown: getMousedown()
       };
 
       const newState = produce(

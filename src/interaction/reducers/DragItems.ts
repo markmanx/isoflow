@@ -11,9 +11,9 @@ export const DragItems: InteractionReducer = {
     ) {
       // User has moved tile since the last mouse event
       draftState.mode.items.nodes.forEach((node) => {
-        const nodeIndex = draftState.scene.nodes.findIndex(
-          (sceneNode) => sceneNode.id === node.id
-        );
+        const nodeIndex = draftState.scene.nodes.findIndex((sceneNode) => {
+          return sceneNode.id === node.id;
+        });
 
         if (nodeIndex === -1) return;
 

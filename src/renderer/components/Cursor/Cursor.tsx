@@ -16,7 +16,7 @@ export const Cursor = ({ position, tileSize }: Props) => {
     if (!ref.current) return;
 
     gsap.to(ref.current, {
-      duration: 0.05,
+      duration: 0.15,
       left: position.x,
       top: position.y
     });
