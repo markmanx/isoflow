@@ -19,11 +19,12 @@ export const Grid = ({ tileSize, scroll }: Props) => {
         left: '-100%',
         top: '-100%',
         position: 'absolute',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        transform: `${getCSSMatrix()} translateZ(0)`
       }}
     >
-      <svg width="100%" height="100%" transform={`${getCSSMatrix()}`}>
-        <pattern
+      <Box component="svg" width="100%" height="100%">
+        {/* <pattern
           id="dotpattern"
           x={`calc(50% - ${tileSize * 0.5}px - 2px)`}
           y={`calc(50% - ${tileSize * 0.5}px - 2px)`}
@@ -32,11 +33,11 @@ export const Grid = ({ tileSize, scroll }: Props) => {
           patternUnits="userSpaceOnUse"
         >
           <circle cx="2" cy="2" r={2} fill="rgba(0, 0, 0, 0.3)" />
-        </pattern>
+        </pattern> */}
         <pattern
           id="gridpattern"
-          x={`calc(50% - ${tileSize * 0.5}px)`}
-          y={`calc(50% - ${tileSize * 0.5}px)`}
+          x={`${window.innerWidth * 1.5 - tileSize * 0.5}px`}
+          y={`${window.innerHeight * 1.5 - tileSize * 0.5}px`}
           width={tileSize}
           height={tileSize}
           patternUnits="userSpaceOnUse"
@@ -52,7 +53,7 @@ export const Grid = ({ tileSize, scroll }: Props) => {
           />
         </pattern>
         <rect x="0" y="0" width="100%" height="100%" fill="url(#gridpattern)" />
-      </svg>
+      </Box>
     </Box>
   );
 };

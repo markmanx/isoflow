@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import { getCSSMatrix } from 'src/renderer/utils/projection';
 import { getProjectedTileSize } from 'src/renderer/utils/constants';
 
@@ -28,17 +29,18 @@ export const Cursor = ({ tile, tileSize }: Props) => {
   // );
 
   return (
-    <svg
-      style={{
+    <Box
+      component="svg"
+      sx={{
         position: 'absolute',
         left: `calc(50% - ${tileSize * 0.5}px)`,
-        top: `calc(50% - ${tileSize * 0.5}px)`
+        top: `calc(50% - ${tileSize * 0.5}px)`,
+        transform: `${getCSSMatrix()}`
       }}
       width={tileSize}
       height={tileSize}
-      transform={`${getCSSMatrix()}`}
     >
       <rect width={tileSize} height={tileSize} fill="red" />
-    </svg>
+    </Box>
   );
 };
