@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { getCSSMatrix } from 'src/renderer/utils/projection';
 import { getProjectedTileSize } from 'src/renderer/utils/constants';
+import { useWindowSize } from 'src/hooks/useWindowSize';
 
 interface Props {
   tileSize: number;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const Grid = ({ tileSize, scroll }: Props) => {
+  const windowSize = useWindowSize();
   const projectedTileSize = getProjectedTileSize(tileSize);
 
   return (
@@ -36,8 +38,8 @@ export const Grid = ({ tileSize, scroll }: Props) => {
         </pattern> */}
         <pattern
           id="gridpattern"
-          x={`${window.innerWidth * 1.5 - tileSize * 0.5}px`}
-          y={`${window.innerHeight * 1.5 - tileSize * 0.5}px`}
+          x={`${windowSize.width * 1.5 - tileSize * 0.5}px`}
+          y={`${windowSize.height * 1.5 - tileSize * 0.5}px`}
           width={tileSize}
           height={tileSize}
           patternUnits="userSpaceOnUse"
