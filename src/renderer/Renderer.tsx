@@ -82,6 +82,8 @@ const InitialisedRenderer = () => {
   const screenToIso = ({ x, y }: { x: number; y: number }) => {
     const editorWidth = window.innerWidth;
     const editorHeight = window.innerHeight;
+    const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
+    const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
     // The origin is the center of the project.
     const projectPosition = {
@@ -91,10 +93,13 @@ const InitialisedRenderer = () => {
 
     const tile = {
       x: Math.floor(
-        (projectPosition.x + PROJECTED_TILE_DIMENSIONS.x) /
-          PROJECTED_TILE_DIMENSIONS.x
+        (projectPosition.x + halfW) / PROJECTED_TILE_DIMENSIONS.x -
+          projectPosition.y / PROJECTED_TILE_DIMENSIONS.y
       ),
-      y: 0
+      y: -Math.floor(
+        (projectPosition.y + halfH) / PROJECTED_TILE_DIMENSIONS.y +
+          projectPosition.x / PROJECTED_TILE_DIMENSIONS.x
+      )
     };
 
     return tile;
@@ -130,15 +135,12 @@ const InitialisedRenderer = () => {
   const getTilePosition = ({ x, y }: { x: number; y: number }) => {
     const editorWidth = window.innerWidth;
     const editorHeight = window.innerHeight;
+    const halfW = PROJECTED_TILE_DIMENSIONS.x / 2;
+    const halfH = PROJECTED_TILE_DIMENSIONS.y / 2;
 
     const position = {
-      x:
-        editorWidth * 0.5 +
-        PROJECTED_TILE_DIMENSIONS.x * x -
-        PROJECTED_TILE_DIMENSIONS.x * y,
-      y:
-        editorHeight * 0.5 -
-        (PROJECTED_TILE_DIMENSIONS.y * x + PROJECTED_TILE_DIMENSIONS.y * y)
+      x: editorWidth * 0.5 + (halfW * x - halfW * y),
+      y: editorHeight * 0.5 - (halfH * x + halfH * y)
     };
 
     return position;
@@ -148,9 +150,7 @@ const InitialisedRenderer = () => {
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
       <Cursor
-        position={getTilePosition(
-          screenToIso(mouse.position.screen.toObject())
-        )}
+        position={getTilePosition(screenToIso(mouse.position.screen))}
         tileSize={TILE_SIZE}
       />
       {/* {mode.type === 'LASSO' && (
