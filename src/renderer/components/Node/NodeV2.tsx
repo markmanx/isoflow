@@ -16,9 +16,10 @@ export const NodeV2 = ({ iconUrl, position }: Props) => {
       src={iconUrl}
       sx={{
         position: 'absolute',
-        left: position.x,
-        top: position.y,
-        width: PROJECTED_TILE_DIMENSIONS.x
+        left: position.x - PROJECTED_TILE_DIMENSIONS.x / 2,
+        bottom: position.y - PROJECTED_TILE_DIMENSIONS.y / 2,
+        width: PROJECTED_TILE_DIMENSIONS.x,
+        pointerEvents: 'none'
       }}
     />
   );

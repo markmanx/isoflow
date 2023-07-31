@@ -1,6 +1,6 @@
 import { Coords } from 'src/utils/Coords';
 
-export const TILE_SIZE = 10;
+export const TILE_SIZE = 100;
 export const PROJECTED_TILE_DIMENSIONS = new Coords(
   TILE_SIZE * 1.415,
   TILE_SIZE * 0.819
