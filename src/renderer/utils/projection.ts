@@ -25,15 +25,6 @@ export const applyProjectionMatrix = (
   return matrix;
 };
 
-export const getCSSMatrix = (origin: Coords = new Coords(0, 0)) => {
-  const matrix = {
-    a: Math.sqrt(2) / 2,
-    b: Math.sqrt(6) / 6,
-    c: -(Math.sqrt(2) / 2),
-    d: Math.sqrt(6) / 6,
-    tx: origin.x - (Math.sqrt(2) / 2) * (origin.x - origin.y),
-    ty: origin.y - (Math.sqrt(6) / 6) * (origin.x + origin.y - 2)
-  };
-
-  return `matrix(${matrix.a}, ${matrix.b}, ${matrix.c}, ${matrix.d}, ${matrix.tx}, ${matrix.ty})`;
+export const getCSSMatrix = () => {
+  return `matrix(1,-.5,1,.5,0,0)`;
 };

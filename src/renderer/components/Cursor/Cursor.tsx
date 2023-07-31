@@ -1,16 +1,15 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
 import { getCSSMatrix } from 'src/renderer/utils/projection';
-import { getProjectedTileSize } from 'src/renderer/utils/constants';
 
 interface Props {
-  tile: { x: number; y: number };
+  position: { x: number; y: number };
   tileSize: number;
 }
 
-export const Cursor = ({ tile, tileSize }: Props) => {
-  const projectedTileSize = getProjectedTileSize(tileSize);
-  const position = tile;
+export const Cursor = ({ position, tileSize }: Props) => {
+  const theme = useTheme();
 
   // return (
   //   <svg
@@ -33,14 +32,21 @@ export const Cursor = ({ tile, tileSize }: Props) => {
       component="svg"
       sx={{
         position: 'absolute',
-        left: `calc(50% - ${tileSize * 0.5}px)`,
-        top: `calc(50% - ${tileSize * 0.5}px)`,
-        transform: `${getCSSMatrix()}`
+        left: position.x,
+        top: position.y,
+        transform: `translate(${-tileSize * 0.5}px, ${
+          -tileSize * 0.5
+        }px) ${getCSSMatrix()}`
       }}
       width={tileSize}
       height={tileSize}
     >
-      <rect width={tileSize} height={tileSize} fill="red" />
+      <rect
+        width={tileSize}
+        height={tileSize}
+        fill={theme.palette.primary.main}
+        opacity={0.5}
+      />
     </Box>
   );
 };
