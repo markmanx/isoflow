@@ -14,7 +14,7 @@ export const NodeV2 = ({ iconUrl, position }: Props) => {
   const setPosition = useCallback(
     ({
       position: _position,
-      animationDuration = 0
+      animationDuration = 0.15
     }: {
       position: { x: number; y: number };
       animationDuration?: number;
@@ -33,14 +33,14 @@ export const NodeV2 = ({ iconUrl, position }: Props) => {
   useEffect(() => {
     if (!ref.current) return;
 
-    setPosition({ position, animationDuration: 0.15 });
+    setPosition({ position });
   }, [position, setPosition]);
 
   const onImageLoaded = useCallback(() => {
     if (!ref.current) return;
 
     gsap.killTweensOf(ref.current);
-    setPosition({ position });
+    setPosition({ position, animationDuration: 0 });
     ref.current.style.opacity = '1';
   }, [position, setPosition]);
 
