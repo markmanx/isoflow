@@ -1,6 +1,6 @@
 import React from 'react';
 import { Slider, useTheme } from '@mui/material';
-import { Node } from 'src/stores/useSceneStore';
+import { Node } from 'src/types';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { MarkdownEditor } from '../../../MarkdownEditor/MarkdownEditor';
 
@@ -26,7 +26,9 @@ export const NodeSettings = ({
       <Section title="Label">
         <MarkdownEditor
           value={label}
-          onChange={(text) => onUpdate({ label: text })}
+          onChange={(text) => {
+            return onUpdate({ label: text });
+          }}
         />
       </Section>
       <Section title="Label height">
@@ -36,16 +38,18 @@ export const NodeSettings = ({
           min={0}
           max={200}
           value={labelHeight}
-          onChange={(e, newHeight) =>
-            onUpdate({ labelHeight: newHeight as number })
-          }
+          onChange={(e, newHeight) => {
+            return onUpdate({ labelHeight: newHeight as number });
+          }}
         />
       </Section>
       <Section title="Color">
         <ColorSelector
           activeColor={color}
           colors={Object.values(theme.customVars.diagramPalette)}
-          onChange={(col) => onUpdate({ color: col })}
+          onChange={(col) => {
+            return onUpdate({ color: col });
+          }}
         />
       </Section>
     </>

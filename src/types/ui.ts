@@ -1,5 +1,5 @@
 import { Coords } from './common';
-import { Node } from './scene';
+import { SceneItem } from './scene';
 
 export enum SidebarTypeEnum {
   SINGLE_NODE = 'SINGLE_NODE',
@@ -56,8 +56,6 @@ export interface LassoMode {
   };
   isDragging: boolean;
 }
-
-export type SceneItem = Node;
 
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';

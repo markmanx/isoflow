@@ -1,10 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { Group, Path, Point } from 'paper';
 import { useTheme } from '@mui/material';
-import {
-  PIXEL_UNIT,
-  PROJECTED_TILE_DIMENSIONS
-} from 'src/renderer/utils/constants';
+import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
 
 export const useLabelConnector = () => {
   const theme = useTheme();
@@ -25,11 +22,11 @@ export const useLabelConnector = () => {
 
     pathRef.current = new Path.Line({
       strokeColor: theme.palette.grey[800],
-      strokeWidth: PIXEL_UNIT * 2.5,
-      dashArray: [0, PIXEL_UNIT * 6],
+      strokeWidth: 2.5,
+      dashArray: [0, 6],
       strokeJoin: 'round',
       strokeCap: 'round',
-      dashOffset: PIXEL_UNIT * 4,
+      dashOffset: 4,
       from: new Point(0, 0)
     });
 

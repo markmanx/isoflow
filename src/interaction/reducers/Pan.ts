@@ -1,5 +1,5 @@
 import { CoordsUtils } from 'src/utils';
-import { InteractionReducer } from '../types';
+import { InteractionReducer } from 'src/types';
 
 export const Pan: InteractionReducer = {
   mousemove: (draftState) => {

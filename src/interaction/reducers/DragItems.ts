@@ -1,5 +1,5 @@
 import { CoordsUtils } from 'src/utils';
-import { InteractionReducer } from '../types';
+import { InteractionReducer } from 'src/types';
 
 export const DragItems: InteractionReducer = {
   mousemove: (draftState) => {
@@ -10,7 +10,7 @@ export const DragItems: InteractionReducer = {
       !CoordsUtils.isEqual(draftState.mouse.delta.tile, CoordsUtils.zero())
     ) {
       // User has moved tile since the last mouse event
-      draftState.mode.items.nodes.forEach((node) => {
+      draftState.mode.items.forEach((node) => {
         const nodeIndex = draftState.scene.nodes.findIndex((sceneNode) => {
           return sceneNode.id === node.id;
         });

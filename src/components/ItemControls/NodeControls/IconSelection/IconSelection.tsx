@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Grid from '@mui/material/Grid';
-import { Icon } from 'src/stores/useSceneStore';
+import { Icon } from 'src/types';
 import { IconCategory } from './IconCategory';
 
 interface Props {
@@ -13,7 +13,9 @@ export const Icons = ({ icons, onClick }: Props) => {
     const cats: { name?: string; icons: Icon[] }[] = [];
 
     icons.forEach((icon) => {
-      const category = cats.find((cat) => cat.name === icon.category);
+      const category = cats.find((cat) => {
+        return cat.name === icon.category;
+      });
 
       if (!category) {
         cats.push({ name: icon.category, icons: [icon] });
@@ -37,11 +39,13 @@ export const Icons = ({ icons, onClick }: Props) => {
 
   return (
     <Grid container spacing={4}>
-      {categorisedIcons.map((cat) => (
-        <Grid item xs={12} key={`icon-category-${cat.name}`}>
-          <IconCategory {...cat} onClick={onClick} />
-        </Grid>
-      ))}
+      {categorisedIcons.map((cat) => {
+        return (
+          <Grid item xs={12} key={`icon-category-${cat.name}`}>
+            <IconCategory {...cat} onClick={onClick} />
+          </Grid>
+        );
+      })}
     </Grid>
   );
 };

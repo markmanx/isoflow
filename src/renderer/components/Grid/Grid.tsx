@@ -1,15 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
-import { getCSSMatrix } from 'src/renderer/utils/projection';
+import { getIsoMatrixCSS } from 'src/utils';
 import { useWindowSize } from 'src/hooks/useWindowSize';
 
 interface Props {
   tileSize: number;
-  scroll: { x: number; y: number };
 }
 
-export const Grid = ({ tileSize: _tileSize, scroll }: Props) => {
+export const Grid = ({ tileSize: _tileSize }: Props) => {
   const windowSize = useWindowSize();
   const tileSize = _tileSize;
 
@@ -32,20 +30,10 @@ export const Grid = ({ tileSize: _tileSize, scroll }: Props) => {
           height: '300%',
           left: '-100%',
           top: '-100%',
-          transform: `${getCSSMatrix()}`
+          transform: getIsoMatrixCSS()
         }}
       >
         <Box component="svg" width="100%" height="100%">
-          {/* <pattern
-            id="dotpattern"
-            x={`calc(50% - ${tileSize * 0.5}px)`}
-            y={`calc(50% - ${tileSize * 0.5}px)`}
-            width={tileSize}
-            height={tileSize}
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="0" cy="0" r={2} fill="rgba(0, 0, 0, 0.3)" />
-          </pattern> */}
           <pattern
             id="gridpattern"
             x={`${windowSize.width * 1.5 - tileSize * 0.5}px`}

@@ -41,9 +41,9 @@ export interface Group {
   nodeIds: string[];
 }
 
-export type Icon = IconInput;
-
 export type SceneItem = Node | Connector | Group;
+
+export type Icon = IconInput;
 
 export type Scene = {
   nodes: Node[];

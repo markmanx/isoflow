@@ -131,10 +131,12 @@ export const getBoundingBox = (
   ];
 };
 
-export const getCSSMatrix = (
-  translate: { x: number; y: number } = { x: 0, y: 0 }
-) => {
-  return `translate(${translate.x}px, ${translate.y}px) matrix(0.707, 0.409, -0.707, 0.409, 0, -0.816)`;
+export const getIsoMatrixCSS = () => {
+  return `matrix(0.707, 0.409, -0.707, 0.409, 0, -0.816)`;
+};
+
+export const getTranslateCSS = (translate: Coords = { x: 0, y: 0 }) => {
+  return `translate(${translate.x}px, ${translate.y}px)`;
 };
 
 interface GetNodesByTile {

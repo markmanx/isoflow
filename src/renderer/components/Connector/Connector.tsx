@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import {
-  Connector as ConnectorInterface,
-  useSceneStore
-} from 'src/stores/useSceneStore';
+import { Connector as ConnectorInterface } from 'src/types';
+import { useSceneStore } from 'src/stores/useSceneStore';
 import { useConnector } from './useConnector';
 
 interface ConnectorProps {

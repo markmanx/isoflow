@@ -1,6 +1,5 @@
-import { CoordsUtils } from 'src/utils';
-import { isWithinBounds } from 'src/renderer/utils/gridHelpers';
-import { InteractionReducer } from '../types';
+import { CoordsUtils, isWithinBounds } from 'src/utils';
+import { InteractionReducer } from 'src/types';
 
 export const Lasso: InteractionReducer = {
   mousemove: (draftState) => {

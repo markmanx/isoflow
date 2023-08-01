@@ -6,9 +6,9 @@ import { TileOriginEnum } from 'src/types';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { TILE_SIZE } from 'src/config';
-import { Grid } from '../../renderer/components/Grid/Grid';
-import { Cursor } from '../../renderer/components/Cursor/Cursor';
-import { NodeV2 } from '../../renderer/components/Node/NodeV2';
+import { Grid } from 'src/renderer/components/Grid/Grid';
+import { Cursor } from 'src/renderer/components/Cursor/Cursor';
+import { Node } from 'src/renderer/components/Node/Node';
 
 export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
@@ -26,9 +26,6 @@ export const Renderer = () => {
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
-  const scroll = useUiStateStore((state) => {
-    return state.scroll;
-  });
   useInteractionManager();
 
   return (
@@ -38,7 +35,7 @@ export const Renderer = () => {
         height: '100%'
       }}
     >
-      <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position} />
+      <Grid tileSize={TILE_SIZE * zoom} />
       {mode.showCursor && (
         <Cursor
           position={getTilePosition(mouse.position.tile, TileOriginEnum.TOP)}
@@ -47,7 +44,7 @@ export const Renderer = () => {
       )}
       {scene.nodes.map((node) => {
         return (
-          <NodeV2
+          <Node
             key={node.id}
             position={getTilePosition(node.position, TileOriginEnum.BOTTOM)}
             iconUrl={
@@ -58,40 +55,6 @@ export const Renderer = () => {
           />
         );
       })}
-      {/* {mode.type === 'LASSO' && (
-        <Lasso
-          parentContainer={renderer.lassoContainer.current as paper.Group}
-          startTile={mode.selection.startTile}
-          endTile={mode.selection.endTile}
-        />
-      )}
-      {scene.connectors.map((connector) => {
-        return (
-          <Connector
-            key={connector.id}
-            connector={connector}
-            parentContainer={renderer.connectorManager.container as paper.Group}
-          />
-        );
-      })}
-      {scene.groups.map((group) => {
-        return (
-          <Group
-            key={group.id}
-            parentContainer={renderer.groupManager.container as paper.Group}
-            group={group}
-          />
-        );
-      })}
-      {scene.nodes.map((node) => {
-        return (
-          <Node
-            key={node.id}
-            node={node}
-            parentContainer={renderer.nodeManager.container as paper.Group}
-          />
-        );
-      })} */}
     </Box>
   );
 };

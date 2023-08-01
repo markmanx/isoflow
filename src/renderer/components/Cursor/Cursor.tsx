@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import gsap from 'gsap';
 import { Box, useTheme } from '@mui/material';
-import { getCSSMatrix } from 'src/renderer/utils/projection';
+import { getTranslateCSS, getIsoMatrixCSS } from 'src/utils';
 
 interface Props {
   position: { x: number; y: number };
@@ -54,7 +54,10 @@ export const Cursor = ({ position, tileSize }: Props) => {
       component="svg"
       sx={{
         position: 'absolute',
-        transform: getCSSMatrix({ x: -(tileSize / 2), y: -(tileSize / 2) }),
+        transform: `${getTranslateCSS({
+          x: -(tileSize / 2),
+          y: -(tileSize / 2)
+        })} ${getIsoMatrixCSS()}`,
         opacity: 0
       }}
       width={tileSize}
