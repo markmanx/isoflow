@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace } from 'src/utils';
 import { Coords } from 'src/utils/Coords';
-import { SortedSceneItems, SceneItem, Node } from 'src/stores/useSceneStore';
+import { SceneItem, Node } from 'src/stores/useSceneStore';
 
 // TODO: Move into the defaults file
 const ZOOM_INCREMENT = 0.2;
@@ -41,6 +41,7 @@ export interface Mouse {
 // TODO: Extract modes into own file for simplicity
 export interface CursorMode {
   type: 'CURSOR';
+  showCursor: boolean;
   mousedown: {
     items: { nodes: Node[] };
     tile: Coords;
@@ -49,10 +50,12 @@ export interface CursorMode {
 
 export interface PanMode {
   type: 'PAN';
+  showCursor: boolean;
 }
 
 export interface LassoMode {
   type: 'LASSO'; // TODO: Put these into an enum
+  showCursor: boolean;
   selection: {
     startTile: Coords;
     endTile: Coords;
@@ -63,6 +66,7 @@ export interface LassoMode {
 
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';
+  showCursor: boolean;
   items: { nodes: Node[] };
 }
 
@@ -108,6 +112,7 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
   return {
     mode: {
       type: 'CURSOR',
+      showCursor: true,
       mousedown: null
     },
     mouse: {

@@ -56,6 +56,7 @@ export const Lasso: InteractionReducer = {
       if (!isWithinSelection) {
         draftState.mode = {
           type: 'CURSOR',
+          showCursor: true,
           mousedown: null
         };
 
@@ -71,6 +72,7 @@ export const Lasso: InteractionReducer = {
 
     draftState.mode = {
       type: 'CURSOR',
+      showCursor: true,
       mousedown: null
     };
   },

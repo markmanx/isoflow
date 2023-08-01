@@ -46,7 +46,7 @@ const InitialisedRenderer = () => {
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
-      {mode.type === 'CURSOR' && (
+      {mode.showCursor && (
         <Cursor
           position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
           tileSize={TILE_SIZE}

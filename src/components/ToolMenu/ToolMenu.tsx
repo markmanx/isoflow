@@ -15,9 +15,15 @@ import { IconButton } from '../IconButton/IconButton';
 
 export const ToolMenu = () => {
   const theme = useTheme();
-  const zoom = useUiStateStore((state) => state.zoom);
-  const mode = useUiStateStore((state) => state.mode);
-  const uiStateStoreActions = useUiStateStore((state) => state.actions);
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
+  const uiStateStoreActions = useUiStateStore((state) => {
+    return state.actions;
+  });
 
   return (
     <Card
@@ -32,16 +38,25 @@ export const ToolMenu = () => {
       <IconButton
         name="Select"
         Icon={<NearMeIcon />}
-        onClick={() =>
-          uiStateStoreActions.setMode({ type: 'CURSOR', mousedown: null })
-        }
+        onClick={() => {
+          return uiStateStoreActions.setMode({
+            type: 'CURSOR',
+            showCursor: true,
+            mousedown: null
+          });
+        }}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'CURSOR'}
       />
       <IconButton
         name="Pan"
         Icon={<PanToolIcon />}
-        onClick={() => uiStateStoreActions.setMode({ type: 'PAN' })}
+        onClick={() => {
+          return uiStateStoreActions.setMode({
+            type: 'PAN',
+            showCursor: false
+          });
+        }}
         size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'PAN'}
       />

@@ -20,6 +20,7 @@ export const Cursor: InteractionReducer = {
         // User's last mousedown action was on a node
         draftState.mode = {
           type: 'DRAG_ITEMS',
+          showCursor: true,
           items: draftState.mode.mousedown.items
         };
 
@@ -28,6 +29,7 @@ export const Cursor: InteractionReducer = {
 
       draftState.mode = {
         type: 'LASSO',
+        showCursor: false,
         selection: {
           startTile: draftState.mode.mousedown.tile,
           endTile: draftState.mouse.position.tile,
