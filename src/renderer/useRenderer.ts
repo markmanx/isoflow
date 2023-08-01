@@ -1,7 +1,8 @@
 import { useCallback, useRef } from 'react';
 import Paper, { Group } from 'paper';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { CoordsUtils } from 'src/utils';
 import { useNodeManager } from './useNodeManager';
 import { useGroupManager } from './useGroupManager';
 import { useConnectorManager } from './useConnectorManager';
@@ -37,8 +38,8 @@ export const useRenderer = () => {
     container.current.set({ position: [0, 0] });
     Paper.project.activeLayer.addChild(container.current);
     setScroll({
-      position: new Coords(0, 0),
-      offset: new Coords(0, 0)
+      position: CoordsUtils.zero(),
+      offset: CoordsUtils.zero()
     });
   }, [setScroll, nodeManager.container, groupManager.container]);
 

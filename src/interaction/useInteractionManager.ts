@@ -2,8 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore, Mouse } from 'src/stores/useUiStateStore';
-import { Coords } from 'src/utils/Coords';
-import { screenToIso } from 'src/utils';
+import { CoordsUtils, screenToIso } from 'src/utils';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
@@ -39,9 +38,6 @@ export const useInteractionManager = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
   });
-  const gridSize = useSceneStore((state) => {
-    return state.gridSize;
-  });
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -63,13 +59,13 @@ export const useInteractionManager = () => {
       const reducerAction = reducer[e.type];
 
       const newPosition: Mouse['position'] = {
-        screen: new Coords(e.clientX, e.clientY),
-        tile: Coords.fromObject(screenToIso({ x: e.clientX, y: e.clientY }))
+        screen: { x: e.clientX, y: e.clientY },
+        tile: screenToIso({ x: e.clientX, y: e.clientY })
       };
 
       const newDelta: Mouse['delta'] = {
-        screen: newPosition.screen.subtract(mouse.position.screen),
-        tile: newPosition.tile.subtract(mouse.position.tile)
+        screen: CoordsUtils.subtract(newPosition.screen, mouse.position.screen),
+        tile: CoordsUtils.subtract(newPosition.tile, mouse.position.tile)
       };
 
       const getMousedown = (): Mouse['mousedown'] => {
@@ -95,7 +91,6 @@ export const useInteractionManager = () => {
           mouse: nextMouse,
           mode,
           scroll,
-          gridSize,
           contextMenu,
           itemControls
         },
@@ -114,7 +109,6 @@ export const useInteractionManager = () => {
     [
       mode,
       scroll,
-      gridSize,
       itemControls,
       uiStateActions,
       sceneActions,

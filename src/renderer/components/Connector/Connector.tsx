@@ -12,9 +12,6 @@ interface ConnectorProps {
 
 export const Connector = ({ parentContainer, connector }: ConnectorProps) => {
   const { init, updateFromTo, updateColor } = useConnector();
-  const gridSize = useSceneStore((state) => {
-    return state.gridSize;
-  });
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
@@ -40,8 +37,8 @@ export const Connector = ({ parentContainer, connector }: ConnectorProps) => {
 
     if (!fromNode || !toNode) return;
 
-    updateFromTo(gridSize, fromNode.position, toNode.position);
-  }, [gridSize, nodes, connector, updateFromTo]);
+    updateFromTo({ x: 100, y: 100 }, fromNode.position, toNode.position);
+  }, [nodes, connector, updateFromTo]);
 
   return null;
 };

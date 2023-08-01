@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { Group, Path } from 'paper';
 import { pathfinder } from 'src/renderer/utils/pathfinder';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { getTileBounds } from 'src/renderer/utils/gridHelpers';
 
 export const useConnector = () => {

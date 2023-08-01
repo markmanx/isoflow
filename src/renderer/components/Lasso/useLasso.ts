@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import gsap from 'gsap';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { TILE_SIZE, PIXEL_UNIT } from 'src/renderer/utils/constants';
 import {
   getBoundingBox,
@@ -25,11 +25,11 @@ export const useLasso = () => {
     const lassoStartTile = boundingBox[3];
     const lassoScreenPosition = getTileBounds(lassoStartTile).left;
     const sorted = sortByPosition(boundingBox);
-    const position = new Coords(sorted.lowX, sorted.highY);
-    const size = new Coords(
-      sorted.highX - sorted.lowX,
-      sorted.highY - sorted.lowY
-    );
+    const position = { x: sorted.lowX, y: sorted.highY };
+    const size = {
+      x: sorted.highX - sorted.lowX,
+      y: sorted.highY - sorted.lowY
+    };
 
     shapeRef.current.set({
       position,

@@ -3,15 +3,9 @@ import { create } from 'zustand';
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
 import { NODE_DEFAULTS } from 'src/utils/config';
-import { IconInput } from '../validation/SceneInput';
-import { Coords } from '../utils/Coords';
+import { IconInput, SceneItemTypeEnum, Coords } from 'src/types';
 
 // TODO: Move all types into a types file for easier access and less mental load over where to look
-export enum SceneItemTypeEnum {
-  NODE = 'NODE',
-  CONNECTOR = 'CONNECTOR',
-  GROUP = 'GROUP'
-}
 
 export interface Node {
   type: SceneItemTypeEnum.NODE;
@@ -57,7 +51,6 @@ export interface SortedSceneItems {
 // TODO: This typing is super confusing to work with
 export type Scene = SortedSceneItems & {
   icons: IconInput[];
-  gridSize: Coords;
 };
 
 export interface SceneActions {
@@ -78,7 +71,6 @@ export const useSceneStore = create<UseSceneStore>((set, get) => {
     connectors: [],
     groups: [],
     icons: [],
-    gridSize: new Coords(51, 51),
     actions: {
       set: (scene) => {
         set(scene);

@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { Group, Shape } from 'paper';
 import gsap from 'gsap';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { TILE_SIZE, PIXEL_UNIT } from '../../utils/constants';
 import { applyProjectionMatrix } from '../../utils/projection';
 
@@ -33,10 +33,10 @@ export const useCursor = () => {
 
   const moveTo = useCallback(
     (position: Coords, opts?: { animationDuration?: number }) => {
-      const tweenProxy = new Coords(
-        container.current.position.x,
-        container.current.position.y
-      );
+      const tweenProxy = {
+        x: container.current.position.x,
+        y: container.current.position.y
+      };
 
       gsap.to(tweenProxy, {
         duration: opts?.animationDuration || 0.1,

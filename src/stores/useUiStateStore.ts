@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { clamp, roundToOneDecimalPlace } from 'src/utils';
-import { Coords } from 'src/utils/Coords';
+import { clamp, roundToOneDecimalPlace, CoordsUtils } from 'src/utils';
+import { Coords } from 'src/types';
 import { SceneItem, Node } from 'src/stores/useSceneStore';
 
 // TODO: Move into the defaults file
@@ -116,15 +116,15 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
       mousedown: null
     },
     mouse: {
-      position: { screen: new Coords(0, 0), tile: new Coords(0, 0) },
+      position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
       mousedown: null,
       delta: null
     },
     itemControls: null,
     contextMenu: null,
     scroll: {
-      position: new Coords(0, 0),
-      offset: new Coords(0, 0)
+      position: { x: 0, y: 0 },
+      offset: { x: 0, y: 0 }
     },
     zoom: 1,
     actions: {

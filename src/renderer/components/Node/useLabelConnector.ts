@@ -16,7 +16,7 @@ export const useLabelConnector = () => {
 
     pathRef.current.segments[1].point.y = -(
       labelHeight +
-      PROJECTED_TILE_DIMENSIONS.y * 0.5
+      PROJECTED_TILE_DIMENSIONS.height * 0.5
     );
   }, []);
 

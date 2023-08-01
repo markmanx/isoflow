@@ -1,12 +1,12 @@
 import Paper from 'paper';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
-import { Coords } from 'src/utils/Coords';
-import { clamp } from 'src/utils';
+import { Coords } from 'src/types';
+import { clamp, CoordsUtils } from 'src/utils';
 import { SortedSceneItems, Node } from 'src/stores/useSceneStore';
 import { Scroll } from 'src/stores/useUiStateStore';
 
-const halfW = PROJECTED_TILE_DIMENSIONS.x * 0.5;
-const halfH = PROJECTED_TILE_DIMENSIONS.y * 0.5;
+const halfW = PROJECTED_TILE_DIMENSIONS.width * 0.5;
+const halfH = PROJECTED_TILE_DIMENSIONS.height * 0.5;
 
 interface GetTileFromMouse {
   mousePosition: Coords;
@@ -19,10 +19,11 @@ export const getTileFromMouse = ({
   scroll,
   gridSize
 }: GetTileFromMouse) => {
-  const canvasPosition = new Coords(
-    mousePosition.x - (scroll.position.x + Paper.view.bounds.center.x),
-    mousePosition.y - (scroll.position.y + Paper.view.bounds.center.y) + halfH
-  );
+  const canvasPosition = {
+    x: mousePosition.x - (scroll.position.x + Paper.view.bounds.center.x),
+    y:
+      mousePosition.y - (scroll.position.y + Paper.view.bounds.center.y) + halfH
+  };
 
   const row = Math.floor(
     ((mousePosition.x - scroll.position.x) / halfW + canvasPosition.y / halfH) /
@@ -35,34 +36,37 @@ export const getTileFromMouse = ({
   const halfRowNum = Math.floor(gridSize.x * 0.5);
   const halfColNum = Math.floor(gridSize.y * 0.5);
 
-  return new Coords(
-    clamp(row, -halfRowNum, halfRowNum),
-    clamp(col, -halfColNum, halfColNum)
-  );
+  return {
+    x: clamp(row, -halfRowNum, halfRowNum),
+    y: clamp(col, -halfColNum, halfColNum)
+  };
 };
 
 export const getTilePosition = ({ x, y }: Coords) => {
-  return new Coords(x * halfW - y * halfW, x * halfH + y * halfH);
+  return { x: x * halfW - y * halfW, y: x * halfH + y * halfH };
 };
 
 export const getTileBounds = (coords: Coords) => {
   const position = getTilePosition(coords);
 
   return {
-    left: new Coords(
-      position.x - PROJECTED_TILE_DIMENSIONS.x * 0.5,
-      position.y
-    ),
-    right: new Coords(
-      position.x + PROJECTED_TILE_DIMENSIONS.x * 0.5,
-      position.y
-    ),
-    top: new Coords(position.x, position.y - PROJECTED_TILE_DIMENSIONS.y * 0.5),
-    bottom: new Coords(
-      position.x,
-      position.y + PROJECTED_TILE_DIMENSIONS.y * 0.5
-    ),
-    center: new Coords(position.x, position.y)
+    left: {
+      x: position.x - PROJECTED_TILE_DIMENSIONS.width * 0.5,
+      y: position.y
+    },
+    right: {
+      x: position.x + PROJECTED_TILE_DIMENSIONS.width * 0.5,
+      y: position.y
+    },
+    top: {
+      x: position.x,
+      y: position.y - PROJECTED_TILE_DIMENSIONS.height * 0.5
+    },
+    bottom: {
+      x: position.x,
+      y: position.y + PROJECTED_TILE_DIMENSIONS.height * 0.5
+    },
+    center: { x: position.x, y: position.y }
   };
 };
 
@@ -77,7 +81,7 @@ export const getItemsByTile = ({
   sortedSceneItems
 }: GetItemsByTile): { nodes: Node[] } => {
   const nodes = sortedSceneItems.nodes.filter((node) => {
-    return node.position.isEqual(tile);
+    return CoordsUtils.isEqual(node.position, tile);
   });
 
   return { nodes };
@@ -90,7 +94,7 @@ interface GetItemsByTileV2 {
 
 export const getItemsByTileV2 = ({ tile, sceneItems }: GetItemsByTileV2) => {
   return sceneItems.filter((item) => {
-    return item.position.isEqual(tile);
+    return CoordsUtils.isEqual(item.position, tile);
   });
 };
 
@@ -110,23 +114,25 @@ export const canvasCoordsToScreenCoords = ({
     Paper.project.view.element;
   const container = Paper.project.activeLayer.children[0];
   const globalItemsGroupPosition = container.globalToLocal([0, 0]);
-  const onScreenPosition = new Coords(
-    (position.x +
-      scrollPosition.x +
-      globalItemsGroupPosition.x +
-      container.position.x +
-      viewW * 0.5) *
-      zoom +
+  const onScreenPosition = {
+    x:
+      (position.x +
+        scrollPosition.x +
+        globalItemsGroupPosition.x +
+        container.position.x +
+        viewW * 0.5) *
+        zoom +
       offsetX,
 
-    (position.y +
-      scrollPosition.y +
-      globalItemsGroupPosition.y +
-      container.position.y +
-      viewH * 0.5) *
-      zoom +
+    y:
+      (position.y +
+        scrollPosition.y +
+        globalItemsGroupPosition.y +
+        container.position.y +
+        viewH * 0.5) *
+        zoom +
       offsetY
-  );
+  };
 
   return onScreenPosition;
 };
@@ -192,7 +198,7 @@ export const getGridSubset = (tiles: Coords[]) => {
 
   for (let x = lowX; x < highX + 1; x += 1) {
     for (let y = lowY; y < highY + 1; y += 1) {
-      subset.push(new Coords(x, y));
+      subset.push({ x, y });
     }
   }
 
@@ -209,7 +215,7 @@ export const isWithinBounds = (tile: Coords, bounds: Coords[]) => {
 // passed in (at least 1 tile needed)
 export const getBoundingBox = (
   tiles: Coords[],
-  offset: Coords = new Coords(0, 0)
+  offset: Coords = CoordsUtils.zero()
 ) => {
   if (tiles.length === 0) {
     return null;
@@ -218,9 +224,9 @@ export const getBoundingBox = (
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
   return [
-    new Coords(lowX - offset.x, lowY - offset.y),
-    new Coords(highX + offset.x, lowY - offset.y),
-    new Coords(highX + offset.x, highY + offset.y),
-    new Coords(lowX - offset.x, highY + offset.y)
+    { x: lowX - offset.x, y: lowY - offset.y },
+    { x: highX + offset.x, y: lowY - offset.y },
+    { x: highX + offset.x, y: highY + offset.y },
+    { x: lowX - offset.x, y: highY + offset.y }
   ];
 };

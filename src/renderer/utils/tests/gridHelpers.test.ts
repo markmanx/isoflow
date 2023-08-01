@@ -1,4 +1,4 @@
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { getGridSubset, isWithinBounds } from '../gridHelpers';
 
 jest.mock('paper', () => {
@@ -7,27 +7,33 @@ jest.mock('paper', () => {
 
 describe('Tests gridhelpers', () => {
   test('getGridSubset() works correctly', () => {
-    const gridSubset = getGridSubset([new Coords(5, 5), new Coords(7, 7)]);
+    const gridSubset = getGridSubset([
+      { x: 5, y: 5 },
+      { x: 7, y: 7 }
+    ]);
 
     expect(gridSubset).toEqual([
-      new Coords(5, 5),
-      new Coords(5, 6),
-      new Coords(5, 7),
-      new Coords(6, 5),
-      new Coords(6, 6),
-      new Coords(6, 7),
-      new Coords(7, 5),
-      new Coords(7, 6),
-      new Coords(7, 7)
+      { x: 5, y: 5 },
+      { x: 5, y: 6 },
+      { x: 5, y: 7 },
+      { x: 6, y: 5 },
+      { x: 6, y: 6 },
+      { x: 6, y: 7 },
+      { x: 7, y: 5 },
+      { x: 7, y: 6 },
+      { x: 7, y: 7 }
     ]);
   });
 
   test('isWithinBounds() works correctly', () => {
-    const BOUNDS = [new Coords(4, 4), new Coords(6, 6)];
+    const bounds: Coords[] = [
+      { x: 4, y: 4 },
+      { x: 6, y: 6 }
+    ];
 
-    const withinBounds = isWithinBounds(new Coords(5, 5), BOUNDS);
-    const onBorder = isWithinBounds(new Coords(4, 4), BOUNDS);
-    const outsideBounds = isWithinBounds(new Coords(3, 3), BOUNDS);
+    const withinBounds = isWithinBounds({ x: 5, y: 5 }, bounds);
+    const onBorder = isWithinBounds({ x: 4, y: 4 }, bounds);
+    const outsideBounds = isWithinBounds({ x: 3, y: 3 }, bounds);
 
     expect(withinBounds).toBe(true);
     expect(onBorder).toBe(true);

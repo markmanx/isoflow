@@ -9,7 +9,7 @@ import {
   NodeInput,
   ConnectorInput,
   GroupInput
-} from 'src/validation/SceneInput';
+} from 'src/types';
 import { useSceneStore, Scene } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/renderer/Renderer';

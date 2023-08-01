@@ -1,5 +1,4 @@
 import { Matrix, Point } from 'paper';
-import { Coords } from 'src/utils/Coords';
 
 export const getProjectionMatrix = (x: number, y: number) => {
   return new Matrix([

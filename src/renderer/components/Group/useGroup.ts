@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { Group, Shape } from 'paper';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { PIXEL_UNIT, TILE_SIZE } from 'src/renderer/utils/constants';
 import { getColorVariant } from 'src/utils';
 import {
@@ -26,7 +26,7 @@ export const useGroup = () => {
   const setTiles = useCallback((tiles: Coords[]) => {
     if (!pathRef.current) return;
 
-    const corners = getBoundingBox(tiles, new Coords(1, 1));
+    const corners = getBoundingBox(tiles, { x: 1, y: 1 });
 
     if (corners === null) {
       containerRef.current.removeChildren();
@@ -34,10 +34,10 @@ export const useGroup = () => {
     }
 
     const sorted = sortByPosition(corners);
-    const size = new Coords(
-      sorted.highX - sorted.lowX,
-      sorted.highY - sorted.lowY
-    );
+    const size = {
+      x: sorted.highX - sorted.lowX,
+      y: sorted.highY - sorted.lowY
+    };
 
     pathRef.current.set({
       position: [0, 0],

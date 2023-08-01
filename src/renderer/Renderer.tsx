@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import gsap from 'gsap';
+import React from 'react';
 import { Box } from '@mui/material';
-import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { OriginEnum, clamp, getTilePosition } from 'src/utils';
+import { OriginEnum, getTilePosition } from 'src/utils';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { TILE_SIZE, PROJECTED_TILE_DIMENSIONS } from './utils/constants';
-import { Initialiser } from './Initialiser';
-import { useRenderer } from './useRenderer';
-import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
-import { Lasso } from './components/Lasso/Lasso';
-import { Connector } from './components/Connector/Connector';
-import { Group } from './components/Group/Group';
+import { TILE_SIZE } from './utils/constants';
+// import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
 import { Grid } from './components/Grid/Grid';
 import { Cursor } from './components/Cursor/Cursor';
 import { NodeV2 } from './components/Node/NodeV2';
 
-const InitialisedRenderer = () => {
-  const renderer = useRenderer();
-  const [isReady, setIsReady] = useState(false);
+export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
-  });
-  const gridSize = useSceneStore((state) => {
-    return state.gridSize;
   });
   const icons = useSceneStore((state) => {
     return state.icons;
@@ -50,7 +38,7 @@ const InitialisedRenderer = () => {
         height: '100%'
       }}
     >
-      <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position.toObject()} />
+      <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position} />
       {mode.showCursor && (
         <Cursor
           position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
@@ -105,14 +93,5 @@ const InitialisedRenderer = () => {
         );
       })} */}
     </Box>
-  );
-};
-
-export const Renderer = () => {
-  return (
-    <Initialiser>
-      <InitialisedRenderer />
-      <ContextMenuLayer />
-    </Initialiser>
   );
 };

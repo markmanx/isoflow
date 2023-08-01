@@ -1,8 +1,5 @@
-import { Coords } from 'src/utils/Coords';
-import {
-  isWithinBounds,
-  getItemsByTileV2
-} from 'src/renderer/utils/gridHelpers';
+import { CoordsUtils } from 'src/utils';
+import { isWithinBounds } from 'src/renderer/utils/gridHelpers';
 import { InteractionReducer } from '../types';
 
 export const Lasso: InteractionReducer = {
@@ -14,7 +11,7 @@ export const Lasso: InteractionReducer = {
 
     if (
       draftState.mouse.delta === null ||
-      draftState.mouse.delta.tile.isEqual(Coords.zero())
+      CoordsUtils.isEqual(draftState.mouse.delta.tile, CoordsUtils.zero())
     )
       return;
     // User has moved tile since they moused down
@@ -22,7 +19,7 @@ export const Lasso: InteractionReducer = {
     if (!draftState.mode.isDragging) {
       const { mousedown } = draftState.mouse;
       const items = draftState.scene.nodes.filter((node) => {
-        return node.position.isEqual(mousedown.tile);
+        return CoordsUtils.isEqual(node.position, mousedown.tile);
       });
 
       // User is creating a selection
@@ -37,9 +34,12 @@ export const Lasso: InteractionReducer = {
 
     if (draftState.mode.isDragging) {
       // User is dragging an existing selection
-      draftState.mode.selection.startTile =
-        draftState.mode.selection.startTile.add(draftState.mouse.delta.tile);
-      draftState.mode.selection.endTile = draftState.mode.selection.endTile.add(
+      draftState.mode.selection.startTile = CoordsUtils.add(
+        draftState.mode.selection.startTile,
+        draftState.mouse.delta.tile
+      );
+      draftState.mode.selection.endTile = CoordsUtils.add(
+        draftState.mode.selection.endTile,
         draftState.mouse.delta.tile
       );
     }

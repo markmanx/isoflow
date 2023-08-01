@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { List, Box, Card } from '@mui/material';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { getTileScreenPosition } from 'src/renderer/utils/gridHelpers';
 import { useSceneStore } from 'src/stores/useSceneStore';

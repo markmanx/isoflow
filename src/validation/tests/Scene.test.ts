@@ -1,12 +1,10 @@
+import { NodeInput, ConnectorInput, GroupInput } from 'src/types/inputs';
+import { sceneInput } from '../scene';
 import {
-  sceneInput,
-  NodeInput,
-  ConnectorInput,
-  GroupInput,
   findInvalidNode,
   findInvalidConnector,
   findInvalidGroup
-} from '../SceneInput';
+} from '../utils';
 import { scene } from '../../tests/fixtures/scene';
 
 describe('scene validation works correctly', () => {

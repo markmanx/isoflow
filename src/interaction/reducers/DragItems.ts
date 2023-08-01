@@ -1,4 +1,4 @@
-import { Coords } from 'src/utils/Coords';
+import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from '../types';
 
 export const DragItems: InteractionReducer = {
@@ -7,7 +7,7 @@ export const DragItems: InteractionReducer = {
 
     if (
       draftState.mouse.delta !== null &&
-      !draftState.mouse.delta.tile.isEqual(Coords.fromObject({ x: 0, y: 0 }))
+      !CoordsUtils.isEqual(draftState.mouse.delta.tile, CoordsUtils.zero())
     ) {
       // User has moved tile since the last mouse event
       draftState.mode.items.nodes.forEach((node) => {

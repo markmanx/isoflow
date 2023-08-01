@@ -23,8 +23,11 @@ export const NodeV2 = ({ iconUrl, position }: Props) => {
 
       gsap.to(ref.current, {
         duration: animationDuration,
-        x: _position.x - PROJECTED_TILE_DIMENSIONS.x / 2,
-        y: _position.y - PROJECTED_TILE_DIMENSIONS.y / 2 - ref.current.height
+        x: _position.x - PROJECTED_TILE_DIMENSIONS.width / 2,
+        y:
+          _position.y -
+          PROJECTED_TILE_DIMENSIONS.height / 2 -
+          ref.current.height
       });
     },
     []
@@ -52,7 +55,7 @@ export const NodeV2 = ({ iconUrl, position }: Props) => {
       src={iconUrl}
       sx={{
         position: 'absolute',
-        width: PROJECTED_TILE_DIMENSIONS.x,
+        width: PROJECTED_TILE_DIMENSIONS.width,
         pointerEvents: 'none',
         opacity: 0
       }}
