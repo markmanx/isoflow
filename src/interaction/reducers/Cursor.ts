@@ -1,5 +1,5 @@
 import { SidebarTypeEnum } from 'src/stores/useUiStateStore';
-import { Coords } from 'src/utils/Coords';
+import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from '../types';
 import { getItemsByTile } from '../../renderer/utils/gridHelpers';
 
@@ -9,7 +9,7 @@ export const Cursor: InteractionReducer = {
 
     if (
       draftState.mouse.delta === null ||
-      draftState.mouse.delta?.tile.isEqual(Coords.zero())
+      CoordsUtils.isEqual(draftState.mouse.delta?.tile, CoordsUtils.zero())
     )
       return;
     // User has moved tile since the last event
@@ -20,6 +20,7 @@ export const Cursor: InteractionReducer = {
         // User's last mousedown action was on a node
         draftState.mode = {
           type: 'DRAG_ITEMS',
+          showCursor: true,
           items: draftState.mode.mousedown.items
         };
 
@@ -28,6 +29,7 @@ export const Cursor: InteractionReducer = {
 
       draftState.mode = {
         type: 'LASSO',
+        showCursor: false,
         selection: {
           startTile: draftState.mode.mousedown.tile,
           endTile: draftState.mouse.position.tile,

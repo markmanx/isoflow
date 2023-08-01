@@ -1,5 +1,5 @@
 import React from 'react';
-import Isoflow, { DefaultLabelContainer } from 'src/Isoflow';
+import Isoflow from 'src/Isoflow';
 import { Box, useTheme } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {

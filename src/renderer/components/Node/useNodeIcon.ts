@@ -8,14 +8,18 @@ const NODE_IMG_PADDING = 0;
 export const useNodeIcon = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const container = useRef(new Group());
-  const icons = useSceneStore((state) => state.icons);
+  const icons = useSceneStore((state) => {
+    return state.icons;
+  });
 
   const update = useCallback(
     async (iconId: string) => {
       setIsLoaded(false);
       container.current.removeChildren();
 
-      const icon = icons.find((_icon) => _icon.id === iconId);
+      const icon = icons.find((_icon) => {
+        return _icon.id === iconId;
+      });
 
       if (!icon) return;
 
@@ -26,7 +30,7 @@ export const useNodeIcon = () => {
           if (!container.current) return;
 
           iconRaster.scale(
-            (PROJECTED_TILE_DIMENSIONS.x - NODE_IMG_PADDING) /
+            (PROJECTED_TILE_DIMENSIONS.width - NODE_IMG_PADDING) /
               iconRaster.bounds.width
           );
 
@@ -36,7 +40,7 @@ export const useNodeIcon = () => {
           container.current.pivot = iconRaster.bounds.bottomCenter;
           container.current.position = new Point(
             0,
-            PROJECTED_TILE_DIMENSIONS.y * 0.5
+            PROJECTED_TILE_DIMENSIONS.height * 0.5
           );
 
           resolve(null);

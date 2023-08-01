@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Group } from 'paper';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { Node as NodeInterface } from 'src/stores/useSceneStore';
 import { useNodeIcon } from './useNodeIcon';
@@ -63,7 +62,7 @@ export const Node = ({ node, parentContainer }: NodeProps) => {
   useEffect(() => {
     if (!isIconLoaded) return;
 
-    const tweenValues = Coords.fromObject(groupRef.current.position);
+    const tweenValues = groupRef.current.position;
     const endState = getTilePosition(node.position);
 
     gsap.to(tweenValues, {

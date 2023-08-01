@@ -1,5 +1,5 @@
 import PF from 'pathfinding';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 
 // TODO1: This file is a mess, refactor it
 // TODO: Have one single place for utils
@@ -10,18 +10,18 @@ export const pathfinder = (gridSize: Coords) => {
     diagonalMovement: PF.DiagonalMovement.Always
   });
 
-  const convertToGridXY = ({ x, y }: Coords) => {
-    return new Coords(
-      x + Math.floor(gridSize.x * 0.5),
-      y + Math.floor(gridSize.y * 0.5)
-    );
+  const convertToGridXY = ({ x, y }: Coords): Coords => {
+    return {
+      x: x + Math.floor(gridSize.x * 0.5),
+      y: y + Math.floor(gridSize.y * 0.5)
+    };
   };
 
-  const convertToSceneXY = ({ x, y }: Coords) => {
-    return new Coords(
-      x - Math.floor(gridSize.x * 0.5),
-      y - Math.floor(gridSize.y * 0.5)
-    );
+  const convertToSceneXY = ({ x, y }: Coords): Coords => {
+    return {
+      x: x - Math.floor(gridSize.x * 0.5),
+      y: y - Math.floor(gridSize.y * 0.5)
+    };
   };
 
   const setWalkableAt = (coords: Coords, isWalkable: boolean) => {
@@ -29,7 +29,7 @@ export const pathfinder = (gridSize: Coords) => {
     grid.setWalkableAt(x, y, isWalkable);
   };
 
-  const findPath = (tiles: Coords[]) => {
+  const findPath = (tiles: Coords[]): Coords[] => {
     const normalisedRoute = tiles.map((tile) => {
       return convertToGridXY(tile);
     });
@@ -56,7 +56,7 @@ export const pathfinder = (gridSize: Coords) => {
     }, [] as number[][]);
 
     return path.map((tile) => {
-      return convertToSceneXY(new Coords(tile[0], tile[1]));
+      return convertToSceneXY({ x: tile[0], y: tile[1] });
     });
   };
 

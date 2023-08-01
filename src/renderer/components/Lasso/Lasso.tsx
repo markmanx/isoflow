@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Coords } from 'src/utils/Coords';
+import { Coords } from 'src/types';
 import { useLasso } from './useLasso';
 
 interface Props {

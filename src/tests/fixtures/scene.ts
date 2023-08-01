@@ -1,10 +1,6 @@
-import { SceneInput } from 'src/validation/SceneInput';
+import { SceneInput } from 'src/types';
 
 export const scene: SceneInput = {
-  gridSize: {
-    width: 10,
-    height: 10
-  },
   icons: [
     {
       id: 'icon1',

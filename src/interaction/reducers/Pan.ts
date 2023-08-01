@@ -1,3 +1,4 @@
+import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from '../types';
 
 export const Pan: InteractionReducer = {
@@ -6,7 +7,10 @@ export const Pan: InteractionReducer = {
 
     if (draftState.mouse.mousedown !== null) {
       draftState.scroll.position = draftState.mouse.delta?.screen
-        ? draftState.scroll.position.add(draftState.mouse.delta.screen)
+        ? CoordsUtils.add(
+            draftState.scroll.position,
+            draftState.mouse.delta.screen
+          )
         : draftState.scroll.position;
     }
   },

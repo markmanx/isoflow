@@ -5,7 +5,7 @@ import { CustomNode } from './CustomNode/CustomNode';
 
 const examples = [
   { name: 'Basic Editor', component: BasicEditor },
-  { name: 'Custom Node Label', component: CustomNode }
+  { name: 'Live Diagrams', component: CustomNode }
 ];
 
 export const Examples = () => {

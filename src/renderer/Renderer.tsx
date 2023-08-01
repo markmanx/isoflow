@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Paper from 'paper';
-import gsap from 'gsap';
-import { Coords } from 'src/utils/Coords';
+import React from 'react';
+import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { OriginEnum, getTilePosition } from 'src/utils';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { Initialiser } from './Initialiser';
-import { useRenderer } from './useRenderer';
-import { Node } from './components/Node/Node';
-import { getTilePosition } from './utils/gridHelpers';
-import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
-import { Lasso } from './components/Lasso/Lasso';
-import { Connector } from './components/Connector/Connector';
-import { Group } from './components/Group/Group';
+import { TILE_SIZE } from './utils/constants';
+// import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
+import { Grid } from './components/Grid/Grid';
+import { Cursor } from './components/Cursor/Cursor';
+import { NodeV2 } from './components/Node/NodeV2';
 
-const InitialisedRenderer = () => {
-  const renderer = useRenderer();
-  const [isReady, setIsReady] = useState(false);
+export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
   });
-  const gridSize = useSceneStore((state) => {
-    return state.gridSize;
+  const icons = useSceneStore((state) => {
+    return state.icons;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -35,73 +29,36 @@ const InitialisedRenderer = () => {
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
-  const { activeLayer } = Paper.project;
   useInteractionManager();
 
-  const {
-    init: initRenderer,
-    zoomTo,
-    container: rendererContainer,
-    scrollTo
-  } = renderer;
-  const { position: scrollPosition } = scroll;
-
-  useEffect(() => {
-    initRenderer(gridSize);
-    setIsReady(true);
-
-    return () => {
-      if (activeLayer) gsap.killTweensOf(activeLayer.view);
-    };
-  }, [initRenderer, activeLayer, gridSize.toString()]);
-
-  useEffect(() => {
-    zoomTo(zoom);
-  }, [zoom, zoomTo]);
-
-  useEffect(() => {
-    const { center: viewCenter } = activeLayer.view.bounds;
-
-    const newPosition = new Coords(
-      scrollPosition.x + viewCenter.x,
-      scrollPosition.y + viewCenter.y
-    );
-
-    rendererContainer.current.position.set(newPosition.x, newPosition.y);
-  }, [scrollPosition, rendererContainer, activeLayer.view.bounds]);
-
-  useEffect(() => {
-    if (mode.type !== 'CURSOR') return;
-
-    const { tile } = mouse.position;
-
-    const tilePosition = getTilePosition(tile);
-    renderer.cursor.moveTo(tilePosition);
-  }, [
-    mode,
-    mouse,
-    renderer.cursor.moveTo,
-    gridSize,
-    scrollPosition,
-    renderer.cursor,
-    scroll
-  ]);
-
-  useEffect(() => {
-    scrollTo(scrollPosition);
-  }, [scrollPosition, scrollTo]);
-
-  useEffect(() => {
-    const isCursorVisible = mode.type === 'CURSOR';
-
-    renderer.cursor.setVisible(isCursorVisible);
-  }, [mode.type, renderer.cursor]);
-
-  if (!isReady) return null;
-
   return (
-    <>
-      {mode.type === 'LASSO' && (
+    <Box
+      sx={{
+        width: '100%',
+        height: '100%'
+      }}
+    >
+      <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position} />
+      {mode.showCursor && (
+        <Cursor
+          position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
+          tileSize={TILE_SIZE * zoom}
+        />
+      )}
+      {scene.nodes.map((node) => {
+        return (
+          <NodeV2
+            key={node.id}
+            position={getTilePosition(node.position, OriginEnum.BOTTOM)}
+            iconUrl={
+              icons.find((icon) => {
+                return icon.id === node.iconId;
+              })?.url
+            }
+          />
+        );
+      })}
+      {/* {mode.type === 'LASSO' && (
         <Lasso
           parentContainer={renderer.lassoContainer.current as paper.Group}
           startTile={mode.selection.startTile}
@@ -134,16 +91,7 @@ const InitialisedRenderer = () => {
             parentContainer={renderer.nodeManager.container as paper.Group}
           />
         );
-      })}
-    </>
-  );
-};
-
-export const Renderer = () => {
-  return (
-    <Initialiser>
-      <InitialisedRenderer />
-      <ContextMenuLayer />
-    </Initialiser>
+      })} */}
+    </Box>
   );
 };
