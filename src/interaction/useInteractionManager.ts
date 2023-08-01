@@ -23,6 +23,9 @@ export const useInteractionManager = () => {
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
@@ -60,7 +63,7 @@ export const useInteractionManager = () => {
 
       const newPosition: Mouse['position'] = {
         screen: { x: e.clientX, y: e.clientY },
-        tile: screenToIso({ x: e.clientX, y: e.clientY })
+        tile: screenToIso({ mouse: { x: e.clientX, y: e.clientY }, zoom })
       };
 
       const newDelta: Mouse['delta'] = {
@@ -92,11 +95,11 @@ export const useInteractionManager = () => {
         scroll,
         contextMenu,
         itemControls
-      }
+      };
 
       const newState = produce(baseState, (draft) => {
-          return reducerAction(draft);
-        });
+        return reducerAction(draft);
+      });
 
       uiStateActions.setMouse(nextMouse);
       uiStateActions.setScroll(newState.scroll);
@@ -107,12 +110,16 @@ export const useInteractionManager = () => {
     },
     [
       mode,
+      mouse.position.screen,
+      mouse.position.tile,
+      mouse.mousedown,
       scroll,
       itemControls,
       uiStateActions,
       sceneActions,
       scene,
-      contextMenu
+      contextMenu,
+      zoom
     ]
   );
 

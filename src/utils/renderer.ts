@@ -1,45 +1,72 @@
 import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
-import { Coords, TileOriginEnum, Node } from 'src/types';
+import { Coords, TileOriginEnum, Node, Size } from 'src/types';
 import { CoordsUtils } from 'src/utils';
 
-export const screenToIso = ({ x, y }: { x: number; y: number }) => {
+interface GetProjectedTileSize {
+  zoom: number;
+}
+
+// Gets the size of a tile at a given zoom level
+export const getProjectedTileSize = ({ zoom }: GetProjectedTileSize): Size => {
+  return {
+    width: PROJECTED_TILE_DIMENSIONS.width * zoom,
+    height: PROJECTED_TILE_DIMENSIONS.height * zoom
+  };
+};
+
+interface ScreenToIso {
+  mouse: Coords;
+  zoom: number;
+}
+
+// converts a mouse position to a tile position
+export const screenToIso = ({ mouse, zoom }: ScreenToIso) => {
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
-  const halfW = PROJECTED_TILE_DIMENSIONS.width / 2;
-  const halfH = PROJECTED_TILE_DIMENSIONS.height / 2;
+  const projectedTileSize = getProjectedTileSize({ zoom });
+  const halfW = projectedTileSize.width / 2;
+  const halfH = projectedTileSize.height / 2;
 
   // The origin is the center of the project.
   const projectPosition = {
-    x: x - editorWidth * 0.5,
-    y: y - editorHeight * 0.5
+    x: mouse.x - editorWidth * 0.5,
+    y: mouse.y - editorHeight * 0.5
   };
 
   const tile = {
     x: Math.floor(
-      (projectPosition.x + halfW) / PROJECTED_TILE_DIMENSIONS.width -
-        projectPosition.y / PROJECTED_TILE_DIMENSIONS.height
+      (projectPosition.x + halfW) / projectedTileSize.width -
+        projectPosition.y / projectedTileSize.height
     ),
     y: -Math.floor(
-      (projectPosition.y + halfH) / PROJECTED_TILE_DIMENSIONS.height +
-        projectPosition.x / PROJECTED_TILE_DIMENSIONS.width
+      (projectPosition.y + halfH) / projectedTileSize.height +
+        projectPosition.x / projectedTileSize.width
     )
   };
 
   return tile;
 };
 
-export const getTilePosition = (
-  { x, y }: { x: number; y: number },
-  origin: TileOriginEnum = TileOriginEnum.CENTER
-) => {
+interface GetTilePosition {
+  tile: Coords;
+  zoom: number;
+  origin?: TileOriginEnum;
+}
+
+export const getTilePosition = ({
+  tile,
+  zoom,
+  origin = TileOriginEnum.CENTER
+}: GetTilePosition) => {
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
-  const halfW = PROJECTED_TILE_DIMENSIONS.width / 2;
-  const halfH = PROJECTED_TILE_DIMENSIONS.height / 2;
+  const projectedTileSize = getProjectedTileSize({ zoom });
+  const halfW = projectedTileSize.width / 2;
+  const halfH = projectedTileSize.height / 2;
 
   const position: Coords = {
-    x: editorWidth * 0.5 + (halfW * x - halfW * y),
-    y: editorHeight * 0.5 - (halfH * x + halfH * y) + halfH
+    x: editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y),
+    y: editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y) + halfH
   };
 
   switch (origin) {

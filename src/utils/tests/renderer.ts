@@ -5,7 +5,7 @@ jest.mock('paper', () => {
   return {};
 });
 
-describe('Tests gridhelpers', () => {
+describe('Tests renderer utils', () => {
   test('getGridSubset() works correctly', () => {
     const gridSubset = getGridSubset([
       { x: 5, y: 5 },
