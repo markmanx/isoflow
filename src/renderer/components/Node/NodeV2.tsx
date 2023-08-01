@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/renderer/utils/constants';
@@ -11,25 +11,50 @@ interface Props {
 export const NodeV2 = ({ iconUrl, position }: Props) => {
   const ref = useRef<HTMLImageElement>();
 
+  const setPosition = useCallback(
+    ({
+      position: _position,
+      animationDuration = 0
+    }: {
+      position: { x: number; y: number };
+      animationDuration?: number;
+    }) => {
+      if (!ref.current) return;
+
+      gsap.to(ref.current, {
+        duration: animationDuration,
+        x: _position.x - PROJECTED_TILE_DIMENSIONS.x / 2,
+        y: _position.y - PROJECTED_TILE_DIMENSIONS.y / 2 - ref.current.height
+      });
+    },
+    []
+  );
+
   useEffect(() => {
     if (!ref.current) return;
 
-    gsap.to(ref.current, {
-      duration: 0.15,
-      x: position.x - PROJECTED_TILE_DIMENSIONS.x / 2,
-      y: position.y - PROJECTED_TILE_DIMENSIONS.y / 2 - ref.current.height
-    });
-  }, [position]);
+    setPosition({ position, animationDuration: 0.15 });
+  }, [position, setPosition]);
+
+  const onImageLoaded = useCallback(() => {
+    if (!ref.current) return;
+
+    gsap.killTweensOf(ref.current);
+    setPosition({ position });
+    ref.current.style.opacity = '1';
+  }, [position, setPosition]);
 
   return (
     <Box
       ref={ref}
+      onLoad={onImageLoaded}
       component="img"
       src={iconUrl}
       sx={{
         position: 'absolute',
         width: PROJECTED_TILE_DIMENSIONS.x,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        opacity: 0
       }}
     />
   );
