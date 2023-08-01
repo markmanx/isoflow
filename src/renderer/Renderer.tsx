@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Paper from 'paper';
 import gsap from 'gsap';
+import { Box } from '@mui/material';
 import { Coords } from 'src/utils/Coords';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { OriginEnum, clamp, getTilePosition } from 'src/utils';
@@ -44,12 +44,17 @@ const InitialisedRenderer = () => {
   useInteractionManager();
 
   return (
-    <>
-      <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
+    <Box
+      sx={{
+        width: '100%',
+        height: '100%'
+      }}
+    >
+      <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position.toObject()} />
       {mode.showCursor && (
         <Cursor
           position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
-          tileSize={TILE_SIZE}
+          tileSize={TILE_SIZE * zoom}
         />
       )}
       {scene.nodes.map((node) => {
@@ -99,7 +104,7 @@ const InitialisedRenderer = () => {
           />
         );
       })} */}
-    </>
+    </Box>
   );
 };
 
