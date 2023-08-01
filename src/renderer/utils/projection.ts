@@ -28,5 +28,5 @@ export const applyProjectionMatrix = (
 export const getCSSMatrix = (
   translate: { x: number; y: number } = { x: 0, y: 0 }
 ) => {
-  return `translate(${translate.x}, ${translate.y}) matrix(0.707, 0.409, -0.707, 0.409, 0, -0.816) translate(-${translate.x}, -${translate.y}) translateZ(0)`;
+  return `translate(${translate.x}px, ${translate.y}px) matrix(0.707, 0.409, -0.707, 0.409, 0, -0.816)`;
 };

@@ -46,10 +46,12 @@ const InitialisedRenderer = () => {
   return (
     <>
       <Grid tileSize={TILE_SIZE} scroll={scroll.position.toObject()} />
-      <Cursor
-        position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
-        tileSize={TILE_SIZE}
-      />
+      {mode.type === 'CURSOR' && (
+        <Cursor
+          position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
+          tileSize={TILE_SIZE}
+        />
+      )}
       {scene.nodes.map((node) => {
         return (
           <NodeV2

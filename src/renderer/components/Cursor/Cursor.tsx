@@ -8,6 +8,7 @@ interface Props {
   tileSize: number;
 }
 
+// TODO: Remove tilesize
 export const Cursor = ({ position, tileSize }: Props) => {
   const theme = useTheme();
   const ref = useRef<SVGElement>();
@@ -28,9 +29,7 @@ export const Cursor = ({ position, tileSize }: Props) => {
       component="svg"
       sx={{
         position: 'absolute',
-        transform: `translate(${-tileSize * 0.5}px, ${
-          -tileSize * 0.5
-        }px) ${getCSSMatrix()}`
+        transform: getCSSMatrix({ x: -(tileSize / 2), y: -(tileSize / 2) })
       }}
       width={tileSize}
       height={tileSize}
