@@ -1,8 +1,8 @@
 import { useCallback, useRef } from 'react';
 import { Group, Path } from 'paper';
-import { pathfinder } from 'src/renderer/utils/pathfinder';
-import { Coords } from 'src/types';
-import { getTileBounds } from 'src/renderer/utils/gridHelpers';
+import { pathfinder } from 'src/utils/pathfinder';
+import { Coords, TileOriginEnum } from 'src/types';
+import { getTilePosition } from 'src/utils';
 
 export const useConnector = () => {
   const containerRef = useRef(new Group());
@@ -24,7 +24,7 @@ export const useConnector = () => {
       const path = findPath([from, to]);
 
       const points = path.map((tile) => {
-        return getTileBounds(tile).center;
+        return getTilePosition(tile, TileOriginEnum.CENTER);
       });
 
       pathRef.current.set({

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { OriginEnum, getTilePosition } from 'src/utils';
+import { getTilePosition } from 'src/utils';
+import { TileOriginEnum } from 'src/types';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { TILE_SIZE } from './utils/constants';
-// import { ContextMenuLayer } from './components/ContextMenuLayer/ContextMenuLayer';
-import { Grid } from './components/Grid/Grid';
-import { Cursor } from './components/Cursor/Cursor';
-import { NodeV2 } from './components/Node/NodeV2';
+import { TILE_SIZE } from 'src/config';
+import { Grid } from '../../renderer/components/Grid/Grid';
+import { Cursor } from '../../renderer/components/Cursor/Cursor';
+import { NodeV2 } from '../../renderer/components/Node/NodeV2';
 
 export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
@@ -41,7 +41,7 @@ export const Renderer = () => {
       <Grid tileSize={TILE_SIZE * zoom} scroll={scroll.position} />
       {mode.showCursor && (
         <Cursor
-          position={getTilePosition(mouse.position.tile, OriginEnum.TOP)}
+          position={getTilePosition(mouse.position.tile, TileOriginEnum.TOP)}
           tileSize={TILE_SIZE * zoom}
         />
       )}
@@ -49,7 +49,7 @@ export const Renderer = () => {
         return (
           <NodeV2
             key={node.id}
-            position={getTilePosition(node.position, OriginEnum.BOTTOM)}
+            position={getTilePosition(node.position, TileOriginEnum.BOTTOM)}
             iconUrl={
               icons.find((icon) => {
                 return icon.id === node.iconId;

@@ -4,15 +4,15 @@ import {
   Scroll,
   ContextMenu,
   ItemControls,
-  Mouse
-} from 'src/stores/useUiStateStore';
-import { SortedSceneItems } from 'src/stores/useSceneStore';
+  Mouse,
+  Scene
+} from 'src/types';
 
 export interface State {
   mode: Mode;
   mouse: Mouse;
   scroll: Scroll;
-  scene: SortedSceneItems;
+  scene: Scene;
   contextMenu: ContextMenu;
   itemControls: ItemControls;
 }

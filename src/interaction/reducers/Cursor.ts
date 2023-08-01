@@ -1,7 +1,5 @@
-import { SidebarTypeEnum } from 'src/stores/useUiStateStore';
-import { CoordsUtils } from 'src/utils';
-import { InteractionReducer } from '../types';
-import { getItemsByTile } from '../../renderer/utils/gridHelpers';
+import { SidebarTypeEnum, InteractionReducer } from 'src/types';
+import { CoordsUtils, filterNodesByTile } from 'src/utils';
 
 export const Cursor: InteractionReducer = {
   mousemove: (draftState) => {
@@ -16,7 +14,7 @@ export const Cursor: InteractionReducer = {
 
     if (draftState.mode.mousedown) {
       // User is in mousedown mode
-      if (draftState.mode.mousedown.items.nodes.length > 0) {
+      if (draftState.mode.mousedown.items.length > 0) {
         // User's last mousedown action was on a node
         draftState.mode = {
           type: 'DRAG_ITEMS',
@@ -42,9 +40,9 @@ export const Cursor: InteractionReducer = {
   mousedown: (draftState) => {
     if (draftState.mode.type !== 'CURSOR') return;
 
-    const itemsAtTile = getItemsByTile({
+    const itemsAtTile = filterNodesByTile({
       tile: draftState.mouse.position.tile,
-      sortedSceneItems: draftState.scene
+      nodes: draftState.scene.nodes
     });
 
     draftState.mode.mousedown = {
@@ -64,7 +62,7 @@ export const Cursor: InteractionReducer = {
 
     if (draftState.mode.mousedown !== null) {
       // User's last mousedown action was on a scene item
-      const mousedownNode = draftState.mode.mousedown.items.nodes[0];
+      const mousedownNode = draftState.mode.mousedown.items[0];
 
       if (mousedownNode) {
         // The user's last mousedown action was on a node

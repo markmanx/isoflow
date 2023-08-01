@@ -1,5 +1,5 @@
 import { Coords } from 'src/types';
-import { getGridSubset, isWithinBounds } from '../gridHelpers';
+import { getGridSubset, isWithinBounds } from '../renderer';
 
 jest.mock('paper', () => {
   return {};
