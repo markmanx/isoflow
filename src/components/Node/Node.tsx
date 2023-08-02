@@ -11,7 +11,8 @@ interface Props {
 }
 
 export const Node = ({ iconUrl, tile, zoom }: Props) => {
-  const ref = useRef<HTMLImageElement>();
+  const nodeRef = useRef<HTMLDivElement>();
+  const iconRef = useRef<HTMLImageElement>();
 
   const tileSize = useMemo<Size>(() => {
     return getProjectedTileSize({ zoom });
@@ -25,7 +26,7 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
       tile: Coords;
       animationDuration?: number;
     }) => {
-      if (!ref.current) return;
+      if (!nodeRef.current || !iconRef.current) return;
 
       const position = getTilePosition({
         tile: _tile,
@@ -33,21 +34,22 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
         origin: TileOriginEnum.BOTTOM
       });
 
-      gsap.to(ref.current, {
+      gsap.to(iconRef.current, { duration: 0, y: -iconRef.current.height });
+      gsap.to(nodeRef.current, {
         duration: animationDuration,
         x: position.x - tileSize.width / 2,
-        y: position.y - tileSize.height / 2 - ref.current.height
+        y: position.y - tileSize.height / 2
       });
     },
     [tileSize]
   );
 
   const onImageLoaded = useCallback(() => {
-    if (!ref.current) return;
+    if (!nodeRef.current || !iconRef.current) return;
 
-    gsap.killTweensOf(ref.current);
+    gsap.killTweensOf(nodeRef.current);
     moveToTile({ tile, animationDuration: 0 });
-    ref.current.style.opacity = '1';
+    nodeRef.current.style.opacity = '1';
   }, [tile, moveToTile]);
 
   useEffect(() => {
@@ -56,16 +58,23 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
 
   return (
     <Box
-      ref={ref}
-      onLoad={onImageLoaded}
-      component="img"
-      src={iconUrl}
+      ref={nodeRef}
       sx={{
         position: 'absolute',
-        width: tileSize.width,
-        pointerEvents: 'none',
         opacity: 0
       }}
-    />
+    >
+      <Box
+        ref={iconRef}
+        onLoad={onImageLoaded}
+        component="img"
+        src={iconUrl}
+        sx={{
+          position: 'absolute',
+          width: tileSize.width,
+          pointerEvents: 'none'
+        }}
+      />
+    </Box>
   );
 };
