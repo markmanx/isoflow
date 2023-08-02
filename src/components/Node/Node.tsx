@@ -5,6 +5,7 @@ import { Size, Coords, TileOriginEnum } from 'src/types';
 import { getTilePosition, getProjectedTileSize } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { LabelContainer } from './LabelContainer';
+import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
 interface Props {
   iconUrl?: string;
@@ -84,7 +85,7 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
         }}
       >
         <LabelContainer labelHeight={20 + iconSize.height} tileSize={tileSize}>
-          asdf
+          <MarkdownLabel label="Hello" />
         </LabelContainer>
       </Box>
       <Box
