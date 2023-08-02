@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { getIsoMatrixCSS } from 'src/utils';
-import { useWindowSize } from 'src/hooks/useWindowSize';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
 interface Props {
   tileSize: number;
 }
 
 export const Grid = ({ tileSize: _tileSize }: Props) => {
-  const windowSize = useWindowSize();
+  const containerRef = useRef<HTMLDivElement>();
   const tileSize = _tileSize;
+  const { size, observe } = useResizeObserver();
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    observe(containerRef.current);
+  }, [observe]);
 
   return (
     <Box
+      ref={containerRef}
       sx={{
         position: 'absolute',
         left: 0,
@@ -36,8 +44,8 @@ export const Grid = ({ tileSize: _tileSize }: Props) => {
         <Box component="svg" width="100%" height="100%">
           <pattern
             id="gridpattern"
-            x={`${windowSize.width * 1.5 - tileSize * 0.5}px`}
-            y={`${windowSize.height * 1.5 - tileSize * 0.5}px`}
+            x={`${size.width * 1.5 - tileSize * 0.5}px`}
+            y={`${size.height * 1.5 - tileSize * 0.5}px`}
             width={tileSize}
             height={tileSize}
             patternUnits="userSpaceOnUse"
