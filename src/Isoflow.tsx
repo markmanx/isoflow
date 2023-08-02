@@ -15,7 +15,7 @@ import { useSceneStore } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
 import { sceneInputtoScene, sceneToSceneInput } from 'src/utils';
-import { DefaultLabelContainer } from 'src/renderer/components/Node/DefaultLabelContainer';
+import { DefaultLabelContainer } from 'src/components/Node/DefaultLabelContainer';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 
 interface Props {

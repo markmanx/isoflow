@@ -6,9 +6,9 @@ import { TileOriginEnum } from 'src/types';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { TILE_SIZE } from 'src/config';
-import { Grid } from 'src/renderer/components/Grid/Grid';
-import { Cursor } from 'src/renderer/components/Cursor/Cursor';
-import { Node } from 'src/renderer/components/Node/Node';
+import { Grid } from 'src/components/Grid/Grid';
+import { Cursor } from 'src/components/Cursor/Cursor';
+import { Node } from 'src/components/Node/Node';
 
 export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
