@@ -1,8 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { getTilePosition } from 'src/utils';
-import { TileOriginEnum } from 'src/types';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { TILE_SIZE } from 'src/config';
