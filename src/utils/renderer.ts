@@ -49,20 +49,19 @@ export const screenToIso = ({ mouse, zoom }: ScreenToIso) => {
 
 interface GetTilePosition {
   tile: Coords;
-  zoom: number;
+  tileSize: Size;
   origin?: TileOriginEnum;
 }
 
 export const getTilePosition = ({
   tile,
-  zoom,
+  tileSize,
   origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
-  const projectedTileSize = getProjectedTileSize({ zoom });
-  const halfW = projectedTileSize.width / 2;
-  const halfH = projectedTileSize.height / 2;
+  const halfW = tileSize.width / 2;
+  const halfH = tileSize.height / 2;
 
   const position: Coords = {
     x: editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y),

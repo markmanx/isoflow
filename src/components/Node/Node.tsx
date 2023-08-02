@@ -1,57 +1,58 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
-import { Size } from 'src/types';
+import { Size, Coords, TileOriginEnum } from 'src/types';
+import { getTilePosition, getProjectedTileSize } from 'src/utils';
 
 interface Props {
   iconUrl?: string;
-  position: { x: number; y: number };
+  tile: Coords;
   zoom: number;
 }
 
-export const Node = ({ iconUrl, position, zoom }: Props) => {
+export const Node = ({ iconUrl, tile, zoom }: Props) => {
   const ref = useRef<HTMLImageElement>();
 
   const tileSize = useMemo<Size>(() => {
-    return {
-      width: PROJECTED_TILE_DIMENSIONS.width * zoom,
-      height: PROJECTED_TILE_DIMENSIONS.height * zoom
-    };
+    return getProjectedTileSize({ zoom });
   }, [zoom]);
 
-  const setPosition = useCallback(
+  const moveToTile = useCallback(
     ({
-      position: _position,
+      tile: _tile,
       animationDuration = 0.15
     }: {
-      position: { x: number; y: number };
+      tile: Coords;
       animationDuration?: number;
     }) => {
       if (!ref.current) return;
 
+      const position = getTilePosition({
+        tile: _tile,
+        tileSize,
+        origin: TileOriginEnum.BOTTOM
+      });
+
       gsap.to(ref.current, {
         duration: animationDuration,
-        x: _position.x - tileSize.width / 2,
-        y: _position.y - tileSize.height / 2 - ref.current.height
+        x: position.x - tileSize.width / 2,
+        y: position.y - tileSize.height / 2 - ref.current.height
       });
     },
     [tileSize]
   );
 
-  useEffect(() => {
-    if (!ref.current) return;
-
-    setPosition({ position });
-  }, [position, setPosition]);
-
   const onImageLoaded = useCallback(() => {
     if (!ref.current) return;
 
     gsap.killTweensOf(ref.current);
-    setPosition({ position, animationDuration: 0 });
+    moveToTile({ tile, animationDuration: 0 });
     ref.current.style.opacity = '1';
-  }, [position, setPosition]);
+  }, [tile, moveToTile]);
+
+  useEffect(() => {
+    moveToTile({ tile, animationDuration: 0 });
+  }, [tile, moveToTile]);
 
   return (
     <Box

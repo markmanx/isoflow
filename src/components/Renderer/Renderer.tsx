@@ -36,7 +36,7 @@ export const Renderer = () => {
       }}
     >
       <Grid tileSize={TILE_SIZE * zoom} />
-      {mode.showCursor && (
+      {/* {mode.showCursor && (
         <Cursor
           position={getTilePosition({
             tile: mouse.position.tile,
@@ -45,16 +45,12 @@ export const Renderer = () => {
           })}
           tileSize={TILE_SIZE * zoom}
         />
-      )}
+      )} */}
       {scene.nodes.map((node) => {
         return (
           <Node
             key={node.id}
-            position={getTilePosition({
-              tile: node.position,
-              origin: TileOriginEnum.BOTTOM,
-              zoom
-            })}
+            tile={node.position}
             iconUrl={
               icons.find((icon) => {
                 return icon.id === node.iconId;
