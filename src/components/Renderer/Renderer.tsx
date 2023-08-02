@@ -50,7 +50,7 @@ export const Renderer = () => {
         return (
           <Node
             key={node.id}
-            tile={node.position}
+            node={node}
             iconUrl={
               icons.find((icon) => {
                 return icon.id === node.iconId;

@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { Size, Coords, TileOriginEnum } from 'src/types';
+import { Size, Coords, TileOriginEnum, Node as NodeI } from 'src/types';
 import { getTilePosition, getProjectedTileSize } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
 interface Props {
+  node: NodeI;
   iconUrl?: string;
-  tile: Coords;
   zoom: number;
 }
 
-export const Node = ({ iconUrl, tile, zoom }: Props) => {
+export const Node = ({ node, iconUrl, zoom }: Props) => {
   const nodeRef = useRef<HTMLDivElement>();
   const iconRef = useRef<HTMLImageElement>();
   const { observe, size: iconSize } = useResizeObserver();
@@ -63,13 +63,13 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
     if (!nodeRef.current || !iconRef.current) return;
 
     gsap.killTweensOf(nodeRef.current);
-    moveToTile({ tile, animationDuration: 0 });
+    moveToTile({ tile: node.position, animationDuration: 0 });
     nodeRef.current.style.opacity = '1';
-  }, [tile, moveToTile]);
+  }, [node.position, moveToTile]);
 
   useEffect(() => {
-    moveToTile({ tile, animationDuration: 0 });
-  }, [tile, moveToTile]);
+    moveToTile({ tile: node.position, animationDuration: 0 });
+  }, [node.position, moveToTile]);
 
   return (
     <Box
@@ -84,8 +84,12 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
           position: 'absolute'
         }}
       >
-        <LabelContainer labelHeight={20 + iconSize.height} tileSize={tileSize}>
-          <MarkdownLabel label="Hello" />
+        <LabelContainer
+          labelHeight={node.labelHeight + iconSize.height}
+          tileSize={tileSize}
+        >
+          {node.label && <MarkdownLabel label={node.label} />}
+          {node.labelComponent}
         </LabelContainer>
       </Box>
       <Box

@@ -24,7 +24,7 @@ export interface Node {
   labelHeight: number;
   position: Coords;
   isSelected: boolean;
-  labelElement?: React.ReactNode;
+  labelComponent?: React.ReactNode;
 }
 
 export interface Connector {

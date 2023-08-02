@@ -59,7 +59,8 @@ export const CustomNode = () => {
           {
             id: 'Node1',
             label: 'Requests per minute',
-            labelElement: <CustomLabel />,
+            labelComponent: <CustomLabel />,
+            labelHeight: 40,
             iconId: 'server',
             position: {
               x: 0,
