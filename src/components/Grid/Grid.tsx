@@ -10,7 +10,7 @@ interface Props {
 export const Grid = ({ tileSize: _tileSize }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const tileSize = _tileSize;
-  const { size, observe } = useResizeObserver();
+  const { size: containerSize, observe } = useResizeObserver();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -44,8 +44,8 @@ export const Grid = ({ tileSize: _tileSize }: Props) => {
         <Box component="svg" width="100%" height="100%">
           <pattern
             id="gridpattern"
-            x={`${size.width * 1.5 - tileSize * 0.5}px`}
-            y={`${size.height * 1.5 - tileSize * 0.5}px`}
+            x={`${containerSize.width * 1.5 - tileSize * 0.5}px`}
+            y={`${containerSize.height * 1.5 - tileSize * 0.5}px`}
             width={tileSize}
             height={tileSize}
             patternUnits="userSpaceOnUse"
