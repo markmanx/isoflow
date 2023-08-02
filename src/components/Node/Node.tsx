@@ -3,6 +3,8 @@ import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { Size, Coords, TileOriginEnum } from 'src/types';
 import { getTilePosition, getProjectedTileSize } from 'src/utils';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { LabelContainer } from './LabelContainer';
 
 interface Props {
   iconUrl?: string;
@@ -13,6 +15,13 @@ interface Props {
 export const Node = ({ iconUrl, tile, zoom }: Props) => {
   const nodeRef = useRef<HTMLDivElement>();
   const iconRef = useRef<HTMLImageElement>();
+  const { observe, size: iconSize } = useResizeObserver();
+
+  useEffect(() => {
+    if (!iconRef.current) return;
+
+    observe(iconRef.current);
+  }, [observe]);
 
   const tileSize = useMemo<Size>(() => {
     return getProjectedTileSize({ zoom });
@@ -34,11 +43,16 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
         origin: TileOriginEnum.BOTTOM
       });
 
-      gsap.to(iconRef.current, { duration: 0, y: -iconRef.current.height });
+      gsap.to(iconRef.current, {
+        duration: animationDuration,
+        x: -iconRef.current.width * 0.5,
+        y: -iconRef.current.height
+      });
+
       gsap.to(nodeRef.current, {
         duration: animationDuration,
-        x: position.x - tileSize.width / 2,
-        y: position.y - tileSize.height / 2
+        x: position.x,
+        y: position.y
       });
     },
     [tileSize]
@@ -65,14 +79,23 @@ export const Node = ({ iconUrl, tile, zoom }: Props) => {
       }}
     >
       <Box
+        sx={{
+          position: 'absolute'
+        }}
+      >
+        <LabelContainer labelHeight={20 + iconSize.height} tileSize={tileSize}>
+          asdf
+        </LabelContainer>
+      </Box>
+      <Box
+        component="img"
         ref={iconRef}
         onLoad={onImageLoaded}
-        component="img"
         src={iconUrl}
         sx={{
+          pointerEvents: 'none',
           position: 'absolute',
-          width: tileSize.width,
-          pointerEvents: 'none'
+          width: tileSize.width
         }}
       />
     </Box>

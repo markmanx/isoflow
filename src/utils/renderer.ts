@@ -65,7 +65,7 @@ export const getTilePosition = ({
 
   const position: Coords = {
     x: editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y),
-    y: editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y) + halfH
+    y: editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y)
   };
 
   switch (origin) {
