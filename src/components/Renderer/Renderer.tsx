@@ -36,16 +36,7 @@ export const Renderer = () => {
       }}
     >
       <Grid tileSize={TILE_SIZE * zoom} />
-      {/* {mode.showCursor && (
-        <Cursor
-          position={getTilePosition({
-            tile: mouse.position.tile,
-            origin: TileOriginEnum.TOP,
-            zoom
-          })}
-          tileSize={TILE_SIZE * zoom}
-        />
-      )} */}
+      {mode.showCursor && <Cursor tile={mouse.position.tile} zoom={zoom} />}
       {scene.nodes.map((node) => {
         return (
           <Node

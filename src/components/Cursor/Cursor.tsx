@@ -1,52 +1,78 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+  useMemo
+} from 'react';
 import gsap from 'gsap';
 import { Box, useTheme } from '@mui/material';
-import { getTranslateCSS, getIsoMatrixCSS } from 'src/utils';
+import {
+  getTranslateCSS,
+  getIsoMatrixCSS,
+  getTilePosition,
+  getProjectedTileSize
+} from 'src/utils';
+import { TILE_SIZE } from 'src/config';
+import { Coords, TileOriginEnum, Size } from 'src/types';
 
 interface Props {
-  position: { x: number; y: number };
-  tileSize: number;
+  tile: Coords;
+  zoom: number;
 }
 
-// TODO: Remove tilesize
-export const Cursor = ({ position, tileSize }: Props) => {
+export const Cursor = ({ tile, zoom }: Props) => {
   const theme = useTheme();
   const [isReady, setIsReady] = useState(false);
   const ref = useRef<SVGElement>();
 
+  const projectedTileSize = useMemo<Size>(() => {
+    return getProjectedTileSize({ zoom });
+  }, [zoom]);
+
+  const tileSize = useMemo(() => {
+    return TILE_SIZE * zoom;
+  }, [zoom]);
+
   const setPosition = useCallback(
     ({
-      position: _position,
+      tile: _tile,
       animationDuration = 0.15
     }: {
-      position: { x: number; y: number };
+      tile: Coords;
       animationDuration?: number;
     }) => {
       if (!ref.current) return;
 
+      const position = getTilePosition({
+        tile: _tile,
+        origin: TileOriginEnum.CENTER,
+        tileSize: projectedTileSize
+      });
+
       gsap.to(ref.current, {
         duration: animationDuration,
-        left: _position.x,
-        top: _position.y
+        left: position.x,
+        top: position.y
       });
     },
-    []
+    [projectedTileSize]
   );
 
   useEffect(() => {
     if (!ref.current || !isReady) return;
 
-    setPosition({ position });
-  }, [position, setPosition, isReady]);
+    setPosition({ tile });
+  }, [tile, setPosition, isReady]);
 
   useEffect(() => {
     if (!ref.current || isReady) return;
 
     gsap.killTweensOf(ref.current);
-    setPosition({ position, animationDuration: 0 });
+    setPosition({ tile, animationDuration: 0 });
     ref.current.style.opacity = '1';
     setIsReady(true);
-  }, [position, setPosition, isReady]);
+  }, [tile, setPosition, isReady]);
 
   return (
     <Box
