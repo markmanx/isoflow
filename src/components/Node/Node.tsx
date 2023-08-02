@@ -1,15 +1,24 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
 import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
+import { Size } from 'src/types';
 
 interface Props {
   iconUrl?: string;
   position: { x: number; y: number };
+  zoom: number;
 }
 
-export const Node = ({ iconUrl, position }: Props) => {
+export const Node = ({ iconUrl, position, zoom }: Props) => {
   const ref = useRef<HTMLImageElement>();
+
+  const tileSize = useMemo<Size>(() => {
+    return {
+      width: PROJECTED_TILE_DIMENSIONS.width * zoom,
+      height: PROJECTED_TILE_DIMENSIONS.height * zoom
+    };
+  }, [zoom]);
 
   const setPosition = useCallback(
     ({
@@ -23,14 +32,11 @@ export const Node = ({ iconUrl, position }: Props) => {
 
       gsap.to(ref.current, {
         duration: animationDuration,
-        x: _position.x - PROJECTED_TILE_DIMENSIONS.width / 2,
-        y:
-          _position.y -
-          PROJECTED_TILE_DIMENSIONS.height / 2 -
-          ref.current.height
+        x: _position.x - tileSize.width / 2,
+        y: _position.y - tileSize.height / 2 - ref.current.height
       });
     },
-    []
+    [tileSize]
   );
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const Node = ({ iconUrl, position }: Props) => {
       src={iconUrl}
       sx={{
         position: 'absolute',
-        width: PROJECTED_TILE_DIMENSIONS.width,
+        width: tileSize.width,
         pointerEvents: 'none',
         opacity: 0
       }}

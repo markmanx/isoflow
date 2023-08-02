@@ -60,6 +60,7 @@ export const Renderer = () => {
                 return icon.id === node.iconId;
               })?.url
             }
+            zoom={zoom}
           />
         );
       })}
