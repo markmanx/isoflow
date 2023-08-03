@@ -31,7 +31,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
 
   const moveToTile = useCallback(
     ({
-      tile: _tile,
+      tile,
       animationDuration = 0.15
     }: {
       tile: Coords;
@@ -40,8 +40,9 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
       if (!nodeRef.current || !iconRef.current) return;
 
       const position = getTilePosition({
-        tile: _tile,
+        tile,
         tileSize,
+        scroll,
         origin: TileOriginEnum.BOTTOM
       });
 
@@ -53,11 +54,11 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
 
       gsap.to(nodeRef.current, {
         duration: animationDuration,
-        x: position.x + scroll.position.x,
-        y: position.y + scroll.position.y
+        x: position.x,
+        y: position.y
       });
     },
-    [tileSize, scroll.position.x, scroll.position.y]
+    [tileSize, scroll]
   );
 
   const onImageLoaded = useCallback(() => {

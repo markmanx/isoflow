@@ -1,5 +1,5 @@
 import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
-import { Coords, TileOriginEnum, Node, Size } from 'src/types';
+import { Coords, TileOriginEnum, Node, Size, Scroll } from 'src/types';
 import { CoordsUtils } from 'src/utils';
 
 interface GetProjectedTileSize {
@@ -17,10 +17,11 @@ export const getProjectedTileSize = ({ zoom }: GetProjectedTileSize): Size => {
 interface ScreenToIso {
   mouse: Coords;
   zoom: number;
+  scroll: Scroll;
 }
 
 // converts a mouse position to a tile position
-export const screenToIso = ({ mouse, zoom }: ScreenToIso) => {
+export const screenToIso = ({ mouse, zoom, scroll }: ScreenToIso) => {
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
   const projectedTileSize = getProjectedTileSize({ zoom });
@@ -29,8 +30,8 @@ export const screenToIso = ({ mouse, zoom }: ScreenToIso) => {
 
   // The origin is the center of the project.
   const projectPosition = {
-    x: mouse.x - editorWidth * 0.5,
-    y: mouse.y - editorHeight * 0.5
+    x: mouse.x - scroll.position.x - editorWidth * 0.5,
+    y: mouse.y - scroll.position.y - editorHeight * 0.5
   };
 
   const tile = {
@@ -50,12 +51,14 @@ export const screenToIso = ({ mouse, zoom }: ScreenToIso) => {
 interface GetTilePosition {
   tile: Coords;
   tileSize: Size;
+  scroll: Scroll;
   origin?: TileOriginEnum;
 }
 
 export const getTilePosition = ({
   tile,
   tileSize,
+  scroll,
   origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
   // TODO: Refactor editorWidth to not use window width
@@ -65,8 +68,10 @@ export const getTilePosition = ({
   const halfH = tileSize.height / 2;
 
   const position: Coords = {
-    x: editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y),
-    y: editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y)
+    x:
+      editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y) + scroll.position.x,
+    y:
+      editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y) + scroll.position.y
   };
 
   switch (origin) {

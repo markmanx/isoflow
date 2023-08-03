@@ -63,7 +63,11 @@ export const useInteractionManager = () => {
 
       const newPosition: Mouse['position'] = {
         screen: { x: e.clientX, y: e.clientY },
-        tile: screenToIso({ mouse: { x: e.clientX, y: e.clientY }, zoom })
+        tile: screenToIso({
+          mouse: { x: e.clientX, y: e.clientY },
+          zoom,
+          scroll
+        })
       };
 
       const newDelta: Mouse['delta'] = {

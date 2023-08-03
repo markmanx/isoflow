@@ -14,14 +14,15 @@ import {
   getProjectedTileSize
 } from 'src/utils';
 import { TILE_SIZE } from 'src/config';
-import { Coords, TileOriginEnum, Size } from 'src/types';
+import { Coords, TileOriginEnum, Size, Scroll } from 'src/types';
 
 interface Props {
   tile: Coords;
+  scroll: Scroll;
   zoom: number;
 }
 
-export const Cursor = ({ tile, zoom }: Props) => {
+export const Cursor = ({ tile, zoom, scroll }: Props) => {
   const theme = useTheme();
   const [isReady, setIsReady] = useState(false);
   const ref = useRef<SVGElement>();
@@ -47,6 +48,7 @@ export const Cursor = ({ tile, zoom }: Props) => {
       const position = getTilePosition({
         tile: _tile,
         origin: TileOriginEnum.CENTER,
+        scroll,
         tileSize: projectedTileSize
       });
 
@@ -56,7 +58,7 @@ export const Cursor = ({ tile, zoom }: Props) => {
         top: position.y
       });
     },
-    [projectedTileSize]
+    [projectedTileSize, scroll]
   );
 
   useEffect(() => {

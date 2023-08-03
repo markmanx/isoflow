@@ -37,7 +37,9 @@ export const Renderer = () => {
       }}
     >
       <Grid scroll={scroll} zoom={zoom} />
-      {mode.showCursor && <Cursor tile={mouse.position.tile} zoom={zoom} />}
+      {mode.showCursor && (
+        <Cursor tile={mouse.position.tile} zoom={zoom} scroll={scroll} />
+      )}
       {scene.nodes.map((node) => {
         return (
           <Node
