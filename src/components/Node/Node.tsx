@@ -99,9 +99,9 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         onLoad={onImageLoaded}
         src={iconUrl}
         sx={{
-          pointerEvents: 'none',
           position: 'absolute',
-          width: tileSize.width
+          width: tileSize.width,
+          pointerEvents: 'none'
         }}
       />
     </Box>
