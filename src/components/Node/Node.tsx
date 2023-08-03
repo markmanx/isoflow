@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
+import chroma from 'chroma-js';
 import { Size, Coords, TileOriginEnum, Node as NodeI, Scroll } from 'src/types';
-import { getTilePosition, getProjectedTileSize } from 'src/utils';
+import {
+  getTilePosition,
+  getProjectedTileSize,
+  getColorVariant
+} from 'src/utils';
+import { TILE_SIZE } from 'src/config';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { IsoTile } from 'src/components/IsoTile/IsoTile';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
@@ -25,7 +32,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
     observe(iconRef.current);
   }, [observe]);
 
-  const tileSize = useMemo<Size>(() => {
+  const projectedTileSize = useMemo<Size>(() => {
     return getProjectedTileSize({ zoom });
   }, [zoom]);
 
@@ -41,7 +48,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
 
       const position = getTilePosition({
         tile,
-        tileSize,
+        tileSize: projectedTileSize,
         scroll,
         origin: TileOriginEnum.BOTTOM
       });
@@ -58,7 +65,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         y: position.y
       });
     },
-    [tileSize, scroll]
+    [projectedTileSize, scroll]
   );
 
   const onImageLoaded = useCallback(() => {
@@ -86,9 +93,26 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
           position: 'absolute'
         }}
       >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -projectedTileSize.height / 2,
+            transform: 'scale(1.2)'
+          }}
+        >
+          <IsoTile
+            size={TILE_SIZE * zoom}
+            fill={node.color}
+            cornerRadius={15}
+            stroke={{
+              width: 1,
+              color: getColorVariant(node.color, 'dark', { grade: 1.5 })
+            }}
+          />
+        </Box>
         <LabelContainer
           labelHeight={node.labelHeight + iconSize.height}
-          tileSize={tileSize}
+          tileSize={projectedTileSize}
         >
           {node.label && <MarkdownLabel label={node.label} />}
           {node.labelComponent}
@@ -101,7 +125,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         src={iconUrl}
         sx={{
           position: 'absolute',
-          width: tileSize.width,
+          width: projectedTileSize.width,
           pointerEvents: 'none'
         }}
       />

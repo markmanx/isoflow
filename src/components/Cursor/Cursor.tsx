@@ -6,15 +6,11 @@ import React, {
   useMemo
 } from 'react';
 import gsap from 'gsap';
-import { Box, useTheme } from '@mui/material';
-import {
-  getTranslateCSS,
-  getIsoMatrixCSS,
-  getTilePosition,
-  getProjectedTileSize
-} from 'src/utils';
+import { useTheme } from '@mui/material';
+import { getTilePosition, getProjectedTileSize } from 'src/utils';
 import { TILE_SIZE } from 'src/config';
 import { Coords, TileOriginEnum, Size, Scroll } from 'src/types';
+import { IsoTile } from 'src/components/IsoTile/IsoTile';
 
 interface Props {
   tile: Coords;
@@ -77,27 +73,6 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
   }, [tile, setPosition, isReady]);
 
   return (
-    <Box
-      ref={ref}
-      component="svg"
-      sx={{
-        position: 'absolute',
-        transform: `${getTranslateCSS({
-          x: -(tileSize / 2),
-          y: -(tileSize / 2)
-        })} ${getIsoMatrixCSS()}`,
-        opacity: 0
-      }}
-      width={tileSize}
-      height={tileSize}
-    >
-      <rect
-        width={tileSize}
-        height={tileSize}
-        fill={theme.palette.primary.main}
-        opacity={0.7}
-        rx={10}
-      />
-    </Box>
+    <IsoTile ref={ref} fill={theme.palette.primary.main} size={tileSize} />
   );
 };
