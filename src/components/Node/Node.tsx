@@ -112,6 +112,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         <LabelContainer
           labelHeight={node.labelHeight + iconSize.height}
           tileSize={projectedTileSize}
+          connectorDotSize={5 * zoom}
         >
           {node.label && <MarkdownLabel label={node.label} />}
           {node.labelComponent}

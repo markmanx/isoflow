@@ -8,11 +8,15 @@ interface Props {
   labelHeight: number;
   tileSize: Size;
   children: React.ReactNode;
+  connectorDotSize: number;
 }
 
-const connectorWidth = 4;
-
-export const LabelContainer = ({ children, labelHeight, tileSize }: Props) => {
+export const LabelContainer = ({
+  children,
+  labelHeight,
+  tileSize,
+  connectorDotSize
+}: Props) => {
   const contentRef = useRef<HTMLDivElement>();
   const { observe, size: contentSize } = useResizeObserver();
 
@@ -45,17 +49,17 @@ export const LabelContainer = ({ children, labelHeight, tileSize }: Props) => {
         sx={{
           position: 'absolute',
           top: -(labelHeight + tileSize.height / 2),
-          left: -connectorWidth / 2
+          left: -connectorDotSize / 2
         }}
       >
         <line
-          x1={connectorWidth / 2}
+          x1={connectorDotSize / 2}
           y1={tileSize.height / 2}
-          x2={connectorWidth / 2}
+          x2={connectorDotSize / 2}
           y2={labelHeight}
-          strokeDasharray={`0, ${connectorWidth * 2}`}
+          strokeDasharray={`0, ${connectorDotSize * 2}`}
           stroke="black"
-          strokeWidth={connectorWidth}
+          strokeWidth={connectorDotSize}
           strokeLinecap="round"
         />
       </Box>
