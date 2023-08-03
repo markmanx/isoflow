@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useSceneStore } from 'src/stores/useSceneStore';
@@ -24,6 +24,9 @@ export const Renderer = () => {
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
   useInteractionManager();
 
   return (
@@ -33,7 +36,7 @@ export const Renderer = () => {
         height: '100%'
       }}
     >
-      <Grid tileSize={TILE_SIZE * zoom} />
+      <Grid scroll={scroll} zoom={zoom} />
       {mode.showCursor && <Cursor tile={mouse.position.tile} zoom={zoom} />}
       {scene.nodes.map((node) => {
         return (
@@ -46,6 +49,7 @@ export const Renderer = () => {
               })?.url
             }
             zoom={zoom}
+            scroll={scroll}
           />
         );
       })}

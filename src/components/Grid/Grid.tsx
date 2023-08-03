@@ -1,22 +1,16 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Box } from '@mui/material';
-import { getIsoMatrixCSS } from 'src/utils';
-import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import gridTileSvg from 'src/assets/grid-tile-bg.svg';
+import { Scroll } from 'src/types';
+import { getProjectedTileSize } from 'src/utils';
 
 interface Props {
-  tileSize: number;
+  scroll: Scroll;
+  zoom: number;
 }
 
-export const Grid = ({ tileSize: _tileSize }: Props) => {
+export const Grid = ({ zoom, scroll }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
-  const tileSize = _tileSize;
-  const { size: containerSize, observe } = useResizeObserver();
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    observe(containerRef.current);
-  }, [observe]);
 
   return (
     <Box
@@ -34,41 +28,13 @@ export const Grid = ({ tileSize: _tileSize }: Props) => {
       <Box
         sx={{
           position: 'absolute',
-          width: '300%',
-          height: '300%',
-          left: '-100%',
-          top: '-100%',
-          transform: getIsoMatrixCSS()
+          width: '100%',
+          height: '100%',
+          background: `repeat url("${gridTileSvg}")`,
+          backgroundSize: `${getProjectedTileSize({ zoom }).width}px`,
+          backgroundPosition: `calc(50% + ${scroll.position.x}px) calc(50% + ${scroll.position.y}px)`
         }}
-      >
-        <Box component="svg" width="100%" height="100%">
-          <pattern
-            id="gridpattern"
-            x={`${containerSize.width * 1.5 - tileSize * 0.5}px`}
-            y={`${containerSize.height * 1.5 - tileSize * 0.5}px`}
-            width={tileSize}
-            height={tileSize}
-            patternUnits="userSpaceOnUse"
-          >
-            <rect
-              x="0"
-              y="0"
-              width={tileSize}
-              height={tileSize}
-              strokeWidth={1}
-              stroke="rgba(0, 0, 0, 0.3)"
-              fill="none"
-            />
-          </pattern>
-          <rect
-            x="0"
-            y="0"
-            width="100%"
-            height="100%"
-            fill="url(#gridpattern)"
-          />
-        </Box>
-      </Box>
+      />
     </Box>
   );
 };

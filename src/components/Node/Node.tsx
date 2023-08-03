@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { Size, Coords, TileOriginEnum, Node as NodeI } from 'src/types';
+import { Size, Coords, TileOriginEnum, Node as NodeI, Scroll } from 'src/types';
 import { getTilePosition, getProjectedTileSize } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { LabelContainer } from './LabelContainer';
@@ -11,9 +11,10 @@ interface Props {
   node: NodeI;
   iconUrl?: string;
   zoom: number;
+  scroll: Scroll;
 }
 
-export const Node = ({ node, iconUrl, zoom }: Props) => {
+export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
   const nodeRef = useRef<HTMLDivElement>();
   const iconRef = useRef<HTMLImageElement>();
   const { observe, size: iconSize } = useResizeObserver();
@@ -52,11 +53,11 @@ export const Node = ({ node, iconUrl, zoom }: Props) => {
 
       gsap.to(nodeRef.current, {
         duration: animationDuration,
-        x: position.x,
-        y: position.y
+        x: position.x + scroll.position.x,
+        y: position.y + scroll.position.y
       });
     },
-    [tileSize]
+    [tileSize, scroll.position.x, scroll.position.y]
   );
 
   const onImageLoaded = useCallback(() => {

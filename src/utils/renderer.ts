@@ -58,6 +58,7 @@ export const getTilePosition = ({
   tileSize,
   origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
+  // TODO: Refactor editorWidth to not use window width
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
   const halfW = tileSize.width / 2;
