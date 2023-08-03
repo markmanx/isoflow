@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import chroma from 'chroma-js';
 import { Size, Coords, TileOriginEnum, Node as NodeI, Scroll } from 'src/types';
 import {
   getTilePosition,
@@ -103,9 +102,9 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
           <IsoTile
             size={TILE_SIZE * zoom}
             fill={node.color}
-            cornerRadius={15}
+            cornerRadius={15 * zoom}
             stroke={{
-              width: 1,
+              width: 1 * zoom,
               color: getColorVariant(node.color, 'dark', { grade: 1.5 })
             }}
           />
