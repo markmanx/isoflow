@@ -33,8 +33,8 @@ export const Group = ({ nodes, zoom, scroll }: Props) => {
 
     const sorted = sortByPosition(corners);
     const size: Size = {
-      width: sorted.highX - sorted.lowX,
-      height: sorted.highY - sorted.lowY
+      width: sorted.highX - sorted.lowX + 1,
+      height: sorted.highY - sorted.lowY + 1
     };
 
     const position = getTilePosition({
