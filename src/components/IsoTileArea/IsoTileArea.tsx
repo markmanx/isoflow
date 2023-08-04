@@ -32,7 +32,7 @@ export const IsoTileArea = forwardRef(
 
     const translate = useMemo<Coords>(() => {
       return { x: tileArea.width * (projectedTileSize.width / 2), y: 0 };
-    }, [tileArea, projectedTileSize, zoom]);
+    }, [tileArea, projectedTileSize]);
 
     const strokeParams = useMemo(() => {
       if (!stroke) return {};
@@ -48,7 +48,7 @@ export const IsoTileArea = forwardRef(
 
     const marginLeft = useMemo(() => {
       return -(tileArea.width * projectedTileSize.width * 0.5);
-    }, [projectedTileSize.width, tileArea.width, zoom]);
+    }, [projectedTileSize.width, tileArea.width]);
 
     return (
       <Box
