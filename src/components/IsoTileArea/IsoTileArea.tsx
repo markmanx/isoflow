@@ -31,7 +31,7 @@ export const IsoTileArea = forwardRef(
     }, [tileArea, projectedTileSize]);
 
     const translate = useMemo<Coords>(() => {
-      return { x: tileArea.width * (projectedTileSize.width / 2) * zoom, y: 0 };
+      return { x: tileArea.width * (projectedTileSize.width / 2), y: 0 };
     }, [tileArea, projectedTileSize, zoom]);
 
     const strokeParams = useMemo(() => {
@@ -47,7 +47,7 @@ export const IsoTileArea = forwardRef(
     }, [stroke]);
 
     const marginLeft = useMemo(() => {
-      return -(tileArea.width * projectedTileSize.width * 0.5) * zoom;
+      return -(tileArea.width * projectedTileSize.width * 0.5);
     }, [projectedTileSize.width, tileArea.width, zoom]);
 
     return (
