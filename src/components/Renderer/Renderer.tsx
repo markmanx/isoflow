@@ -50,7 +50,13 @@ export const Renderer = () => {
           }) as NodeI[];
 
         return (
-          <Group key={group.id} nodes={nodes} zoom={zoom} scroll={scroll} />
+          <Group
+            key={group.id}
+            group={group}
+            nodes={nodes}
+            zoom={zoom}
+            scroll={scroll}
+          />
         );
       })}
       {mode.showCursor && (

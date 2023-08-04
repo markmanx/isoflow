@@ -9,7 +9,7 @@ import {
   Connector,
   Group
 } from 'src/types';
-import { NODE_DEFAULTS } from 'src/config';
+import { NODE_DEFAULTS, DEFAULT_COLOR } from 'src/config';
 import { customVars } from 'src/styles/theme';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
@@ -30,7 +30,8 @@ export const groupInputToGroup = (groupInput: GroupInput): Group => {
   return {
     type: SceneItemTypeEnum.GROUP,
     id: groupInput.id,
-    nodeIds: groupInput.nodeIds
+    nodeIds: groupInput.nodeIds,
+    color: groupInput.color ?? DEFAULT_COLOR
   };
 };
 
@@ -40,7 +41,7 @@ export const connectorInputToConnector = (
   return {
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
-    color: connectorInput.color ?? customVars.diagramPalette.blue,
+    color: connectorInput.color ?? DEFAULT_COLOR,
     from: connectorInput.from,
     to: connectorInput.to
   };

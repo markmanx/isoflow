@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+import chroma from 'chroma-js';
 import { Box } from '@mui/material';
-import { Node, Size, Scroll, TileOriginEnum } from 'src/types';
+import { Node, Size, Scroll, TileOriginEnum, Group as GroupI } from 'src/types';
 import {
   getBoundingBox,
   sortByPosition,
@@ -11,11 +12,12 @@ import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
 interface Props {
   nodes: Node[];
+  group: GroupI;
   zoom: number;
   scroll: Scroll;
 }
 
-export const Group = ({ nodes, zoom, scroll }: Props) => {
+export const Group = ({ nodes, zoom, scroll, group }: Props) => {
   const projectedTileSize = useMemo(() => {
     return getProjectedTileSize({ zoom });
   }, [zoom]);
@@ -57,7 +59,16 @@ export const Group = ({ nodes, zoom, scroll }: Props) => {
         top: groupAttrs.position.y
       }}
     >
-      <IsoTileArea tileArea={groupAttrs.size} fill="red" zoom={zoom} />
+      <IsoTileArea
+        tileArea={groupAttrs.size}
+        fill={chroma(group.color).alpha(0.6).css()}
+        zoom={zoom}
+        cornerRadius={22 * zoom}
+        stroke={{
+          color: group.color,
+          width: 1 * zoom
+        }}
+      />
     </Box>
   );
 };

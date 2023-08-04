@@ -39,6 +39,7 @@ export interface Group {
   type: SceneItemTypeEnum.GROUP;
   id: string;
   nodeIds: string[];
+  color: string;
 }
 
 export type SceneItem = Node | Connector | Group;
