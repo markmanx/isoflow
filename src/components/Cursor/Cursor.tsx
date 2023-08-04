@@ -79,6 +79,7 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
         fill={theme.palette.primary.main}
         tileArea={{ width: 1, height: 1 }}
         zoom={zoom}
+        cornerRadius={10 * zoom}
       />
     </Box>
   );
