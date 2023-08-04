@@ -1,13 +1,8 @@
 import React, { useMemo } from 'react';
 import chroma from 'chroma-js';
 import { Box } from '@mui/material';
-import { Node, Size, Scroll, TileOriginEnum, Group as GroupI } from 'src/types';
-import {
-  getBoundingBox,
-  sortByPosition,
-  getTilePosition,
-  getProjectedTileSize
-} from 'src/utils';
+import { Node, Scroll, TileOriginEnum, Group as GroupI } from 'src/types';
+import { getBoundingBox, getTilePosition, getBoundingBoxSize } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
 interface Props {
@@ -18,10 +13,6 @@ interface Props {
 }
 
 export const Group = ({ nodes, zoom, scroll, group }: Props) => {
-  const projectedTileSize = useMemo(() => {
-    return getProjectedTileSize({ zoom });
-  }, [zoom]);
-
   const nodePositions = useMemo(() => {
     return nodes.map((node) => {
       return node.position;
@@ -30,24 +21,17 @@ export const Group = ({ nodes, zoom, scroll, group }: Props) => {
 
   const groupAttrs = useMemo(() => {
     const corners = getBoundingBox(nodePositions, { x: 1, y: 1 });
-
-    if (corners === null) return null;
-
-    const sorted = sortByPosition(corners);
-    const size: Size = {
-      width: sorted.highX - sorted.lowX + 1,
-      height: sorted.highY - sorted.lowY + 1
-    };
+    const size = getBoundingBoxSize(corners);
 
     const position = getTilePosition({
       tile: corners[2],
-      tileSize: projectedTileSize,
+      zoom,
       scroll,
       origin: TileOriginEnum.TOP
     });
 
     return { size, position };
-  }, [nodePositions, projectedTileSize, scroll]);
+  }, [nodePositions, zoom, scroll]);
 
   if (!groupAttrs) return null;
 

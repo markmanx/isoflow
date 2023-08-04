@@ -1,10 +1,10 @@
 import PF from 'pathfinding';
-import { Coords } from 'src/types';
+import { Size, Coords } from 'src/types';
 
 // TODO1: This file is a mess, refactor it
 // TODO: Have one single place for utils
-export const pathfinder = (gridSize: Coords) => {
-  const grid = new PF.Grid(gridSize.x, gridSize.y);
+export const pathfinder = (gridSize: Size) => {
+  const grid = new PF.Grid(gridSize.width, gridSize.height);
   const finder = new PF.AStarFinder({
     heuristic: PF.Heuristic.manhattan,
     diagonalMovement: PF.DiagonalMovement.Always
@@ -12,15 +12,15 @@ export const pathfinder = (gridSize: Coords) => {
 
   const convertToGridXY = ({ x, y }: Coords): Coords => {
     return {
-      x: x + Math.floor(gridSize.x * 0.5),
-      y: y + Math.floor(gridSize.y * 0.5)
+      x: x + Math.floor(gridSize.width * 0.5),
+      y: y + Math.floor(gridSize.height * 0.5)
     };
   };
 
   const convertToSceneXY = ({ x, y }: Coords): Coords => {
     return {
-      x: x - Math.floor(gridSize.x * 0.5),
-      y: y - Math.floor(gridSize.y * 0.5)
+      x: x - Math.floor(gridSize.width * 0.5),
+      y: y - Math.floor(gridSize.height * 0.5)
     };
   };
 

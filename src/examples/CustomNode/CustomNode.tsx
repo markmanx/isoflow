@@ -53,7 +53,14 @@ export const CustomNode = () => {
     <Isoflow
       initialScene={{
         icons,
-        connectors: [],
+        connectors: [
+          {
+            id: 'connector1',
+            from: 'database',
+            to: 'server',
+            label: 'connection'
+          }
+        ],
         groups: [
           {
             id: 'group1',

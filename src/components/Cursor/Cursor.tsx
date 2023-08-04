@@ -1,15 +1,8 @@
-import React, {
-  useEffect,
-  useRef,
-  useCallback,
-  useState,
-  useMemo
-} from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import gsap from 'gsap';
-import { getTilePosition, getProjectedTileSize } from 'src/utils';
-import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { Coords, TileOriginEnum, Size, Scroll } from 'src/types';
+import { getTilePosition } from 'src/utils';
+import { Coords, TileOriginEnum, Scroll } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
 interface Props {
@@ -22,10 +15,6 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
   const theme = useTheme();
   const [isReady, setIsReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>();
-
-  const projectedTileSize = useMemo<Size>(() => {
-    return getProjectedTileSize({ zoom });
-  }, [zoom]);
 
   const setPosition = useCallback(
     ({
@@ -41,7 +30,7 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
         tile: _tile,
         origin: TileOriginEnum.TOP,
         scroll,
-        tileSize: projectedTileSize
+        zoom
       });
 
       gsap.to(containerRef.current, {
@@ -50,7 +39,7 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
         top: position.y
       });
     },
-    [projectedTileSize, scroll]
+    [zoom, scroll]
   );
 
   useEffect(() => {

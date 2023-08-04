@@ -50,22 +50,23 @@ export const screenToIso = ({ mouse, zoom, scroll }: ScreenToIso) => {
 
 interface GetTilePosition {
   tile: Coords;
-  tileSize: Size;
   scroll: Scroll;
+  zoom: number;
   origin?: TileOriginEnum;
 }
 
 export const getTilePosition = ({
   tile,
-  tileSize,
   scroll,
+  zoom,
   origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
   // TODO: Refactor editorWidth to not use window width
   const editorWidth = window.innerWidth;
   const editorHeight = window.innerHeight;
-  const halfW = tileSize.width / 2;
-  const halfH = tileSize.height / 2;
+  const projectedTileSize = getProjectedTileSize({ zoom });
+  const halfW = projectedTileSize.width / 2;
+  const halfH = projectedTileSize.height / 2;
 
   const position: Coords = {
     x:
@@ -148,11 +149,7 @@ export const isWithinBounds = (tile: Coords, bounds: Coords[]) => {
 export const getBoundingBox = (
   tiles: Coords[],
   offset: Coords = CoordsUtils.zero()
-) => {
-  if (tiles.length === 0) {
-    return null;
-  }
-
+): Coords[] => {
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
   return [
@@ -161,6 +158,15 @@ export const getBoundingBox = (
     { x: highX + offset.x, y: highY + offset.y },
     { x: lowX - offset.x, y: highY + offset.y }
   ];
+};
+
+export const getBoundingBoxSize = (boundingBox: Coords[]): Size => {
+  const { lowX, lowY, highX, highY } = sortByPosition(boundingBox);
+
+  return {
+    width: highX - lowX + 1,
+    height: highY - lowY + 1
+  };
 };
 
 export const getIsoMatrixCSS = () => {

@@ -7,7 +7,6 @@ import {
   getProjectedTileSize,
   getColorVariant
 } from 'src/utils';
-import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { LabelContainer } from './LabelContainer';
@@ -47,7 +46,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
 
       const position = getTilePosition({
         tile,
-        tileSize: projectedTileSize,
+        zoom,
         scroll,
         origin: TileOriginEnum.BOTTOM
       });
@@ -64,7 +63,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         y: position.y
       });
     },
-    [projectedTileSize, scroll]
+    [zoom, scroll]
   );
 
   const onImageLoaded = useCallback(() => {
