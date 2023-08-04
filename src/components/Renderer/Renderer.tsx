@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
-import { TILE_SIZE } from 'src/config';
 import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';
 import { Node } from 'src/components/Node/Node';
+import { Group } from 'src/components/Group/Group';
+import { Node as NodeI } from 'src/types';
 
 export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
@@ -37,6 +38,21 @@ export const Renderer = () => {
       }}
     >
       <Grid scroll={scroll} zoom={zoom} />
+      {scene.groups.map((group) => {
+        const nodes = group.nodeIds
+          .map((nodeId) => {
+            return scene.nodes.find((node) => {
+              return node.id === nodeId;
+            });
+          })
+          .filter((node) => {
+            return node !== undefined;
+          }) as NodeI[];
+
+        return (
+          <Group key={group.id} nodes={nodes} zoom={zoom} scroll={scroll} />
+        );
+      })}
       {mode.showCursor && (
         <Cursor tile={mouse.position.tile} zoom={zoom} scroll={scroll} />
       )}

@@ -91,6 +91,7 @@ export const useInteractionManager = () => {
         delta: newDelta,
         mousedown: getMousedown()
       };
+      console.log(nextMouse.position.tile);
 
       const baseState: State = {
         scene,

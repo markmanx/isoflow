@@ -1,4 +1,4 @@
-import { PROJECTED_TILE_DIMENSIONS } from 'src/config';
+import { TILE_PROJECTION_MULTIPLIERS, UNPROJECTED_TILE_SIZE } from 'src/config';
 import { Coords, TileOriginEnum, Node, Size, Scroll } from 'src/types';
 import { CoordsUtils } from 'src/utils';
 
@@ -9,8 +9,8 @@ interface GetProjectedTileSize {
 // Gets the size of a tile at a given zoom level
 export const getProjectedTileSize = ({ zoom }: GetProjectedTileSize): Size => {
   return {
-    width: PROJECTED_TILE_DIMENSIONS.width * zoom,
-    height: PROJECTED_TILE_DIMENSIONS.height * zoom
+    width: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.width * zoom,
+    height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height * zoom
   };
 };
 
@@ -164,7 +164,7 @@ export const getBoundingBox = (
 };
 
 export const getIsoMatrixCSS = () => {
-  return `matrix(0.707, 0.409, -0.707, 0.409, 0, -0.816)`;
+  return `matrix(-0.707, 0.409, 0.707, 0.409, 0, -0.816)`;
 };
 
 export const getTranslateCSS = (translate: Coords = { x: 0, y: 0 }) => {

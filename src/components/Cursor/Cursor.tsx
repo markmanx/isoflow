@@ -5,12 +5,12 @@ import React, {
   useState,
   useMemo
 } from 'react';
+import { Box, useTheme } from '@mui/material';
 import gsap from 'gsap';
-import { useTheme } from '@mui/material';
 import { getTilePosition, getProjectedTileSize } from 'src/utils';
-import { TILE_SIZE } from 'src/config';
+import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { Coords, TileOriginEnum, Size, Scroll } from 'src/types';
-import { IsoTile } from 'src/components/IsoTile/IsoTile';
+import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
 interface Props {
   tile: Coords;
@@ -21,14 +21,10 @@ interface Props {
 export const Cursor = ({ tile, zoom, scroll }: Props) => {
   const theme = useTheme();
   const [isReady, setIsReady] = useState(false);
-  const ref = useRef<SVGElement>();
+  const containerRef = useRef<HTMLDivElement>();
 
   const projectedTileSize = useMemo<Size>(() => {
     return getProjectedTileSize({ zoom });
-  }, [zoom]);
-
-  const tileSize = useMemo(() => {
-    return TILE_SIZE * zoom;
   }, [zoom]);
 
   const setPosition = useCallback(
@@ -39,16 +35,16 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
       tile: Coords;
       animationDuration?: number;
     }) => {
-      if (!ref.current) return;
+      if (!containerRef.current) return;
 
       const position = getTilePosition({
         tile: _tile,
-        origin: TileOriginEnum.CENTER,
+        origin: TileOriginEnum.TOP,
         scroll,
         tileSize: projectedTileSize
       });
 
-      gsap.to(ref.current, {
+      gsap.to(containerRef.current, {
         duration: animationDuration,
         left: position.x,
         top: position.y
@@ -58,21 +54,32 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
   );
 
   useEffect(() => {
-    if (!ref.current || !isReady) return;
+    if (!containerRef.current || !isReady) return;
 
     setPosition({ tile });
   }, [tile, setPosition, isReady]);
 
   useEffect(() => {
-    if (!ref.current || isReady) return;
+    if (!containerRef.current || isReady) return;
 
-    gsap.killTweensOf(ref.current);
+    gsap.killTweensOf(containerRef.current);
     setPosition({ tile, animationDuration: 0 });
-    ref.current.style.opacity = '1';
+    containerRef.current.style.opacity = '1';
     setIsReady(true);
   }, [tile, setPosition, isReady]);
 
   return (
-    <IsoTile ref={ref} fill={theme.palette.primary.main} size={tileSize} />
+    <Box
+      ref={containerRef}
+      sx={{
+        position: 'absolute'
+      }}
+    >
+      <IsoTileArea
+        fill={theme.palette.primary.main}
+        tileArea={{ width: 1, height: 1 }}
+        zoom={zoom}
+      />
+    </Box>
   );
 };

@@ -1,77 +1,63 @@
-// import { useCallback, useRef } from 'react';
-// import { Group, Shape } from 'paper';
-// import { Coords } from 'src/types';
-// import { PIXEL_UNIT, TILE_SIZE } from 'src/renderer/utils/constants';
-// import { getColorVariant } from 'src/utils';
-// import {
-//   getBoundingBox,
-//   sortByPosition,
-//   getTileBounds
-// } from '../../utils/gridHelpers';
-// import { applyProjectionMatrix } from '../../utils/projection';
+import React, { useMemo } from 'react';
+import { Box } from '@mui/material';
+import { Node, Size, Scroll, TileOriginEnum } from 'src/types';
+import {
+  getBoundingBox,
+  sortByPosition,
+  getTilePosition,
+  getProjectedTileSize
+} from 'src/utils';
+import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
-// export const useGroup = () => {
-//   // TODO: Make sure consistent naming for all containers among all scene components
-//   const containerRef = useRef(new Group());
-//   const pathRef = useRef<paper.Shape.Rectangle>();
+interface Props {
+  nodes: Node[];
+  zoom: number;
+  scroll: Scroll;
+}
 
-//   const setColor = useCallback((color: string) => {
-//     if (!pathRef.current) return;
+export const Group = ({ nodes, zoom, scroll }: Props) => {
+  const projectedTileSize = useMemo(() => {
+    return getProjectedTileSize({ zoom });
+  }, [zoom]);
 
-//     const fillColor = getColorVariant(color, 'light', { alpha: 0.5 });
+  const nodePositions = useMemo(() => {
+    return nodes.map((node) => {
+      return node.position;
+    });
+  }, [nodes]);
 
-//     pathRef.current.set({ fillColor, strokeColor: color });
-//   }, []);
+  const groupAttrs = useMemo(() => {
+    const corners = getBoundingBox(nodePositions, { x: 1, y: 1 });
 
-//   const setTiles = useCallback((tiles: Coords[]) => {
-//     if (!pathRef.current) return;
+    if (corners === null) return null;
 
-//     const corners = getBoundingBox(tiles, { x: 1, y: 1 });
+    const sorted = sortByPosition(corners);
+    const size: Size = {
+      width: sorted.highX - sorted.lowX,
+      height: sorted.highY - sorted.lowY
+    };
 
-//     if (corners === null) {
-//       containerRef.current.removeChildren();
-//       throw new Error('Group has no nodes');
-//     }
+    const position = getTilePosition({
+      tile: corners[2],
+      tileSize: projectedTileSize,
+      scroll,
+      origin: TileOriginEnum.TOP
+    });
 
-//     const sorted = sortByPosition(corners);
-//     const size = {
-//       x: sorted.highX - sorted.lowX,
-//       y: sorted.highY - sorted.lowY
-//     };
+    return { size, position };
+  }, [nodePositions, projectedTileSize, scroll]);
 
-//     pathRef.current.set({
-//       position: [0, 0],
-//       radius: PIXEL_UNIT * 17,
-//       size: [
-//         (size.x + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
-//         (size.y + 1) * (TILE_SIZE - PIXEL_UNIT * 3)
-//       ]
-//     });
+  if (!groupAttrs) return null;
 
-//     containerRef.current.set({
-//       pivot: pathRef.current.bounds.bottomLeft,
-//       position: getTileBounds(corners[3]).left
-//     });
-//   }, []);
-
-//   // TODO: Do we really need init an init function on each component hook?  Does any of them take arguments?
-//   const init = useCallback(() => {
-//     containerRef.current.removeChildren();
-
-//     pathRef.current = new Shape.Rectangle({
-//       strokeCap: 'round',
-//       strokeWidth: PIXEL_UNIT
-//     });
-
-//     containerRef.current.addChild(pathRef.current);
-//     applyProjectionMatrix(containerRef.current);
-
-//     return containerRef.current;
-//   }, []);
-
-//   return {
-//     init,
-//     setTiles,
-//     setColor
-//   };
-// };
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        left: groupAttrs.position.x,
+        top: groupAttrs.position.y
+      }}
+    >
+      <IsoTileArea tileArea={groupAttrs.size} fill="red" zoom={zoom} />
+    </Box>
+  );
+};

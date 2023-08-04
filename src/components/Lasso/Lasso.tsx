@@ -2,7 +2,7 @@
 // import { Group, Shape } from 'paper';
 // import gsap from 'gsap';
 // import { Coords } from 'src/types';
-// import { TILE_SIZE, PIXEL_UNIT } from 'src/renderer/utils/constants';
+// import { UNPROJECTED_TILE_SIZE, PIXEL_UNIT } from 'src/renderer/utils/constants';
 // import {
 //   getBoundingBox,
 //   sortByPosition,
@@ -34,8 +34,8 @@
 //     shapeRef.current.set({
 //       position,
 //       size: [
-//         (size.x + 1) * (TILE_SIZE - PIXEL_UNIT * 3),
-//         (size.y + 1) * (TILE_SIZE - PIXEL_UNIT * 3)
+//         (size.x + 1) * (UNPROJECTED_TILE_SIZE - PIXEL_UNIT * 3),
+//         (size.y + 1) * (UNPROJECTED_TILE_SIZE - PIXEL_UNIT * 3)
 //       ]
 //     });
 
@@ -52,7 +52,7 @@
 //     shapeRef.current = new Shape.Rectangle({
 //       strokeCap: 'round',
 //       fillColor: 'lightBlue',
-//       size: [TILE_SIZE, TILE_SIZE],
+//       size: [UNPROJECTED_TILE_SIZE, UNPROJECTED_TILE_SIZE],
 //       opacity: 0.5,
 //       radius: PIXEL_UNIT * 8,
 //       strokeWidth: PIXEL_UNIT * 3,

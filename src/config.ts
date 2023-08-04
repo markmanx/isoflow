@@ -1,10 +1,10 @@
 import { Size } from 'src/types';
 import { customVars } from './styles/theme';
 
-export const TILE_SIZE = 100;
-export const PROJECTED_TILE_DIMENSIONS: Size = {
-  width: TILE_SIZE * 1.415,
-  height: TILE_SIZE * 0.819
+export const UNPROJECTED_TILE_SIZE = 100;
+export const TILE_PROJECTION_MULTIPLIERS: Size = {
+  width: 1.415,
+  height: 0.819
 };
 export const DEFAULT_COLOR = customVars.diagramPalette.blue;
 export const CONNECTOR_DEFAULTS = {

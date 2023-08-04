@@ -7,9 +7,9 @@ import {
   getProjectedTileSize,
   getColorVariant
 } from 'src/utils';
-import { TILE_SIZE } from 'src/config';
+import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
-import { IsoTile } from 'src/components/IsoTile/IsoTile';
+import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
@@ -95,18 +95,21 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         <Box
           sx={{
             position: 'absolute',
-            top: -projectedTileSize.height / 2,
-            transform: 'scale(1.2)'
+            top: -projectedTileSize.height
           }}
         >
-          <IsoTile
-            size={TILE_SIZE * zoom}
+          <IsoTileArea
+            tileArea={{
+              width: 1,
+              height: 1
+            }}
             fill={node.color}
             cornerRadius={15 * zoom}
             stroke={{
               width: 1 * zoom,
               color: getColorVariant(node.color, 'dark', { grade: 1.5 })
             }}
+            zoom={zoom}
           />
         </Box>
         <LabelContainer
