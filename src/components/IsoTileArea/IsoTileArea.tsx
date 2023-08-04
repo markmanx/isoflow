@@ -2,11 +2,7 @@ import React, { forwardRef, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { Size, Coords } from 'src/types';
-import {
-  getIsoMatrixCSS,
-  getTranslateCSS,
-  getProjectedTileSize
-} from 'src/utils';
+import { getIsoMatrixCSS, getProjectedTileSize } from 'src/utils';
 
 interface Props {
   tileArea: Size;
@@ -35,8 +31,8 @@ export const IsoTileArea = forwardRef(
     }, [tileArea, projectedTileSize]);
 
     const translate = useMemo<Coords>(() => {
-      return { x: tileArea.width * (projectedTileSize.width / 2), y: 0 };
-    }, [tileArea, projectedTileSize]);
+      return { x: tileArea.width * (projectedTileSize.width / 2) * zoom, y: 0 };
+    }, [tileArea, projectedTileSize, zoom]);
 
     const strokeParams = useMemo(() => {
       if (!stroke) return {};
@@ -51,8 +47,8 @@ export const IsoTileArea = forwardRef(
     }, [stroke]);
 
     const marginLeft = useMemo(() => {
-      return -(tileArea.width * projectedTileSize.width * 0.5);
-    }, [projectedTileSize.width, tileArea.width]);
+      return -(tileArea.width * projectedTileSize.width * 0.5) * zoom;
+    }, [projectedTileSize.width, tileArea.width, zoom]);
 
     return (
       <Box
@@ -70,8 +66,8 @@ export const IsoTileArea = forwardRef(
         <g transform={`translate(${translate.x}, ${translate.y})`}>
           <g transform={getIsoMatrixCSS()}>
             <rect
-              width={tileArea.width * UNPROJECTED_TILE_SIZE}
-              height={tileArea.height * UNPROJECTED_TILE_SIZE}
+              width={tileArea.width * UNPROJECTED_TILE_SIZE * zoom}
+              height={tileArea.height * UNPROJECTED_TILE_SIZE * zoom}
               fill={fill}
               rx={cornerRadius}
               {...strokeParams}
