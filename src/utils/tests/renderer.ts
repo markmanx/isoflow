@@ -1,10 +1,6 @@
 import { Coords } from 'src/types';
 import { getGridSubset, isWithinBounds } from '../renderer';
 
-jest.mock('paper', () => {
-  return {};
-});
-
 describe('Tests renderer utils', () => {
   test('getGridSubset() works correctly', () => {
     const gridSubset = getGridSubset([
