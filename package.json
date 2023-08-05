@@ -26,7 +26,7 @@
     "@types/jest": "^27.5.2",
     "@types/jsdom": "^21.1.0",
     "@types/pathfinding": "^0.0.6",
-    "@types/react": "^18.0.28",
+    "@types/react": "^17.0.62",
     "@types/react-dom": "^18.0.11",
     "@types/uuid": "^9.0.2",
     "@types/webpack-env": "^1.18.0",

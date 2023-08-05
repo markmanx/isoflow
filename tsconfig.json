@@ -16,7 +16,7 @@
     "strict": true,
   },
   "exclude": [
-    "node_modules",
+    "./node_modules",
   ],
   "include": [
     "src/**/*.ts",
