@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
-import { useSceneStore, useNodeHooks, Node } from 'src/stores/useSceneStore';
+import { Node } from 'src/types';
+import { useSceneStore, useNodeHooks } from 'src/stores/useSceneStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from './IconSelection/IconSelection';
 import { Header } from '../components/Header';
@@ -12,8 +13,12 @@ interface Props {
 
 export const NodeControls = ({ nodeId }: Props) => {
   const [tab, setTab] = useState(0);
-  const icons = useSceneStore((state) => state.icons);
-  const sceneActions = useSceneStore((state) => state.actions);
+  const icons = useSceneStore((state) => {
+    return state.icons;
+  });
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
   const { useGetNodeById } = useNodeHooks();
   const node = useGetNodeById(nodeId);
 
@@ -53,7 +58,9 @@ export const NodeControls = ({ nodeId }: Props) => {
       {tab === 1 && (
         <Icons
           icons={icons}
-          onClick={(icon) => onNodeUpdated({ iconId: icon.id })}
+          onClick={(icon) => {
+            return onNodeUpdated({ iconId: icon.id });
+          }}
         />
       )}
     </ControlsContainer>

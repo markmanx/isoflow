@@ -1,23 +1,32 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import { Icon as IconInterface } from 'src/stores/useSceneStore';
+import { Icon as IconI } from 'src/types';
 import { Icon } from './Icon';
 import { Section } from '../../components/Section';
 
 interface Props {
   name?: string;
-  icons: IconInterface[];
-  onClick: (icon: IconInterface) => void;
+  icons: IconI[];
+  onClick: (icon: IconI) => void;
 }
 
-export const IconCategory = ({ name, icons, onClick }: Props) => (
-  <Section title={name}>
-    <Grid container spacing={2}>
-      {icons.map((icon) => (
-        <Grid item xs={3} key={icon.id}>
-          <Icon icon={icon} onClick={() => onClick(icon)} />
-        </Grid>
-      ))}
-    </Grid>
-  </Section>
-);
+export const IconCategory = ({ name, icons, onClick }: Props) => {
+  return (
+    <Section title={name}>
+      <Grid container spacing={2}>
+        {icons.map((icon) => {
+          return (
+            <Grid item xs={3} key={icon.id}>
+              <Icon
+                icon={icon}
+                onClick={() => {
+                  return onClick(icon);
+                }}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Section>
+  );
+};

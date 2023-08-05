@@ -8,7 +8,7 @@ import {
 
 export type IconInput = z.infer<typeof iconInput>;
 export type NodeInput = z.infer<typeof nodeInput> & {
-  labelElement?: React.ReactNode;
+  labelComponent?: React.ReactNode;
 };
 export type ConnectorInput = z.infer<typeof connectorInput>;
 export type GroupInput = z.infer<typeof groupInput>;

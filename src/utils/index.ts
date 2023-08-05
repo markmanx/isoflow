@@ -1,3 +1,5 @@
 export * from './CoordsUtils';
 export * from './common';
-export * from './config';
+export * from './inputs';
+export * from './pathfinder';
+export * from './renderer';

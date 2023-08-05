@@ -9,7 +9,7 @@
     "url": "https://github.com/markmanx/isoflow.git"
   },
   "main": "./dist/index.js",
-  "types": "./dist/App.d.ts",
+  "types": "./dist/Isoflow.d.ts",
   "scripts": {
     "start": "webpack serve --config ./webpack/dev.config.js",
     "dev": "nodemon --watch ./src/ -e ts,tsx --exec npm run build",
@@ -51,6 +51,7 @@
     "react-dom": "^18.2.0",
     "recharts": "^2.7.2",
     "style-loader": "^3.3.3",
+    "svg-url-loader": "^8.0.0",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "tsconfig-paths-webpack-plugin": "^4.1.0",

@@ -3,7 +3,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   mode: "production",
-  entry: "./src/App.tsx",
+  entry: "./src/Isoflow.tsx",
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "index.js",
@@ -33,6 +33,14 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader'
+          },
+        ],
       },
     ],
   },

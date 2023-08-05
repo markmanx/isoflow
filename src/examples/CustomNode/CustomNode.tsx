@@ -53,17 +53,42 @@ export const CustomNode = () => {
     <Isoflow
       initialScene={{
         icons,
-        connectors: [],
-        groups: [],
+        connectors: [
+          {
+            id: 'connector1',
+            from: 'database',
+            to: 'server',
+            label: 'connection'
+          }
+        ],
+        groups: [
+          {
+            id: 'group1',
+            label: 'Group 1',
+            nodeIds: ['server', 'database']
+          }
+        ],
         nodes: [
           {
-            id: 'Node1',
+            id: 'server',
             label: 'Requests per minute',
-            labelElement: <CustomLabel />,
+            labelComponent: <CustomLabel />,
+            labelHeight: 40,
             iconId: 'server',
             position: {
               x: 0,
               y: 0
+            }
+          },
+          {
+            id: 'database',
+            label: 'Transactions',
+            labelComponent: <CustomLabel />,
+            labelHeight: 40,
+            iconId: 'server',
+            position: {
+              x: 0,
+              y: 3
             }
           }
         ]

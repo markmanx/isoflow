@@ -1,13 +1,13 @@
 import { useCallback, useEffect } from 'react';
 import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/useSceneStore';
-import { useUiStateStore, Mouse } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { CoordsUtils, screenToIso } from 'src/utils';
+import { InteractionReducer, Mouse, State } from 'src/types';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
 import { Lasso } from './reducers/Lasso';
-import type { InteractionReducer } from './types';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
@@ -23,6 +23,9 @@ export const useInteractionManager = () => {
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
@@ -35,8 +38,8 @@ export const useInteractionManager = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const scene = useSceneStore(({ nodes, connectors, groups }) => {
-    return { nodes, connectors, groups };
+  const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
+    return { nodes, connectors, groups, icons };
   });
   const sceneActions = useSceneStore((state) => {
     return state.actions;
@@ -60,7 +63,11 @@ export const useInteractionManager = () => {
 
       const newPosition: Mouse['position'] = {
         screen: { x: e.clientX, y: e.clientY },
-        tile: screenToIso({ x: e.clientX, y: e.clientY })
+        tile: screenToIso({
+          mouse: { x: e.clientX, y: e.clientY },
+          zoom,
+          scroll
+        })
       };
 
       const newDelta: Mouse['delta'] = {
@@ -85,19 +92,18 @@ export const useInteractionManager = () => {
         mousedown: getMousedown()
       };
 
-      const newState = produce(
-        {
-          scene,
-          mouse: nextMouse,
-          mode,
-          scroll,
-          contextMenu,
-          itemControls
-        },
-        (draft) => {
-          return reducerAction(draft);
-        }
-      );
+      const baseState: State = {
+        scene,
+        mouse: nextMouse,
+        mode,
+        scroll,
+        contextMenu,
+        itemControls
+      };
+
+      const newState = produce(baseState, (draft) => {
+        return reducerAction(draft);
+      });
 
       uiStateActions.setMouse(nextMouse);
       uiStateActions.setScroll(newState.scroll);
@@ -108,12 +114,16 @@ export const useInteractionManager = () => {
     },
     [
       mode,
+      mouse.position.screen,
+      mouse.position.tile,
+      mouse.mousedown,
       scroll,
       itemControls,
       uiStateActions,
       sceneActions,
       scene,
-      contextMenu
+      contextMenu,
+      zoom
     ]
   );
 
