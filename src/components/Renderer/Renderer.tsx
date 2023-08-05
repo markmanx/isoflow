@@ -70,8 +70,7 @@ export const Renderer = () => {
       {mode.showCursor && (
         <Cursor tile={mouse.position.tile} zoom={zoom} scroll={scroll} />
       )}
-      <Box id="connectors" />
-      {scene.connectors.map((connector) => {
+      {/* {scene.connectors.map((connector) => {
         const nodes = getNodesFromIds([connector.from, connector.to]);
 
         return (
@@ -83,7 +82,7 @@ export const Renderer = () => {
             zoom={zoom}
           />
         );
-      })}
+      })} */}
       {scene.nodes.map((node) => {
         return (
           <Node
