@@ -1,5 +1,5 @@
 import { Coords } from './common';
-import { IconInput } from './inputs';
+import { IconInput, SceneInput } from './inputs';
 
 export enum TileOriginEnum {
   CENTER = 'CENTER',
@@ -54,12 +54,7 @@ export type Scene = {
 };
 
 export interface SceneActions {
-  set: (scene: Scene) => void;
-  setItems: (elements: {
-    nodes: Node[];
-    connectors: Connector[];
-    groups: Group[];
-  }) => void;
+  setScene: (scene: SceneInput) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   createNode: (position: Coords) => void;
 }

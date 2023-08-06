@@ -14,38 +14,21 @@ import {
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { sceneInputtoScene, sceneToSceneInput } from 'src/utils';
+import { sceneToSceneInput } from 'src/utils';
 import { LabelContainer } from 'src/components/Node/LabelContainer';
+import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
+import { useUiStateStore } from './stores/useUiStateStore';
 
 interface Props {
-  initialScene: SceneInput;
+  initialScene: SceneInput & {
+    zoom?: number;
+    hideToolbar?: boolean;
+  };
   onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
 }
-
-const InnerApp = React.memo(
-  ({ height, width }: Pick<Props, 'height' | 'width'>) => {
-    return (
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Box
-          sx={{
-            width: width ?? '100%',
-            height,
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-          <Renderer />
-          <ItemControlsManager />
-          <ToolMenu />
-        </Box>
-      </ThemeProvider>
-    );
-  }
-);
 
 const Isoflow = ({
   initialScene,
@@ -53,14 +36,19 @@ const Isoflow = ({
   height = 500,
   onSceneUpdated
 }: Props) => {
+  useWindowUtils();
   const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
+  const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
 
   useEffect(() => {
-    const convertedInput = sceneInputtoScene(initialScene);
-    sceneActions.set(convertedInput);
-  }, [initialScene, sceneActions]);
+    uiActions.setZoom(initialScene.zoom ?? 1);
+    uiActions.setToolbarVisibility(initialScene.hideToolbar ?? false);
+    sceneActions.setScene(initialScene);
+  }, [initialScene, sceneActions, uiActions]);
 
   useSceneStore.subscribe((scene, prevScene) => {
     if (!onSceneUpdated) return;
@@ -68,7 +56,23 @@ const Isoflow = ({
     onSceneUpdated(sceneToSceneInput(scene), sceneToSceneInput(prevScene));
   });
 
-  return <InnerApp height={height} width={width} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Box
+        sx={{
+          width: width ?? '100%',
+          height,
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <Renderer />
+        <ItemControlsManager />
+        {!initialScene.hideToolbar && <ToolMenu />}
+      </Box>
+    </ThemeProvider>
+  );
 };
 
 const useIsoflow = () => {
@@ -81,6 +85,8 @@ const useIsoflow = () => {
   };
 };
 
+export default Isoflow;
+
 export {
   Scene,
   SceneInput,
@@ -91,5 +97,3 @@ export {
   useIsoflow,
   LabelContainer
 };
-
-export default Isoflow;

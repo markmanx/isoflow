@@ -41,9 +41,6 @@ export const useInteractionManager = () => {
   const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
     return { nodes, connectors, groups, icons };
   });
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
 
   const onMouseEvent = useCallback(
     (e: MouseEvent) => {
@@ -110,7 +107,6 @@ export const useInteractionManager = () => {
       uiStateActions.setMode(newState.mode);
       uiStateActions.setContextMenu(newState.contextMenu);
       uiStateActions.setSidebar(newState.itemControls);
-      sceneActions.setItems(newState.scene);
     },
     [
       mode,
@@ -120,7 +116,6 @@ export const useInteractionManager = () => {
       scroll,
       itemControls,
       uiStateActions,
-      sceneActions,
       scene,
       contextMenu,
       zoom

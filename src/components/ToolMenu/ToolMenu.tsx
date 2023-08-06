@@ -4,13 +4,15 @@ import {
   PanTool as PanToolIcon,
   ZoomIn as ZoomInIcon,
   ZoomOut as ZoomOutIcon,
-  NearMe as NearMeIcon
+  NearMe as NearMeIcon,
+  CenterFocusStrong as CenterFocusStrongIcon
 } from '@mui/icons-material';
 import {
   useUiStateStore,
   MIN_ZOOM,
   MAX_ZOOM
 } from 'src/stores/useUiStateStore';
+import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { IconButton } from '../IconButton/IconButton';
 
 export const ToolMenu = () => {
@@ -24,6 +26,7 @@ export const ToolMenu = () => {
   const uiStateStoreActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { fitDiagramToScreen } = useDiagramUtils();
 
   return (
     <Card
@@ -73,6 +76,12 @@ export const ToolMenu = () => {
         onClick={uiStateStoreActions.decrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MIN_ZOOM}
+      />
+      <IconButton
+        name="Center"
+        Icon={<CenterFocusStrongIcon />}
+        onClick={fitDiagramToScreen}
+        size={theme.customVars.toolMenu.height}
       />
     </Card>
   );

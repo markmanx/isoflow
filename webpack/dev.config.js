@@ -14,7 +14,10 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "build"),
     },
-    allowedHosts: ['.csb.app'],
+    allowedHosts: [
+      '.csb.app', // So Codesandbox.io can run the dev server
+      '.ngrok-free.app'
+    ],
     port: 3000,
   },
   module: {

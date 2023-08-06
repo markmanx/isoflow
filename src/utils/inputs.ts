@@ -10,7 +10,6 @@ import {
   Group
 } from 'src/types';
 import { NODE_DEFAULTS, DEFAULT_COLOR } from 'src/config';
-import { customVars } from 'src/styles/theme';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   return {

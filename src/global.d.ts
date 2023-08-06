@@ -1,4 +1,11 @@
-declare module '*.svg' {
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-  export default content;
+import { Size, Coords, SceneInput } from 'src/types';
+
+declare global {
+  interface Window {
+    Isoflow: {
+      getDiagramBoundingBox: () => Size & Coords;
+      fitDiagramToScreen: () => void;
+      setScene: (scene: SceneInput) => void;
+    };
+  }
 }

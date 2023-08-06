@@ -88,7 +88,7 @@ export const CustomNode = () => {
             iconId: 'server',
             position: {
               x: 0,
-              y: 3
+              y: -3
             }
           }
         ]

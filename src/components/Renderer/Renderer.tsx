@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI } from 'src/types';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
@@ -9,8 +9,10 @@ import { Cursor } from 'src/components/Cursor/Cursor';
 import { Node } from 'src/components/Node/Node';
 import { Group } from 'src/components/Group/Group';
 import { Connector } from 'src/components/Connector/Connector';
+import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 
 export const Renderer = () => {
+  const [isDebugModeOn] = useState(false);
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
   });
@@ -98,6 +100,11 @@ export const Renderer = () => {
           />
         );
       })}
+      {isDebugModeOn && (
+        <Box sx={{ position: 'absolute' }}>
+          <DebugUtils />
+        </Box>
+      )}
     </Box>
   );
 };

@@ -4,6 +4,8 @@ import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
 import { NODE_DEFAULTS } from 'src/config';
 import { Scene, SceneActions, Node, SceneItemTypeEnum } from 'src/types';
+import { sceneInput } from 'src/validation/scene';
+import { sceneInputtoScene } from 'src/utils';
 
 export type UseSceneStore = Scene & {
   actions: SceneActions;
@@ -17,11 +19,12 @@ export const useSceneStore = create<UseSceneStore>((set, get) => {
     groups: [],
     icons: [],
     actions: {
-      set: (scene) => {
-        set(scene);
-      },
-      setItems: (items) => {
-        set({ nodes: items.nodes });
+      setScene: (scene) => {
+        sceneInput.parse(scene);
+
+        const newScene = sceneInputtoScene(scene);
+
+        set(newScene);
       },
       updateNode: (id, updates) => {
         const { nodes } = get();

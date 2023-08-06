@@ -4,8 +4,8 @@ import { BasicEditor } from './BasicEditor/BasicEditor';
 import { CustomNode } from './CustomNode/CustomNode';
 
 const examples = [
-  { name: 'Basic Editor', component: BasicEditor },
-  { name: 'Live Diagrams', component: CustomNode }
+  { name: 'Live Diagrams', component: CustomNode },
+  { name: 'Basic Editor', component: BasicEditor }
 ];
 
 export const Examples = () => {

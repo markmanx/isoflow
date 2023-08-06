@@ -80,6 +80,7 @@ export interface Scroll {
 }
 
 export interface UiState {
+  hideToolbar: boolean;
   mode: Mode;
   itemControls: ItemControls;
   contextMenu: ContextMenu;
@@ -90,8 +91,10 @@ export interface UiState {
 
 export interface UiStateActions {
   setMode: (mode: Mode) => void;
+  setToolbarVisibility: (visible: boolean) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
+  setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
   setSidebar: (itemControls: ItemControls) => void;
   setContextMenu: (contextMenu: ContextMenu) => void;

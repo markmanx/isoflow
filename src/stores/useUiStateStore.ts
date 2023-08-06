@@ -13,6 +13,7 @@ export type UseUiStateStore = UiState & {
 
 export const useUiStateStore = create<UseUiStateStore>((set, get) => {
   return {
+    hideToolbar: false,
     mode: {
       type: 'CURSOR',
       showCursor: true,
@@ -43,6 +44,12 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
         const { zoom } = get();
         const targetZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
         set({ zoom: roundToOneDecimalPlace(targetZoom) });
+      },
+      setToolbarVisibility: (visible) => {
+        set({ hideToolbar: visible });
+      },
+      setZoom: (zoom) => {
+        set({ zoom });
       },
       setScroll: ({ position, offset }) => {
         set({ scroll: { position, offset: offset ?? get().scroll.offset } });
