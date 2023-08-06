@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
-import { Connector as ConnectorI, Node, Coords } from 'src/types';
+import { Node, Coords } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { pathfinder, getBoundingBox, getBoundingBoxSize } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
@@ -8,7 +8,7 @@ import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 
 interface Props {
-  connector: ConnectorI;
+  // connector: ConnectorI;
   fromNode: Node;
   toNode: Node;
 }

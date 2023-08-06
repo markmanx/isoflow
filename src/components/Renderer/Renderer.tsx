@@ -8,7 +8,7 @@ import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';
 import { Node } from 'src/components/Node/Node';
 import { Group } from 'src/components/Group/Group';
-import { Connector } from 'src/components/Connector/Connector';
+// import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
@@ -37,7 +37,7 @@ export const Renderer = () => {
     return state.actions;
   });
   const { setElement } = useInteractionManager();
-  const { observe, size: rendererSize } = useResizeObserver();
+  const { observe, disconnect, size: rendererSize } = useResizeObserver();
 
   const getNodesFromIds = useCallback(
     (nodeIds: string[]) => {
@@ -59,7 +59,11 @@ export const Renderer = () => {
 
     observe(containerRef.current);
     setElement(containerRef.current);
-  }, [setElement, observe]);
+
+    return () => {
+      disconnect();
+    };
+  }, [setElement, observe, disconnect]);
 
   useEffect(() => {
     setRendererSize(rendererSize);

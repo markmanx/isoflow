@@ -135,7 +135,8 @@ export const useInteractionManager = () => {
       uiStateActions,
       scene,
       contextMenu,
-      zoom
+      zoom,
+      rendererSize
     ]
   );
 

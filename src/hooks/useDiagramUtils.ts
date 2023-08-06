@@ -8,12 +8,6 @@ import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 const BOUNDING_BOX_PADDING = 4;
 
 export const useDiagramUtils = () => {
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
-  const scroll = useUiStateStore((state) => {
-    return state.scroll;
-  });
   const scene = useSceneStore(({ nodes, groups, connectors, icons }) => {
     return {
       nodes,
@@ -57,10 +51,10 @@ export const useDiagramUtils = () => {
 
   const fitDiagramToScreen = useCallback(() => {
     const boundingBox = getDiagramBoundingBox();
-    const newZoom = Math.min(
-      window.innerWidth / boundingBox.width,
-      window.innerHeight / boundingBox.height
-    );
+    // const newZoom = Math.min(
+    //   window.innerWidth / boundingBox.width,
+    //   window.innerHeight / boundingBox.height
+    // );
 
     uiStateActions.setScroll({
       offset: {

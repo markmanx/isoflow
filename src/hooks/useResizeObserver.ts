@@ -9,18 +9,21 @@ export const useResizeObserver = () => {
     resizeObserverRef.current?.disconnect();
   }, []);
 
-  const observe = useCallback((element: HTMLElement) => {
-    disconnect();
+  const observe = useCallback(
+    (element: HTMLElement) => {
+      disconnect();
 
-    resizeObserverRef.current = new ResizeObserver(() => {
-      setSize({
-        width: element.clientWidth,
-        height: element.clientHeight
+      resizeObserverRef.current = new ResizeObserver(() => {
+        setSize({
+          width: element.clientWidth,
+          height: element.clientHeight
+        });
       });
-    });
 
-    resizeObserverRef.current.observe(element);
-  }, []);
+      resizeObserverRef.current.observe(element);
+    },
+    [disconnect]
+  );
 
   useEffect(() => {
     return () => {
@@ -30,6 +33,7 @@ export const useResizeObserver = () => {
 
   return {
     observe,
-    size
+    size,
+    disconnect
   };
 };
