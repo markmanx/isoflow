@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { CoordsUtils, screenToIso } from 'src/utils';
-import { InteractionReducer, Mouse, State } from 'src/types';
+import { InteractionReducer, Mouse, State, Coords } from 'src/types';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
@@ -17,6 +17,7 @@ const reducers: { [k in string]: InteractionReducer } = {
 };
 
 export const useInteractionManager = () => {
+  const elementRef = useRef<HTMLElement>();
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -57,11 +58,21 @@ export const useInteractionManager = () => {
         return;
 
       const reducerAction = reducer[e.type];
+      const componentOffset = elementRef.current?.getBoundingClientRect();
+      const offset: Coords = {
+        x: componentOffset?.left ?? 0,
+        y: componentOffset?.top ?? 0
+      };
+
+      const mousePosition = {
+        x: e.clientX - offset.x,
+        y: e.clientY - offset.y
+      };
 
       const newPosition: Mouse['position'] = {
-        screen: { x: e.clientX, y: e.clientY },
+        screen: mousePosition,
         tile: screenToIso({
-          mouse: { x: e.clientX, y: e.clientY },
+          mouse: mousePosition,
           zoom,
           scroll
         })
@@ -123,6 +134,8 @@ export const useInteractionManager = () => {
   );
 
   useEffect(() => {
+    if (!elementRef.current) return;
+
     window.addEventListener('mousemove', onMouseEvent);
     window.addEventListener('mousedown', onMouseEvent);
     window.addEventListener('mouseup', onMouseEvent);
@@ -133,4 +146,12 @@ export const useInteractionManager = () => {
       window.removeEventListener('mouseup', onMouseEvent);
     };
   }, [onMouseEvent]);
+
+  const setElement = useCallback((element: HTMLElement) => {
+    elementRef.current = element;
+  }, []);
+
+  return {
+    setElement
+  };
 };

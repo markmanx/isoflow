@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI } from 'src/types';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
@@ -13,6 +13,7 @@ import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 
 export const Renderer = () => {
   const [isDebugModeOn] = useState(false);
+  const containerRef = useRef<HTMLDivElement>();
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
   });
@@ -31,7 +32,7 @@ export const Renderer = () => {
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
-  useInteractionManager();
+  const { setElement } = useInteractionManager();
 
   const getNodesFromIds = useCallback(
     (nodeIds: string[]) => {
@@ -48,8 +49,15 @@ export const Renderer = () => {
     [scene.nodes]
   );
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    setElement(containerRef.current);
+  }, [setElement]);
+
   return (
     <Box
+      ref={containerRef}
       sx={{
         width: '100%',
         height: '100%'
