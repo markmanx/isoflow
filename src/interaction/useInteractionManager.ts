@@ -17,7 +17,7 @@ const reducers: { [k in string]: InteractionReducer } = {
 };
 
 export const useInteractionManager = () => {
-  const elementRef = useRef<HTMLElement>();
+  const rendererRef = useRef<HTMLElement>();
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -42,9 +42,14 @@ export const useInteractionManager = () => {
   const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
     return { nodes, connectors, groups, icons };
   });
+  const rendererSize = useUiStateStore((state) => {
+    return state.rendererSize;
+  });
 
   const onMouseEvent = useCallback(
     (e: MouseEvent) => {
+      if (!rendererRef.current) return;
+
       const reducer = reducers[mode.type];
 
       if (
@@ -58,7 +63,7 @@ export const useInteractionManager = () => {
         return;
 
       const reducerAction = reducer[e.type];
-      const componentOffset = elementRef.current?.getBoundingClientRect();
+      const componentOffset = rendererRef.current?.getBoundingClientRect();
       const offset: Coords = {
         x: componentOffset?.left ?? 0,
         y: componentOffset?.top ?? 0
@@ -74,7 +79,8 @@ export const useInteractionManager = () => {
         tile: screenToIso({
           mouse: mousePosition,
           zoom,
-          scroll
+          scroll,
+          rendererSize
         })
       };
 
@@ -134,21 +140,23 @@ export const useInteractionManager = () => {
   );
 
   useEffect(() => {
-    if (!elementRef.current) return;
+    if (!rendererRef.current) return;
 
-    window.addEventListener('mousemove', onMouseEvent);
-    window.addEventListener('mousedown', onMouseEvent);
-    window.addEventListener('mouseup', onMouseEvent);
+    const el = rendererRef.current;
+
+    el.addEventListener('mousemove', onMouseEvent);
+    el.addEventListener('mousedown', onMouseEvent);
+    el.addEventListener('mouseup', onMouseEvent);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseEvent);
-      window.removeEventListener('mousedown', onMouseEvent);
-      window.removeEventListener('mouseup', onMouseEvent);
+      el.removeEventListener('mousemove', onMouseEvent);
+      el.removeEventListener('mousedown', onMouseEvent);
+      el.removeEventListener('mouseup', onMouseEvent);
     };
   }, [onMouseEvent]);
 
   const setElement = useCallback((element: HTMLElement) => {
-    elementRef.current = element;
+    rendererRef.current = element;
   }, []);
 
   return {

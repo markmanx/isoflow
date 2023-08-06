@@ -18,20 +18,24 @@ interface ScreenToIso {
   mouse: Coords;
   zoom: number;
   scroll: Scroll;
+  rendererSize: Size;
 }
 
 // converts a mouse position to a tile position
-export const screenToIso = ({ mouse, zoom, scroll }: ScreenToIso) => {
-  const editorWidth = window.innerWidth;
-  const editorHeight = window.innerHeight;
+export const screenToIso = ({
+  mouse,
+  zoom,
+  scroll,
+  rendererSize
+}: ScreenToIso) => {
   const projectedTileSize = getProjectedTileSize({ zoom });
   const halfW = projectedTileSize.width / 2;
   const halfH = projectedTileSize.height / 2;
 
   // The origin is the center of the project.
   const projectPosition = {
-    x: mouse.x - scroll.position.x - editorWidth * 0.5,
-    y: mouse.y - scroll.position.y - editorHeight * 0.5
+    x: mouse.x - scroll.position.x - rendererSize.width * 0.5,
+    y: mouse.y - scroll.position.y - rendererSize.height * 0.5
   };
 
   const tile = {
@@ -53,26 +57,29 @@ interface GetTilePosition {
   scroll: Scroll;
   zoom: number;
   origin?: TileOriginEnum;
+  rendererSize: Size;
 }
 
 export const getTilePosition = ({
   tile,
   scroll,
   zoom,
-  origin = TileOriginEnum.CENTER
+  origin = TileOriginEnum.CENTER,
+  rendererSize
 }: GetTilePosition) => {
-  // TODO: Refactor editorWidth to not use window width
-  const editorWidth = window.innerWidth;
-  const editorHeight = window.innerHeight;
   const projectedTileSize = getProjectedTileSize({ zoom });
   const halfW = projectedTileSize.width / 2;
   const halfH = projectedTileSize.height / 2;
 
   const position: Coords = {
     x:
-      editorWidth * 0.5 + (halfW * tile.x - halfW * tile.y) + scroll.position.x,
+      rendererSize.width * 0.5 +
+      (halfW * tile.x - halfW * tile.y) +
+      scroll.position.x,
     y:
-      editorHeight * 0.5 - (halfH * tile.x + halfH * tile.y) + scroll.position.y
+      rendererSize.height * 0.5 -
+      (halfH * tile.x + halfH * tile.y) +
+      scroll.position.y
   };
 
   switch (origin) {

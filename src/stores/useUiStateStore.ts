@@ -31,6 +31,7 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
       offset: { x: 0, y: 0 }
     },
     zoom: 1,
+    rendererSize: { width: 0, height: 0 },
     actions: {
       setMode: (mode) => {
         set({ mode });
@@ -62,6 +63,9 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
       },
       setMouse: (mouse) => {
         set({ mouse });
+      },
+      setRendererSize: (rendererSize) => {
+        set({ rendererSize });
       }
     }
   };

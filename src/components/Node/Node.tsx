@@ -1,28 +1,28 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { Size, Coords, TileOriginEnum, Node as NodeI, Scroll } from 'src/types';
-import {
-  getTilePosition,
-  getProjectedTileSize,
-  getColorVariant
-} from 'src/utils';
+import { Size, Coords, TileOriginEnum, Node as NodeI } from 'src/types';
+import { getProjectedTileSize, getColorVariant } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
 interface Props {
   node: NodeI;
   iconUrl?: string;
-  zoom: number;
-  scroll: Scroll;
 }
 
-export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
+export const Node = ({ node, iconUrl }: Props) => {
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
   const nodeRef = useRef<HTMLDivElement>();
   const iconRef = useRef<HTMLImageElement>();
   const { observe, size: iconSize } = useResizeObserver();
+  const { getTilePosition } = useGetTilePosition();
 
   useEffect(() => {
     if (!iconRef.current) return;
@@ -46,8 +46,6 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
 
       const position = getTilePosition({
         tile,
-        zoom,
-        scroll,
         origin: TileOriginEnum.BOTTOM
       });
 
@@ -63,7 +61,7 @@ export const Node = ({ node, iconUrl, zoom, scroll }: Props) => {
         y: position.y
       });
     },
-    [zoom, scroll]
+    [getTilePosition]
   );
 
   const onImageLoaded = useCallback(() => {

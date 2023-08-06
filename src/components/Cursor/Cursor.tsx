@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import gsap from 'gsap';
-import { getTilePosition } from 'src/utils';
-import { Coords, TileOriginEnum, Scroll } from 'src/types';
+import { Coords, TileOriginEnum } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 
 interface Props {
   tile: Coords;
-  scroll: Scroll;
-  zoom: number;
 }
 
-export const Cursor = ({ tile, zoom, scroll }: Props) => {
+export const Cursor = ({ tile }: Props) => {
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
   const theme = useTheme();
   const [isReady, setIsReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>();
+  const { getTilePosition } = useGetTilePosition();
 
   const setPosition = useCallback(
     ({
@@ -28,9 +31,7 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
 
       const position = getTilePosition({
         tile: _tile,
-        origin: TileOriginEnum.TOP,
-        scroll,
-        zoom
+        origin: TileOriginEnum.TOP
       });
 
       gsap.to(containerRef.current, {
@@ -39,7 +40,7 @@ export const Cursor = ({ tile, zoom, scroll }: Props) => {
         top: position.y
       });
     },
-    [zoom, scroll]
+    [getTilePosition]
   );
 
   useEffect(() => {

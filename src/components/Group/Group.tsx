@@ -1,18 +1,22 @@
 import React, { useMemo } from 'react';
 import chroma from 'chroma-js';
 import { Box } from '@mui/material';
-import { Node, Scroll, TileOriginEnum, Group as GroupI } from 'src/types';
-import { getBoundingBox, getTilePosition, getBoundingBoxSize } from 'src/utils';
+import { Node, TileOriginEnum, Group as GroupI } from 'src/types';
+import { getBoundingBox, getBoundingBoxSize } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { useUiStateStore } from 'src/stores/useUiStateStore';
 
 interface Props {
   nodes: Node[];
   group: GroupI;
-  zoom: number;
-  scroll: Scroll;
 }
 
-export const Group = ({ nodes, zoom, scroll, group }: Props) => {
+export const Group = ({ nodes, group }: Props) => {
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const { getTilePosition } = useGetTilePosition();
   const nodePositions = useMemo(() => {
     return nodes.map((node) => {
       return node.position;
@@ -25,13 +29,11 @@ export const Group = ({ nodes, zoom, scroll, group }: Props) => {
 
     const position = getTilePosition({
       tile: corners[2],
-      zoom,
-      scroll,
       origin: TileOriginEnum.TOP
     });
 
     return { size, position };
-  }, [nodePositions, zoom, scroll]);
+  }, [nodePositions, getTilePosition]);
 
   if (!groupAttrs) return null;
 

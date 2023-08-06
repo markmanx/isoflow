@@ -10,6 +10,7 @@ import { Node } from 'src/components/Node/Node';
 import { Group } from 'src/components/Group/Group';
 import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
 export const Renderer = () => {
   const [isDebugModeOn] = useState(false);
@@ -32,7 +33,11 @@ export const Renderer = () => {
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
+  const { setRendererSize } = useUiStateStore((state) => {
+    return state.actions;
+  });
   const { setElement } = useInteractionManager();
+  const { observe, size: rendererSize } = useResizeObserver();
 
   const getNodesFromIds = useCallback(
     (nodeIds: string[]) => {
@@ -52,8 +57,13 @@ export const Renderer = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    observe(containerRef.current);
     setElement(containerRef.current);
-  }, [setElement]);
+  }, [setElement, observe]);
+
+  useEffect(() => {
+    setRendererSize(rendererSize);
+  }, [rendererSize, setRendererSize]);
 
   return (
     <Box
@@ -67,19 +77,9 @@ export const Renderer = () => {
       {scene.groups.map((group) => {
         const nodes = getNodesFromIds(group.nodeIds);
 
-        return (
-          <Group
-            key={group.id}
-            group={group}
-            nodes={nodes}
-            zoom={zoom}
-            scroll={scroll}
-          />
-        );
+        return <Group key={group.id} group={group} nodes={nodes} />;
       })}
-      {mode.showCursor && (
-        <Cursor tile={mouse.position.tile} zoom={zoom} scroll={scroll} />
-      )}
+      {mode.showCursor && <Cursor tile={mouse.position.tile} />}
       {/* {scene.connectors.map((connector) => {
         const nodes = getNodesFromIds([connector.from, connector.to]);
 
@@ -103,8 +103,6 @@ export const Renderer = () => {
                 return icon.id === node.iconId;
               })?.url
             }
-            zoom={zoom}
-            scroll={scroll}
           />
         );
       })}

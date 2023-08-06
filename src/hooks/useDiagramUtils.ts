@@ -2,12 +2,8 @@ import { useCallback } from 'react';
 import { useSceneStore } from 'src/stores/useSceneStore';
 import { useUiStateStore } from 'src/stores/useUiStateStore';
 import { Size, Coords } from 'src/types';
-import {
-  getBoundingBox,
-  getBoundingBoxSize,
-  sortByPosition,
-  getTilePosition
-} from 'src/utils';
+import { getBoundingBox, getBoundingBoxSize, sortByPosition } from 'src/utils';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 
 const BOUNDING_BOX_PADDING = 4;
 
@@ -29,6 +25,7 @@ export const useDiagramUtils = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { getTilePosition } = useGetTilePosition();
 
   const getDiagramBoundingBox = useCallback((): Size & Coords => {
     if (scene.nodes.length === 0) return { width: 0, height: 0, x: 0, y: 0 };
@@ -43,9 +40,7 @@ export const useDiagramUtils = () => {
     });
     const cornerPositions = corners.map((corner) => {
       return getTilePosition({
-        scroll,
-        tile: corner,
-        zoom
+        tile: corner
       });
     });
     const sortedCorners = sortByPosition(cornerPositions);
@@ -58,7 +53,7 @@ export const useDiagramUtils = () => {
       x: topLeft.x,
       y: topLeft.y
     };
-  }, [scene, scroll, zoom]);
+  }, [scene, getTilePosition]);
 
   const fitDiagramToScreen = useCallback(() => {
     const boundingBox = getDiagramBoundingBox();

@@ -1,4 +1,4 @@
-import { Coords } from './common';
+import { Coords, Size } from './common';
 import { SceneItem } from './scene';
 
 export enum SidebarTypeEnum {
@@ -87,6 +87,7 @@ export interface UiState {
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
+  rendererSize: Size;
 }
 
 export interface UiStateActions {
@@ -99,4 +100,5 @@ export interface UiStateActions {
   setSidebar: (itemControls: ItemControls) => void;
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
+  setRendererSize: (rendererSize: Size) => void;
 }
