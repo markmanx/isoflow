@@ -47,8 +47,11 @@ const Isoflow = ({
   useEffect(() => {
     uiActions.setZoom(initialScene.zoom ?? 1);
     uiActions.setToolbarVisibility(initialScene.hideToolbar ?? false);
+  }, [initialScene.zoom, initialScene.hideToolbar, sceneActions, uiActions]);
+
+  useEffect(() => {
     sceneActions.setScene(initialScene);
-  }, [initialScene, sceneActions, uiActions]);
+  }, [initialScene, sceneActions]);
 
   useSceneStore.subscribe((scene, prevScene) => {
     if (!onSceneUpdated) return;
@@ -69,7 +72,7 @@ const Isoflow = ({
       >
         <Renderer />
         <ItemControlsManager />
-        {!initialScene.hideToolbar && <ToolMenu />}
+        <ToolMenu />
       </Box>
     </ThemeProvider>
   );
