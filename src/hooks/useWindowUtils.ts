@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSceneStore } from 'src/stores/useSceneStore';
+import { useSceneStore } from 'src/stores/sceneStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 
 export const useWindowUtils = () => {

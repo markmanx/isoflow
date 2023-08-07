@@ -1,8 +1,8 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI } from 'src/types';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
-import { useSceneStore } from 'src/stores/useSceneStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';

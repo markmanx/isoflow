@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Node } from 'src/types';
-import { useSceneStore, useNodeHooks } from 'src/stores/useSceneStore';
+import { useSceneStore } from 'src/stores/sceneStore';
+import { useNode } from 'src/hooks/useNode';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from './IconSelection/IconSelection';
 import { Header } from '../components/Header';
@@ -19,8 +20,7 @@ export const NodeControls = ({ nodeId }: Props) => {
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
-  const { useGetNodeById } = useNodeHooks();
-  const node = useGetNodeById(nodeId);
+  const node = useNode(nodeId);
 
   const onTabChanged = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);

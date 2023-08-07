@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useSceneStore } from 'src/stores/useSceneStore';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Size, Coords } from 'src/types';
 import { getBoundingBox, getBoundingBoxSize, sortByPosition } from 'src/utils';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';

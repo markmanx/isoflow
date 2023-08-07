@@ -5,7 +5,7 @@ import { Size, Coords, TileOriginEnum, Node as NodeI } from 'src/types';
 import { getProjectedTileSize, getColorVariant } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';

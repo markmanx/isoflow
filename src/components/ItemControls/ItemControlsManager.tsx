@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Card, useTheme } from '@mui/material';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ProjectControls } from './ProjectControls/ProjectControls';
 

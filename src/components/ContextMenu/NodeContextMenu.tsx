@@ -3,7 +3,7 @@ import {
   ArrowRightAlt as ConnectIcon,
   Delete as DeleteIcon
 } from '@mui/icons-material';
-import { useNodeHooks } from 'src/stores/useSceneStore';
+import { useNode } from 'src/hooks/useNode';
 import { ContextMenu } from './components/ContextMenu';
 import { ContextMenuItem } from './components/ContextMenuItem';
 
@@ -12,8 +12,7 @@ interface Props {
 }
 
 export const NodeContextMenu = ({ nodeId }: Props) => {
-  const { useGetNodeById } = useNodeHooks();
-  const node = useGetNodeById(nodeId);
+  const node = useNode(nodeId);
 
   if (!node) return null;
 

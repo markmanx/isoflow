@@ -11,14 +11,14 @@ import {
   GroupInput,
   Scene
 } from 'src/types';
-import { useSceneStore } from 'src/stores/useSceneStore';
+import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
 import { sceneToSceneInput } from 'src/utils';
 import { LabelContainer } from 'src/components/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
-import { useUiStateStore } from './stores/useUiStateStore';
+import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 
 interface Props {
   initialScene: SceneInput & {
@@ -30,12 +30,7 @@ interface Props {
   height?: number | string;
 }
 
-const Isoflow = ({
-  initialScene,
-  width,
-  height = 500,
-  onSceneUpdated
-}: Props) => {
+const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
   useWindowUtils();
   const sceneActions = useSceneStore((state) => {
     return state.actions;
@@ -61,14 +56,8 @@ const Isoflow = ({
     sceneActions.setScene(initialScene);
   }, [initialScene, sceneActions]);
 
-  useSceneStore.subscribe((scene, prevScene) => {
-    if (!onSceneUpdated) return;
-
-    onSceneUpdated(sceneToSceneInput(scene), sceneToSceneInput(prevScene));
-  });
-
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GlobalStyles />
       <Box
         sx={{
@@ -82,6 +71,18 @@ const Isoflow = ({
         {isToolbarVisible && <ItemControlsManager />}
         <ToolMenu />
       </Box>
+    </>
+  );
+};
+
+export const Isoflow = (props: Props) => {
+  return (
+    <ThemeProvider theme={theme}>
+      <SceneProvider>
+        <UiStateProvider>
+          <App {...props} />
+        </UiStateProvider>
+      </SceneProvider>
     </ThemeProvider>
   );
 };

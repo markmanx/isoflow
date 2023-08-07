@@ -3,7 +3,7 @@ import { Box, useTheme } from '@mui/material';
 import gsap from 'gsap';
 import { Coords, TileOriginEnum } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 
 interface Props {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { NodeContextMenu } from 'src/components/ContextMenu/NodeContextMenu';
 import { EmptyTileContextMenu } from 'src/components/ContextMenu/EmptyTileContextMenu';
-import { useSceneStore } from 'src/stores/useSceneStore';
+import { useSceneStore } from 'src/stores/sceneStore';
 
 export const ContextMenuLayer = () => {
   const contextMenu = useUiStateStore((state) => {

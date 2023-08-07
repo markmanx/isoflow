@@ -5,7 +5,7 @@ import { Node, TileOriginEnum, Group as GroupI } from 'src/types';
 import { getBoundingBox, getBoundingBoxSize } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   nodes: Node[];
