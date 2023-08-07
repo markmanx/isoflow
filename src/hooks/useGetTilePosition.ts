@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Coords, TileOriginEnum } from 'src/types';
 import { getTilePosition as getTilePositionUtil } from 'src/utils';
 

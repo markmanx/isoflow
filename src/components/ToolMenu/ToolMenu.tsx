@@ -7,12 +7,9 @@ import {
   NearMe as NearMeIcon,
   CenterFocusStrong as CenterFocusStrongIcon
 } from '@mui/icons-material';
-import {
-  useUiStateStore,
-  MIN_ZOOM,
-  MAX_ZOOM
-} from 'src/stores/useUiStateStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
+import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
 import { IconButton } from '../IconButton/IconButton';
 
 export const ToolMenu = () => {

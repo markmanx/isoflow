@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { produce } from 'immer';
-import { useSceneStore } from 'src/stores/useSceneStore';
-import { useUiStateStore } from 'src/stores/useUiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { CoordsUtils, screenToIso } from 'src/utils';
 import { InteractionReducer, Mouse, State, Coords } from 'src/types';
 import { DragItems } from './reducers/DragItems';
