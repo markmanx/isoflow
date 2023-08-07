@@ -1,11 +1,7 @@
 import { create } from 'zustand';
 import { clamp, roundToOneDecimalPlace, CoordsUtils } from 'src/utils';
 import { UiState, UiStateActions } from 'src/types';
-
-// TODO: Move into the defaults file
-const ZOOM_INCREMENT = 0.2;
-export const MIN_ZOOM = 0.2;
-export const MAX_ZOOM = 1;
+import { ZOOM_INCREMENT, MAX_ZOOM, MIN_ZOOM } from 'src/config';
 
 export type UseUiStateStore = UiState & {
   actions: UiStateActions;

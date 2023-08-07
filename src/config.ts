@@ -15,3 +15,6 @@ export const NODE_DEFAULTS = {
   labelHeight: 100,
   color: DEFAULT_COLOR
 };
+export const ZOOM_INCREMENT = 0.2;
+export const MIN_ZOOM = 0.2;
+export const MAX_ZOOM = 1;

@@ -1,6 +1,12 @@
-import { TILE_PROJECTION_MULTIPLIERS, UNPROJECTED_TILE_SIZE } from 'src/config';
+import {
+  TILE_PROJECTION_MULTIPLIERS,
+  UNPROJECTED_TILE_SIZE,
+  ZOOM_INCREMENT,
+  MAX_ZOOM,
+  MIN_ZOOM
+} from 'src/config';
 import { Coords, TileOriginEnum, Node, Size, Scroll } from 'src/types';
-import { CoordsUtils } from 'src/utils';
+import { CoordsUtils, clamp, roundToOneDecimalPlace } from 'src/utils';
 
 interface GetProjectedTileSize {
   zoom: number;
@@ -193,4 +199,14 @@ export const filterNodesByTile = ({ tile, nodes }: GetNodesByTile): Node[] => {
   return nodes.filter((node) => {
     return CoordsUtils.isEqual(node.position, tile);
   });
+};
+
+export const incrementZoom = (zoom: number) => {
+  const newZoom = clamp(zoom + ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
+  return roundToOneDecimalPlace(newZoom);
+};
+
+export const decrementZoom = (zoom: number) => {
+  const newZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
+  return roundToOneDecimalPlace(newZoom);
 };
