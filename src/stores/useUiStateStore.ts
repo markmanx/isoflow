@@ -13,7 +13,7 @@ export type UseUiStateStore = UiState & {
 
 export const useUiStateStore = create<UseUiStateStore>((set, get) => {
   return {
-    hideToolbar: false,
+    isToolbarVisible: true,
     mode: {
       type: 'CURSOR',
       showCursor: true,
@@ -46,9 +46,6 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
         const targetZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
         set({ zoom: roundToOneDecimalPlace(targetZoom) });
       },
-      setToolbarVisibility: (visible) => {
-        set({ hideToolbar: visible });
-      },
       setZoom: (zoom) => {
         set({ zoom });
       },
@@ -66,6 +63,10 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
       },
       setRendererSize: (rendererSize) => {
         set({ rendererSize });
+      },
+      setToolbarVisibility: (visible) => {
+        console.log({ isVis: visible });
+        set({ isToolbarVisible: visible });
       }
     }
   };

@@ -80,7 +80,7 @@ export interface Scroll {
 }
 
 export interface UiState {
-  hideToolbar: boolean;
+  isToolbarVisible: boolean;
   mode: Mode;
   itemControls: ItemControls;
   contextMenu: ContextMenu;

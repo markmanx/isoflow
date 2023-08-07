@@ -23,7 +23,7 @@ import { useUiStateStore } from './stores/useUiStateStore';
 interface Props {
   initialScene: SceneInput & {
     zoom?: number;
-    hideToolbar?: boolean;
+    isToolbarVisible?: boolean;
   };
   onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
   width?: number | string;
@@ -43,11 +43,19 @@ const Isoflow = ({
   const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const isToolbarVisible = useUiStateStore((state) => {
+    return state.isToolbarVisible;
+  });
 
   useEffect(() => {
     uiActions.setZoom(initialScene.zoom ?? 1);
-    uiActions.setToolbarVisibility(initialScene.hideToolbar ?? false);
-  }, [initialScene.zoom, initialScene.hideToolbar, sceneActions, uiActions]);
+    uiActions.setToolbarVisibility(initialScene.isToolbarVisible ?? true);
+  }, [
+    initialScene.zoom,
+    initialScene.isToolbarVisible,
+    sceneActions,
+    uiActions
+  ]);
 
   useEffect(() => {
     sceneActions.setScene(initialScene);
@@ -71,7 +79,7 @@ const Isoflow = ({
         }}
       >
         <Renderer />
-        <ItemControlsManager />
+        {isToolbarVisible && <ItemControlsManager />}
         <ToolMenu />
       </Box>
     </ThemeProvider>
