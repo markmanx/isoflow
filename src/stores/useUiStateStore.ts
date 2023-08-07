@@ -65,7 +65,6 @@ export const useUiStateStore = create<UseUiStateStore>((set, get) => {
         set({ rendererSize });
       },
       setToolbarVisibility: (visible) => {
-        console.log({ isVis: visible });
         set({ isToolbarVisible: visible });
       }
     }
