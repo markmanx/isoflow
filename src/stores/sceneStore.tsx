@@ -1,5 +1,6 @@
-import React, { createContext, useRef, useContext } from 'react';
+import React, { createContext, useRef, useContext, useEffect } from 'react';
 import { createStore, useStore } from 'zustand';
+import { mountStoreDevtool } from 'simple-zustand-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
 import { NODE_DEFAULTS } from 'src/config';
@@ -88,6 +89,12 @@ export const SceneProvider = ({ children }: ProviderProps) => {
 
 export function useSceneStore<T>(selector: (state: SceneStore) => T) {
   const store = useContext(SceneContext);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      mountStoreDevtool('SceneStore', store);
+    }
+  }, [store]);
 
   if (store === null) {
     throw new Error('Missing provider in the tree');

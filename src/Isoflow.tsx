@@ -20,7 +20,7 @@ import { ItemControlsManager } from './components/ItemControls/ItemControlsManag
 import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 
 interface Props {
-  initialScene: SceneInput & {
+  initialScene?: SceneInput & {
     zoom?: number;
   };
   interactionsEnabled?: boolean;
@@ -48,12 +48,14 @@ const App = ({
   });
 
   useEffect(() => {
-    uiActions.setZoom(initialScene.zoom ?? 1);
+    uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setInteractionsEnabled(interactionsEnabledProp);
-  }, [initialScene.zoom, interactionsEnabledProp, sceneActions, uiActions]);
+  }, [initialScene?.zoom, interactionsEnabledProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    sceneActions.setScene(initialScene);
+    if (initialScene) {
+      sceneActions.setScene(initialScene);
+    }
   }, [initialScene, sceneActions]);
 
   return (

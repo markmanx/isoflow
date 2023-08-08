@@ -52,7 +52,7 @@ export interface PanMode {
 }
 
 export interface LassoMode {
-  type: 'LASSO'; // TODO: Put these into an enum
+  type: 'LASSO';
   showCursor: boolean;
   selection: {
     startTile: Coords;
