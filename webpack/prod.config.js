@@ -3,10 +3,13 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/Isoflow.tsx',
+  entry: {
+    'index': './src/Isoflow.tsx',
+    'validation': './src/validation/scene.ts',
+  },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'index.js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
   externals: {
