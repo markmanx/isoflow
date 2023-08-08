@@ -16,7 +16,6 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
     type: SceneItemTypeEnum.NODE,
     id: nodeInput.id,
     label: nodeInput.label ?? NODE_DEFAULTS.label,
-    labelComponent: nodeInput.labelComponent,
     labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
     color: nodeInput.color ?? NODE_DEFAULTS.color,
     iconId: nodeInput.iconId,

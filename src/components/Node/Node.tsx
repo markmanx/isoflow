@@ -115,7 +115,6 @@ export const Node = ({ node, iconUrl }: Props) => {
           connectorDotSize={5 * zoom}
         >
           {node.label && <MarkdownLabel label={node.label} />}
-          {node.labelComponent}
         </LabelContainer>
       </Box>
       <Box
