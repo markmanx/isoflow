@@ -1,5 +1,4 @@
 import chroma from 'chroma-js';
-import { SceneInput, Scene } from 'src/types';
 
 export const clamp = (num: number, min: number, max: number) => {
   // eslint-disable-next-line no-nested-ternary
@@ -12,26 +11,6 @@ export const getRandom = (min: number, max: number) => {
 
 export const roundToOneDecimalPlace = (num: number) => {
   return Math.round(num * 10) / 10;
-};
-
-export const sceneToSceneInput = (scene: Scene): SceneInput => {
-  const nodes: SceneInput['nodes'] = scene.nodes.map((node) => {
-    return {
-      id: node.id,
-      position: node.position,
-      label: node.label,
-      labelHeight: node.labelHeight,
-      color: node.color,
-      iconId: node.iconId
-    };
-  });
-
-  return {
-    nodes,
-    connectors: [],
-    groups: [],
-    icons: scene.icons
-  } as SceneInput;
 };
 
 interface GetColorVariantOpts {

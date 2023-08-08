@@ -40,6 +40,7 @@ export const connectorInputToConnector = (
   return {
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
+    label: connectorInput.label ?? '',
     color: connectorInput.color ?? DEFAULT_COLOR,
     from: connectorInput.from,
     to: connectorInput.to
@@ -66,4 +67,50 @@ export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
     connectors,
     icons: sceneInput.icons
   } as Scene;
+};
+
+export const nodeToNodeInput = (node: Node): NodeInput => {
+  return {
+    id: node.id,
+    position: node.position,
+    label: node.label,
+    labelHeight: node.labelHeight,
+    color: node.color,
+    iconId: node.iconId
+  };
+};
+
+export const connectorToConnectorInput = (
+  connector: Connector
+): ConnectorInput => {
+  return {
+    id: connector.id,
+    label: connector.label,
+    from: connector.from,
+    to: connector.to,
+    color: connector.color
+  };
+};
+
+export const groupToGroupInput = (group: Group): GroupInput => {
+  return {
+    id: group.id,
+    nodeIds: group.nodeIds,
+    color: group.color
+  };
+};
+
+export const sceneToSceneInput = (scene: Scene): SceneInput => {
+  const nodes: NodeInput[] = scene.nodes.map(nodeInputToNode);
+  const connectors: ConnectorInput[] = scene.connectors.map(
+    connectorToConnectorInput
+  );
+  const groups: GroupInput[] = scene.groups.map(groupToGroupInput);
+
+  return {
+    nodes,
+    connectors,
+    groups,
+    icons: scene.icons
+  } as SceneInput;
 };

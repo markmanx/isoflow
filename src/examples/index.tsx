@@ -2,8 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { Box, Select, MenuItem, useTheme } from '@mui/material';
 import { BasicEditor } from './BasicEditor/BasicEditor';
 import { CustomNode } from './CustomNode/CustomNode';
+import { Callbacks } from './Callbacks/Callbacks';
 
 const examples = [
+  { name: 'Callbacks', component: Callbacks },
   { name: 'Live Diagrams', component: CustomNode },
   { name: 'Basic Editor', component: BasicEditor }
 ];

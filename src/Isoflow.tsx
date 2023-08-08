@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { shallow } from 'zustand/shallow';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
@@ -11,6 +12,7 @@ import {
   GroupInput,
   Scene
 } from 'src/types';
+import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
@@ -24,7 +26,7 @@ interface Props {
     zoom?: number;
   };
   interactionsEnabled?: boolean;
-  onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
+  onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
 }
@@ -37,6 +39,9 @@ const App = ({
   onSceneUpdated
 }: Props) => {
   useWindowUtils();
+  const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
+    return { nodes, connectors, groups, icons };
+  }, shallow);
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -57,6 +62,13 @@ const App = ({
       sceneActions.setScene(initialScene);
     }
   }, [initialScene, sceneActions]);
+
+  useEffect(() => {
+    if (onSceneUpdated) {
+      const sceneInput = sceneToSceneInput(scene);
+      onSceneUpdated(sceneInput);
+    }
+  }, [scene, onSceneUpdated]);
 
   return (
     <>

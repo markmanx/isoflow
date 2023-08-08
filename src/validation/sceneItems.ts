@@ -29,7 +29,6 @@ export const connectorInput = z.object({
 
 export const groupInput = z.object({
   id: z.string(),
-  label: z.string().nullable(),
   color: z.string().optional(),
   nodeIds: z.array(z.string())
 });

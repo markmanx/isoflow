@@ -64,7 +64,6 @@ export const CustomNode = () => {
         groups: [
           {
             id: 'group1',
-            label: 'Group 1',
             nodeIds: ['server', 'database']
           }
         ],
