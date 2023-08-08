@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -18,6 +18,8 @@ const reducers: { [k in string]: InteractionReducer } = {
 
 export const useInteractionManager = () => {
   const rendererRef = useRef<HTMLElement>();
+  const [isEnabled, setIsEnabled] = useState(true);
+  const destroyListeners = useRef<() => void>();
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -140,8 +142,12 @@ export const useInteractionManager = () => {
     ]
   );
 
+  // TODO: Needs optimisation, listeners are added / removed every time the mouse position changes.  Very intensive.
   useEffect(() => {
-    if (!rendererRef.current) return;
+    if (!rendererRef.current || !isEnabled) {
+      destroyListeners.current?.();
+      return;
+    }
 
     const el = rendererRef.current;
 
@@ -149,18 +155,21 @@ export const useInteractionManager = () => {
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
 
-    return () => {
+    destroyListeners.current = () => {
       el.removeEventListener('mousemove', onMouseEvent);
       el.removeEventListener('mousedown', onMouseEvent);
       el.removeEventListener('mouseup', onMouseEvent);
     };
-  }, [onMouseEvent]);
+
+    return destroyListeners.current;
+  }, [onMouseEvent, isEnabled]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
   }, []);
 
   return {
-    setElement
+    setElement,
+    setIsEnabled
   };
 };

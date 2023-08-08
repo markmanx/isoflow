@@ -14,7 +14,6 @@ import {
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { sceneToSceneInput } from 'src/utils';
 import { LabelContainer } from 'src/components/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
@@ -23,14 +22,20 @@ import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 interface Props {
   initialScene: SceneInput & {
     zoom?: number;
-    isToolbarVisible?: boolean;
   };
+  interactionsEnabled?: boolean;
   onSceneUpdated?: (scene: SceneInput, prevScene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
 }
 
-const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
+const App = ({
+  initialScene,
+  width,
+  height = 500,
+  interactionsEnabled: interactionsEnabledProp = true,
+  onSceneUpdated
+}: Props) => {
   useWindowUtils();
   const sceneActions = useSceneStore((state) => {
     return state.actions;
@@ -38,19 +43,14 @@ const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
   const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const isToolbarVisible = useUiStateStore((state) => {
-    return state.isToolbarVisible;
+  const interactionsEnabled = useUiStateStore((state) => {
+    return state.interactionsEnabled;
   });
 
   useEffect(() => {
     uiActions.setZoom(initialScene.zoom ?? 1);
-    uiActions.setToolbarVisibility(initialScene.isToolbarVisible ?? true);
-  }, [
-    initialScene.zoom,
-    initialScene.isToolbarVisible,
-    sceneActions,
-    uiActions
-  ]);
+    uiActions.setInteractionsEnabled(interactionsEnabledProp);
+  }, [initialScene.zoom, interactionsEnabledProp, sceneActions, uiActions]);
 
   useEffect(() => {
     sceneActions.setScene(initialScene);
@@ -68,8 +68,8 @@ const App = ({ initialScene, width, height = 500, onSceneUpdated }: Props) => {
         }}
       >
         <Renderer />
-        {isToolbarVisible && <ItemControlsManager />}
-        <ToolMenu />
+        <ItemControlsManager />
+        {interactionsEnabled && <ToolMenu />}
       </Box>
     </>
   );

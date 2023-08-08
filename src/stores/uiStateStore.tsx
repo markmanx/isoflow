@@ -12,7 +12,7 @@ type UiStateStore = UiState & Actions;
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
-      isToolbarVisible: true,
+      interactionsEnabled: true,
       mode: {
         type: 'CURSOR',
         showCursor: true,
@@ -61,8 +61,16 @@ const initialState = () => {
         setRendererSize: (rendererSize) => {
           set({ rendererSize });
         },
-        setToolbarVisibility: (visible) => {
-          set({ isToolbarVisible: visible });
+        setInteractionsEnabled: (enabled) => {
+          set({ interactionsEnabled: enabled });
+
+          if (!enabled) {
+            set({ mode: { type: 'INTERACTIONS_DISABLED', showCursor: false } });
+          } else {
+            set({
+              mode: { type: 'CURSOR', showCursor: true, mousedown: null }
+            });
+          }
         }
       }
     };

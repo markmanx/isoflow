@@ -18,6 +18,9 @@ export const Renderer = () => {
   const scene = useSceneStore(({ nodes, connectors, groups }) => {
     return { nodes, connectors, groups };
   });
+  const interactionsEnabled = useUiStateStore((state) => {
+    return state.interactionsEnabled;
+  });
   const icons = useSceneStore((state) => {
     return state.icons;
   });
@@ -36,7 +39,10 @@ export const Renderer = () => {
   const { setRendererSize } = useUiStateStore((state) => {
     return state.actions;
   });
-  const { setElement } = useInteractionManager();
+  const {
+    setElement: setInteractionsElement,
+    setIsEnabled: setInteractionsEnabled
+  } = useInteractionManager();
   const { observe, disconnect, size: rendererSize } = useResizeObserver();
 
   const getNodesFromIds = useCallback(
@@ -58,12 +64,16 @@ export const Renderer = () => {
     if (!containerRef.current) return;
 
     observe(containerRef.current);
-    setElement(containerRef.current);
+    setInteractionsElement(containerRef.current);
 
     return () => {
       disconnect();
     };
-  }, [setElement, observe, disconnect]);
+  }, [setInteractionsElement, observe, disconnect]);
+
+  useEffect(() => {
+    setInteractionsEnabled(interactionsEnabled);
+  }, [interactionsEnabled, setInteractionsEnabled]);
 
   useEffect(() => {
     setRendererSize(rendererSize);

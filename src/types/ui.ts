@@ -32,6 +32,11 @@ export interface Mouse {
 }
 
 // Begin mode types
+export interface InteractionsDisabled {
+  type: 'INTERACTIONS_DISABLED';
+  showCursor: boolean;
+}
+
 export interface CursorMode {
   type: 'CURSOR';
   showCursor: boolean;
@@ -63,7 +68,12 @@ export interface DragItemsMode {
   items: SceneItem[];
 }
 
-export type Mode = CursorMode | PanMode | DragItemsMode | LassoMode;
+export type Mode =
+  | InteractionsDisabled
+  | CursorMode
+  | PanMode
+  | DragItemsMode
+  | LassoMode;
 // End mode types
 
 export type ContextMenu =
@@ -80,7 +90,7 @@ export interface Scroll {
 }
 
 export interface UiState {
-  isToolbarVisible: boolean;
+  interactionsEnabled: boolean;
   mode: Mode;
   itemControls: ItemControls;
   contextMenu: ContextMenu;
@@ -92,7 +102,6 @@ export interface UiState {
 
 export interface UiStateActions {
   setMode: (mode: Mode) => void;
-  setToolbarVisibility: (visible: boolean) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
   setZoom: (zoom: number) => void;
@@ -101,4 +110,5 @@ export interface UiStateActions {
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
+  setInteractionsEnabled: (enabled: boolean) => void;
 }
