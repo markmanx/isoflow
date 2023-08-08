@@ -1,6 +1,6 @@
 import React, { createContext, useRef, useContext, useEffect } from 'react';
 import { createStore, useStore } from 'zustand';
-import { mountStoreDevtool } from 'simple-zustand-devtools'; // eslint-disable-line import/no-extraneous-dependencies
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
 import { NODE_DEFAULTS } from 'src/config';

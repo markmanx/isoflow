@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useRef, useEffect } from 'react';
 import { createStore, useStore } from 'zustand';
-import { mountStoreDevtool } from 'simple-zustand-devtools'; // eslint-disable-line import/no-extraneous-dependencies
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { CoordsUtils, incrementZoom, decrementZoom } from 'src/utils';
 import { UiState, UiStateActions } from 'src/types';
 
