@@ -18,6 +18,7 @@ import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
 import { LabelContainer } from 'src/components/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
+import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 
@@ -121,5 +122,6 @@ export {
   GroupInput,
   ConnectorInput,
   useIsoflow,
-  LabelContainer
+  LabelContainer,
+  sceneValidationSchema
 };

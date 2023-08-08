@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useRef, useEffect } from 'react';
+import React, { createContext, useContext, useRef } from 'react';
 import { createStore, useStore } from 'zustand';
-import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { CoordsUtils, incrementZoom, decrementZoom } from 'src/utils';
 import { UiState, UiStateActions } from 'src/types';
 
@@ -104,12 +103,6 @@ export const UiStateProvider = ({ children }: ProviderProps) => {
 
 export function useUiStateStore<T>(selector: (state: UiStateStore) => T) {
   const store = useContext(UiStateContext);
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      mountStoreDevtool('UIStore', store);
-    }
-  }, [store]);
 
   if (store === null) {
     throw new Error('Missing provider in the tree');
