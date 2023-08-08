@@ -48,8 +48,6 @@ export const IsoTileArea = ({
     return {
       stroke: stroke.color,
       strokeWidth: stroke.width,
-      strokeAlignment: 'center',
-      strokeLineJoin: 'round',
       strokeLineCap: 'round'
     };
   }, [stroke]);
