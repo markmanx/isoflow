@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "paths": {
-      "src/*": [
-        "./src/*"
-      ],
+      "src/*": ["./*"],
     },
     "outDir": "./dist",
     "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
     "strict": true,
+    "module": "es6",
+    "moduleResolution": "node",
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
     "src/global.d.ts"
   ],
 }
