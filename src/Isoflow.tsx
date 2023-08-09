@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
@@ -39,6 +39,7 @@ const App = ({
   interactionsEnabled: interactionsEnabledProp = true,
   onSceneUpdated
 }: Props) => {
+  const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
     return { nodes, connectors, groups, icons };
@@ -59,17 +60,18 @@ const App = ({
   }, [initialScene?.zoom, interactionsEnabledProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    if (initialScene) {
-      sceneActions.setScene(initialScene);
-    }
+    if (!initialScene) return;
+
+    sceneActions.setScene(initialScene);
+    setIsReady(true);
   }, [initialScene, sceneActions]);
 
   useEffect(() => {
-    if (onSceneUpdated) {
-      const sceneInput = sceneToSceneInput(scene);
-      onSceneUpdated(sceneInput);
-    }
-  }, [scene, onSceneUpdated]);
+    if (!isReady || !onSceneUpdated) return;
+
+    const sceneInput = sceneToSceneInput(scene);
+    onSceneUpdated(sceneInput);
+  }, [scene, onSceneUpdated, isReady]);
 
   return (
     <>
