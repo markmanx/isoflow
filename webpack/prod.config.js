@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: {
     'index': './src/Isoflow.tsx',
-    'validation': './src/validation/scene.ts',
+    '/validation/scene': './src/validation/scene.ts',
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
