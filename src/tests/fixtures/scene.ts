@@ -5,12 +5,12 @@ export const scene: SceneInput = {
     {
       id: 'icon1',
       name: 'Icon1',
-      url: 'http://example1.com'
+      url: 'https://isoflow.io/static/assets/icons/networking/server.svg'
     },
     {
       id: 'icon2',
       name: 'Icon2',
-      url: 'http://example2.com'
+      url: 'https://isoflow.io/static/assets/icons/networking/block.svg'
     }
   ],
   nodes: [
