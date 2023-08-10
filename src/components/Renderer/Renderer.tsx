@@ -98,7 +98,12 @@ export const Renderer = () => {
         const nodes = getNodesFromIds([connector.from, connector.to]);
 
         return (
-          <Connector key={connector.id} fromNode={nodes[0]} toNode={nodes[1]} />
+          <Connector
+            key={connector.id}
+            connector={connector}
+            fromNode={nodes[0]}
+            toNode={nodes[1]}
+          />
         );
       })}
       {scene.nodes.map((node) => {

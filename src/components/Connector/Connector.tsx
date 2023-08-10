@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
-import { Node, Coords } from 'src/types';
+import { Node, Coords, Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import {
   findPath,
@@ -14,6 +14,7 @@ import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
+  connector: ConnectorI;
   fromNode: Node;
   toNode: Node;
 }
@@ -22,7 +23,7 @@ interface Props {
 // is the grid that encompasses the two nodes + the offset below.
 const BOUNDS_OFFSET: Coords = { x: 3, y: 3 };
 
-export const Connector = ({ fromNode, toNode }: Props) => {
+export const Connector = ({ fromNode, toNode, connector }: Props) => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
@@ -72,7 +73,7 @@ export const Connector = ({ fromNode, toNode }: Props) => {
       <IsoTileArea tileArea={route.searchAreaSize} zoom={zoom} fill="none">
         <polyline
           points={route.path}
-          stroke="black"
+          stroke={connector.color}
           strokeWidth={10 * zoom}
           fill="none"
         />
