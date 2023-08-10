@@ -13,9 +13,10 @@ import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 interface Props {
   node: NodeI;
   iconUrl?: string;
+  order: number;
 }
 
-export const Node = ({ node, iconUrl }: Props) => {
+export const Node = ({ node, iconUrl, order }: Props) => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
@@ -81,6 +82,7 @@ export const Node = ({ node, iconUrl }: Props) => {
       ref={nodeRef}
       sx={{
         position: 'absolute',
+        zIndex: order,
         opacity: 0
       }}
     >

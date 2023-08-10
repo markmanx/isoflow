@@ -11,6 +11,7 @@ import { Group } from 'src/components/Group/Group';
 import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 
 export const Renderer = () => {
   const [isDebugModeOn] = useState(false);
@@ -91,41 +92,53 @@ export const Renderer = () => {
       }}
     >
       <Grid scroll={scroll} zoom={zoom} />
-      {scene.groups.map((group) => {
-        const groupNodes = getNodesFromIds(group.nodeIds);
+      <SceneLayer>
+        {scene.groups.map((group) => {
+          const groupNodes = getNodesFromIds(group.nodeIds);
 
-        return <Group key={group.id} group={group} nodes={groupNodes} />;
-      })}
-      {mode.showCursor && <Cursor tile={mouse.position.tile} />}
-      {scene.connectors.map((connector) => {
-        const connectorNodes = getNodesFromIds([connector.from, connector.to]);
+          return <Group key={group.id} group={group} nodes={groupNodes} />;
+        })}
+      </SceneLayer>
+      <SceneLayer>
+        {mode.showCursor && <Cursor tile={mouse.position.tile} />}
+      </SceneLayer>
+      <SceneLayer>
+        {scene.connectors.map((connector) => {
+          const connectorNodes = getNodesFromIds([
+            connector.from,
+            connector.to
+          ]);
 
-        return (
-          <Connector
-            key={connector.id}
-            connector={connector}
-            fromNode={connectorNodes[0]}
-            toNode={connectorNodes[1]}
-          />
-        );
-      })}
-      {nodes.map((node) => {
-        return (
-          <Node
-            key={node.id}
-            node={node}
-            iconUrl={
-              icons.find((icon) => {
-                return icon.id === node.iconId;
-              })?.url
-            }
-          />
-        );
-      })}
+          return (
+            <Connector
+              key={connector.id}
+              connector={connector}
+              fromNode={connectorNodes[0]}
+              toNode={connectorNodes[1]}
+            />
+          );
+        })}
+      </SceneLayer>
+      <SceneLayer>
+        {nodes.map((node) => {
+          return (
+            <Node
+              key={node.id}
+              order={-node.position.x - node.position.y}
+              node={node}
+              iconUrl={
+                icons.find((icon) => {
+                  return icon.id === node.iconId;
+                })?.url
+              }
+            />
+          );
+        })}
+      </SceneLayer>
       {isDebugModeOn && (
-        <Box sx={{ position: 'absolute' }}>
+        <SceneLayer>
           <DebugUtils />
-        </Box>
+        </SceneLayer>
       )}
     </Box>
   );
