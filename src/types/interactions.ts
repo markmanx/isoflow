@@ -15,6 +15,7 @@ export interface State {
   scene: Scene;
   contextMenu: ContextMenu;
   itemControls: ItemControls;
+  rendererRef: HTMLElement;
 }
 
 export type InteractionReducerAction = (state: Draft<State>) => void;

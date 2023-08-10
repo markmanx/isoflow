@@ -87,7 +87,8 @@ export const useInteractionManager = () => {
         mode,
         scroll,
         contextMenu,
-        itemControls
+        itemControls,
+        rendererRef: rendererRef.current
       };
 
       const getTransitionaryState = () => {

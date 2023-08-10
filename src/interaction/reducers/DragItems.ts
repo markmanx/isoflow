@@ -3,6 +3,12 @@ import { InteractionReducer } from 'src/types';
 
 export const DragItems: InteractionReducer = {
   type: 'DRAG_ITEMS',
+  entry: (draftState) => {
+    draftState.rendererRef.style.userSelect = 'none';
+  },
+  exit: (draftState) => {
+    draftState.rendererRef.style.userSelect = 'auto';
+  },
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
