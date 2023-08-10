@@ -58,6 +58,9 @@ export const IconButton = ({
       >
         <Box
           sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             svg: {
               color: iconColor
             }

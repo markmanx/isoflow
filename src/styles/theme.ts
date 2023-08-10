@@ -29,7 +29,7 @@ export const customVars: CustomThemeVars = {
     y: 40
   },
   toolMenu: {
-    height: 55
+    height: 50
   },
   diagramPalette: {
     green: '#53b435',
