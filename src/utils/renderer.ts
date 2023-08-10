@@ -5,7 +5,7 @@ import {
   MAX_ZOOM,
   MIN_ZOOM
 } from 'src/config';
-import { Coords, TileOriginEnum, Node, Size, Scroll } from 'src/types';
+import { Coords, TileOriginEnum, Node, Size, Scroll, Mouse } from 'src/types';
 import { CoordsUtils, clamp, roundToOneDecimalPlace } from 'src/utils';
 
 interface GetProjectedTileSize {
@@ -209,4 +209,67 @@ export const incrementZoom = (zoom: number) => {
 export const decrementZoom = (zoom: number) => {
   const newZoom = clamp(zoom - ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
   return roundToOneDecimalPlace(newZoom);
+};
+
+interface GetMouse {
+  interactiveElement: HTMLElement;
+  zoom: number;
+  scroll: Scroll;
+  lastMouse: Mouse;
+  mouseEvent: MouseEvent;
+  rendererSize: Size;
+}
+
+export const getMouse = ({
+  interactiveElement,
+  zoom,
+  scroll,
+  lastMouse,
+  mouseEvent,
+  rendererSize
+}: GetMouse): Mouse => {
+  const componentOffset = interactiveElement.getBoundingClientRect();
+  const offset: Coords = {
+    x: componentOffset?.left ?? 0,
+    y: componentOffset?.top ?? 0
+  };
+
+  const mousePosition = {
+    x: mouseEvent.clientX - offset.x,
+    y: mouseEvent.clientY - offset.y
+  };
+
+  const newPosition: Mouse['position'] = {
+    screen: mousePosition,
+    tile: screenToIso({
+      mouse: mousePosition,
+      zoom,
+      scroll,
+      rendererSize
+    })
+  };
+
+  const newDelta: Mouse['delta'] = {
+    screen: CoordsUtils.subtract(newPosition.screen, lastMouse.position.screen),
+    tile: CoordsUtils.subtract(newPosition.tile, lastMouse.position.tile)
+  };
+
+  const getMousedown = (): Mouse['mousedown'] => {
+    switch (mouseEvent.type) {
+      case 'mousedown':
+        return newPosition;
+      case 'mousemove':
+        return lastMouse.mousedown;
+      default:
+        return null;
+    }
+  };
+
+  const nextMouse: Mouse = {
+    position: newPosition,
+    delta: newDelta,
+    mousedown: getMousedown()
+  };
+
+  return nextMouse;
 };

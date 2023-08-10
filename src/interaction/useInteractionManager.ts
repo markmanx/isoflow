@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { CoordsUtils, screenToIso } from 'src/utils';
-import { InteractionReducer, Mouse, State, Coords } from 'src/types';
+import { InteractionReducer, State } from 'src/types';
+import { getMouse } from 'src/utils';
 import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
@@ -18,6 +18,7 @@ const reducers: { [k in string]: InteractionReducer } = {
 
 export const useInteractionManager = () => {
   const rendererRef = useRef<HTMLElement>();
+  const reducerTypeRef = useRef<string>();
   const [isEnabled, setIsEnabled] = useState(true);
   const destroyListeners = useRef<() => void>();
   const mode = useUiStateStore((state) => {
@@ -57,6 +58,11 @@ export const useInteractionManager = () => {
 
       const reducer = reducers[mode.type];
 
+      // if (reducerTypeRef.current !== reducer.type) {
+      //   reducerTypeRef.current = reducer.type;
+      //   reducer.entry?.(scene);
+      // }
+
       if (
         !reducer ||
         !(
@@ -71,48 +77,14 @@ export const useInteractionManager = () => {
 
       if (!reducerAction) return;
 
-      const componentOffset = rendererRef.current?.getBoundingClientRect();
-      const offset: Coords = {
-        x: componentOffset?.left ?? 0,
-        y: componentOffset?.top ?? 0
-      };
-
-      const mousePosition = {
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y
-      };
-
-      const newPosition: Mouse['position'] = {
-        screen: mousePosition,
-        tile: screenToIso({
-          mouse: mousePosition,
-          zoom,
-          scroll,
-          rendererSize
-        })
-      };
-
-      const newDelta: Mouse['delta'] = {
-        screen: CoordsUtils.subtract(newPosition.screen, mouse.position.screen),
-        tile: CoordsUtils.subtract(newPosition.tile, mouse.position.tile)
-      };
-
-      const getMousedown = (): Mouse['mousedown'] => {
-        switch (e.type) {
-          case 'mousedown':
-            return newPosition;
-          case 'mousemove':
-            return mouse.mousedown;
-          default:
-            return null;
-        }
-      };
-
-      const nextMouse: Mouse = {
-        position: newPosition,
-        delta: newDelta,
-        mousedown: getMousedown()
-      };
+      const nextMouse = getMouse({
+        interactiveElement: rendererRef.current,
+        zoom,
+        scroll,
+        lastMouse: mouse,
+        mouseEvent: e,
+        rendererSize
+      });
 
       const baseState: State = {
         scene,
