@@ -2,6 +2,7 @@ import { SidebarTypeEnum, InteractionReducer } from 'src/types';
 import { CoordsUtils, filterNodesByTile } from 'src/utils';
 
 export const Cursor: InteractionReducer = {
+  type: 'CURSOR',
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'CURSOR') return;
 

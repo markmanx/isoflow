@@ -2,6 +2,7 @@ import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
 export const DragItems: InteractionReducer = {
+  type: 'DRAG_ITEMS',
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'DRAG_ITEMS') return;
 
@@ -24,7 +25,6 @@ export const DragItems: InteractionReducer = {
       });
     }
   },
-  mousedown: () => {},
   mouseup: (draftState) => {
     draftState.mode = { type: 'CURSOR', showCursor: true, mousedown: null };
   }

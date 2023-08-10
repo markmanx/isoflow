@@ -20,7 +20,9 @@ export interface State {
 export type InteractionReducerAction = (state: Draft<State>) => void;
 
 export type InteractionReducer = {
-  mousemove: InteractionReducerAction;
-  mousedown: InteractionReducerAction;
-  mouseup: InteractionReducerAction;
+  type: string;
+  entry?: InteractionReducerAction;
+  mousemove?: InteractionReducerAction;
+  mousedown?: InteractionReducerAction;
+  mouseup?: InteractionReducerAction;
 };

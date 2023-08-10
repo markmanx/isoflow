@@ -110,7 +110,7 @@ export const Node = ({ node, iconUrl }: Props) => {
           />
         </Box>
         <LabelContainer
-          labelHeight={(node.labelHeight + iconSize.height) * zoom}
+          labelHeight={node.labelHeight + iconSize.height}
           tileSize={projectedTileSize}
           connectorDotSize={5 * zoom}
         >

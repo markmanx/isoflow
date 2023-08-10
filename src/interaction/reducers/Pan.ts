@@ -2,6 +2,8 @@ import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
 export const Pan: InteractionReducer = {
+  type: 'PAN',
+  entry: () => {},
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'PAN') return;
 
@@ -13,7 +15,5 @@ export const Pan: InteractionReducer = {
           )
         : draftState.scroll.position;
     }
-  },
-  mousedown: () => {},
-  mouseup: () => {}
+  }
 };

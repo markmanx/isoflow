@@ -2,6 +2,7 @@ import { CoordsUtils, isWithinBounds } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
 export const Lasso: InteractionReducer = {
+  type: 'LASSO',
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'LASSO') return;
 
@@ -74,6 +75,5 @@ export const Lasso: InteractionReducer = {
       showCursor: true,
       mousedown: null
     };
-  },
-  mouseup: () => {}
+  }
 };

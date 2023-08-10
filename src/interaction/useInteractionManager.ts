@@ -68,6 +68,9 @@ export const useInteractionManager = () => {
         return;
 
       const reducerAction = reducer[e.type];
+
+      if (!reducerAction) return;
+
       const componentOffset = rendererRef.current?.getBoundingClientRect();
       const offset: Coords = {
         x: componentOffset?.left ?? 0,
