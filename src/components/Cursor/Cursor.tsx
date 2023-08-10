@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useCallback, useState } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { Box, useTheme } from '@mui/material';
-import gsap from 'gsap';
 import { Coords, TileOriginEnum } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -15,54 +14,20 @@ export const Cursor = ({ tile }: Props) => {
     return state.zoom;
   });
   const theme = useTheme();
-  const [isReady, setIsReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>();
   const { getTilePosition } = useGetTilePosition();
 
-  const setPosition = useCallback(
-    ({
-      tile: _tile,
-      animationDuration = 0.15
-    }: {
-      tile: Coords;
-      animationDuration?: number;
-    }) => {
-      if (!containerRef.current) return;
-
-      const position = getTilePosition({
-        tile: _tile,
-        origin: TileOriginEnum.TOP
-      });
-
-      gsap.to(containerRef.current, {
-        duration: animationDuration,
-        left: position.x,
-        top: position.y
-      });
-    },
-    [getTilePosition]
-  );
-
-  useEffect(() => {
-    if (!containerRef.current || !isReady) return;
-
-    setPosition({ tile });
-  }, [tile, setPosition, isReady]);
-
-  useEffect(() => {
-    if (!containerRef.current || isReady) return;
-
-    gsap.killTweensOf(containerRef.current);
-    setPosition({ tile, animationDuration: 0 });
-    containerRef.current.style.opacity = '1';
-    setIsReady(true);
-  }, [tile, setPosition, isReady]);
+  const position = useMemo(() => {
+    return getTilePosition({ tile, origin: TileOriginEnum.TOP });
+  }, [getTilePosition, tile]);
 
   return (
     <Box
       ref={containerRef}
       sx={{
-        position: 'absolute'
+        position: 'absolute',
+        left: position.x,
+        top: position.y
       }}
     >
       <IsoTileArea
