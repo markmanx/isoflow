@@ -19,6 +19,7 @@ export const DragItems: InteractionReducer = {
 
         draftState.scene.nodes[nodeIndex].position =
           draftState.mouse.position.tile;
+
         draftState.contextMenu = null;
       });
     }

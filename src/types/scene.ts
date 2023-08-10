@@ -55,6 +55,7 @@ export type Scene = {
 
 export interface SceneActions {
   setScene: (scene: SceneInput) => void;
+  updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   createNode: (position: Coords) => void;
 }

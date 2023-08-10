@@ -28,6 +28,9 @@ const initialState = () => {
 
           set(newScene);
         },
+        updateScene: (scene) => {
+          set(scene);
+        },
         updateNode: (id, updates) => {
           const { nodes } = get();
           const nodeIndex = nodes.findIndex((node) => {

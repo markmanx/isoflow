@@ -15,8 +15,11 @@ import { useResizeObserver } from 'src/hooks/useResizeObserver';
 export const Renderer = () => {
   const [isDebugModeOn] = useState(false);
   const containerRef = useRef<HTMLDivElement>();
-  const scene = useSceneStore(({ nodes, connectors, groups }) => {
-    return { nodes, connectors, groups };
+  const nodes = useSceneStore((state) => {
+    return state.nodes;
+  });
+  const scene = useSceneStore(({ connectors, groups }) => {
+    return { connectors, groups };
   });
   const interactionsEnabled = useUiStateStore((state) => {
     return state.interactionsEnabled;
@@ -49,7 +52,7 @@ export const Renderer = () => {
     (nodeIds: string[]) => {
       return nodeIds
         .map((nodeId) => {
-          return scene.nodes.find((node) => {
+          return nodes.find((node) => {
             return node.id === nodeId;
           });
         })
@@ -57,7 +60,7 @@ export const Renderer = () => {
           return node !== undefined;
         }) as NodeI[];
     },
-    [scene.nodes]
+    [nodes]
   );
 
   useEffect(() => {
@@ -89,24 +92,24 @@ export const Renderer = () => {
     >
       <Grid scroll={scroll} zoom={zoom} />
       {scene.groups.map((group) => {
-        const nodes = getNodesFromIds(group.nodeIds);
+        const groupNodes = getNodesFromIds(group.nodeIds);
 
-        return <Group key={group.id} group={group} nodes={nodes} />;
+        return <Group key={group.id} group={group} nodes={groupNodes} />;
       })}
       {mode.showCursor && <Cursor tile={mouse.position.tile} />}
       {scene.connectors.map((connector) => {
-        const nodes = getNodesFromIds([connector.from, connector.to]);
+        const connectorNodes = getNodesFromIds([connector.from, connector.to]);
 
         return (
           <Connector
             key={connector.id}
             connector={connector}
-            fromNode={nodes[0]}
-            toNode={nodes[1]}
+            fromNode={connectorNodes[0]}
+            toNode={connectorNodes[1]}
           />
         );
       })}
-      {scene.nodes.map((node) => {
+      {nodes.map((node) => {
         return (
           <Node
             key={node.id}
