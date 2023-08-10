@@ -38,3 +38,7 @@ export const getColorVariant = (
       return chroma(color).alpha(alpha).css();
   }
 };
+
+export const setWindowCursor = (cursor: string) => {
+  window.document.body.style.cursor = cursor;
+};

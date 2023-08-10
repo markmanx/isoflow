@@ -58,11 +58,6 @@ export const useInteractionManager = () => {
 
       const reducer = reducers[mode.type];
 
-      // if (reducerTypeRef.current !== reducer.type) {
-      //   reducerTypeRef.current = reducer.type;
-      //   reducer.entry?.(scene);
-      // }
-
       if (
         !reducer ||
         !(
@@ -95,7 +90,37 @@ export const useInteractionManager = () => {
         itemControls
       };
 
-      const newState = produce(baseState, (draft) => {
+      const getTransitionaryState = () => {
+        if (reducerTypeRef.current === reducer.type) return null;
+
+        const prevReducerExitFn = reducerTypeRef.current
+          ? reducers[reducerTypeRef.current].exit
+          : null;
+        const nextReducerEntryFn = reducer.entry;
+
+        reducerTypeRef.current = reducer.type;
+
+        const transitionaryState: State = baseState;
+
+        const setTransitionaryState = (state: State, transitionaryFn: any) => {
+          return produce(state, (draft) => {
+            return transitionaryFn(draft);
+          });
+        };
+
+        if (prevReducerExitFn) {
+          setTransitionaryState(transitionaryState, prevReducerExitFn);
+        }
+
+        if (nextReducerEntryFn) {
+          setTransitionaryState(transitionaryState, nextReducerEntryFn);
+        }
+
+        return null;
+      };
+
+      const transitionaryState = getTransitionaryState();
+      const newState = produce(transitionaryState ?? baseState, (draft) => {
         return reducerAction(draft);
       });
 
@@ -108,9 +133,7 @@ export const useInteractionManager = () => {
     },
     [
       mode,
-      mouse.position.screen,
-      mouse.position.tile,
-      mouse.mousedown,
+      mouse,
       scroll,
       itemControls,
       uiStateActions,

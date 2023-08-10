@@ -1,9 +1,14 @@
-import { CoordsUtils } from 'src/utils';
+import { CoordsUtils, setWindowCursor } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
 export const Pan: InteractionReducer = {
   type: 'PAN',
-  entry: () => {},
+  entry: () => {
+    setWindowCursor('grab');
+  },
+  exit: () => {
+    setWindowCursor('default');
+  },
   mousemove: (draftState) => {
     if (draftState.mode.type !== 'PAN') return;
 
@@ -15,5 +20,11 @@ export const Pan: InteractionReducer = {
           )
         : draftState.scroll.position;
     }
+  },
+  mousedown: () => {
+    setWindowCursor('grabbing');
+  },
+  mouseup: () => {
+    setWindowCursor('grab');
   }
 };
