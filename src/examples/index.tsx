@@ -5,8 +5,8 @@ import { CustomNode } from './CustomNode/CustomNode';
 import { Callbacks } from './Callbacks/Callbacks';
 
 const examples = [
-  { name: 'Callbacks', component: Callbacks },
   { name: 'Live Diagrams', component: CustomNode },
+  { name: 'Callbacks', component: Callbacks },
   { name: 'Basic Editor', component: BasicEditor }
 ];
 

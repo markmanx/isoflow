@@ -84,8 +84,8 @@ export const CustomNode = () => {
             labelHeight: 40,
             iconId: 'server',
             position: {
-              x: 0,
-              y: -3
+              x: 5,
+              y: 3
             }
           }
         ]

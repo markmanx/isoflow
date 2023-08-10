@@ -8,7 +8,7 @@ import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';
 import { Node } from 'src/components/Node/Node';
 import { Group } from 'src/components/Group/Group';
-// import { Connector } from 'src/components/Connector/Connector';
+import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
@@ -94,19 +94,13 @@ export const Renderer = () => {
         return <Group key={group.id} group={group} nodes={nodes} />;
       })}
       {mode.showCursor && <Cursor tile={mouse.position.tile} />}
-      {/* {scene.connectors.map((connector) => {
+      {scene.connectors.map((connector) => {
         const nodes = getNodesFromIds([connector.from, connector.to]);
 
         return (
-          <Connector
-            connector={connector}
-            fromNode={nodes[0]}
-            toNode={nodes[1]}
-            scroll={scroll}
-            zoom={zoom}
-          />
+          <Connector key={connector.id} fromNode={nodes[0]} toNode={nodes[1]} />
         );
-      })} */}
+      })}
       {scene.nodes.map((node) => {
         return (
           <Node
