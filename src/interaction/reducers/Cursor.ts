@@ -22,20 +22,18 @@ export const Cursor: InteractionReducer = {
           showCursor: true,
           items: draftState.mode.mousedown.items
         };
-
-        return;
       }
 
-      draftState.mode = {
-        type: 'LASSO',
-        showCursor: false,
-        selection: {
-          startTile: draftState.mode.mousedown.tile,
-          endTile: draftState.mouse.position.tile,
-          items: []
-        },
-        isDragging: false
-      };
+      // draftState.mode = {
+      //   type: 'LASSO',
+      //   showCursor: false,
+      //   selection: {
+      //     startTile: draftState.mode.mousedown.tile,
+      //     endTile: draftState.mouse.position.tile,
+      //     items: []
+      //   },
+      //   isDragging: false
+      // };
     }
   },
   mousedown: (draftState) => {
