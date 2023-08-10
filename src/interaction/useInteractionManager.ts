@@ -80,7 +80,6 @@ export const useInteractionManager = () => {
         mouseEvent: e,
         rendererSize
       });
-      console.log(nextMouse.position.tile);
 
       const baseState: State = {
         scene,
