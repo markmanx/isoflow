@@ -11,6 +11,7 @@ export const MarkdownLabel = ({ label }: Props) => {
     <Box
       sx={{
         maxWidth: 200,
+        minWidth: 100,
         maxHeight: 150
       }}
     >
