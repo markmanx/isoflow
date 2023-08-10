@@ -9,7 +9,7 @@ interface Props {
   height?: number;
 }
 
-const tools = ['bold', 'italic', 'underline', 'strike', 'bullet', 'link'];
+const tools = ['bold', 'italic', 'underline', 'strike', 'link'];
 
 export const MarkdownEditor = ({
   value,
