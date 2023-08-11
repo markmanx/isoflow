@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "noImplicitAny": true,
     "target": "es6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
