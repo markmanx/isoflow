@@ -1,6 +1,6 @@
 {
   "name": "isoflow",
-  "version": "0.3.43",
+  "version": "0.3.44",
   "private": false,
   "description": "A highly customizable React component for building interactive flow diagrams.",
   "license": "MIT",
