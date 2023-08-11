@@ -14,6 +14,7 @@
     "strict": true,
     "module": "es6",
     "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "include": [
     "**/*.ts",
