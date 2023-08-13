@@ -30,6 +30,7 @@ interface Props {
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
+  debugMode?: boolean;
 }
 
 const App = ({
@@ -37,7 +38,8 @@ const App = ({
   width,
   height = 500,
   interactionsEnabled: interactionsEnabledProp = true,
-  onSceneUpdated
+  onSceneUpdated,
+  debugMode = false
 }: Props) => {
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
@@ -72,6 +74,10 @@ const App = ({
     const sceneInput = sceneToSceneInput(scene);
     onSceneUpdated(sceneInput);
   }, [scene, onSceneUpdated, isReady]);
+
+  useEffect(() => {
+    uiActions.setDebugMode(debugMode);
+  }, [debugMode, uiActions]);
 
   return (
     <>

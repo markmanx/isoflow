@@ -98,6 +98,7 @@ export interface UiState {
   scroll: Scroll;
   mouse: Mouse;
   rendererSize: Size;
+  debugMode: boolean;
 }
 
 export interface UiStateActions {
@@ -111,4 +112,5 @@ export interface UiStateActions {
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
   setInteractionsEnabled: (enabled: boolean) => void;
+  setDebugMode: (enabled: boolean) => void;
 }

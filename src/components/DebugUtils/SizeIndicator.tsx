@@ -3,10 +3,10 @@ import { Box } from '@mui/material';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 
 export const SizeIndicator = () => {
-  const { getDiagramBoundingBox } = useDiagramUtils();
+  const { getUnprojectedBounds } = useDiagramUtils();
   const diagramBoundingBox = useMemo(() => {
-    return getDiagramBoundingBox();
-  }, [getDiagramBoundingBox]);
+    return getUnprojectedBounds();
+  }, [getUnprojectedBounds]);
 
   return (
     <Box

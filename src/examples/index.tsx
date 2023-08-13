@@ -3,8 +3,10 @@ import { Box, Select, MenuItem, useTheme } from '@mui/material';
 import { BasicEditor } from './BasicEditor/BasicEditor';
 import { CustomNode } from './CustomNode/CustomNode';
 import { Callbacks } from './Callbacks/Callbacks';
+import { DebugTools } from './DebugTools/DebugTools';
 
 const examples = [
+  { name: 'Debug tools', component: DebugTools },
   { name: 'Live Diagrams', component: CustomNode },
   { name: 'Callbacks', component: Callbacks },
   { name: 'Basic Editor', component: BasicEditor }

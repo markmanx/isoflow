@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { Size, Coords } from 'src/types';
+import { Size, Coords, Node, TileOriginEnum } from 'src/types';
 import { getBoundingBox, getBoundingBoxSize, sortByPosition } from 'src/utils';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { useScroll } from 'src/hooks/useScroll';
 
-const BOUNDING_BOX_PADDING = 4;
+const BOUNDING_BOX_PADDING = 0;
 
 export const useDiagramUtils = () => {
   const scene = useSceneStore(({ nodes, groups, connectors, icons }) => {
@@ -16,15 +17,17 @@ export const useDiagramUtils = () => {
       icons
     };
   });
+  const { scrollToTile } = useScroll();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
   const { getTilePosition } = useGetTilePosition();
 
-  const getDiagramBoundingBox = useCallback((): Size & Coords => {
-    if (scene.nodes.length === 0) return { width: 0, height: 0, x: 0, y: 0 };
-
-    const nodePositions = scene.nodes.map((node) => {
+  const getProjectBounds = useCallback((nodes: Node[]): Coords[] => {
+    const nodePositions = nodes.map((node) => {
       return node.position;
     });
 
@@ -32,7 +35,14 @@ export const useDiagramUtils = () => {
       x: BOUNDING_BOX_PADDING,
       y: BOUNDING_BOX_PADDING
     });
-    const cornerPositions = corners.map((corner) => {
+
+    return corners;
+  }, []);
+
+  const getUnprojectedBounds = useCallback((): Size & Coords => {
+    const projectBounds = getProjectBounds(scene.nodes);
+
+    const cornerPositions = projectBounds.map((corner) => {
       return getTilePosition({
         tile: corner
       });
@@ -47,30 +57,26 @@ export const useDiagramUtils = () => {
       x: topLeft.x,
       y: topLeft.y
     };
-  }, [scene, getTilePosition]);
+  }, [scene, getTilePosition, getProjectBounds]);
 
   const fitDiagramToScreen = useCallback(() => {
-    const boundingBox = getDiagramBoundingBox();
+    const boundingBox = getProjectBounds(scene.nodes);
+    const sortedCornerPositions = sortByPosition(boundingBox);
+    const boundingBoxSize = getBoundingBoxSize(boundingBox);
     // const newZoom = Math.min(
     //   window.innerWidth / boundingBox.width,
     //   window.innerHeight / boundingBox.height
     // );
 
-    uiStateActions.setScroll({
-      offset: {
-        x: 0,
-        y: 0
-      },
-      position: {
-        x: -(boundingBox.x + boundingBox.width / 2) + window.innerWidth / 2,
-        y: -(boundingBox.y + boundingBox.height / 2) + window.innerHeight / 2
-      }
-    });
-    // uiStateActions.setZoom(newZoom);
-  }, [getDiagramBoundingBox, uiStateActions]);
+    const centralTile: Coords = {
+      x: sortedCornerPositions.lowX + Math.floor(boundingBoxSize.width / 2),
+      y: sortedCornerPositions.lowY + Math.floor(boundingBoxSize.height / 2)
+    };
+    scrollToTile(centralTile);
+  }, [getProjectBounds, scene, scrollToTile]);
 
   return {
-    getDiagramBoundingBox,
+    getUnprojectedBounds,
     fitDiagramToScreen
   };
 };

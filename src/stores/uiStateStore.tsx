@@ -29,6 +29,7 @@ const initialState = () => {
         position: { x: 0, y: 0 },
         offset: { x: 0, y: 0 }
       },
+      debugMode: false,
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
       actions: {
@@ -71,6 +72,9 @@ const initialState = () => {
               mode: { type: 'CURSOR', showCursor: true, mousedown: null }
             });
           }
+        },
+        setDebugMode: (debugMode) => {
+          set({ debugMode });
         }
       }
     };

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI } from 'src/types';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -14,8 +14,10 @@ import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 
 export const Renderer = () => {
-  const [isDebugModeOn] = useState(false);
   const containerRef = useRef<HTMLDivElement>();
+  const debugMode = useUiStateStore((state) => {
+    return state.debugMode;
+  });
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
@@ -135,7 +137,7 @@ export const Renderer = () => {
           );
         })}
       </SceneLayer>
-      {isDebugModeOn && (
+      {debugMode && (
         <SceneLayer>
           <DebugUtils />
         </SceneLayer>
