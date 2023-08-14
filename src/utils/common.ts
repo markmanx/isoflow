@@ -1,8 +1,7 @@
 import chroma from 'chroma-js';
 
 export const clamp = (num: number, min: number, max: number) => {
-  // eslint-disable-next-line no-nested-ternary
-  return num <= min ? min : num >= max ? max : num;
+  return Math.max(Math.min(num, max), min);
 };
 
 export const getRandom = (min: number, max: number) => {

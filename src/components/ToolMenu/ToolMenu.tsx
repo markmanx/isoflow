@@ -23,7 +23,7 @@ export const ToolMenu = () => {
   const uiStateStoreActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const { fitDiagramToScreen } = useDiagramUtils();
+  const { fitProjectToScreen } = useDiagramUtils();
 
   return (
     <Card
@@ -77,7 +77,7 @@ export const ToolMenu = () => {
       <IconButton
         name="Center"
         Icon={<CenterFocusStrongIcon />}
-        onClick={fitDiagramToScreen}
+        onClick={fitProjectToScreen}
         size={theme.customVars.toolMenu.height}
       />
     </Card>

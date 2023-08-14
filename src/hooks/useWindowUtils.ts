@@ -14,13 +14,13 @@ export const useWindowUtils = () => {
   const sceneActions = useSceneStore(({ actions }) => {
     return actions;
   });
-  const { fitDiagramToScreen, getUnprojectedBounds } = useDiagramUtils();
+  const { fitProjectToScreen, getUnprojectedBounds } = useDiagramUtils();
 
   useEffect(() => {
     window.Isoflow = {
       getUnprojectedBounds,
-      fitDiagramToScreen,
+      fitProjectToScreen,
       setScene: sceneActions.setScene
     };
-  }, [getUnprojectedBounds, fitDiagramToScreen, scene, sceneActions]);
+  }, [getUnprojectedBounds, fitProjectToScreen, scene, sceneActions]);
 };

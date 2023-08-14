@@ -7,9 +7,11 @@ export const DebugUtils = () => {
   const {
     customVars: { appPadding }
   } = useTheme();
-  const { scroll, mouse } = useUiStateStore(({ scroll, mouse }) => {
-    return { scroll, mouse };
+  const uiState = useUiStateStore(({ scroll, mouse, zoom, rendererSize }) => {
+    return { scroll, mouse, zoom, rendererSize };
   });
+
+  const { scroll, mouse, zoom, rendererSize } = uiState;
 
   return (
     <>
@@ -31,6 +33,10 @@ export const DebugUtils = () => {
         </Typography>
         <Typography variant="body2">
           Mouse: {mouse.position.tile.x}, {mouse.position.tile.y}
+        </Typography>
+        <Typography variant="body2">Zoom: {zoom}</Typography>
+        <Typography variant="body2">
+          Renderer size: {rendererSize.width} {rendererSize.height}
         </Typography>
       </Box>
     </>

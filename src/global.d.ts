@@ -4,7 +4,7 @@ declare global {
   interface Window {
     Isoflow: {
       getUnprojectedBounds: () => Size & Coords;
-      fitDiagramToScreen: () => void;
+      fitProjectToScreen: () => void;
       setScene: (scene: SceneInput) => void;
     };
   }

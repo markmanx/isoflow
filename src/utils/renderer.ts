@@ -38,10 +38,9 @@ export const screenToIso = ({
   const halfW = projectedTileSize.width / 2;
   const halfH = projectedTileSize.height / 2;
 
-  // The origin is the center of the project.
   const projectPosition = {
-    x: mouse.x - scroll.position.x - rendererSize.width * 0.5,
-    y: mouse.y - scroll.position.y - rendererSize.height * 0.5
+    x: -rendererSize.width * 0.5 + mouse.x - scroll.position.x,
+    y: -rendererSize.height * 0.5 + mouse.y - scroll.position.y
   };
 
   const tile = {
