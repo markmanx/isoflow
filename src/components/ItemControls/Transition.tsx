@@ -7,27 +7,29 @@ interface Props {
   isIn: boolean;
 }
 
-export const Transition = ({ children, isIn }: Props) => (
-  <Slide
-    direction="right"
-    in={isIn}
-    mountOnEnter
-    unmountOnExit
-    style={{
-      transitionDelay: isIn ? '150ms' : '0ms'
-    }}
-  >
-    <Card
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        borderRadius: 0
+export const Transition = ({ children, isIn }: Props) => {
+  return (
+    <Slide
+      direction="right"
+      in={isIn}
+      mountOnEnter
+      unmountOnExit
+      style={{
+        transitionDelay: isIn ? '150ms' : '0ms'
       }}
     >
-      {children}
-    </Card>
-  </Slide>
-);
+      <Card
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          borderRadius: 0
+        }}
+      >
+        {children}
+      </Card>
+    </Slide>
+  );
+};

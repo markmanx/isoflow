@@ -1,39 +1,29 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { Box } from '@mui/material';
 import gsap from 'gsap';
-import { Size, Coords, TileOriginEnum, Node as NodeI } from 'src/types';
-import { getProjectedTileSize, getColorVariant } from 'src/utils';
-import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { Coords, TileOriginEnum, Node as NodeI, IconInput } from 'src/types';
+import { getColorVariant } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
+import { NodeIcon } from './NodeIcon';
 
 interface Props {
   node: NodeI;
-  iconUrl?: string;
+  icon?: IconInput;
   order: number;
 }
 
-export const Node = ({ node, iconUrl, order }: Props) => {
+export const Node = ({ node, icon, order }: Props) => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
   const nodeRef = useRef<HTMLDivElement>();
-  const iconRef = useRef<HTMLImageElement>();
-  const { observe, size: iconSize } = useResizeObserver();
   const { getTilePosition } = useGetTilePosition();
-
-  useEffect(() => {
-    if (!iconRef.current) return;
-
-    observe(iconRef.current);
-  }, [observe]);
-
-  const projectedTileSize = useMemo<Size>(() => {
-    return getProjectedTileSize({ zoom });
-  }, [zoom]);
+  const projectedTileSize = useProjectedTileSize();
 
   const moveToTile = useCallback(
     ({
@@ -43,17 +33,11 @@ export const Node = ({ node, iconUrl, order }: Props) => {
       tile: Coords;
       animationDuration?: number;
     }) => {
-      if (!nodeRef.current || !iconRef.current) return;
+      if (!nodeRef.current) return;
 
       const position = getTilePosition({
         tile,
         origin: TileOriginEnum.BOTTOM
-      });
-
-      gsap.to(iconRef.current, {
-        duration: animationDuration,
-        x: -iconRef.current.width * 0.5,
-        y: -iconRef.current.height
       });
 
       gsap.to(nodeRef.current, {
@@ -66,12 +50,10 @@ export const Node = ({ node, iconUrl, order }: Props) => {
   );
 
   const onImageLoaded = useCallback(() => {
-    if (!nodeRef.current || !iconRef.current) return;
+    if (!nodeRef.current) return;
 
-    gsap.killTweensOf(nodeRef.current);
-    moveToTile({ tile: node.position, animationDuration: 0 });
     nodeRef.current.style.opacity = '1';
-  }, [node.position, moveToTile]);
+  }, []);
 
   useEffect(() => {
     moveToTile({ tile: node.position, animationDuration: 0 });
@@ -112,24 +94,22 @@ export const Node = ({ node, iconUrl, order }: Props) => {
           />
         </Box>
         <LabelContainer
-          labelHeight={node.labelHeight + iconSize.height}
+          labelHeight={node.labelHeight + 100}
           tileSize={projectedTileSize}
           connectorDotSize={5 * zoom}
         >
           {node.label && <MarkdownLabel label={node.label} />}
         </LabelContainer>
       </Box>
-      <Box
-        component="img"
-        ref={iconRef}
-        onLoad={onImageLoaded}
-        src={iconUrl}
-        sx={{
-          position: 'absolute',
-          width: projectedTileSize.width,
-          pointerEvents: 'none'
-        }}
-      />
+      {icon && (
+        <Box
+          sx={{
+            position: 'absolute'
+          }}
+        >
+          <NodeIcon icon={icon} onImageLoaded={onImageLoaded} />
+        </Box>
+      )}
     </Box>
   );
 };

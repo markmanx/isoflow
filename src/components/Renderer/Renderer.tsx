@@ -128,11 +128,9 @@ export const Renderer = () => {
               key={node.id}
               order={-node.position.x - node.position.y}
               node={node}
-              iconUrl={
-                icons.find((icon) => {
-                  return icon.id === node.iconId;
-                })?.url
-              }
+              icon={icons.find((icon) => {
+                return icon.id === node.iconId;
+              })}
             />
           );
         })}

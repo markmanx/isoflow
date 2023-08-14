@@ -5,10 +5,11 @@ import { IconCategory } from './IconCategory';
 
 interface Props {
   icons: Icon[];
-  onClick: (icon: Icon) => void;
+  onClick?: (icon: Icon) => void;
+  onMouseDown?: (icon: Icon) => void;
 }
 
-export const Icons = ({ icons, onClick }: Props) => {
+export const Icons = ({ icons, onClick, onMouseDown }: Props) => {
   const categorisedIcons = useMemo(() => {
     const cats: { name?: string; icons: Icon[] }[] = [];
 
@@ -42,7 +43,11 @@ export const Icons = ({ icons, onClick }: Props) => {
       {categorisedIcons.map((cat) => {
         return (
           <Grid item xs={12} key={`icon-category-${cat.name}`}>
-            <IconCategory {...cat} onClick={onClick} />
+            <IconCategory
+              {...cat}
+              onClick={onClick}
+              onMouseDown={onMouseDown}
+            />
           </Grid>
         );
       })}

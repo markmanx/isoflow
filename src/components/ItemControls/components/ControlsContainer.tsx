@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 interface Props {
-  header: React.ReactNode;
+  header?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -17,7 +17,9 @@ export const ControlsContainer = ({ header, children }: Props) => {
         flexDirection: 'column'
       }}
     >
-      <Box sx={{ width: '100%', boxShadow: 6, zIndex: 1 }}>{header}</Box>
+      {header && (
+        <Box sx={{ width: '100%', boxShadow: 6, zIndex: 1 }}>{header}</Box>
+      )}
       <Box
         sx={{
           width: '100%',

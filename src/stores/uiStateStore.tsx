@@ -50,7 +50,7 @@ const initialState = () => {
         setScroll: ({ position, offset }) => {
           set({ scroll: { position, offset: offset ?? get().scroll.offset } });
         },
-        setSidebar: (itemControls) => {
+        setItemControls: (itemControls) => {
           set({ itemControls });
         },
         setContextMenu: (contextMenu) => {

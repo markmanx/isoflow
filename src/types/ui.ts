@@ -1,18 +1,23 @@
 import { Coords, Size } from './common';
 import { SceneItem } from './scene';
+import { IconInput } from './inputs';
 
-export enum SidebarTypeEnum {
+export enum ItemControlsTypeEnum {
   SINGLE_NODE = 'SINGLE_NODE',
-  PROJECT_SETTINGS = 'PROJECT_SETTINGS'
+  PROJECT_SETTINGS = 'PROJECT_SETTINGS',
+  PLACE_ELEMENT = 'PLACE_ELEMENT'
 }
 
 export type ItemControls =
   | {
-      type: SidebarTypeEnum.SINGLE_NODE;
+      type: ItemControlsTypeEnum.SINGLE_NODE;
       nodeId: string;
     }
   | {
-      type: SidebarTypeEnum.PROJECT_SETTINGS;
+      type: ItemControlsTypeEnum.PROJECT_SETTINGS;
+    }
+  | {
+      type: ItemControlsTypeEnum.PLACE_ELEMENT;
     }
   | null;
 
@@ -68,12 +73,19 @@ export interface DragItemsMode {
   items: SceneItem[];
 }
 
+export interface PlaceElement {
+  type: 'PLACE_ELEMENT';
+  showCursor: boolean;
+  icon: IconInput | null;
+}
+
 export type Mode =
   | InteractionsDisabled
   | CursorMode
   | PanMode
   | DragItemsMode
-  | LassoMode;
+  | LassoMode
+  | PlaceElement;
 // End mode types
 
 export type ContextMenu =
@@ -107,7 +119,7 @@ export interface UiStateActions {
   decrementZoom: () => void;
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
-  setSidebar: (itemControls: ItemControls) => void;
+  setItemControls: (itemControls: ItemControls) => void;
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;

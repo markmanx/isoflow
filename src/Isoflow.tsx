@@ -21,6 +21,8 @@ import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
+import { SceneLayer } from './components/SceneLayer/SceneLayer';
+import { DragAndDrop } from './components/DragAndDrop/DragAndDrop';
 
 interface Props {
   initialScene?: SceneInput & {
@@ -54,6 +56,12 @@ const App = ({
   });
   const interactionsEnabled = useUiStateStore((state) => {
     return state.interactionsEnabled;
+  });
+  const mode = useUiStateStore((state) => {
+    return state.mode;
+  });
+  const mouse = useUiStateStore((state) => {
+    return state.mouse;
   });
 
   useEffect(() => {
@@ -93,6 +101,11 @@ const App = ({
         <Renderer />
         <ItemControlsManager />
         {interactionsEnabled && <ToolMenu />}
+        {mode.type === 'PLACE_ELEMENT' && mode.icon && (
+          <SceneLayer>
+            <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
+          </SceneLayer>
+        )}
       </Box>
     </>
   );

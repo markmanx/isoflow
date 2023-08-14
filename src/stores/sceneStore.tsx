@@ -1,9 +1,7 @@
 import React, { createContext, useRef, useContext } from 'react';
 import { createStore, useStore } from 'zustand';
-import { v4 as uuid } from 'uuid';
 import { produce } from 'immer';
-import { NODE_DEFAULTS } from 'src/config';
-import { Scene, SceneActions, Node, SceneItemTypeEnum } from 'src/types';
+import { Scene, SceneActions } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
 import { sceneInputtoScene } from 'src/utils';
 
@@ -46,19 +44,6 @@ const initialState = () => {
           });
 
           set({ nodes: newNodes });
-        },
-        createNode: (position) => {
-          const { nodes, icons } = get();
-          const newNode: Node = {
-            ...NODE_DEFAULTS,
-            id: uuid(),
-            type: SceneItemTypeEnum.NODE,
-            iconId: icons[0].id,
-            position,
-            isSelected: false
-          };
-
-          set({ nodes: [...nodes, newNode] });
         }
       }
     };

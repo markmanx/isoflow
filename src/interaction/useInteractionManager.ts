@@ -8,12 +8,14 @@ import { DragItems } from './reducers/DragItems';
 import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
 import { Lasso } from './reducers/Lasso';
+import { PlaceElement } from './reducers/PlaceElement';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
   PAN: Pan,
-  LASSO: Lasso
+  LASSO: Lasso,
+  PLACE_ELEMENT: PlaceElement
 };
 
 export const useInteractionManager = () => {
@@ -88,7 +90,8 @@ export const useInteractionManager = () => {
         scroll,
         contextMenu,
         itemControls,
-        rendererRef: rendererRef.current
+        rendererRef: rendererRef.current,
+        sceneActions
       };
 
       const getTransitionaryState = () => {
@@ -129,7 +132,7 @@ export const useInteractionManager = () => {
       uiStateActions.setScroll(newState.scroll);
       uiStateActions.setMode(newState.mode);
       uiStateActions.setContextMenu(newState.contextMenu);
-      uiStateActions.setSidebar(newState.itemControls);
+      uiStateActions.setItemControls(newState.itemControls);
       sceneActions.updateScene(newState.scene);
     },
     [
@@ -153,7 +156,7 @@ export const useInteractionManager = () => {
       return;
     }
 
-    const el = rendererRef.current;
+    const el = window;
 
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);

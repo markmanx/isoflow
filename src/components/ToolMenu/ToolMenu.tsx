@@ -1,11 +1,13 @@
 import React from 'react';
 import { Card, useTheme } from '@mui/material';
+import { ItemControlsTypeEnum } from 'src/types';
 import {
   PanTool as PanToolIcon,
   ZoomIn as ZoomInIcon,
   ZoomOut as ZoomOutIcon,
   NearMe as NearMeIcon,
-  CenterFocusStrong as CenterFocusStrongIcon
+  CenterFocusStrong as CenterFocusStrongIcon,
+  Add as AddIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
@@ -36,10 +38,25 @@ export const ToolMenu = () => {
       }}
     >
       <IconButton
+        name="Add element"
+        Icon={<AddIcon />}
+        onClick={() => {
+          uiStateStoreActions.setItemControls({
+            type: ItemControlsTypeEnum.PLACE_ELEMENT
+          });
+          uiStateStoreActions.setMode({
+            type: 'PLACE_ELEMENT',
+            showCursor: true,
+            icon: null
+          });
+        }}
+        size={theme.customVars.toolMenu.height}
+      />
+      <IconButton
         name="Select"
         Icon={<NearMeIcon />}
         onClick={() => {
-          return uiStateStoreActions.setMode({
+          uiStateStoreActions.setMode({
             type: 'CURSOR',
             showCursor: true,
             mousedown: null
@@ -52,7 +69,7 @@ export const ToolMenu = () => {
         name="Pan"
         Icon={<PanToolIcon />}
         onClick={() => {
-          return uiStateStoreActions.setMode({
+          uiStateStoreActions.setMode({
             type: 'PAN',
             showCursor: false
           });

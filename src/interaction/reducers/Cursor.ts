@@ -1,4 +1,4 @@
-import { SidebarTypeEnum, InteractionReducer } from 'src/types';
+import { ItemControlsTypeEnum, InteractionReducer } from 'src/types';
 import { CoordsUtils, filterNodesByTile } from 'src/utils';
 
 export const Cursor: InteractionReducer = {
@@ -74,7 +74,7 @@ export const Cursor: InteractionReducer = {
         draftState.contextMenu = draftState.scene.nodes[nodeIndex];
         draftState.scene.nodes[nodeIndex].isSelected = true;
         draftState.itemControls = {
-          type: SidebarTypeEnum.SINGLE_NODE,
+          type: ItemControlsTypeEnum.SINGLE_NODE,
           nodeId: draftState.scene.nodes[nodeIndex].id
         };
         draftState.mode.mousedown = null;

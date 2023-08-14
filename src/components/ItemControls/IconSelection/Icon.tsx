@@ -6,12 +6,18 @@ import { Icon as IconI } from 'src/types';
 
 interface Props {
   icon: IconI;
-  onClick: () => void;
+  onClick?: () => void;
+  onMouseDown?: () => void;
 }
 
-export const Icon = ({ icon, onClick }: Props) => {
+export const Icon = ({ icon, onClick, onMouseDown }: Props) => {
   return (
-    <Button variant="text" onClick={onClick}>
+    <Button
+      variant="text"
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      sx={{ userSelect: 'none' }}
+    >
       <Stack
         justifyContent="center"
         alignItems="center"
@@ -19,6 +25,7 @@ export const Icon = ({ icon, onClick }: Props) => {
       >
         <Box
           component="img"
+          draggable={false}
           src={icon.url}
           alt={`Icon ${icon.name}`}
           sx={{ width: '100%', height: 80 }}

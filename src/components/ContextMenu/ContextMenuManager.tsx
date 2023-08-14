@@ -3,14 +3,10 @@ import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { NodeContextMenu } from 'src/components/ContextMenu/NodeContextMenu';
 import { EmptyTileContextMenu } from 'src/components/ContextMenu/EmptyTileContextMenu';
-import { useSceneStore } from 'src/stores/sceneStore';
 
 export const ContextMenuLayer = () => {
   const contextMenu = useUiStateStore((state) => {
     return state.contextMenu;
-  });
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
   });
 
   return (
@@ -29,9 +25,7 @@ export const ContextMenuLayer = () => {
       {contextMenu?.type === 'EMPTY_TILE' && (
         <EmptyTileContextMenu
           key={contextMenu.position.toString()}
-          onAddNode={() => {
-            return sceneActions.createNode(contextMenu.position);
-          }}
+          onAddNode={() => {}}
           position={contextMenu.position}
         />
       )}

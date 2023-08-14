@@ -4,7 +4,7 @@ import { Node } from 'src/types';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useNode } from 'src/hooks/useNode';
 import { ControlsContainer } from '../components/ControlsContainer';
-import { Icons } from './IconSelection/IconSelection';
+import { Icons } from '../IconSelection/Icons';
 import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 

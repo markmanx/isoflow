@@ -5,7 +5,8 @@ import {
   ContextMenu,
   ItemControls,
   Mouse,
-  Scene
+  Scene,
+  SceneActions
 } from 'src/types';
 
 export interface State {
@@ -13,6 +14,7 @@ export interface State {
   mouse: Mouse;
   scroll: Scroll;
   scene: Scene;
+  sceneActions: SceneActions;
   contextMenu: ContextMenu;
   itemControls: ItemControls;
   rendererRef: HTMLElement;

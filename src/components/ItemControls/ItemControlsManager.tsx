@@ -1,11 +1,14 @@
 import React, { useMemo } from 'react';
 import { Card, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ProjectControls } from './ProjectControls/ProjectControls';
 
 export const ItemControlsManager = () => {
-  const itemControls = useUiStateStore((state) => state.itemControls);
+  const itemControls = useUiStateStore((state) => {
+    return state.itemControls;
+  });
   const theme = useTheme();
 
   const Controls = useMemo(() => {
@@ -14,6 +17,8 @@ export const ItemControlsManager = () => {
         return <NodeControls nodeId={itemControls.nodeId} />;
       case 'PROJECT_SETTINGS':
         return <ProjectControls />;
+      case 'PLACE_ELEMENT':
+        return <IconSelection />;
       default:
         return null;
     }
