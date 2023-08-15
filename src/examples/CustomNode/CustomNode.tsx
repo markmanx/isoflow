@@ -56,9 +56,14 @@ export const CustomNode = () => {
         connectors: [
           {
             id: 'connector1',
-            from: 'database',
-            to: 'server',
-            label: 'connection'
+            anchors: [
+              {
+                nodeId: 'server'
+              },
+              {
+                nodeId: 'database'
+              }
+            ]
           }
         ],
         groups: [

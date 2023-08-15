@@ -106,20 +106,11 @@ export const Renderer = () => {
       </SceneLayer>
       <SceneLayer>
         {scene.connectors.map((connector) => {
-          const connectorNodes = getNodesFromIds([
-            connector.from,
-            connector.to
-          ]);
-
-          return (
-            <Connector
-              key={connector.id}
-              connector={connector}
-              fromNode={connectorNodes[0]}
-              toNode={connectorNodes[1]}
-            />
-          );
+          return <Connector key={connector.id} connector={connector} />;
         })}
+        {mode.type === 'CONNECTOR' && mode.connector && (
+          <Connector connector={mode.connector} />
+        )}
       </SceneLayer>
       <SceneLayer>
         {nodes.map((node) => {

@@ -1,82 +1,80 @@
 import React, { useMemo } from 'react';
-import { Box } from '@mui/material';
-import { Node, Coords, Connector as ConnectorI } from 'src/types';
+import { Box, useTheme } from '@mui/material';
+import { Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import {
-  findPath,
-  getBoundingBox,
-  getBoundingBoxSize,
-  sortByPosition,
-  CoordsUtils
-} from 'src/utils';
+import { getAnchorPosition } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
+import { Circle } from 'src/components/Circle/Circle';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
 
 interface Props {
   connector: ConnectorI;
-  fromNode: Node;
-  toNode: Node;
 }
 
-// The boundaries of the search area for the pathfinder algorithm
-// is the grid that encompasses the two nodes + the offset below.
-const BOUNDS_OFFSET: Coords = { x: 3, y: 3 };
-
-export const Connector = ({ fromNode, toNode, connector }: Props) => {
+export const Connector = ({ connector }: Props) => {
+  const theme = useTheme();
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
+  const nodes = useSceneStore((state) => {
+    return state.nodes;
+  });
   const { getTilePosition } = useGetTilePosition();
-  const route = useMemo(() => {
-    const searchArea = getBoundingBox(
-      [fromNode.position, toNode.position],
-      BOUNDS_OFFSET
-    );
-    const searchAreaSize = getBoundingBoxSize(searchArea);
-    const sorted = sortByPosition(searchArea);
-    const topLeftTile = { x: sorted.highX, y: sorted.highY };
-
-    const positionsNormalisedFromSearchArea = {
-      from: CoordsUtils.subtract(topLeftTile, fromNode.position),
-      to: CoordsUtils.subtract(topLeftTile, toNode.position)
-    };
-
-    const connectorRoute = findPath({
-      from: positionsNormalisedFromSearchArea.from,
-      to: positionsNormalisedFromSearchArea.to,
-      gridSize: searchAreaSize
-    });
+  const pathString = useMemo(() => {
     const unprojectedTileSize = UNPROJECTED_TILE_SIZE * zoom;
-    const path = connectorRoute.reduce((acc, tile) => {
+    return connector.path.tiles.reduce((acc, tile) => {
       return `${acc} ${tile.x * unprojectedTileSize},${
         tile.y * unprojectedTileSize
       }`;
     }, '');
+  }, [zoom, connector.path.tiles]);
 
-    const position = getTilePosition({
-      tile: topLeftTile
+  const pathOrigin = useMemo(() => {
+    return getTilePosition({ tile: connector.path.origin });
+  }, [getTilePosition, connector.path.origin]);
+
+  const anchorPositions = useMemo(() => {
+    const unprojectedTileSize = UNPROJECTED_TILE_SIZE * zoom;
+
+    return connector.anchors.map((anchor) => {
+      const position = getAnchorPosition({ anchor, nodes });
+
+      return {
+        x: (connector.path.origin.x - position.x) * unprojectedTileSize,
+        y: (connector.path.origin.y - position.y) * unprojectedTileSize
+      };
     });
-
-    return { path, searchAreaSize, topLeftTile, position };
-  }, [fromNode.position, toNode.position, zoom, getTilePosition]);
+  }, [connector.path.origin, connector.anchors, zoom, nodes]);
 
   return (
     <Box
       id="connector"
       sx={{
         position: 'absolute',
-        left: route.position.x,
-        top: route.position.y
+        left: pathOrigin.x,
+        top: pathOrigin.y
       }}
     >
-      <IsoTileArea tileArea={route.searchAreaSize} zoom={zoom} fill="none">
+      <IsoTileArea tileArea={connector.path.areaSize} zoom={zoom} fill="none">
         <polyline
-          points={route.path}
+          points={pathString}
           stroke={connector.color}
           strokeWidth={10 * zoom}
           fill="none"
         />
+        {anchorPositions.map((anchor) => {
+          return (
+            <Circle
+              position={anchor}
+              radius={10 * zoom}
+              stroke={theme.palette.common.black}
+              fill={theme.palette.common.white}
+              strokeWidth={4 * zoom}
+            />
+          );
+        })}
       </IsoTileArea>
     </Box>
   );

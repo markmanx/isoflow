@@ -3,10 +3,24 @@ import {
   UNPROJECTED_TILE_SIZE,
   ZOOM_INCREMENT,
   MAX_ZOOM,
-  MIN_ZOOM
+  MIN_ZOOM,
+  CONNECTOR_DEFAULTS
 } from 'src/config';
-import { Coords, TileOriginEnum, Node, Size, Scroll, Mouse } from 'src/types';
-import { CoordsUtils, clamp, roundToOneDecimalPlace } from 'src/utils';
+import {
+  Coords,
+  TileOriginEnum,
+  Node,
+  Size,
+  Scroll,
+  Mouse,
+  ConnectorAnchor
+} from 'src/types';
+import {
+  CoordsUtils,
+  clamp,
+  roundToOneDecimalPlace,
+  findPath
+} from 'src/utils';
 
 interface GetProjectedTileSize {
   zoom: number;
@@ -271,4 +285,94 @@ export const getMouse = ({
   };
 
   return nextMouse;
+};
+
+export function getItemById<T extends { id: string }>(
+  items: T[],
+  id: string
+): { item: T; index: number } {
+  const index = items.findIndex((item) => {
+    return item.id === id;
+  });
+
+  if (index === -1) {
+    throw new Error(`Item with id ${id} not found.`);
+  }
+
+  return { item: items[index], index };
+}
+
+interface GetAnchorPositions {
+  anchor: ConnectorAnchor;
+  nodes: Node[];
+}
+
+export const getAnchorPosition = ({
+  anchor,
+  nodes
+}: GetAnchorPositions): Coords => {
+  if (anchor.type === 'NODE') {
+    const { item: node } = getItemById(nodes, anchor.id);
+    return node.position;
+  }
+
+  return anchor.coords;
+};
+
+interface NormalisePositionFromOrigin {
+  position: Coords;
+  origin: Coords;
+}
+
+export const normalisePositionFromOrigin = ({
+  position,
+  origin
+}: NormalisePositionFromOrigin) => {
+  return CoordsUtils.subtract(origin, position);
+};
+
+interface GetConnectorPath {
+  anchors: ConnectorAnchor[];
+  nodes: Node[];
+}
+
+export const getConnectorPath = ({
+  anchors,
+  nodes
+}: GetConnectorPath): { tiles: Coords[]; origin: Coords; areaSize: Size } => {
+  if (anchors.length < 2)
+    throw new Error(
+      `Connector needs at least two anchors (receieved: ${anchors.length})`
+    );
+
+  const anchorPositions = anchors.map((anchor) => {
+    return getAnchorPosition({ anchor, nodes });
+  });
+  const searchArea = getBoundingBox(
+    anchorPositions,
+    CONNECTOR_DEFAULTS.searchOffset
+  );
+  const searchAreaSize = getBoundingBoxSize(searchArea);
+  const sorted = sortByPosition(searchArea);
+  const origin = { x: sorted.highX, y: sorted.highY };
+  const positionsNormalisedFromSearchArea = anchorPositions.map((position) => {
+    return normalisePositionFromOrigin({ position, origin });
+  });
+  const tiles = positionsNormalisedFromSearchArea.reduce<Coords[]>(
+    (acc, position, i) => {
+      if (i === 0) return [position];
+
+      const prev = positionsNormalisedFromSearchArea[i - 1];
+      const path = findPath({
+        from: prev,
+        to: position,
+        gridSize: searchAreaSize
+      });
+
+      return [...acc, ...path];
+    },
+    []
+  );
+
+  return { tiles, origin, areaSize: searchAreaSize };
 };

@@ -7,7 +7,8 @@ import {
   ZoomOut as ZoomOutIcon,
   NearMe as NearMeIcon,
   CenterFocusStrong as CenterFocusStrongIcon,
-  Add as AddIcon
+  Add as AddIcon,
+  EastOutlined as ConnectorIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
@@ -48,6 +49,18 @@ export const ToolMenu = () => {
             type: 'PLACE_ELEMENT',
             showCursor: true,
             icon: null
+          });
+        }}
+        size={theme.customVars.toolMenu.height}
+      />
+      <IconButton
+        name="Connector"
+        Icon={<ConnectorIcon />}
+        onClick={() => {
+          uiStateStoreActions.setMode({
+            type: 'CONNECTOR',
+            connector: null,
+            showCursor: true
           });
         }}
         size={theme.customVars.toolMenu.height}

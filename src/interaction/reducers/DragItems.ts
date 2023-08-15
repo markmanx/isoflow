@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { CoordsUtils } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
@@ -17,18 +18,23 @@ export const DragItems: InteractionReducer = {
       !CoordsUtils.isEqual(draftState.mouse.delta.tile, CoordsUtils.zero())
     ) {
       // User has moved tile since the last mouse event
-      draftState.mode.items.forEach((node) => {
-        const nodeIndex = draftState.scene.nodes.findIndex((sceneNode) => {
-          return sceneNode.id === node.id;
+      const newScene = draftState.mode.items.reduce((acc, node) => {
+        return produce(acc, (draft) => {
+          const afterNodeUpdates = draftState.sceneActions.updateNode(
+            node.id,
+            {
+              position: draftState.mouse.position.tile
+            },
+            acc
+          );
+
+          draft.nodes = afterNodeUpdates.nodes;
+          draft.connectors = afterNodeUpdates.connectors;
         });
+      }, draftState.scene);
 
-        if (nodeIndex === -1) return;
-
-        draftState.scene.nodes[nodeIndex].position =
-          draftState.mouse.position.tile;
-
-        draftState.contextMenu = null;
-      });
+      draftState.scene = newScene;
+      draftState.contextMenu = null;
     }
   },
   mouseup: (draftState) => {

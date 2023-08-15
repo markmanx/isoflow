@@ -9,13 +9,15 @@ import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
 import { Lasso } from './reducers/Lasso';
 import { PlaceElement } from './reducers/PlaceElement';
+import { Connector } from './reducers/Connector';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
   PAN: Pan,
   LASSO: Lasso,
-  PLACE_ELEMENT: PlaceElement
+  PLACE_ELEMENT: PlaceElement,
+  CONNECTOR: Connector
 };
 
 export const useInteractionManager = () => {
@@ -47,9 +49,11 @@ export const useInteractionManager = () => {
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
-  const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
-    return { nodes, connectors, groups, icons };
-  });
+  const scene = useSceneStore(
+    ({ nodes, connectors, groups, icons, actions }) => {
+      return { nodes, connectors, groups, icons, actions };
+    }
+  );
   const rendererSize = useUiStateStore((state) => {
     return state.rendererSize;
   });

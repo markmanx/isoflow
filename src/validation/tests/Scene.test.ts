@@ -36,9 +36,7 @@ describe('scene validation works correctly', () => {
     const { nodes } = scene;
     const invalidConnector = {
       id: 'invalidConnector',
-      from: 'node1',
-      to: 'invalidNode',
-      label: null
+      anchors: [{ nodeId: 'node1' }, { nodeId: 'invalidNode' }]
     };
     const connectors: ConnectorInput[] = [
       ...scene.connectors,

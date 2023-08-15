@@ -1,4 +1,4 @@
-import { Coords } from './common';
+import { Coords, Size } from './common';
 import { IconInput, SceneInput } from './inputs';
 
 export enum TileOriginEnum {
@@ -26,13 +26,26 @@ export interface Node {
   isSelected: boolean;
 }
 
+export type ConnectorAnchor =
+  | {
+      type: 'NODE';
+      id: string;
+    }
+  | {
+      type: 'TILE';
+      coords: Coords;
+    };
+
 export interface Connector {
   type: SceneItemTypeEnum.CONNECTOR;
   id: string;
-  label: string;
   color: string;
-  from: string;
-  to: string;
+  anchors: ConnectorAnchor[];
+  path: {
+    tiles: Coords[];
+    origin: Coords;
+    areaSize: Size;
+  };
 }
 
 export interface Group {
@@ -46,15 +59,15 @@ export type SceneItem = Node | Connector | Group;
 
 export type Icon = IconInput;
 
+export interface SceneActions {
+  setScene: (scene: SceneInput) => void;
+  updateScene: (scene: Scene) => void;
+  updateNode: (id: string, updates: Partial<Node>, scene?: Scene) => Scene;
+}
+
 export type Scene = {
   nodes: Node[];
   connectors: Connector[];
   groups: Group[];
   icons: IconInput[];
 };
-
-export interface SceneActions {
-  setScene: (scene: SceneInput) => void;
-  updateScene: (scene: Scene) => void;
-  updateNode: (id: string, updates: Partial<Node>) => void;
-}

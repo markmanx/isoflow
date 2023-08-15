@@ -1,4 +1,4 @@
-import { Size } from 'src/types';
+import { Size, Coords } from 'src/types';
 import { customVars } from './styles/theme';
 
 export const UNPROJECTED_TILE_SIZE = 100;
@@ -7,8 +7,17 @@ export const TILE_PROJECTION_MULTIPLIERS: Size = {
   height: 0.819
 };
 export const DEFAULT_COLOR = customVars.diagramPalette.blue;
-export const CONNECTOR_DEFAULTS = {
-  width: 4
+
+interface ConnectorDefaults {
+  width: number;
+  searchOffset: Coords;
+}
+
+export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
+  width: 4,
+  // The boundaries of the search area for the pathfinder algorithm
+  // is the grid that encompasses the two nodes + the offset below.
+  searchOffset: { x: 3, y: 3 }
 };
 export const NODE_DEFAULTS = {
   label: '',

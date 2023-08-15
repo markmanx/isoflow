@@ -43,8 +43,14 @@ export const scene: SceneInput = {
     }
   ],
   connectors: [
-    { id: 'connector1', label: 'Connector1', from: 'node1', to: 'node2' },
-    { id: 'connector2', label: 'Connector2', from: 'node2', to: 'node3' }
+    {
+      id: 'connector1',
+      anchors: [{ nodeId: 'node1' }, { nodeId: 'node2' }]
+    },
+    {
+      id: 'connector2',
+      anchors: [{ nodeId: 'node2' }, { nodeId: 'node3' }]
+    }
   ],
   groups: [{ id: 'group1', nodeIds: ['node1', 'node2'] }]
 };

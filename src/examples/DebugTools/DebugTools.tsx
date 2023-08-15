@@ -7,14 +7,7 @@ export const DebugTools = () => {
     <Isoflow
       initialScene={{
         icons,
-        connectors: [
-          {
-            id: 'connector1',
-            from: 'database',
-            to: 'server',
-            label: 'connection'
-          }
-        ],
+        connectors: [],
         groups: [
           {
             id: 'group1',
@@ -36,7 +29,7 @@ export const DebugTools = () => {
             id: 'database',
             label: 'Transactions',
             labelHeight: 40,
-            iconId: 'server',
+            iconId: 'block',
             position: {
               x: 5,
               y: 3

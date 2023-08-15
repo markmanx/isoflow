@@ -19,14 +19,20 @@ export const findInvalidConnector = (
   nodes: NodeInput[]
 ) => {
   return connectors.find((con) => {
-    const fromNode = nodes.find((node) => {
-      return con.from === node.id;
-    });
-    const toNode = nodes.find((node) => {
-      return con.to === node.id;
+    const invalidAnchor = con.anchors.find((anchor) => {
+      if (
+        anchor.nodeId &&
+        !nodes.find((node) => {
+          return node.id === anchor.nodeId;
+        })
+      ) {
+        return true;
+      }
+
+      return false;
     });
 
-    return Boolean(!fromNode || !toNode);
+    return Boolean(invalidAnchor);
   });
 };
 

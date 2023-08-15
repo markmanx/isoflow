@@ -1,5 +1,5 @@
 import { Coords, Size } from './common';
-import { SceneItem } from './scene';
+import { SceneItem, Connector } from './scene';
 import { IconInput } from './inputs';
 
 export enum ItemControlsTypeEnum {
@@ -73,10 +73,16 @@ export interface DragItemsMode {
   items: SceneItem[];
 }
 
-export interface PlaceElement {
+export interface PlaceElementMode {
   type: 'PLACE_ELEMENT';
   showCursor: boolean;
   icon: IconInput | null;
+}
+
+export interface ConnectorMode {
+  type: 'CONNECTOR';
+  showCursor: boolean;
+  connector: Connector | null;
 }
 
 export type Mode =
@@ -85,7 +91,8 @@ export type Mode =
   | PanMode
   | DragItemsMode
   | LassoMode
-  | PlaceElement;
+  | PlaceElementMode
+  | ConnectorMode;
 // End mode types
 
 export type ContextMenu =

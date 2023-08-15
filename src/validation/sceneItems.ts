@@ -1,5 +1,10 @@
 import z from 'zod';
 
+const coords = z.object({
+  x: z.number(),
+  y: z.number()
+});
+
 export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
@@ -13,18 +18,29 @@ export const nodeInput = z.object({
   labelHeight: z.number().optional(),
   color: z.string().optional(),
   iconId: z.string(),
-  position: z.object({
-    x: z.number(),
-    y: z.number()
-  })
+  position: coords
 });
+
+export const connectorAnchorInput = z
+  .object({
+    nodeId: z.string(),
+    tile: coords
+  })
+  .partial()
+  .superRefine((data, ctx) => {
+    if (!data.nodeId && !data.tile) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['connectorAnchor'],
+        message: 'Connector anchor needs either a nodeId or tile coords.'
+      });
+    }
+  });
 
 export const connectorInput = z.object({
   id: z.string(),
-  label: z.string().nullable(),
   color: z.string().optional(),
-  from: z.string(),
-  to: z.string()
+  anchors: z.array(connectorAnchorInput)
 });
 
 export const groupInput = z.object({

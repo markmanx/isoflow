@@ -3,7 +3,7 @@ import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
 import { Scene, SceneActions } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
-import { sceneInputtoScene } from 'src/utils';
+import { sceneInputtoScene, getItemById, getConnectorPath } from 'src/utils';
 
 interface Actions {
   actions: SceneActions;
@@ -29,21 +29,28 @@ const initialState = () => {
         updateScene: (scene) => {
           set(scene);
         },
-        updateNode: (id, updates) => {
-          const { nodes } = get();
-          const nodeIndex = nodes.findIndex((node) => {
-            return node.id === id;
+        updateNode: (id, updates, scene) => {
+          return produce(scene ?? get(), (draftState) => {
+            const { item: node, index } = getItemById(draftState.nodes, id);
+
+            draftState.nodes[index] = {
+              ...node,
+              ...updates
+            };
+
+            draftState.connectors.forEach((connector, i) => {
+              const needsUpdate = connector.anchors.find((anchor) => {
+                return anchor.type === 'NODE' && anchor.id === id;
+              });
+
+              if (needsUpdate) {
+                draftState.connectors[i].path = getConnectorPath({
+                  anchors: connector.anchors,
+                  nodes: draftState.nodes
+                });
+              }
+            });
           });
-
-          if (nodeIndex === -1) {
-            return;
-          }
-
-          const newNodes = produce(nodes, (draftState) => {
-            draftState[nodeIndex] = { ...draftState[nodeIndex], ...updates };
-          });
-
-          set({ nodes: newNodes });
         }
       }
     };

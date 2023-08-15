@@ -7,9 +7,13 @@ import {
   Scene,
   Node,
   Connector,
-  Group
+  Group,
+  ConnectorAnchorInput,
+  ConnectorAnchor,
+  Coords
 } from 'src/types';
 import { NODE_DEFAULTS, DEFAULT_COLOR } from 'src/config';
+import { getConnectorPath } from './renderer';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   return {
@@ -33,16 +37,40 @@ export const groupInputToGroup = (groupInput: GroupInput): Group => {
   };
 };
 
+const connectorAnchorInputToConnectorAnchor = (
+  anchor: ConnectorAnchorInput
+): ConnectorAnchor => {
+  if (anchor.nodeId) {
+    return {
+      type: 'NODE',
+      id: anchor.nodeId
+    };
+  }
+
+  return {
+    type: 'TILE',
+    coords: anchor.tile as Coords
+  };
+};
+
 export const connectorInputToConnector = (
-  connectorInput: ConnectorInput
+  connectorInput: ConnectorInput,
+  nodes: Node[]
 ): Connector => {
+  const anchors = connectorInput.anchors
+    .map((anchor) => {
+      return connectorAnchorInputToConnectorAnchor(anchor);
+    })
+    .filter((anchor) => {
+      return anchor !== null;
+    });
+
   return {
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
-    label: connectorInput.label ?? '',
     color: connectorInput.color ?? DEFAULT_COLOR,
-    from: connectorInput.from,
-    to: connectorInput.to
+    anchors,
+    path: getConnectorPath({ anchors, nodes })
   };
 };
 
@@ -56,7 +84,7 @@ export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
   });
 
   const connectors = sceneInput.connectors.map((connectorInput) => {
-    return connectorInputToConnector(connectorInput);
+    return connectorInputToConnector(connectorInput, nodes);
   });
 
   return {
@@ -79,15 +107,38 @@ export const nodeToNodeInput = (node: Node): NodeInput => {
   };
 };
 
+export const connectorAnchorToConnectorAnchorInput = (
+  anchor: ConnectorAnchor
+): ConnectorAnchorInput | null => {
+  switch (anchor.type) {
+    case 'NODE':
+      return {
+        nodeId: anchor.id
+      };
+    case 'TILE':
+      return {
+        tile: anchor.coords
+      };
+    default:
+      return null;
+  }
+};
+
 export const connectorToConnectorInput = (
   connector: Connector
 ): ConnectorInput => {
+  const anchors = connector.anchors
+    .map((anchor) => {
+      return connectorAnchorToConnectorAnchorInput(anchor);
+    })
+    .filter((anchor): anchor is ConnectorAnchorInput => {
+      return !!anchor;
+    });
+
   return {
     id: connector.id,
-    label: connector.label,
-    from: connector.from,
-    to: connector.to,
-    color: connector.color
+    color: connector.color,
+    anchors
   };
 };
 
@@ -102,7 +153,8 @@ export const groupToGroupInput = (group: Group): GroupInput => {
 export const sceneToSceneInput = (scene: Scene): SceneInput => {
   const nodes: NodeInput[] = scene.nodes.map(nodeInputToNode);
   const connectors: ConnectorInput[] = scene.connectors.map(
-    connectorToConnectorInput
+    connectorToConnectorInput,
+    nodes
   );
   const groups: GroupInput[] = scene.groups.map(groupToGroupInput);
 
