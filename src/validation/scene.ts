@@ -1,11 +1,7 @@
 // TODO: Split into individual files
 import { z } from 'zod';
 import { iconInput, nodeInput, connectorInput, groupInput } from './sceneItems';
-import {
-  findInvalidConnector,
-  findInvalidGroup,
-  findInvalidNode
-} from './utils';
+import { findInvalidConnector, findInvalidNode } from './utils';
 
 export const sceneInput = z
   .object({
@@ -37,18 +33,6 @@ export const sceneInput = z
         code: z.ZodIssueCode.custom,
         path: ['connectors', invalidConnector.id],
         message: 'Invalid connector found in scene'
-      });
-
-      return;
-    }
-
-    const invalidGroup = findInvalidGroup(scene.groups, scene.nodes);
-
-    if (invalidGroup) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['groups', invalidGroup.id],
-        message: 'Invalid group found in scene'
       });
     }
   });

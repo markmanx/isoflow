@@ -8,7 +8,8 @@ import {
   NearMe as NearMeIcon,
   CenterFocusStrong as CenterFocusStrongIcon,
   Add as AddIcon,
-  EastOutlined as ConnectorIcon
+  EastOutlined as ConnectorIcon,
+  CropSquare as CropSquareIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
@@ -54,6 +55,19 @@ export const ToolMenu = () => {
         size={theme.customVars.toolMenu.height}
       />
       <IconButton
+        name="Area"
+        Icon={<CropSquareIcon />}
+        onClick={() => {
+          uiStateStoreActions.setMode({
+            type: 'AREA_TOOL',
+            showCursor: true,
+            area: null
+          });
+        }}
+        isActive={mode.type === 'AREA_TOOL'}
+        size={theme.customVars.toolMenu.height}
+      />
+      <IconButton
         name="Connector"
         Icon={<ConnectorIcon />}
         onClick={() => {
@@ -63,6 +77,7 @@ export const ToolMenu = () => {
             showCursor: true
           });
         }}
+        isActive={mode.type === 'CONNECTOR'}
         size={theme.customVars.toolMenu.height}
       />
       <IconButton

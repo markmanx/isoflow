@@ -376,3 +376,15 @@ export const getConnectorPath = ({
 
   return { tiles, origin, areaSize: searchAreaSize };
 };
+
+type GetRectangleFromSize = (
+  from: Coords,
+  size: Size
+) => { from: Coords; to: Coords };
+
+export const getRectangleFromSize: GetRectangleFromSize = (from, size) => {
+  return {
+    from,
+    to: { x: from.x + size.width, y: from.y + size.height }
+  };
+};

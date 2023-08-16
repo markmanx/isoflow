@@ -5,6 +5,11 @@ const coords = z.object({
   y: z.number()
 });
 
+const size = z.object({
+  width: z.number(),
+  height: z.number()
+});
+
 export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
@@ -46,5 +51,6 @@ export const connectorInput = z.object({
 export const groupInput = z.object({
   id: z.string(),
   color: z.string().optional(),
-  nodeIds: z.array(z.string())
+  from: coords,
+  to: coords
 });

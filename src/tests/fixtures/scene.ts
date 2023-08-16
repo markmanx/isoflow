@@ -52,5 +52,5 @@ export const scene: SceneInput = {
       anchors: [{ nodeId: 'node2' }, { nodeId: 'node3' }]
     }
   ],
-  groups: [{ id: 'group1', nodeIds: ['node1', 'node2'] }]
+  groups: [{ id: 'group1', from: { x: 0, y: 0 }, to: { x: 2, y: 2 } }]
 };

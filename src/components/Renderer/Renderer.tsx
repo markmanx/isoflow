@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
-import { Node as NodeI } from 'src/types';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
@@ -12,6 +11,8 @@ import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
+import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
+import { DEFAULT_COLOR } from 'src/config';
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLDivElement>();
@@ -51,21 +52,6 @@ export const Renderer = () => {
   } = useInteractionManager();
   const { observe, disconnect, size: rendererSize } = useResizeObserver();
 
-  const getNodesFromIds = useCallback(
-    (nodeIds: string[]) => {
-      return nodeIds
-        .map((nodeId) => {
-          return nodes.find((node) => {
-            return node.id === nodeId;
-          });
-        })
-        .filter((node) => {
-          return node !== undefined;
-        }) as NodeI[];
-    },
-    [nodes]
-  );
-
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -96,21 +82,25 @@ export const Renderer = () => {
       <Grid scroll={scroll} zoom={zoom} />
       <SceneLayer>
         {scene.groups.map((group) => {
-          const groupNodes = getNodesFromIds(group.nodeIds);
-
-          return <Group key={group.id} group={group} nodes={groupNodes} />;
+          return <Group key={group.id} {...group} />;
         })}
       </SceneLayer>
       <SceneLayer>
         {mode.showCursor && <Cursor tile={mouse.position.tile} />}
       </SceneLayer>
       <SceneLayer>
+        {mode.type === 'AREA_TOOL' && mode.area && (
+          <Group
+            from={mode.area.from}
+            to={mode.area.to}
+            color={DEFAULT_COLOR}
+          />
+        )}
+      </SceneLayer>
+      <SceneLayer>
         {scene.connectors.map((connector) => {
           return <Connector key={connector.id} connector={connector} />;
         })}
-        {mode.type === 'CONNECTOR' && mode.connector && (
-          <Connector connector={mode.connector} />
-        )}
       </SceneLayer>
       <SceneLayer>
         {nodes.map((node) => {
@@ -125,6 +115,11 @@ export const Renderer = () => {
             />
           );
         })}
+      </SceneLayer>
+      <SceneLayer>
+        {mode.type === 'CONNECTOR' && mode.connector && (
+          <Connector connector={mode.connector} />
+        )}
       </SceneLayer>
       {debugMode && (
         <SceneLayer>

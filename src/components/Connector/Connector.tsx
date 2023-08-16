@@ -1,11 +1,14 @@
 import React, { useMemo } from 'react';
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { getAnchorPosition } from 'src/utils';
+import {
+  getAnchorPosition,
+  getRectangleFromSize,
+  CoordsUtils
+} from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { Circle } from 'src/components/Circle/Circle';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 
@@ -21,23 +24,27 @@ export const Connector = ({ connector }: Props) => {
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
-  const { getTilePosition } = useGetTilePosition();
+
+  const unprojectedTileSize = useMemo(() => {
+    return UNPROJECTED_TILE_SIZE * zoom;
+  }, [zoom]);
+
+  const drawOffset = useMemo(() => {
+    return {
+      x: unprojectedTileSize / 2,
+      y: unprojectedTileSize / 2
+    };
+  }, [unprojectedTileSize]);
+
   const pathString = useMemo(() => {
-    const unprojectedTileSize = UNPROJECTED_TILE_SIZE * zoom;
     return connector.path.tiles.reduce((acc, tile) => {
-      return `${acc} ${tile.x * unprojectedTileSize},${
-        tile.y * unprojectedTileSize
+      return `${acc} ${tile.x * unprojectedTileSize + drawOffset.x},${
+        tile.y * unprojectedTileSize + drawOffset.y
       }`;
     }, '');
-  }, [zoom, connector.path.tiles]);
-
-  const pathOrigin = useMemo(() => {
-    return getTilePosition({ tile: connector.path.origin });
-  }, [getTilePosition, connector.path.origin]);
+  }, [unprojectedTileSize, connector.path.tiles, drawOffset]);
 
   const anchorPositions = useMemo(() => {
-    const unprojectedTileSize = UNPROJECTED_TILE_SIZE * zoom;
-
     return connector.anchors.map((anchor) => {
       const position = getAnchorPosition({ anchor, nodes });
 
@@ -46,36 +53,32 @@ export const Connector = ({ connector }: Props) => {
         y: (connector.path.origin.y - position.y) * unprojectedTileSize
       };
     });
-  }, [connector.path.origin, connector.anchors, zoom, nodes]);
+  }, [connector.path.origin, connector.anchors, nodes, unprojectedTileSize]);
 
   return (
-    <Box
-      id="connector"
-      sx={{
-        position: 'absolute',
-        left: pathOrigin.x,
-        top: pathOrigin.y
-      }}
+    <IsoTileArea
+      {...getRectangleFromSize(connector.path.origin, connector.path.areaSize)}
+      origin={connector.path.origin}
+      zoom={zoom}
+      fill="none"
     >
-      <IsoTileArea tileArea={connector.path.areaSize} zoom={zoom} fill="none">
-        <polyline
-          points={pathString}
-          stroke={connector.color}
-          strokeWidth={10 * zoom}
-          fill="none"
-        />
-        {anchorPositions.map((anchor) => {
-          return (
-            <Circle
-              position={anchor}
-              radius={10 * zoom}
-              stroke={theme.palette.common.black}
-              fill={theme.palette.common.white}
-              strokeWidth={4 * zoom}
-            />
-          );
-        })}
-      </IsoTileArea>
-    </Box>
+      <polyline
+        points={pathString}
+        stroke={connector.color}
+        strokeWidth={10 * zoom}
+        fill="none"
+      />
+      {anchorPositions.map((anchor) => {
+        return (
+          <Circle
+            position={CoordsUtils.add(anchor, drawOffset)}
+            radius={10 * zoom}
+            stroke={theme.palette.common.black}
+            fill={theme.palette.common.white}
+            strokeWidth={4 * zoom}
+          />
+        );
+      })}
+    </IsoTileArea>
   );
 };

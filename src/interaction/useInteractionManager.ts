@@ -10,6 +10,7 @@ import { Cursor } from './reducers/Cursor';
 import { Lasso } from './reducers/Lasso';
 import { PlaceElement } from './reducers/PlaceElement';
 import { Connector } from './reducers/Connector';
+import { AreaTool } from './reducers/AreaTool';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
@@ -17,7 +18,8 @@ const reducers: { [k in string]: InteractionReducer } = {
   PAN: Pan,
   LASSO: Lasso,
   PLACE_ELEMENT: PlaceElement,
-  CONNECTOR: Connector
+  CONNECTOR: Connector,
+  AREA_TOOL: AreaTool
 };
 
 export const useInteractionManager = () => {

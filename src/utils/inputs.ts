@@ -32,7 +32,8 @@ export const groupInputToGroup = (groupInput: GroupInput): Group => {
   return {
     type: SceneItemTypeEnum.GROUP,
     id: groupInput.id,
-    nodeIds: groupInput.nodeIds,
+    from: groupInput.from,
+    to: groupInput.to,
     color: groupInput.color ?? DEFAULT_COLOR
   };
 };
@@ -145,8 +146,9 @@ export const connectorToConnectorInput = (
 export const groupToGroupInput = (group: Group): GroupInput => {
   return {
     id: group.id,
-    nodeIds: group.nodeIds,
-    color: group.color
+    color: group.color,
+    from: group.from,
+    to: group.to
   };
 };
 

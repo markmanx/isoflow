@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
-import gsap from 'gsap';
-import { Coords, TileOriginEnum, Node as NodeI, IconInput } from 'src/types';
-import { getColorVariant } from 'src/utils';
+import { Node as NodeI, IconInput, TileOriginEnum } from 'src/types';
+import { getColorVariant, getRectangleFromSize } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 import { NodeIcon } from './NodeIcon';
@@ -22,32 +21,8 @@ export const Node = ({ node, icon, order }: Props) => {
     return state.zoom;
   });
   const nodeRef = useRef<HTMLDivElement>();
-  const { getTilePosition } = useGetTilePosition();
   const projectedTileSize = useProjectedTileSize();
-
-  const moveToTile = useCallback(
-    ({
-      tile,
-      animationDuration = 0.15
-    }: {
-      tile: Coords;
-      animationDuration?: number;
-    }) => {
-      if (!nodeRef.current) return;
-
-      const position = getTilePosition({
-        tile,
-        origin: TileOriginEnum.BOTTOM
-      });
-
-      gsap.to(nodeRef.current, {
-        duration: animationDuration,
-        x: position.x,
-        y: position.y
-      });
-    },
-    [getTilePosition]
-  );
+  const { getTilePosition } = useGetTilePosition();
 
   const onImageLoaded = useCallback(() => {
     if (!nodeRef.current) return;
@@ -55,61 +30,57 @@ export const Node = ({ node, icon, order }: Props) => {
     nodeRef.current.style.opacity = '1';
   }, []);
 
-  useEffect(() => {
-    moveToTile({ tile: node.position, animationDuration: 0 });
-  }, [node.position, moveToTile]);
+  const position = useMemo(() => {
+    return getTilePosition({
+      tile: node.position,
+      origin: TileOriginEnum.BOTTOM
+    });
+  }, [node.position, getTilePosition]);
 
   return (
     <Box
-      ref={nodeRef}
       sx={{
-        position: 'absolute',
-        zIndex: order,
-        opacity: 0
+        zIndex: order
       }}
     >
       <Box
+        ref={nodeRef}
         sx={{
-          position: 'absolute'
+          position: 'absolute',
+          opacity: 0,
+          left: position.x,
+          top: position.y
         }}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: -projectedTileSize.height
-          }}
-        >
-          <IsoTileArea
-            tileArea={{
-              width: 1,
-              height: 1
-            }}
-            fill={node.color}
-            cornerRadius={15 * zoom}
-            stroke={{
-              width: 1 * zoom,
-              color: getColorVariant(node.color, 'dark', { grade: 1.5 })
-            }}
-            zoom={zoom}
-          />
-        </Box>
-        <LabelContainer
-          labelHeight={node.labelHeight + 100}
-          tileSize={projectedTileSize}
-          connectorDotSize={5 * zoom}
-        >
-          {node.label && <MarkdownLabel label={node.label} />}
-        </LabelContainer>
-      </Box>
-      {icon && (
         <Box
           sx={{
             position: 'absolute'
           }}
         >
-          <NodeIcon icon={icon} onImageLoaded={onImageLoaded} />
+          <Box
+            sx={{
+              position: 'absolute',
+              top: -projectedTileSize.height
+            }}
+          />
+          <LabelContainer
+            labelHeight={node.labelHeight + 100}
+            tileSize={projectedTileSize}
+            connectorDotSize={5 * zoom}
+          >
+            {node.label && <MarkdownLabel label={node.label} />}
+          </LabelContainer>
         </Box>
-      )}
+        {icon && (
+          <Box
+            sx={{
+              position: 'absolute'
+            }}
+          >
+            <NodeIcon icon={icon} onImageLoaded={onImageLoaded} />
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 };

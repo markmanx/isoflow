@@ -1,9 +1,15 @@
 import React, { createContext, useRef, useContext } from 'react';
+import { v4 as uuid } from 'uuid';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
-import { Scene, SceneActions } from 'src/types';
+import { Scene, SceneActions, GroupInput } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
-import { sceneInputtoScene, getItemById, getConnectorPath } from 'src/utils';
+import {
+  sceneInputtoScene,
+  getItemById,
+  getConnectorPath,
+  groupInputToGroup
+} from 'src/utils';
 
 interface Actions {
   actions: SceneActions;
@@ -50,6 +56,11 @@ const initialState = () => {
                 });
               }
             });
+          });
+        },
+        createGroup: (group) => {
+          return produce(get(), (draftState) => {
+            draftState.groups.push(groupInputToGroup(group));
           });
         }
       }

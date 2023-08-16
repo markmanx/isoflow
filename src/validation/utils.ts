@@ -1,9 +1,4 @@
-import {
-  ConnectorInput,
-  NodeInput,
-  GroupInput,
-  IconInput
-} from 'src/types/inputs';
+import { ConnectorInput, NodeInput, IconInput } from 'src/types/inputs';
 
 export const findInvalidNode = (nodes: NodeInput[], icons: IconInput[]) => {
   return nodes.find((node) => {
@@ -33,16 +28,5 @@ export const findInvalidConnector = (
     });
 
     return Boolean(invalidAnchor);
-  });
-};
-
-export const findInvalidGroup = (groups: GroupInput[], nodes: NodeInput[]) => {
-  return groups.find((grp) => {
-    return grp.nodeIds.find((nodeId) => {
-      const validNode = nodes.find((node) => {
-        return node.id === nodeId;
-      });
-      return Boolean(!validNode);
-    });
   });
 };

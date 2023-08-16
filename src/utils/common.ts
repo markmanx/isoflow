@@ -1,4 +1,9 @@
 import chroma from 'chroma-js';
+import { v4 as uuid } from 'uuid';
+
+export const generateId = () => {
+  return uuid();
+};
 
 export const clamp = (num: number, min: number, max: number) => {
   return Math.max(Math.min(num, max), min);

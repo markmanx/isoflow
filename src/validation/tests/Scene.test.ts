@@ -1,10 +1,6 @@
-import { NodeInput, ConnectorInput, GroupInput } from 'src/types/inputs';
+import { NodeInput, ConnectorInput } from 'src/types/inputs';
 import { sceneInput } from '../scene';
-import {
-  findInvalidNode,
-  findInvalidConnector,
-  findInvalidGroup
-} from '../utils';
+import { findInvalidNode, findInvalidConnector } from '../utils';
 import { scene } from '../../tests/fixtures/scene';
 
 describe('scene validation works correctly', () => {
@@ -46,18 +42,5 @@ describe('scene validation works correctly', () => {
     const result = findInvalidConnector(connectors, nodes);
 
     expect(result).toEqual(invalidConnector);
-  });
-
-  test('finds invalid groups in scene', () => {
-    const { nodes } = scene;
-    const invalidGroup: GroupInput = {
-      id: 'invalidGroup',
-      nodeIds: ['invalidNode', 'node1']
-    };
-    const groups: GroupInput[] = [...scene.groups, invalidGroup];
-
-    const result = findInvalidGroup(groups, nodes);
-
-    expect(result).toEqual(invalidGroup);
   });
 });

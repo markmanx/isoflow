@@ -85,6 +85,15 @@ export interface ConnectorMode {
   connector: Connector | null;
 }
 
+export interface AreaToolMode {
+  type: 'AREA_TOOL';
+  showCursor: boolean;
+  area: {
+    from: Coords;
+    to: Coords;
+  } | null;
+}
+
 export type Mode =
   | InteractionsDisabled
   | CursorMode
@@ -92,7 +101,8 @@ export type Mode =
   | DragItemsMode
   | LassoMode
   | PlaceElementMode
-  | ConnectorMode;
+  | ConnectorMode
+  | AreaToolMode;
 // End mode types
 
 export type ContextMenu =

@@ -11,7 +11,14 @@ export const DebugTools = () => {
         groups: [
           {
             id: 'group1',
-            nodeIds: ['server', 'database']
+            from: {
+              x: 5,
+              y: 5
+            },
+            to: {
+              x: 0,
+              y: 0
+            }
           }
         ],
         nodes: [

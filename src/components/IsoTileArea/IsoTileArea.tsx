@@ -1,12 +1,19 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { Size, Coords } from 'src/types';
-import { getIsoMatrixCSS, getProjectedTileSize } from 'src/utils';
+import { Size, Coords, TileOriginEnum } from 'src/types';
+import {
+  getIsoMatrixCSS,
+  getProjectedTileSize,
+  getBoundingBox
+} from 'src/utils';
 import { Svg } from 'src/components/Svg/Svg';
+import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 
 interface Props {
-  tileArea: Size;
+  from: Coords;
+  to: Coords;
+  origin?: Coords;
   fill: string;
   cornerRadius?: number;
   stroke?: {
@@ -18,29 +25,52 @@ interface Props {
 }
 
 export const IsoTileArea = ({
-  tileArea,
+  from,
+  to,
+  origin: _origin,
   fill,
   cornerRadius = 0,
   stroke,
   zoom,
   children
 }: Props) => {
+  const { getTilePosition } = useGetTilePosition();
   const projectedTileSize = useMemo(() => {
     return getProjectedTileSize({ zoom });
   }, [zoom]);
 
+  const size = useMemo(() => {
+    return {
+      width: Math.abs(from.x - to.x) + 1,
+      height: Math.abs(from.y - to.y) + 1
+    };
+  }, [from, to]);
+
+  const origin = useMemo(() => {
+    if (_origin) return _origin;
+
+    const boundingBox = getBoundingBox([from, to]);
+
+    return boundingBox[2];
+  }, [from, to, _origin]);
+
+  const position = useMemo(() => {
+    return getTilePosition({
+      tile: origin,
+      origin: TileOriginEnum.TOP
+    });
+  }, [origin, getTilePosition]);
+
   const viewbox = useMemo<Size>(() => {
     return {
-      width:
-        (tileArea.width / 2 + tileArea.height / 2) * projectedTileSize.width,
-      height:
-        (tileArea.width / 2 + tileArea.height / 2) * projectedTileSize.height
+      width: (size.width / 2 + size.height / 2) * projectedTileSize.width,
+      height: (size.width / 2 + size.height / 2) * projectedTileSize.height
     };
-  }, [tileArea, projectedTileSize]);
+  }, [size, projectedTileSize]);
 
   const translate = useMemo<Coords>(() => {
-    return { x: tileArea.width * (projectedTileSize.width / 2), y: 0 };
-  }, [tileArea, projectedTileSize]);
+    return { x: size.width * (projectedTileSize.width / 2), y: 0 };
+  }, [size, projectedTileSize]);
 
   const strokeParams = useMemo(() => {
     if (!stroke) return {};
@@ -52,14 +82,16 @@ export const IsoTileArea = ({
   }, [stroke]);
 
   const marginLeft = useMemo(() => {
-    return -(tileArea.width * projectedTileSize.width * 0.5);
-  }, [projectedTileSize.width, tileArea.width]);
+    return -(size.width * projectedTileSize.width * 0.5);
+  }, [projectedTileSize.width, size.width]);
 
   return (
     <Box
       sx={{
         position: 'absolute',
-        marginLeft: `${marginLeft}px`
+        marginLeft: `${marginLeft}px`,
+        left: position.x,
+        top: position.y
       }}
     >
       <Svg
@@ -70,8 +102,8 @@ export const IsoTileArea = ({
         <g transform={`translate(${translate.x}, ${translate.y})`}>
           <g transform={getIsoMatrixCSS()}>
             <rect
-              width={tileArea.width * UNPROJECTED_TILE_SIZE * zoom}
-              height={tileArea.height * UNPROJECTED_TILE_SIZE * zoom}
+              width={size.width * UNPROJECTED_TILE_SIZE * zoom}
+              height={size.height * UNPROJECTED_TILE_SIZE * zoom}
               fill={fill}
               rx={cornerRadius}
               {...strokeParams}

@@ -1,5 +1,5 @@
 import { Coords, Size } from './common';
-import { IconInput, SceneInput } from './inputs';
+import { IconInput, SceneInput, GroupInput } from './inputs';
 
 export enum TileOriginEnum {
   CENTER = 'CENTER',
@@ -51,8 +51,9 @@ export interface Connector {
 export interface Group {
   type: SceneItemTypeEnum.GROUP;
   id: string;
-  nodeIds: string[];
   color: string;
+  from: Coords;
+  to: Coords;
 }
 
 export type SceneItem = Node | Connector | Group;
@@ -63,6 +64,7 @@ export interface SceneActions {
   setScene: (scene: SceneInput) => void;
   updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>, scene?: Scene) => Scene;
+  createGroup: (group: GroupInput) => Scene;
 }
 
 export type Scene = {
