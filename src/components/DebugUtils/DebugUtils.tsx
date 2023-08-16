@@ -1,8 +1,7 @@
 import React from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { SizeIndicator } from './SizeIndicator';
-import { Value } from './Value';
 import { LineItem } from './LineItem';
 
 export const DebugUtils = () => {
@@ -19,7 +18,14 @@ export const DebugUtils = () => {
   const { scroll, mouse, zoom, rendererSize } = uiState;
 
   return (
-    <>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none'
+      }}
+    >
       <SizeIndicator />
       <Box
         sx={{
@@ -60,6 +66,6 @@ export const DebugUtils = () => {
         <LineItem title="Mode" value={mode.type} />
         <LineItem title="Mode data" value={JSON.stringify(mode)} />
       </Box>
-    </>
+    </Box>
   );
 };

@@ -11,7 +11,6 @@ import { Connector } from 'src/components/Connector/Connector';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
-import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { DEFAULT_COLOR } from 'src/config';
 
 export const Renderer = () => {
@@ -73,7 +72,6 @@ export const Renderer = () => {
 
   return (
     <Box
-      ref={containerRef}
       sx={{
         width: '100%',
         height: '100%'
@@ -126,6 +124,8 @@ export const Renderer = () => {
           <DebugUtils />
         </SceneLayer>
       )}
+      {/* Interaction layer */}
+      <SceneLayer ref={containerRef} />
     </Box>
   );
 };

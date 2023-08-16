@@ -37,7 +37,8 @@ export const Cursor: InteractionReducer = {
     }
   },
   mousedown: (draftState) => {
-    if (draftState.mode.type !== 'CURSOR') return;
+    if (draftState.mode.type !== 'CURSOR' || !draftState.isRendererInteraction)
+      return;
 
     const itemsAtTile = filterNodesByTile({
       tile: draftState.mouse.position.tile,

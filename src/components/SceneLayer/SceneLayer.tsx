@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Box } from '@mui/material';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   order?: number;
 }
 
-export const SceneLayer = ({ children, order = 0 }: Props) => {
+export const SceneLayer = forwardRef(({ children, order = 0 }: Props, ref) => {
   return (
     <Box
+      ref={ref}
       sx={{
         position: 'absolute',
         zIndex: order,
@@ -21,4 +22,4 @@ export const SceneLayer = ({ children, order = 0 }: Props) => {
       {children}
     </Box>
   );
-};
+});

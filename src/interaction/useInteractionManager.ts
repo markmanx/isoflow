@@ -97,7 +97,8 @@ export const useInteractionManager = () => {
         contextMenu,
         itemControls,
         rendererRef: rendererRef.current,
-        sceneActions
+        sceneActions,
+        isRendererInteraction: rendererRef.current === e.target
       };
 
       const getTransitionaryState = () => {

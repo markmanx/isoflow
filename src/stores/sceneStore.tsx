@@ -1,14 +1,13 @@
 import React, { createContext, useRef, useContext } from 'react';
-import { v4 as uuid } from 'uuid';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
-import { Scene, SceneActions, GroupInput } from 'src/types';
+import { Scene, SceneActions } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
 import {
-  sceneInputtoScene,
   getItemById,
   getConnectorPath,
-  groupInputToGroup
+  groupInputToGroup,
+  sceneInputtoScene
 } from 'src/utils';
 
 interface Actions {
@@ -31,12 +30,20 @@ const initialState = () => {
           const newScene = sceneInputtoScene(scene);
 
           set(newScene);
+
+          return newScene;
         },
+
         updateScene: (scene) => {
-          set(scene);
+          set({
+            nodes: scene.nodes,
+            connectors: scene.connectors,
+            groups: scene.groups
+          });
         },
+
         updateNode: (id, updates, scene) => {
-          return produce(scene ?? get(), (draftState) => {
+          const newScene = produce(scene ?? get(), (draftState) => {
             const { item: node, index } = getItemById(draftState.nodes, id);
 
             draftState.nodes[index] = {
@@ -57,11 +64,20 @@ const initialState = () => {
               }
             });
           });
+
+          set({ nodes: newScene.nodes, connectors: newScene.connectors });
+
+          return newScene;
         },
+
         createGroup: (group) => {
-          return produce(get(), (draftState) => {
+          const newScene = produce(get(), (draftState) => {
             draftState.groups.push(groupInputToGroup(group));
           });
+
+          set({ groups: newScene.groups });
+
+          return newScene;
         }
       }
     };
