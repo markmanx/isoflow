@@ -40,6 +40,7 @@ export const Node = ({ node, icon, order }: Props) => {
   return (
     <Box
       sx={{
+        position: 'absolute',
         zIndex: order
       }}
     >
