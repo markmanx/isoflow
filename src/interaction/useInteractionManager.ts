@@ -134,11 +134,6 @@ export const useInteractionManager = () => {
       reducerAction(baseState);
 
       uiStateActions.setMouse(nextMouse);
-      // uiStateActions.setScroll(newState.scroll);
-      // uiStateActions.setMode(newState.mode);
-      // uiStateActions.setContextMenu(newState.contextMenu);
-      // uiStateActions.setItemControls(newState.itemControls);
-      // sceneActions.updateScene(newState.scene);
     },
     [
       mode,
