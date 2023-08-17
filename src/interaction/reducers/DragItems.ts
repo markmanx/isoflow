@@ -15,7 +15,7 @@ export const DragItems: InteractionReducer = {
     if (
       state.mode.type !== 'DRAG_ITEMS' ||
       !state.mouse.mousedown ||
-      !hasMovedTile
+      !hasMovedTile(state.mouse)
     )
       return;
 
