@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import gridTileSvg from 'src/assets/grid-tile-bg.svg';
 import { Scroll } from 'src/types';
@@ -10,14 +10,12 @@ interface Props {
 }
 
 export const Grid = ({ zoom, scroll }: Props) => {
-  const containerRef = useRef<HTMLDivElement>();
   const projectedTileSize = useMemo(() => {
     return getProjectedTileSize({ zoom });
   }, [zoom]);
 
   return (
     <Box
-      ref={containerRef}
       sx={{
         position: 'absolute',
         left: 0,
