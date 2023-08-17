@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { Size, Coords, Node } from 'src/types';
+import { Size, Coords, Node, Group, Connector } from 'src/types';
 import {
   getBoundingBox,
   getBoundingBoxSize,
   sortByPosition,
-  clamp
+  clamp,
+  getAnchorPosition
 } from 'src/utils';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useScroll } from 'src/hooks/useScroll';
@@ -32,21 +33,42 @@ export const useDiagramUtils = () => {
   });
   const { getTilePosition } = useGetTilePosition();
 
-  const getProjectBounds = useCallback((nodes: Node[]): Coords[] => {
-    const nodePositions = nodes.map((node) => {
-      return node.position;
-    });
+  const getProjectBounds = useCallback(
+    (items: (Node | Group | Connector)[]): Coords[] => {
+      const positions = items.reduce<Coords[]>((acc, item) => {
+        switch (item.type) {
+          case 'NODE':
+            return [...acc, item.position];
+          case 'CONNECTOR':
+            return [
+              ...acc,
+              ...item.anchors.map((anchor) => {
+                return getAnchorPosition({ anchor, nodes: scene.nodes });
+              })
+            ];
+          case 'GROUP':
+            return [...acc, item.from, item.to];
+          default:
+            return acc;
+        }
+      }, []);
 
-    const corners = getBoundingBox(nodePositions, {
-      x: BOUNDING_BOX_PADDING,
-      y: BOUNDING_BOX_PADDING
-    });
+      const corners = getBoundingBox(positions, {
+        x: BOUNDING_BOX_PADDING,
+        y: BOUNDING_BOX_PADDING
+      });
 
-    return corners;
-  }, []);
+      return corners;
+    },
+    [scene.nodes]
+  );
 
   const getUnprojectedBounds = useCallback((): Size & Coords => {
-    const projectBounds = getProjectBounds(scene.nodes);
+    const projectBounds = getProjectBounds([
+      ...scene.nodes,
+      ...scene.connectors,
+      ...scene.groups
+    ]);
 
     const cornerPositions = projectBounds.map((corner) => {
       return getTilePosition({
