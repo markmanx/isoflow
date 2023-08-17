@@ -58,7 +58,7 @@ export const AreaTool: ModeActions = {
     uiState.actions.setMode({
       type: 'CURSOR',
       showCursor: true,
-      mousedown: null
+      mousedownItem: null
     });
   }
 };

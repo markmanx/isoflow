@@ -87,7 +87,7 @@ export const ToolMenu = () => {
           uiStateStoreActions.setMode({
             type: 'CURSOR',
             showCursor: true,
-            mousedown: null
+            mousedownItem: null
           });
         }}
         size={theme.customVars.toolMenu.height}

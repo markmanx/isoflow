@@ -13,7 +13,9 @@ import {
   Size,
   Scroll,
   Mouse,
-  ConnectorAnchor
+  ConnectorAnchor,
+  SceneItem,
+  Scene
 } from 'src/types';
 import {
   CoordsUtils,
@@ -203,15 +205,28 @@ export const getTranslateCSS = (translate: Coords = { x: 0, y: 0 }) => {
   return `translate(${translate.x}px, ${translate.y}px)`;
 };
 
-interface GetNodesByTile {
+interface GetItemAtTile {
   tile: Coords;
-  nodes: Node[];
+  scene: Scene;
 }
 
-export const filterNodesByTile = ({ tile, nodes }: GetNodesByTile): Node[] => {
-  return nodes.filter((node) => {
-    return CoordsUtils.isEqual(node.position, tile);
+export const getItemAtTile = ({
+  tile,
+  scene
+}: GetItemAtTile): SceneItem | null => {
+  const node = scene.nodes.find(({ position }) => {
+    return CoordsUtils.isEqual(position, tile);
   });
+
+  if (node) return node;
+
+  const group = scene.groups.find(({ from, to }) => {
+    return isWithinBounds(tile, [from, to]);
+  });
+
+  if (group) return group;
+
+  return null;
 };
 
 export const incrementZoom = (zoom: number) => {

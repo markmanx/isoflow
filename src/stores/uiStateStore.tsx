@@ -10,7 +10,7 @@ const initialState = () => {
       mode: {
         type: 'CURSOR',
         showCursor: true,
-        mousedown: null
+        mousedownItem: null
       },
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
@@ -64,7 +64,7 @@ const initialState = () => {
             set({ mode: { type: 'INTERACTIONS_DISABLED', showCursor: false } });
           } else {
             set({
-              mode: { type: 'CURSOR', showCursor: true, mousedown: null }
+              mode: { type: 'CURSOR', showCursor: true, mousedownItem: null }
             });
           }
         },

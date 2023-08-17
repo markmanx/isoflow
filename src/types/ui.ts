@@ -45,10 +45,7 @@ export interface InteractionsDisabled {
 export interface CursorMode {
   type: 'CURSOR';
   showCursor: boolean;
-  mousedown: {
-    items: SceneItem[];
-    tile: Coords;
-  } | null;
+  mousedownItem: SceneItem | null;
 }
 
 export interface PanMode {

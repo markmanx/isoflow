@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 import { ModeActions } from 'src/types';
-import { filterNodesByTile, generateId } from 'src/utils';
+import { getItemAtTile, generateId } from 'src/utils';
 
 export const PlaceElement: ModeActions = {
   type: 'PLACE_ELEMENT',
@@ -9,17 +9,14 @@ export const PlaceElement: ModeActions = {
     if (uiState.mode.type !== 'PLACE_ELEMENT') return;
 
     if (!uiState.mode.icon) {
-      const itemsAtTile = filterNodesByTile({
+      const itemAtTile = getItemAtTile({
         tile: uiState.mouse.position.tile,
-        nodes: scene.nodes
+        scene
       });
 
       uiState.actions.setMode({
         type: 'CURSOR',
-        mousedown: {
-          items: itemsAtTile,
-          tile: uiState.mouse.position.tile
-        },
+        mousedownItem: itemAtTile,
         showCursor: true
       });
 

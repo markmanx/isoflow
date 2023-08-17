@@ -9,10 +9,12 @@ export const DragItems: ModeActions = {
 
     renderer.style.userSelect = 'none';
 
-    uiState.mode.items.forEach((node) => {
-      scene.actions.updateNode(node.id, {
-        position: uiState.mouse.position.tile
-      });
+    uiState.mode.items.forEach((item) => {
+      if (item.type === 'NODE') {
+        scene.actions.updateNode(item.id, {
+          position: uiState.mouse.position.tile
+        });
+      }
     });
   },
   exit: ({ rendererRef }) => {
@@ -28,10 +30,12 @@ export const DragItems: ModeActions = {
       return;
 
     // User is dragging
-    uiState.mode.items.forEach((node) => {
-      scene.actions.updateNode(node.id, {
-        position: uiState.mouse.position.tile
-      });
+    uiState.mode.items.forEach((item) => {
+      if (item.type === 'NODE') {
+        scene.actions.updateNode(item.id, {
+          position: uiState.mouse.position.tile
+        });
+      }
     });
 
     uiState.actions.setContextMenu(null);
@@ -40,7 +44,7 @@ export const DragItems: ModeActions = {
     uiState.actions.setMode({
       type: 'CURSOR',
       showCursor: true,
-      mousedown: null
+      mousedownItem: null
     });
   }
 };
