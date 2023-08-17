@@ -71,6 +71,7 @@ export interface SceneActions {
   updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   updateConnector: (id: string, updates: Partial<Connector>) => void;
+  translateGroup: (id: string, delta: Coords) => void;
   createNode: (node: NodeInput) => void;
   createConnector: (connector: ConnectorInput) => void;
   createGroup: (group: GroupInput) => void;

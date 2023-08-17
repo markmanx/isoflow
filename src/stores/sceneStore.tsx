@@ -9,7 +9,10 @@ import {
   groupInputToGroup,
   connectorInputToConnector,
   sceneInputtoScene,
-  nodeInputToNode
+  nodeInputToNode,
+  getBoundingBox,
+  isWithinBounds,
+  CoordsUtils
 } from 'src/utils';
 
 const initialState = () => {
@@ -84,6 +87,26 @@ const initialState = () => {
           });
 
           set({ connectors: newScene.connectors });
+        },
+
+        translateGroup: (id, delta) => {
+          const newScene = produce(get(), (draftState) => {
+            const { item: group, index } = getItemById(draftState.groups, id);
+
+            draftState.groups[index].from = CoordsUtils.add(group.from, delta);
+            draftState.groups[index].to = CoordsUtils.add(group.to, delta);
+
+            const bounds = getBoundingBox([group.from, group.to]);
+            draftState.nodes.forEach((node) => {
+              if (isWithinBounds(node.position, bounds)) {
+                draftState.actions.updateNode(node.id, {
+                  position: CoordsUtils.add(node.position, delta)
+                });
+              }
+            });
+          });
+
+          set({ groups: newScene.groups });
         },
 
         createConnector: (connector) => {

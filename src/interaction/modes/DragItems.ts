@@ -1,4 +1,4 @@
-import { hasMovedTile } from 'src/utils';
+import { CoordsUtils, hasMovedTile } from 'src/utils';
 import { ModeActions } from 'src/types';
 
 export const DragItems: ModeActions = {
@@ -35,6 +35,8 @@ export const DragItems: ModeActions = {
         scene.actions.updateNode(item.id, {
           position: uiState.mouse.position.tile
         });
+      } else if (item.type === 'GROUP' && uiState.mouse.delta?.tile) {
+        scene.actions.translateGroup(item.id, uiState.mouse.delta.tile);
       }
     });
 
