@@ -1,10 +1,16 @@
 import { InteractionReducer } from 'src/types';
 import { produce } from 'immer';
-import { generateId, hasMovedTile } from 'src/utils';
+import { generateId, hasMovedTile, setWindowCursor } from 'src/utils';
 import { DEFAULT_COLOR } from 'src/config';
 
 export const AreaTool: InteractionReducer = {
   type: 'AREA_TOOL',
+  entry: () => {
+    setWindowCursor('crosshair');
+  },
+  exit: () => {
+    setWindowCursor('default');
+  },
   mousemove: ({ uiState }) => {
     if (
       uiState.mode.type !== 'AREA_TOOL' ||

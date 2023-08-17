@@ -5,12 +5,19 @@ import {
   connectorInputToConnector,
   connectorToConnectorInput,
   getConnectorPath,
-  hasMovedTile
+  hasMovedTile,
+  setWindowCursor
 } from 'src/utils';
 import { InteractionReducer } from 'src/types';
 
 export const Connector: InteractionReducer = {
   type: 'CONNECTOR',
+  entry: () => {
+    setWindowCursor('crosshair');
+  },
+  exit: () => {
+    setWindowCursor('default');
+  },
   mousemove: ({ uiState, scene }) => {
     if (
       uiState.mode.type !== 'CONNECTOR' ||
@@ -110,10 +117,10 @@ export const Connector: InteractionReducer = {
       );
     }
 
-    const newMode = produce(uiState.mode, (draftState) => {
-      draftState.connector = null;
+    uiState.actions.setMode({
+      type: 'CURSOR',
+      showCursor: true,
+      mousedown: null
     });
-
-    uiState.actions.setMode(newMode);
   }
 };

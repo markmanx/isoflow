@@ -21,6 +21,7 @@ const reducers: { [k in string]: InteractionReducer } = {
 
 export const useInteractionManager = () => {
   const rendererRef = useRef<HTMLElement>();
+  const reducerTypeRef = useRef<string>();
   const uiState = useUiStateStore((state) => {
     return state;
   });
@@ -66,38 +67,22 @@ export const useInteractionManager = () => {
         isRendererInteraction: rendererRef.current === e.target
       };
 
-      // const getTransitionaryState = () => {
-      //   if (reducerTypeRef.current === reducer.type) return null;
+      if (reducerTypeRef.current !== reducer.type) {
+        const prevReducer = reducerTypeRef.current
+          ? reducers[reducerTypeRef.current]
+          : null;
 
-      //   const prevReducerExitFn = reducerTypeRef.current
-      //     ? reducers[reducerTypeRef.current].exit
-      //     : null;
-      //   const nextReducerEntryFn = reducer.entry;
+        if (prevReducer && prevReducer.exit) {
+          prevReducer.exit(baseState);
+        }
 
-      //   reducerTypeRef.current = reducer.type;
-
-      //   const transitionaryState: State = baseState;
-
-      //   const setTransitionaryState = (state: State, transitionaryFn: any) => {
-      //     return produce(state, (draft) => {
-      //       return transitionaryFn(draft);
-      //     });
-      //   };
-
-      //   if (prevReducerExitFn) {
-      //     setTransitionaryState(transitionaryState, prevReducerExitFn);
-      //   }
-
-      //   if (nextReducerEntryFn) {
-      //     setTransitionaryState(transitionaryState, nextReducerEntryFn);
-      //   }
-
-      //   return null;
-      // };
-
-      // const transitionaryState = getTransitionaryState();
+        if (reducer.entry) {
+          reducer.entry(baseState);
+        }
+      }
 
       reducerAction(baseState);
+      reducerTypeRef.current = reducer.type;
     },
     [scene, uiState]
   );
