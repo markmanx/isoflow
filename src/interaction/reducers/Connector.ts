@@ -101,8 +101,8 @@ export const Connector: InteractionReducer = {
       uiState.actions.setMode(newMode);
     }
   },
-  mouseup: ({ uiState, scene }) => {
-    if (uiState.mode.type !== 'CONNECTOR') return;
+  mouseup: ({ uiState, scene, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'CONNECTOR' || !isRendererInteraction) return;
 
     if (uiState.mode.connector && uiState.mode.connector.anchors.length >= 2) {
       scene.actions.createConnector(

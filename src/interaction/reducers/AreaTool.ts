@@ -34,8 +34,13 @@ export const AreaTool: InteractionReducer = {
 
     uiState.actions.setMode(newMode);
   },
-  mouseup: ({ uiState, scene }) => {
-    if (uiState.mode.type !== 'AREA_TOOL' || !uiState.mode.area) return;
+  mouseup: ({ uiState, scene, isRendererInteraction }) => {
+    if (
+      uiState.mode.type !== 'AREA_TOOL' ||
+      !uiState.mode.area ||
+      !isRendererInteraction
+    )
+      return;
 
     scene.actions.createGroup({
       id: generateId(),
