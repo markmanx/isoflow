@@ -5,11 +5,6 @@ const coords = z.object({
   y: z.number()
 });
 
-const size = z.object({
-  width: z.number(),
-  height: z.number()
-});
-
 export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
