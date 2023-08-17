@@ -1,87 +1,119 @@
-import { v4 as uuid } from 'uuid';
-import { InteractionReducer } from 'src/types';
+import { produce } from 'immer';
 import {
+  generateId,
   filterNodesByTile,
   connectorInputToConnector,
-  getConnectorPath
+  connectorToConnectorInput,
+  getConnectorPath,
+  hasMovedTile
 } from 'src/utils';
+import { InteractionReducer } from 'src/types';
 
 export const Connector: InteractionReducer = {
   type: 'CONNECTOR',
-  mousemove: (draftState) => {
+  mousemove: (state) => {
     if (
-      draftState.mode.type !== 'CONNECTOR' ||
-      !draftState.mode.connector?.anchors[0]
+      state.mode.type !== 'CONNECTOR' ||
+      !state.mode.connector?.anchors[0] ||
+      !hasMovedTile(state.mouse)
     )
       return;
 
+    // TODO: Items at tile should take the entire scene in and return just the first item of interest
+    // for efficiency
     const itemsAtTile = filterNodesByTile({
-      tile: draftState.mouse.position.tile,
-      nodes: draftState.scene.nodes
+      tile: state.mouse.position.tile,
+      nodes: state.scene.nodes
     });
 
     if (itemsAtTile.length > 0) {
       const node = itemsAtTile[0];
 
-      draftState.mode.connector.anchors[1] = {
-        type: 'NODE',
-        id: node.id
-      };
+      const newMode = produce(state.mode, (draftState) => {
+        if (!draftState.connector) return;
+
+        draftState.connector.anchors[1] = {
+          type: 'NODE',
+          id: node.id
+        };
+
+        draftState.connector.path = getConnectorPath({
+          anchors: draftState.connector.anchors,
+          nodes: state.scene.nodes
+        });
+      });
+
+      state.uiStateActions.setMode(newMode);
     } else {
-      draftState.mode.connector.anchors[1] = {
-        type: 'TILE',
-        coords: draftState.mouse.position.tile
-      };
-    }
+      const newMode = produce(state.mode, (draftState) => {
+        if (!draftState.connector) return;
 
-    draftState.mode.connector.path = getConnectorPath({
-      anchors: draftState.mode.connector.anchors,
-      nodes: draftState.scene.nodes
-    });
+        draftState.connector.anchors[1] = {
+          type: 'TILE',
+          coords: state.mouse.position.tile
+        };
+
+        draftState.connector.path = getConnectorPath({
+          anchors: draftState.connector.anchors,
+          nodes: state.scene.nodes
+        });
+      });
+
+      state.uiStateActions.setMode(newMode);
+    }
   },
-  mousedown: (draftState) => {
-    if (draftState.mode.type !== 'CONNECTOR') return;
+  mousedown: (state) => {
+    if (state.mode.type !== 'CONNECTOR') return;
 
     const itemsAtTile = filterNodesByTile({
-      tile: draftState.mouse.position.tile,
-      nodes: draftState.scene.nodes
+      tile: state.mouse.position.tile,
+      nodes: state.scene.nodes
     });
 
     if (itemsAtTile.length > 0) {
       const node = itemsAtTile[0];
 
-      draftState.mode.connector = connectorInputToConnector(
-        {
-          id: uuid(),
-          anchors: [{ nodeId: node.id }, { nodeId: node.id }]
-        },
-        draftState.scene.nodes
-      );
+      const newMode = produce(state.mode, (draftState) => {
+        draftState.connector = connectorInputToConnector(
+          {
+            id: generateId(),
+            anchors: [{ nodeId: node.id }, { nodeId: node.id }]
+          },
+          state.scene.nodes
+        );
+      });
 
-      return;
+      state.uiStateActions.setMode(newMode);
+    } else {
+      const newMode = produce(state.mode, (draftState) => {
+        draftState.connector = connectorInputToConnector(
+          {
+            id: generateId(),
+            anchors: [
+              { tile: state.mouse.position.tile },
+              { tile: state.mouse.position.tile }
+            ]
+          },
+          state.scene.nodes
+        );
+      });
+
+      state.uiStateActions.setMode(newMode);
     }
-
-    draftState.mode.connector = connectorInputToConnector(
-      {
-        id: uuid(),
-        anchors: [
-          { tile: draftState.mouse.position.tile },
-          { tile: draftState.mouse.position.tile }
-        ]
-      },
-      draftState.scene.nodes
-    );
   },
-  mouseup: (draftState) => {
-    if (draftState.mode.type !== 'CONNECTOR') return;
+  mouseup: (state) => {
+    if (state.mode.type !== 'CONNECTOR') return;
 
-    if (
-      draftState.mode.connector &&
-      draftState.mode.connector.anchors.length >= 2
-    ) {
-      draftState.scene.connectors.push(draftState.mode.connector);
+    if (state.mode.connector && state.mode.connector.anchors.length >= 2) {
+      state.sceneActions.createConnector(
+        connectorToConnectorInput(state.mode.connector)
+      );
     }
 
-    draftState.mode.connector = null;
+    const newMode = produce(state.mode, (draftState) => {
+      draftState.connector = null;
+    });
+
+    state.uiStateActions.setMode(newMode);
   }
 };

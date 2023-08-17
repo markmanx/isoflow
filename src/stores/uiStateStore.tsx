@@ -32,6 +32,7 @@ const initialState = () => {
       debugMode: false,
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
+      // TODO: Are all these actions needed?
       actions: {
         setMode: (mode) => {
           set({ mode });

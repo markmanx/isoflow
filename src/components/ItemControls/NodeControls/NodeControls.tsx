@@ -49,6 +49,7 @@ export const NodeControls = ({ nodeId }: Props) => {
     >
       {tab === 0 && (
         <NodeSettings
+          key={node.id}
           color={node.color}
           label={node.label}
           labelHeight={node.labelHeight}
@@ -57,9 +58,10 @@ export const NodeControls = ({ nodeId }: Props) => {
       )}
       {tab === 1 && (
         <Icons
+          key={node.id}
           icons={icons}
           onClick={(icon) => {
-            return onNodeUpdated({ iconId: icon.id });
+            onNodeUpdated({ iconId: icon.id });
           }}
         />
       )}

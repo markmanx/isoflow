@@ -1,44 +1,47 @@
+import { produce } from 'immer';
 import { InteractionReducer } from 'src/types';
-import { v4 as uuid } from 'uuid';
-import { nodeInputToNode, filterNodesByTile } from 'src/utils';
+import { filterNodesByTile, generateId } from 'src/utils';
 
 export const PlaceElement: InteractionReducer = {
   type: 'PLACE_ELEMENT',
   mousemove: () => {},
-  mousedown: (draftState) => {
-    if (draftState.mode.type !== 'PLACE_ELEMENT') return;
+  mousedown: (state) => {
+    if (state.mode.type !== 'PLACE_ELEMENT') return;
 
-    if (!draftState.mode.icon) {
+    if (!state.mode.icon) {
       const itemsAtTile = filterNodesByTile({
-        tile: draftState.mouse.position.tile,
-        nodes: draftState.scene.nodes
+        tile: state.mouse.position.tile,
+        nodes: state.scene.nodes
       });
 
-      draftState.mode = {
+      state.uiStateActions.setMode({
         type: 'CURSOR',
         mousedown: {
           items: itemsAtTile,
-          tile: draftState.mouse.position.tile
+          tile: state.mouse.position.tile
         },
         showCursor: true
-      };
-
-      draftState.itemControls = null;
-    }
-  },
-  mouseup: (draftState) => {
-    if (draftState.mode.type !== 'PLACE_ELEMENT') return;
-
-    if (draftState.mode.icon !== null) {
-      const newNode = nodeInputToNode({
-        id: uuid(),
-        iconId: draftState.mode.icon.id,
-        label: 'New Node',
-        position: draftState.mouse.position.tile
       });
 
-      draftState.mode.icon = null;
-      draftState.scene.nodes.push(newNode);
+      state.uiStateActions.setItemControls(null);
+    }
+  },
+  mouseup: (state) => {
+    if (state.mode.type !== 'PLACE_ELEMENT') return;
+
+    if (state.mode.icon !== null) {
+      state.sceneActions.createNode({
+        id: generateId(),
+        iconId: state.mode.icon.id,
+        label: 'New Node',
+        position: state.mouse.position.tile
+      });
+
+      const newMode = produce(state.mode, (draftState) => {
+        draftState.icon = null;
+      });
+
+      state.uiStateActions.setMode(newMode);
     }
   }
 };

@@ -6,7 +6,8 @@ import {
   ItemControls,
   Mouse,
   Scene,
-  SceneActions
+  SceneActions,
+  UiStateActions
 } from 'src/types';
 
 export interface State {
@@ -15,13 +16,14 @@ export interface State {
   scroll: Scroll;
   scene: Scene;
   sceneActions: SceneActions;
+  uiStateActions: UiStateActions;
   contextMenu: ContextMenu;
   itemControls: ItemControls;
   rendererRef: HTMLElement;
   isRendererInteraction: boolean;
 }
 
-export type InteractionReducerAction = (state: Draft<State>) => void;
+export type InteractionReducerAction = (state: State) => void;
 
 export type InteractionReducer = {
   type: string;

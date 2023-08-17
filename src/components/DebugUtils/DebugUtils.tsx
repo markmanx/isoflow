@@ -57,6 +57,14 @@ export const DebugUtils = () => {
           }
         />
         <LineItem
+          title="Mouse delta"
+          value={
+            mouse.delta
+              ? `${mouse.delta.tile.x}, ${mouse.delta.tile.y}`
+              : 'null'
+          }
+        />
+        <LineItem
           title="Scroll"
           value={`${scroll.position.x}, ${scroll.position.y}`}
         />

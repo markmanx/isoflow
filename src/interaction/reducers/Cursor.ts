@@ -1,27 +1,34 @@
+import { produce } from 'immer';
 import { ItemControlsTypeEnum, InteractionReducer } from 'src/types';
-import { CoordsUtils, filterNodesByTile } from 'src/utils';
+import {
+  CoordsUtils,
+  filterNodesByTile,
+  getItemById,
+  hasMovedTile
+} from 'src/utils';
 
 export const Cursor: InteractionReducer = {
   type: 'CURSOR',
-  mousemove: (draftState) => {
-    if (draftState.mode.type !== 'CURSOR') return;
-
+  mousemove: (state) => {
     if (
-      draftState.mouse.delta === null ||
-      CoordsUtils.isEqual(draftState.mouse.delta?.tile, CoordsUtils.zero())
+      state.mode.type !== 'CURSOR' ||
+      !hasMovedTile(state.mouse) ||
+      !state.mouse.delta ||
+      CoordsUtils.isEqual(state.mouse.delta.tile, CoordsUtils.zero())
     )
       return;
+
     // User has moved tile since the last event
 
-    if (draftState.mode.mousedown) {
+    if (state.mode.mousedown) {
       // User is in mousedown mode
-      if (draftState.mode.mousedown.items.length > 0) {
+      if (state.mode.mousedown.items.length > 0) {
         // User's last mousedown action was on a node
-        draftState.mode = {
+        state.uiStateActions.setMode({
           type: 'DRAG_ITEMS',
           showCursor: true,
-          items: draftState.mode.mousedown.items
-        };
+          items: state.mode.mousedown.items
+        });
       }
 
       // draftState.mode = {
@@ -36,60 +43,59 @@ export const Cursor: InteractionReducer = {
       // };
     }
   },
-  mousedown: (draftState) => {
-    if (draftState.mode.type !== 'CURSOR' || !draftState.isRendererInteraction)
-      return;
+  mousedown: (state) => {
+    if (state.mode.type !== 'CURSOR' || !state.isRendererInteraction) return;
 
     const itemsAtTile = filterNodesByTile({
-      tile: draftState.mouse.position.tile,
-      nodes: draftState.scene.nodes
+      tile: state.mouse.position.tile,
+      nodes: state.scene.nodes
     });
 
-    draftState.mode.mousedown = {
-      items: itemsAtTile,
-      tile: draftState.mouse.position.tile
-    };
-  },
-  mouseup: (draftState) => {
-    if (draftState.mode.type !== 'CURSOR') return;
-
-    draftState.scene.nodes = draftState.scene.nodes.map((node) => {
-      return {
-        ...node,
-        isSelected: false
+    const newMode = produce(state.mode, (draftState) => {
+      draftState.mousedown = {
+        items: itemsAtTile,
+        tile: state.mouse.position.tile
       };
     });
 
-    if (draftState.mode.mousedown !== null) {
+    state.uiStateActions.setMode(newMode);
+  },
+  mouseup: (state) => {
+    if (state.mode.type !== 'CURSOR') return;
+
+    state.scene.nodes.forEach((node) => {
+      if (node.isSelected)
+        state.sceneActions.updateNode(node.id, { isSelected: false });
+    });
+
+    if (state.mode.mousedown !== null) {
       // User's last mousedown action was on a scene item
-      const mousedownNode = draftState.mode.mousedown.items[0];
+      const mousedownNode = state.mode.mousedown.items[0];
 
       if (mousedownNode) {
         // The user's last mousedown action was on a node
-        const nodeIndex = draftState.scene.nodes.findIndex((node) => {
-          return node.id === mousedownNode.id;
-        });
+        const { item: node } = getItemById(state.scene.nodes, mousedownNode.id);
 
-        if (nodeIndex === -1) return;
-
-        draftState.contextMenu = draftState.scene.nodes[nodeIndex];
-        draftState.scene.nodes[nodeIndex].isSelected = true;
-        draftState.itemControls = {
+        state.uiStateActions.setContextMenu(node);
+        // state.sceneActions.updateNode(node.id, { isSelected: true });
+        state.uiStateActions.setItemControls({
           type: ItemControlsTypeEnum.SINGLE_NODE,
-          nodeId: draftState.scene.nodes[nodeIndex].id
-        };
-        draftState.mode.mousedown = null;
-
-        return;
+          nodeId: node.id
+        });
+      } else {
+        // Empty tile selected
+        state.uiStateActions.setContextMenu({
+          type: 'EMPTY_TILE',
+          position: state.mouse.position.tile
+        });
+        state.uiStateActions.setItemControls(null);
       }
 
-      // Empty tile selected
-      draftState.contextMenu = {
-        type: 'EMPTY_TILE',
-        position: draftState.mouse.position.tile
-      };
-      draftState.itemControls = null;
-      draftState.mode.mousedown = null;
+      const newMode = produce(state.mode, (draftState) => {
+        draftState.mousedown = null;
+      });
+
+      state.uiStateActions.setMode(newMode);
     }
   }
 };

@@ -70,7 +70,6 @@
     "chroma-js": "^2.4.2",
     "gsap": "^3.11.4",
     "immer": "^10.0.2",
-    "notistack": "^3.0.1",
     "paper": "^0.12.17",
     "pathfinding": "^0.4.18",
     "react-hook-form": "^7.43.2",

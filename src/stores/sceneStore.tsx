@@ -7,7 +7,9 @@ import {
   getItemById,
   getConnectorPath,
   groupInputToGroup,
-  sceneInputtoScene
+  connectorInputToConnector,
+  sceneInputtoScene,
+  nodeInputToNode
 } from 'src/utils';
 
 interface Actions {
@@ -30,8 +32,6 @@ const initialState = () => {
           const newScene = sceneInputtoScene(scene);
 
           set(newScene);
-
-          return newScene;
         },
 
         updateScene: (scene) => {
@@ -42,8 +42,16 @@ const initialState = () => {
           });
         },
 
-        updateNode: (id, updates, scene) => {
-          const newScene = produce(scene ?? get(), (draftState) => {
+        createNode: (node) => {
+          const newScene = produce(get(), (draftState) => {
+            draftState.nodes.push(nodeInputToNode(node));
+          });
+
+          set({ nodes: newScene.nodes });
+        },
+
+        updateNode: (id, updates) => {
+          const newScene = produce(get(), (draftState) => {
             const { item: node, index } = getItemById(draftState.nodes, id);
 
             draftState.nodes[index] = {
@@ -66,8 +74,32 @@ const initialState = () => {
           });
 
           set({ nodes: newScene.nodes, connectors: newScene.connectors });
+        },
 
-          return newScene;
+        updateConnector: (id, updates) => {
+          const newScene = produce(get(), (draftState) => {
+            const { item: connector, index } = getItemById(
+              draftState.connectors,
+              id
+            );
+
+            draftState.connectors[index] = {
+              ...connector,
+              ...updates
+            };
+          });
+
+          set({ connectors: newScene.connectors });
+        },
+
+        createConnector: (connector) => {
+          const newScene = produce(get(), (draftState) => {
+            draftState.connectors.push(
+              connectorInputToConnector(connector, draftState.nodes)
+            );
+          });
+
+          set({ connectors: newScene.connectors });
         },
 
         createGroup: (group) => {
@@ -76,8 +108,6 @@ const initialState = () => {
           });
 
           set({ groups: newScene.groups });
-
-          return newScene;
         }
       }
     };

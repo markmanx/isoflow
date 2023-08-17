@@ -14,8 +14,9 @@
     "strict": true,
     "module": "es6",
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
+  // "exclude": ["src/interaction/reducers/*"],
   "include": [
     "**/*.ts",
     "**/*.tsx",

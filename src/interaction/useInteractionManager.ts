@@ -1,25 +1,24 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { produce } from 'immer';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { InteractionReducer, State } from 'src/types';
 import { getMouse } from 'src/utils';
-import { DragItems } from './reducers/DragItems';
-import { Pan } from './reducers/Pan';
 import { Cursor } from './reducers/Cursor';
-import { Lasso } from './reducers/Lasso';
-import { PlaceElement } from './reducers/PlaceElement';
-import { Connector } from './reducers/Connector';
+import { DragItems } from './reducers/DragItems';
 import { AreaTool } from './reducers/AreaTool';
+import { Connector } from './reducers/Connector';
+import { Pan } from './reducers/Pan';
+import { PlaceElement } from './reducers/PlaceElement';
+// import { Lasso } from './reducers/Lasso';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
-  PAN: Pan,
-  LASSO: Lasso,
-  PLACE_ELEMENT: PlaceElement,
+  AREA_TOOL: AreaTool,
   CONNECTOR: Connector,
-  AREA_TOOL: AreaTool
+  PAN: Pan,
+  PLACE_ELEMENT: PlaceElement
+  // LASSO: Lasso,
 };
 
 export const useInteractionManager = () => {
@@ -98,49 +97,48 @@ export const useInteractionManager = () => {
         itemControls,
         rendererRef: rendererRef.current,
         sceneActions,
+        uiStateActions,
         isRendererInteraction: rendererRef.current === e.target
       };
 
-      const getTransitionaryState = () => {
-        if (reducerTypeRef.current === reducer.type) return null;
+      // const getTransitionaryState = () => {
+      //   if (reducerTypeRef.current === reducer.type) return null;
 
-        const prevReducerExitFn = reducerTypeRef.current
-          ? reducers[reducerTypeRef.current].exit
-          : null;
-        const nextReducerEntryFn = reducer.entry;
+      //   const prevReducerExitFn = reducerTypeRef.current
+      //     ? reducers[reducerTypeRef.current].exit
+      //     : null;
+      //   const nextReducerEntryFn = reducer.entry;
 
-        reducerTypeRef.current = reducer.type;
+      //   reducerTypeRef.current = reducer.type;
 
-        const transitionaryState: State = baseState;
+      //   const transitionaryState: State = baseState;
 
-        const setTransitionaryState = (state: State, transitionaryFn: any) => {
-          return produce(state, (draft) => {
-            return transitionaryFn(draft);
-          });
-        };
+      //   const setTransitionaryState = (state: State, transitionaryFn: any) => {
+      //     return produce(state, (draft) => {
+      //       return transitionaryFn(draft);
+      //     });
+      //   };
 
-        if (prevReducerExitFn) {
-          setTransitionaryState(transitionaryState, prevReducerExitFn);
-        }
+      //   if (prevReducerExitFn) {
+      //     setTransitionaryState(transitionaryState, prevReducerExitFn);
+      //   }
 
-        if (nextReducerEntryFn) {
-          setTransitionaryState(transitionaryState, nextReducerEntryFn);
-        }
+      //   if (nextReducerEntryFn) {
+      //     setTransitionaryState(transitionaryState, nextReducerEntryFn);
+      //   }
 
-        return null;
-      };
+      //   return null;
+      // };
 
-      const transitionaryState = getTransitionaryState();
-      const newState = produce(transitionaryState ?? baseState, (draft) => {
-        return reducerAction(draft);
-      });
+      // const transitionaryState = getTransitionaryState();
+      reducerAction(baseState);
 
       uiStateActions.setMouse(nextMouse);
-      uiStateActions.setScroll(newState.scroll);
-      uiStateActions.setMode(newState.mode);
-      uiStateActions.setContextMenu(newState.contextMenu);
-      uiStateActions.setItemControls(newState.itemControls);
-      sceneActions.updateScene(newState.scene);
+      // uiStateActions.setScroll(newState.scroll);
+      // uiStateActions.setMode(newState.mode);
+      // uiStateActions.setContextMenu(newState.contextMenu);
+      // uiStateActions.setItemControls(newState.itemControls);
+      // sceneActions.updateScene(newState.scene);
     },
     [
       mode,

@@ -27,7 +27,7 @@ export const NodeSettings = ({
         <MarkdownEditor
           value={label}
           onChange={(text) => {
-            return onUpdate({ label: text });
+            if (label !== text) onUpdate({ label: text });
           }}
         />
       </Section>
@@ -39,7 +39,7 @@ export const NodeSettings = ({
           max={200}
           value={labelHeight}
           onChange={(e, newHeight) => {
-            return onUpdate({ labelHeight: newHeight as number });
+            onUpdate({ labelHeight: newHeight as number });
           }}
         />
       </Section>
@@ -48,7 +48,7 @@ export const NodeSettings = ({
           activeColor={color}
           colors={Object.values(theme.customVars.diagramPalette)}
           onChange={(col) => {
-            return onUpdate({ color: col });
+            onUpdate({ color: col });
           }}
         />
       </Section>

@@ -388,3 +388,9 @@ export const getRectangleFromSize: GetRectangleFromSize = (from, size) => {
     to: { x: from.x + size.width, y: from.y + size.height }
   };
 };
+
+export const hasMovedTile = (mouse: Mouse) => {
+  return (
+    mouse.delta && !CoordsUtils.isEqual(mouse.delta.tile, CoordsUtils.zero())
+  );
+};

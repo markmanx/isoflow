@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { shallow } from 'zustand/shallow';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
@@ -19,6 +19,7 @@ import { Renderer } from 'src/components/Renderer/Renderer';
 import { LabelContainer } from 'src/components/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
+import { EMPTY_SCENE } from 'src/config';
 import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
 import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 import { SceneLayer } from './components/SceneLayer/SceneLayer';
@@ -43,6 +44,7 @@ const App = ({
   onSceneUpdated,
   debugMode = false
 }: Props) => {
+  const prevInitialScene = useRef<SceneInput>(EMPTY_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
@@ -66,12 +68,14 @@ const App = ({
 
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
+    // TODO: Rename setInteractionsEnabled to disableInteractions
     uiActions.setInteractionsEnabled(interactionsEnabledProp);
   }, [initialScene?.zoom, interactionsEnabledProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    if (!initialScene) return;
+    if (!initialScene || prevInitialScene.current === initialScene) return;
 
+    prevInitialScene.current = initialScene;
     sceneActions.setScene(initialScene);
     setIsReady(true);
   }, [initialScene, sceneActions]);

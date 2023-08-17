@@ -1,4 +1,4 @@
-import { Size, Coords } from 'src/types';
+import { Size, Coords, SceneInput } from 'src/types';
 import { customVars } from './styles/theme';
 
 export const UNPROJECTED_TILE_SIZE = 100;
@@ -27,3 +27,9 @@ export const NODE_DEFAULTS = {
 export const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
+export const EMPTY_SCENE: SceneInput = {
+  icons: [],
+  nodes: [],
+  connectors: [],
+  groups: []
+};
