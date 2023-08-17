@@ -3,12 +3,12 @@ import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { InteractionReducer, State } from 'src/types';
 import { getMouse } from 'src/utils';
-import { Cursor } from './reducers/Cursor';
-import { DragItems } from './reducers/DragItems';
-import { AreaTool } from './reducers/AreaTool';
-import { Connector } from './reducers/Connector';
-import { Pan } from './reducers/Pan';
-import { PlaceElement } from './reducers/PlaceElement';
+import { Cursor } from './modes/Cursor';
+import { DragItems } from './modes/DragItems';
+import { AreaTool } from './modes/AreaTool';
+import { Connector } from './modes/Connector';
+import { Pan } from './modes/Pan';
+import { PlaceElement } from './modes/PlaceElement';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
