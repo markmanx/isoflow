@@ -18,8 +18,7 @@ export const Callbacks = () => {
       nodes: [
         {
           id: 'server',
-          label: '<p>Callbacks example</p>',
-          labelHeight: 40,
+          label: '<p>This is an example of tracking changes to the scene.</p>',
           iconId: 'server',
           position: {
             x: 0,

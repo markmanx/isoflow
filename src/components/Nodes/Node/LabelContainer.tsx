@@ -68,7 +68,6 @@ export const LabelContainer = ({
           border: '1px solid',
           borderColor: 'grey.500',
           borderRadius: 2,
-          overflow: 'hidden',
           left: -contentSize.width * 0.5,
           top: -(contentSize.height + labelHeight + yOffset),
           py: 1,
