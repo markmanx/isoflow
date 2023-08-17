@@ -14,15 +14,11 @@ export const Connectors = () => {
   return (
     <>
       {connectors.map((connector) => {
-        return (
-          <>
-            <Connector key={connector.id} connector={connector} />
-            {mode.type === 'CONNECTOR' && mode.connector && (
-              <Connector connector={mode.connector} />
-            )}
-          </>
-        );
+        return <Connector key={connector.id} connector={connector} />;
       })}
+      {mode.type === 'CONNECTOR' && mode.connector && (
+        <Connector connector={mode.connector} />
+      )}
     </>
   );
 };

@@ -15,19 +15,11 @@ export const Groups = () => {
   return (
     <>
       {groups.map((group) => {
-        return (
-          <>
-            <Group key={group.id} {...group} />
-            {mode.type === 'AREA_TOOL' && mode.area && (
-              <Group
-                from={mode.area.from}
-                to={mode.area.to}
-                color={DEFAULT_COLOR}
-              />
-            )}
-          </>
-        );
+        return <Group key={group.id} {...group} />;
       })}
+      {mode.type === 'AREA_TOOL' && mode.area && (
+        <Group from={mode.area.from} to={mode.area.to} color={DEFAULT_COLOR} />
+      )}
     </>
   );
 };
