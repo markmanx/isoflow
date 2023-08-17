@@ -19,7 +19,7 @@ export const Renderer = () => {
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
-  const { setRendererSize } = useUiStateStore((state) => {
+  const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const { setElement: setInteractionsElement } = useInteractionManager();
@@ -37,12 +37,15 @@ export const Renderer = () => {
   }, [setInteractionsElement, observe, disconnect]);
 
   useEffect(() => {
-    setRendererSize(rendererSize);
-  }, [rendererSize, setRendererSize]);
+    uiStateActions.setRendererSize(rendererSize);
+  }, [rendererSize, uiStateActions]);
 
   return (
     <Box
       sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
         height: '100%'
       }}

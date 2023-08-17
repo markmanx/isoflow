@@ -9,17 +9,14 @@ export const DebugUtils = () => {
   const {
     customVars: { appPadding }
   } = useTheme();
-  const uiState = useUiStateStore(({ scroll, mouse, zoom, rendererSize }) => {
-    return { scroll, mouse, zoom, rendererSize };
-  });
+  const uiState = useUiStateStore(
+    ({ scroll, mouse, zoom, rendererSize, mode }) => {
+      return { scroll, mouse, zoom, rendererSize, mode };
+    }
+  );
   const scene = useSceneStore((state) => {
     return state;
   });
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
-
-  const { scroll, mouse, zoom, rendererSize } = uiState;
 
   return (
     <Box
@@ -50,36 +47,36 @@ export const DebugUtils = () => {
       >
         <LineItem
           title="Mouse"
-          value={`${mouse.position.tile.x}, ${mouse.position.tile.y}`}
+          value={`${uiState.mouse.position.tile.x}, ${uiState.mouse.position.tile.y}`}
         />
         <LineItem
           title="Mouse down"
           value={
-            mouse.mousedown
-              ? `${mouse.mousedown.tile.x}, ${mouse.mousedown.tile.y}`
+            uiState.mouse.mousedown
+              ? `${uiState.mouse.mousedown.tile.x}, ${uiState.mouse.mousedown.tile.y}`
               : 'null'
           }
         />
         <LineItem
           title="Mouse delta"
           value={
-            mouse.delta
-              ? `${mouse.delta.tile.x}, ${mouse.delta.tile.y}`
+            uiState.mouse.delta
+              ? `${uiState.mouse.delta.tile.x}, ${uiState.mouse.delta.tile.y}`
               : 'null'
           }
         />
         <LineItem
           title="Scroll"
-          value={`${scroll.position.x}, ${scroll.position.y}`}
+          value={`${uiState.scroll.position.x}, ${uiState.scroll.position.y}`}
         />
-        <LineItem title="Zoom" value={zoom} />
+        <LineItem title="Zoom" value={uiState.zoom} />
         <LineItem
           title="Size"
-          value={`${rendererSize.width}, ${rendererSize.height}`}
+          value={`${uiState.rendererSize.width}, ${uiState.rendererSize.height}`}
         />
         <LineItem title="Scene info" value={`${scene.nodes.length} nodes`} />
-        <LineItem title="Mode" value={mode.type} />
-        <LineItem title="Mode data" value={JSON.stringify(mode)} />
+        <LineItem title="Mode" value={uiState.mode.type} />
+        <LineItem title="Mode data" value={JSON.stringify(uiState.mode)} />
       </Box>
     </Box>
   );

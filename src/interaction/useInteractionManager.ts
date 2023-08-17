@@ -9,7 +9,6 @@ import { AreaTool } from './reducers/AreaTool';
 import { Connector } from './reducers/Connector';
 import { Pan } from './reducers/Pan';
 import { PlaceElement } from './reducers/PlaceElement';
-// import { Lasso } from './reducers/Lasso';
 
 const reducers: { [k in string]: InteractionReducer } = {
   CURSOR: Cursor,
@@ -18,11 +17,9 @@ const reducers: { [k in string]: InteractionReducer } = {
   CONNECTOR: Connector,
   PAN: Pan,
   PLACE_ELEMENT: PlaceElement
-  // LASSO: Lasso,
 };
 
 export const useInteractionManager = () => {
-  const onMouseEventRef = useRef<(e: MouseEvent) => void>(() => {});
   const rendererRef = useRef<HTMLElement>();
   const uiState = useUiStateStore((state) => {
     return state;
@@ -106,22 +103,18 @@ export const useInteractionManager = () => {
   );
 
   useEffect(() => {
-    onMouseEventRef.current = onMouseEvent;
-  }, [onMouseEvent]);
-
-  useEffect(() => {
     const el = window;
 
-    el.addEventListener('mousemove', onMouseEventRef.current);
-    el.addEventListener('mousedown', onMouseEventRef.current);
-    el.addEventListener('mouseup', onMouseEventRef.current);
+    el.addEventListener('mousemove', onMouseEvent);
+    el.addEventListener('mousedown', onMouseEvent);
+    el.addEventListener('mouseup', onMouseEvent);
 
     return () => {
-      el.removeEventListener('mousemove', onMouseEventRef.current);
-      el.removeEventListener('mousedown', onMouseEventRef.current);
-      el.removeEventListener('mouseup', onMouseEventRef.current);
+      el.removeEventListener('mousemove', onMouseEvent);
+      el.removeEventListener('mousedown', onMouseEvent);
+      el.removeEventListener('mouseup', onMouseEvent);
     };
-  }, []);
+  }, [onMouseEvent]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
