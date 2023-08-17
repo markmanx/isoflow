@@ -1,5 +1,5 @@
 import { Coords, Size } from './common';
-import { SceneItem, Connector } from './scene';
+import { SceneItem, Connector, SceneItemReference } from './scene';
 import { IconInput } from './inputs';
 
 export enum ItemControlsTypeEnum {
@@ -45,7 +45,7 @@ export interface InteractionsDisabled {
 export interface CursorMode {
   type: 'CURSOR';
   showCursor: boolean;
-  mousedownItem: SceneItem | null;
+  mousedownItem: SceneItemReference | null;
 }
 
 export interface PanMode {
@@ -59,7 +59,7 @@ export interface LassoMode {
   selection: {
     startTile: Coords;
     endTile: Coords;
-    items: SceneItem[];
+    items: SceneItemReference[];
   };
   isDragging: boolean;
 }
@@ -67,7 +67,7 @@ export interface LassoMode {
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';
   showCursor: boolean;
-  items: SceneItem[];
+  items: SceneItemReference[];
 }
 
 export interface PlaceElementMode {

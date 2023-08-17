@@ -63,6 +63,10 @@ export interface Group {
 }
 
 export type SceneItem = Node | Connector | Group;
+export type SceneItemReference = {
+  type: SceneItemTypeEnum;
+  id: string;
+};
 
 export type Icon = IconInput;
 
@@ -71,7 +75,7 @@ export interface SceneActions {
   updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   updateConnector: (id: string, updates: Partial<Connector>) => void;
-  translateGroup: (id: string, delta: Coords) => void;
+  updateGroup: (id: string, updates: Partial<Group>) => void;
   createNode: (node: NodeInput) => void;
   createConnector: (connector: ConnectorInput) => void;
   createGroup: (group: GroupInput) => void;

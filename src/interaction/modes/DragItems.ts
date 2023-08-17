@@ -1,4 +1,4 @@
-import { CoordsUtils, hasMovedTile } from 'src/utils';
+import { hasMovedTile, CoordsUtils, getItemById } from 'src/utils';
 import { ModeActions } from 'src/types';
 
 export const DragItems: ModeActions = {
@@ -36,7 +36,20 @@ export const DragItems: ModeActions = {
           position: uiState.mouse.position.tile
         });
       } else if (item.type === 'GROUP' && uiState.mouse.delta?.tile) {
-        scene.actions.translateGroup(item.id, uiState.mouse.delta.tile);
+        const { item: group } = getItemById(scene.groups, item.id);
+        const newFrom = CoordsUtils.add(group.from, uiState.mouse.delta.tile);
+        const newTo = CoordsUtils.add(group.to, uiState.mouse.delta.tile);
+        // const bounds = getBoundingBox([group.from, group.to]);
+
+        // scene.nodes.forEach((node) => {
+        //   if (isWithinBounds(node.position, bounds)) {
+        //     draftState.actions.updateNode(node.id, {
+        //       position: CoordsUtils.add(node.position, delta)
+        //     });
+        //   }
+        // });
+
+        scene.actions.updateGroup(item.id, { from: newFrom, to: newTo });
       }
     });
 
