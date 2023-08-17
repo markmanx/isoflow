@@ -1,7 +1,6 @@
 import React, { useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI, IconInput, TileOriginEnum } from 'src/types';
-import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { LabelContainer } from './LabelContainer';
@@ -15,9 +14,6 @@ interface Props {
 }
 
 export const Node = ({ node, icon, order }: Props) => {
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
   const nodeRef = useRef<HTMLDivElement>();
   const projectedTileSize = useProjectedTileSize();
   const { getTilePosition } = useGetTilePosition();
