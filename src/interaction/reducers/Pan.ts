@@ -10,17 +10,17 @@ export const Pan: InteractionReducer = {
   exit: () => {
     setWindowCursor('default');
   },
-  mousemove: (state) => {
-    if (state.mode.type !== 'PAN') return;
+  mousemove: ({ uiState }) => {
+    if (uiState.mode.type !== 'PAN') return;
 
-    if (state.mouse.mousedown !== null) {
-      const newScroll = produce(state.scroll, (draftState) => {
-        draftState.position = state.mouse.delta?.screen
-          ? CoordsUtils.add(draftState.position, state.mouse.delta.screen)
+    if (uiState.mouse.mousedown !== null) {
+      const newScroll = produce(uiState.scroll, (draftState) => {
+        draftState.position = uiState.mouse.delta?.screen
+          ? CoordsUtils.add(draftState.position, uiState.mouse.delta.screen)
           : draftState.position;
       });
 
-      state.uiStateActions.setScroll(newScroll);
+      uiState.actions.setScroll(newScroll);
     }
   },
   mousedown: () => {

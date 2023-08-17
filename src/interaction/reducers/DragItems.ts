@@ -3,33 +3,33 @@ import { InteractionReducer } from 'src/types';
 
 export const DragItems: InteractionReducer = {
   type: 'DRAG_ITEMS',
-  entry: (state) => {
-    const renderer = state.rendererRef;
+  entry: ({ rendererRef }) => {
+    const renderer = rendererRef;
     renderer.style.userSelect = 'none';
   },
-  exit: (state) => {
-    const renderer = state.rendererRef;
+  exit: ({ rendererRef }) => {
+    const renderer = rendererRef;
     renderer.style.userSelect = 'auto';
   },
-  mousemove: (state) => {
+  mousemove: ({ uiState, scene }) => {
     if (
-      state.mode.type !== 'DRAG_ITEMS' ||
-      !state.mouse.mousedown ||
-      !hasMovedTile(state.mouse)
+      uiState.mode.type !== 'DRAG_ITEMS' ||
+      !uiState.mouse.mousedown ||
+      !hasMovedTile(uiState.mouse)
     )
       return;
 
     // User is dragging
-    state.mode.items.forEach((node) => {
-      state.sceneActions.updateNode(node.id, {
-        position: state.mouse.position.tile
+    uiState.mode.items.forEach((node) => {
+      scene.actions.updateNode(node.id, {
+        position: uiState.mouse.position.tile
       });
     });
 
-    state.uiStateActions.setContextMenu(null);
+    uiState.actions.setContextMenu(null);
   },
-  mouseup: (state) => {
-    state.uiStateActions.setMode({
+  mouseup: ({ uiState }) => {
+    uiState.actions.setMode({
       type: 'CURSOR',
       showCursor: true,
       mousedown: null

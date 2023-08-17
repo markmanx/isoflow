@@ -1,79 +1,79 @@
-import { CoordsUtils, isWithinBounds } from 'src/utils';
-import { InteractionReducer } from 'src/types';
+// import { CoordsUtils, isWithinBounds } from 'src/utils';
+// import { InteractionReducer } from 'src/types';
 
-export const Lasso: InteractionReducer = {
-  type: 'LASSO',
-  mousemove: (draftState) => {
-    if (draftState.mode.type !== 'LASSO') return;
+// export const Lasso: InteractionReducer = {
+//   type: 'LASSO',
+//   mousemove: ({ uiState, scene }) => {
+//     if (uiState.mode.type !== 'LASSO') return;
 
-    if (draftState.mouse.mousedown === null) return;
-    // User is in mousedown mode
+//     if (uiState.mouse.mousedown === null) return;
+//     // User is in mousedown mode
 
-    if (
-      draftState.mouse.delta === null ||
-      CoordsUtils.isEqual(draftState.mouse.delta.tile, CoordsUtils.zero())
-    )
-      return;
-    // User has moved tile since they moused down
+//     if (
+//       uiState.mouse.delta === null ||
+//       CoordsUtils.isEqual(uiState.mouse.delta.tile, CoordsUtils.zero())
+//     )
+//       return;
+//     // User has moved tile since they moused down
 
-    if (!draftState.mode.isDragging) {
-      const { mousedown } = draftState.mouse;
-      const items = draftState.scene.nodes.filter((node) => {
-        return CoordsUtils.isEqual(node.position, mousedown.tile);
-      });
+//     if (!uiState.mode.isDragging) {
+//       const { mousedown } = uiState.mouse;
+//       const items = scene.nodes.filter((node) => {
+//         return CoordsUtils.isEqual(node.position, mousedown.tile);
+//       });
 
-      // User is creating a selection
-      draftState.mode.selection = {
-        startTile: draftState.mouse.mousedown.tile,
-        endTile: draftState.mouse.position.tile,
-        items
-      };
+//       // User is creating a selection
+//       uiState.mode.selection = {
+//         startTile: uiState.mouse.mousedown.tile,
+//         endTile: uiState.mouse.position.tile,
+//         items
+//       };
 
-      return;
-    }
+//       return;
+//     }
 
-    if (draftState.mode.isDragging) {
-      // User is dragging an existing selection
-      draftState.mode.selection.startTile = CoordsUtils.add(
-        draftState.mode.selection.startTile,
-        draftState.mouse.delta.tile
-      );
-      draftState.mode.selection.endTile = CoordsUtils.add(
-        draftState.mode.selection.endTile,
-        draftState.mouse.delta.tile
-      );
-    }
-  },
-  mousedown: (draftState) => {
-    if (draftState.mode.type !== 'LASSO') return;
+//     if (uiState.mode.isDragging) {
+//       // User is dragging an existing selection
+//       uiState.mode.selection.startTile = CoordsUtils.add(
+//         uiState.mode.selection.startTile,
+//         uiState.mouse.delta.tile
+//       );
+//       uiState.mode.selection.endTile = CoordsUtils.add(
+//         uiState.mode.selection.endTile,
+//         uiState.mouse.delta.tile
+//       );
+//     }
+//   },
+//   mousedown: (draftState) => {
+//     if (draftState.mode.type !== 'LASSO') return;
 
-    if (draftState.mode.selection) {
-      const isWithinSelection = isWithinBounds(draftState.mouse.position.tile, [
-        draftState.mode.selection.startTile,
-        draftState.mode.selection.endTile
-      ]);
+//     if (draftState.mode.selection) {
+//       const isWithinSelection = isWithinBounds(draftState.mouse.position.tile, [
+//         draftState.mode.selection.startTile,
+//         draftState.mode.selection.endTile
+//       ]);
 
-      if (!isWithinSelection) {
-        draftState.mode = {
-          type: 'CURSOR',
-          showCursor: true,
-          mousedown: null
-        };
+//       if (!isWithinSelection) {
+//         draftState.mode = {
+//           type: 'CURSOR',
+//           showCursor: true,
+//           mousedown: null
+//         };
 
-        return;
-      }
+//         return;
+//       }
 
-      if (isWithinSelection) {
-        draftState.mode.isDragging = true;
+//       if (isWithinSelection) {
+//         draftState.mode.isDragging = true;
 
-        return;
-      }
-    }
+//         return;
+//       }
+//     }
 
-    draftState.mode = {
-      type: 'CURSOR',
-      showCursor: true,
-      mousedown: null
-    };
-  }
-};
+//     draftState.mode = {
+//       type: 'CURSOR',
+//       showCursor: true,
+//       mousedown: null
+//     };
+//   }
+// };

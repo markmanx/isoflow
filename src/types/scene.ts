@@ -82,3 +82,7 @@ export type Scene = {
   groups: Group[];
   icons: IconInput[];
 };
+
+export type SceneStore = Scene & {
+  actions: SceneActions;
+};

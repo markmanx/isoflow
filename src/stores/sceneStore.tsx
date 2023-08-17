@@ -1,7 +1,7 @@
 import React, { createContext, useRef, useContext } from 'react';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
-import { Scene, SceneActions } from 'src/types';
+import { SceneStore } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
 import {
   getItemById,
@@ -11,12 +11,6 @@ import {
   sceneInputtoScene,
   nodeInputToNode
 } from 'src/utils';
-
-interface Actions {
-  actions: SceneActions;
-}
-
-type SceneStore = Scene & Actions;
 
 const initialState = () => {
   return createStore<SceneStore>((set, get) => {

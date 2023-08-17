@@ -5,43 +5,43 @@ import { filterNodesByTile, generateId } from 'src/utils';
 export const PlaceElement: InteractionReducer = {
   type: 'PLACE_ELEMENT',
   mousemove: () => {},
-  mousedown: (state) => {
-    if (state.mode.type !== 'PLACE_ELEMENT') return;
+  mousedown: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'PLACE_ELEMENT') return;
 
-    if (!state.mode.icon) {
+    if (!uiState.mode.icon) {
       const itemsAtTile = filterNodesByTile({
-        tile: state.mouse.position.tile,
-        nodes: state.scene.nodes
+        tile: uiState.mouse.position.tile,
+        nodes: scene.nodes
       });
 
-      state.uiStateActions.setMode({
+      uiState.actions.setMode({
         type: 'CURSOR',
         mousedown: {
           items: itemsAtTile,
-          tile: state.mouse.position.tile
+          tile: uiState.mouse.position.tile
         },
         showCursor: true
       });
 
-      state.uiStateActions.setItemControls(null);
+      uiState.actions.setItemControls(null);
     }
   },
-  mouseup: (state) => {
-    if (state.mode.type !== 'PLACE_ELEMENT') return;
+  mouseup: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'PLACE_ELEMENT') return;
 
-    if (state.mode.icon !== null) {
-      state.sceneActions.createNode({
+    if (uiState.mode.icon !== null) {
+      scene.actions.createNode({
         id: generateId(),
-        iconId: state.mode.icon.id,
+        iconId: uiState.mode.icon.id,
         label: 'New Node',
-        position: state.mouse.position.tile
+        position: uiState.mouse.position.tile
       });
 
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         draftState.icon = null;
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     }
   }
 };

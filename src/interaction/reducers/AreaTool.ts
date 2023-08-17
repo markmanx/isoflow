@@ -5,46 +5,46 @@ import { DEFAULT_COLOR } from 'src/config';
 
 export const AreaTool: InteractionReducer = {
   type: 'AREA_TOOL',
-  mousemove: (state) => {
+  mousemove: ({ uiState }) => {
     if (
-      state.mode.type !== 'AREA_TOOL' ||
-      !hasMovedTile(state.mouse) ||
-      !state.mode.area ||
-      !state.mouse.mousedown
+      uiState.mode.type !== 'AREA_TOOL' ||
+      !hasMovedTile(uiState.mouse) ||
+      !uiState.mode.area ||
+      !uiState.mouse.mousedown
     )
       return;
 
-    const newMode = produce(state.mode, (draftState) => {
+    const newMode = produce(uiState.mode, (draftState) => {
       if (!draftState.area) return;
 
-      draftState.area.to = state.mouse.position.tile;
+      draftState.area.to = uiState.mouse.position.tile;
     });
 
-    state.uiStateActions.setMode(newMode);
+    uiState.actions.setMode(newMode);
   },
-  mousedown: (state) => {
-    if (state.mode.type !== 'AREA_TOOL') return;
+  mousedown: ({ uiState }) => {
+    if (uiState.mode.type !== 'AREA_TOOL') return;
 
-    const newMode = produce(state.mode, (draftState) => {
+    const newMode = produce(uiState.mode, (draftState) => {
       draftState.area = {
-        from: state.mouse.position.tile,
-        to: state.mouse.position.tile
+        from: uiState.mouse.position.tile,
+        to: uiState.mouse.position.tile
       };
     });
 
-    state.uiStateActions.setMode(newMode);
+    uiState.actions.setMode(newMode);
   },
-  mouseup: (state) => {
-    if (state.mode.type !== 'AREA_TOOL' || !state.mode.area) return;
+  mouseup: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'AREA_TOOL' || !uiState.mode.area) return;
 
-    state.sceneActions.createGroup({
+    scene.actions.createGroup({
       id: generateId(),
       color: DEFAULT_COLOR,
-      from: state.mode.area.from,
-      to: state.mode.area.to
+      from: uiState.mode.area.from,
+      to: uiState.mode.area.to
     });
 
-    state.uiStateActions.setMode({
+    uiState.actions.setMode({
       type: 'CURSOR',
       showCursor: true,
       mousedown: null

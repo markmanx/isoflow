@@ -9,25 +9,25 @@ import {
 
 export const Cursor: InteractionReducer = {
   type: 'CURSOR',
-  mousemove: (state) => {
+  mousemove: ({ uiState }) => {
     if (
-      state.mode.type !== 'CURSOR' ||
-      !hasMovedTile(state.mouse) ||
-      !state.mouse.delta ||
-      CoordsUtils.isEqual(state.mouse.delta.tile, CoordsUtils.zero())
+      uiState.mode.type !== 'CURSOR' ||
+      !hasMovedTile(uiState.mouse) ||
+      !uiState.mouse.delta ||
+      CoordsUtils.isEqual(uiState.mouse.delta.tile, CoordsUtils.zero())
     )
       return;
 
     // User has moved tile since the last event
 
-    if (state.mode.mousedown) {
+    if (uiState.mode.mousedown) {
       // User is in mousedown mode
-      if (state.mode.mousedown.items.length > 0) {
+      if (uiState.mode.mousedown.items.length > 0) {
         // User's last mousedown action was on a node
-        state.uiStateActions.setMode({
+        uiState.actions.setMode({
           type: 'DRAG_ITEMS',
           showCursor: true,
-          items: state.mode.mousedown.items
+          items: uiState.mode.mousedown.items
         });
       }
 
@@ -43,59 +43,60 @@ export const Cursor: InteractionReducer = {
       // };
     }
   },
-  mousedown: (state) => {
-    if (state.mode.type !== 'CURSOR' || !state.isRendererInteraction) return;
+  mousedown: ({ uiState, scene, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
     const itemsAtTile = filterNodesByTile({
-      tile: state.mouse.position.tile,
-      nodes: state.scene.nodes
+      tile: uiState.mouse.position.tile,
+      nodes: scene.nodes
     });
 
-    const newMode = produce(state.mode, (draftState) => {
+    const newMode = produce(uiState.mode, (draftState) => {
       draftState.mousedown = {
         items: itemsAtTile,
-        tile: state.mouse.position.tile
+        tile: uiState.mouse.position.tile
       };
     });
 
-    state.uiStateActions.setMode(newMode);
+    uiState.actions.setMode(newMode);
   },
-  mouseup: (state) => {
-    if (state.mode.type !== 'CURSOR') return;
+  mouseup: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'CURSOR') return;
 
-    state.scene.nodes.forEach((node) => {
+    scene.nodes.forEach((node) => {
       if (node.isSelected)
-        state.sceneActions.updateNode(node.id, { isSelected: false });
+        scene.actions.updateNode(node.id, { isSelected: false });
     });
 
-    if (state.mode.mousedown !== null) {
+    if (uiState.mode.mousedown !== null) {
       // User's last mousedown action was on a scene item
-      const mousedownNode = state.mode.mousedown.items[0];
+      const mousedownNode = uiState.mode.mousedown.items[0];
 
       if (mousedownNode) {
         // The user's last mousedown action was on a node
-        const { item: node } = getItemById(state.scene.nodes, mousedownNode.id);
+        const { item: node } = getItemById(scene.nodes, mousedownNode.id);
 
-        state.uiStateActions.setContextMenu(node);
+        uiState.actions.setContextMenu(node);
         // state.sceneActions.updateNode(node.id, { isSelected: true });
-        state.uiStateActions.setItemControls({
+        uiState.actions.setItemControls({
           type: ItemControlsTypeEnum.SINGLE_NODE,
           nodeId: node.id
         });
       } else {
         // Empty tile selected
-        state.uiStateActions.setContextMenu({
+        uiState.actions.setContextMenu({
           type: 'EMPTY_TILE',
-          position: state.mouse.position.tile
+          position: uiState.mouse.position.tile
         });
-        state.uiStateActions.setItemControls(null);
+
+        uiState.actions.setItemControls(null);
       }
 
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         draftState.mousedown = null;
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     }
   }
 };

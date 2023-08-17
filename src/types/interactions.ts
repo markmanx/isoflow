@@ -1,24 +1,8 @@
-import { Draft } from 'immer';
-import {
-  Mode,
-  Scroll,
-  ContextMenu,
-  ItemControls,
-  Mouse,
-  Scene,
-  SceneActions,
-  UiStateActions
-} from 'src/types';
+import { SceneStore, UiStateStore } from 'src/types';
 
 export interface State {
-  mode: Mode;
-  mouse: Mouse;
-  scroll: Scroll;
-  scene: Scene;
-  sceneActions: SceneActions;
-  uiStateActions: UiStateActions;
-  contextMenu: ContextMenu;
-  itemControls: ItemControls;
+  scene: SceneStore;
+  uiState: UiStateStore;
   rendererRef: HTMLElement;
   isRendererInteraction: boolean;
 }

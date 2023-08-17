@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { InteractionReducer, State } from 'src/types';
@@ -22,49 +22,20 @@ const reducers: { [k in string]: InteractionReducer } = {
 };
 
 export const useInteractionManager = () => {
+  const onMouseEventRef = useRef<(e: MouseEvent) => void>(() => {});
   const rendererRef = useRef<HTMLElement>();
-  const destroyListeners = useRef<() => void>();
-  const interactionsEnabled = useUiStateStore((state) => {
-    return state.interactionsEnabled;
+  const uiState = useUiStateStore((state) => {
+    return state;
   });
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
-  const scroll = useUiStateStore((state) => {
-    return state.scroll;
-  });
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
-  const mouse = useUiStateStore((state) => {
-    return state.mouse;
-  });
-  const itemControls = useUiStateStore((state) => {
-    return state.itemControls;
-  });
-  const contextMenu = useUiStateStore((state) => {
-    return state.contextMenu;
-  });
-  const uiStateActions = useUiStateStore((state) => {
-    return state.actions;
-  });
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
-  const scene = useSceneStore(
-    ({ nodes, connectors, groups, icons, actions }) => {
-      return { nodes, connectors, groups, icons, actions };
-    }
-  );
-  const rendererSize = useUiStateStore((state) => {
-    return state.rendererSize;
+  const scene = useSceneStore((state) => {
+    return state;
   });
 
   const onMouseEvent = useCallback(
     (e: MouseEvent) => {
-      if (!rendererRef.current) return;
+      if (!rendererRef.current || !uiState.interactionsEnabled) return;
 
-      const reducer = reducers[mode.type];
+      const reducer = reducers[uiState.mode.type];
 
       if (
         !reducer ||
@@ -82,23 +53,19 @@ export const useInteractionManager = () => {
 
       const nextMouse = getMouse({
         interactiveElement: rendererRef.current,
-        zoom,
-        scroll,
-        lastMouse: mouse,
+        zoom: uiState.zoom,
+        scroll: uiState.scroll,
+        lastMouse: uiState.mouse,
         mouseEvent: e,
-        rendererSize
+        rendererSize: uiState.rendererSize
       });
+
+      uiState.actions.setMouse(nextMouse);
 
       const baseState: State = {
         scene,
-        mouse: nextMouse,
-        mode,
-        scroll,
-        contextMenu,
-        itemControls,
+        uiState,
         rendererRef: rendererRef.current,
-        sceneActions,
-        uiStateActions,
         isRendererInteraction: rendererRef.current === e.target
       };
 
@@ -132,45 +99,29 @@ export const useInteractionManager = () => {
       // };
 
       // const transitionaryState = getTransitionaryState();
-      reducerAction(baseState);
 
-      uiStateActions.setMouse(nextMouse);
+      reducerAction(baseState);
     },
-    [
-      mode,
-      mouse,
-      scroll,
-      itemControls,
-      uiStateActions,
-      sceneActions,
-      scene,
-      contextMenu,
-      zoom,
-      rendererSize
-    ]
+    [scene, uiState]
   );
 
-  // TODO: Needs optimisation, listeners are added / removed every time the mouse position changes.  Very intensive.
   useEffect(() => {
-    if (!rendererRef.current || !interactionsEnabled) {
-      destroyListeners.current?.();
-      return;
-    }
+    onMouseEventRef.current = onMouseEvent;
+  }, [onMouseEvent]);
 
+  useEffect(() => {
     const el = window;
 
-    el.addEventListener('mousemove', onMouseEvent);
-    el.addEventListener('mousedown', onMouseEvent);
-    el.addEventListener('mouseup', onMouseEvent);
+    el.addEventListener('mousemove', onMouseEventRef.current);
+    el.addEventListener('mousedown', onMouseEventRef.current);
+    el.addEventListener('mouseup', onMouseEventRef.current);
 
-    destroyListeners.current = () => {
-      el.removeEventListener('mousemove', onMouseEvent);
-      el.removeEventListener('mousedown', onMouseEvent);
-      el.removeEventListener('mouseup', onMouseEvent);
+    return () => {
+      el.removeEventListener('mousemove', onMouseEventRef.current);
+      el.removeEventListener('mousedown', onMouseEventRef.current);
+      el.removeEventListener('mouseup', onMouseEventRef.current);
     };
-
-    return destroyListeners.current;
-  }, [onMouseEvent, interactionsEnabled]);
+  }, []);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;

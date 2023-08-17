@@ -1,13 +1,7 @@
 import React, { createContext, useContext, useRef } from 'react';
 import { createStore, useStore } from 'zustand';
 import { CoordsUtils, incrementZoom, decrementZoom } from 'src/utils';
-import { UiState, UiStateActions } from 'src/types';
-
-interface Actions {
-  actions: UiStateActions;
-}
-
-type UiStateStore = UiState & Actions;
+import { UiStateStore } from 'src/types';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {

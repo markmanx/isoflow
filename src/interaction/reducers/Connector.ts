@@ -11,25 +11,25 @@ import { InteractionReducer } from 'src/types';
 
 export const Connector: InteractionReducer = {
   type: 'CONNECTOR',
-  mousemove: (state) => {
+  mousemove: ({ uiState, scene }) => {
     if (
-      state.mode.type !== 'CONNECTOR' ||
-      !state.mode.connector?.anchors[0] ||
-      !hasMovedTile(state.mouse)
+      uiState.mode.type !== 'CONNECTOR' ||
+      !uiState.mode.connector?.anchors[0] ||
+      !hasMovedTile(uiState.mouse)
     )
       return;
 
     // TODO: Items at tile should take the entire scene in and return just the first item of interest
     // for efficiency
     const itemsAtTile = filterNodesByTile({
-      tile: state.mouse.position.tile,
-      nodes: state.scene.nodes
+      tile: uiState.mouse.position.tile,
+      nodes: scene.nodes
     });
 
     if (itemsAtTile.length > 0) {
       const node = itemsAtTile[0];
 
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         if (!draftState.connector) return;
 
         draftState.connector.anchors[1] = {
@@ -39,81 +39,81 @@ export const Connector: InteractionReducer = {
 
         draftState.connector.path = getConnectorPath({
           anchors: draftState.connector.anchors,
-          nodes: state.scene.nodes
+          nodes: scene.nodes
         });
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     } else {
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         if (!draftState.connector) return;
 
         draftState.connector.anchors[1] = {
           type: 'TILE',
-          coords: state.mouse.position.tile
+          coords: uiState.mouse.position.tile
         };
 
         draftState.connector.path = getConnectorPath({
           anchors: draftState.connector.anchors,
-          nodes: state.scene.nodes
+          nodes: scene.nodes
         });
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     }
   },
-  mousedown: (state) => {
-    if (state.mode.type !== 'CONNECTOR') return;
+  mousedown: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'CONNECTOR') return;
 
     const itemsAtTile = filterNodesByTile({
-      tile: state.mouse.position.tile,
-      nodes: state.scene.nodes
+      tile: uiState.mouse.position.tile,
+      nodes: scene.nodes
     });
 
     if (itemsAtTile.length > 0) {
       const node = itemsAtTile[0];
 
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         draftState.connector = connectorInputToConnector(
           {
             id: generateId(),
             anchors: [{ nodeId: node.id }, { nodeId: node.id }]
           },
-          state.scene.nodes
+          scene.nodes
         );
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     } else {
-      const newMode = produce(state.mode, (draftState) => {
+      const newMode = produce(uiState.mode, (draftState) => {
         draftState.connector = connectorInputToConnector(
           {
             id: generateId(),
             anchors: [
-              { tile: state.mouse.position.tile },
-              { tile: state.mouse.position.tile }
+              { tile: uiState.mouse.position.tile },
+              { tile: uiState.mouse.position.tile }
             ]
           },
-          state.scene.nodes
+          scene.nodes
         );
       });
 
-      state.uiStateActions.setMode(newMode);
+      uiState.actions.setMode(newMode);
     }
   },
-  mouseup: (state) => {
-    if (state.mode.type !== 'CONNECTOR') return;
+  mouseup: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'CONNECTOR') return;
 
-    if (state.mode.connector && state.mode.connector.anchors.length >= 2) {
-      state.sceneActions.createConnector(
-        connectorToConnectorInput(state.mode.connector)
+    if (uiState.mode.connector && uiState.mode.connector.anchors.length >= 2) {
+      scene.actions.createConnector(
+        connectorToConnectorInput(uiState.mode.connector)
       );
     }
 
-    const newMode = produce(state.mode, (draftState) => {
+    const newMode = produce(uiState.mode, (draftState) => {
       draftState.connector = null;
     });
 
-    state.uiStateActions.setMode(newMode);
+    uiState.actions.setMode(newMode);
   }
 };

@@ -1,8 +1,6 @@
 import React, { useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI, IconInput, TileOriginEnum } from 'src/types';
-import { getColorVariant, getRectangleFromSize } from 'src/utils';
-import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';

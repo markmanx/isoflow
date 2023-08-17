@@ -143,3 +143,7 @@ export interface UiStateActions {
   setInteractionsEnabled: (enabled: boolean) => void;
   setDebugMode: (enabled: boolean) => void;
 }
+
+export type UiStateStore = UiState & {
+  actions: UiStateActions;
+};
