@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "src/*": ["./*"],
+      "src/*": ["./*"]
     },
     "outDir": "./dist",
     "noImplicitAny": true,
@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
   },
-  // "exclude": ["src/interaction/reducers/*"],
+  "exclude": ["node_modules", "./dist"],
   "include": [
     "**/*.ts",
     "**/*.tsx",
