@@ -1,8 +1,8 @@
 import { produce } from 'immer';
-import { InteractionReducer } from 'src/types';
+import { ModeActions } from 'src/types';
 import { filterNodesByTile, generateId } from 'src/utils';
 
-export const PlaceElement: InteractionReducer = {
+export const PlaceElement: ModeActions = {
   type: 'PLACE_ELEMENT',
   mousemove: () => {},
   mousedown: ({ uiState, scene }) => {

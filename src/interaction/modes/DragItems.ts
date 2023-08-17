@@ -1,7 +1,7 @@
 import { hasMovedTile } from 'src/utils';
-import { InteractionReducer } from 'src/types';
+import { ModeActions } from 'src/types';
 
-export const DragItems: InteractionReducer = {
+export const DragItems: ModeActions = {
   type: 'DRAG_ITEMS',
   entry: ({ uiState, scene, rendererRef }) => {
     const renderer = rendererRef;

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { InteractionReducer, State } from 'src/types';
+import { ModeActions, State } from 'src/types';
 import { getMouse } from 'src/utils';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
@@ -10,7 +10,7 @@ import { Connector } from './modes/Connector';
 import { Pan } from './modes/Pan';
 import { PlaceElement } from './modes/PlaceElement';
 
-const reducers: { [k in string]: InteractionReducer } = {
+const modes: { [k in string]: ModeActions } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
   AREA_TOOL: AreaTool,
@@ -30,24 +30,30 @@ export const useInteractionManager = () => {
   });
 
   const onMouseEvent = useCallback(
-    (e: MouseEvent) => {
+    (e: MouseEvent | TouchEvent) => {
       if (!rendererRef.current || !uiState.interactionsEnabled) return;
 
-      const reducer = reducers[uiState.mode.type];
+      const mode = modes[uiState.mode.type];
 
-      if (
-        !reducer ||
-        !(
-          e.type === 'mousemove' ||
-          e.type === 'mouseup' ||
-          e.type === 'mousedown'
-        )
-      )
-        return;
+      const getModeFunction = () => {
+        switch (e.type) {
+          case 'touchmove':
+          case 'mousemove':
+            return mode.mousemove;
+          case 'touchstart':
+          case 'mousedown':
+            return mode.mousedown;
+          case 'touchend':
+          case 'mouseup':
+            return mode.mouseup;
+          default:
+            return null;
+        }
+      };
 
-      const reducerAction = reducer[e.type];
+      const modeFunction = getModeFunction();
 
-      if (!reducerAction) return;
+      if (!modeFunction) return;
 
       const nextMouse = getMouse({
         interactiveElement: rendererRef.current,
@@ -67,22 +73,22 @@ export const useInteractionManager = () => {
         isRendererInteraction: rendererRef.current === e.target
       };
 
-      if (reducerTypeRef.current !== reducer.type) {
+      if (reducerTypeRef.current !== mode.type) {
         const prevReducer = reducerTypeRef.current
-          ? reducers[reducerTypeRef.current]
+          ? modes[reducerTypeRef.current]
           : null;
 
         if (prevReducer && prevReducer.exit) {
           prevReducer.exit(baseState);
         }
 
-        if (reducer.entry) {
-          reducer.entry(baseState);
+        if (mode.entry) {
+          mode.entry(baseState);
         }
       }
 
-      reducerAction(baseState);
-      reducerTypeRef.current = reducer.type;
+      modeFunction(baseState);
+      reducerTypeRef.current = mode.type;
     },
     [scene, uiState]
   );
@@ -93,6 +99,7 @@ export const useInteractionManager = () => {
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
+    el.addEventListener('touchmove', onMouseEvent, false);
 
     return () => {
       el.removeEventListener('mousemove', onMouseEvent);

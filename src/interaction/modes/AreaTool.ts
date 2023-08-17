@@ -1,9 +1,9 @@
-import { InteractionReducer } from 'src/types';
+import { ModeActions } from 'src/types';
 import { produce } from 'immer';
 import { generateId, hasMovedTile, setWindowCursor } from 'src/utils';
 import { DEFAULT_COLOR } from 'src/config';
 
-export const AreaTool: InteractionReducer = {
+export const AreaTool: ModeActions = {
   type: 'AREA_TOOL',
   entry: () => {
     setWindowCursor('crosshair');

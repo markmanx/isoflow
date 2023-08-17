@@ -1,7 +1,7 @@
 // import { CoordsUtils, isWithinBounds } from 'src/utils';
-// import { InteractionReducer } from 'src/types';
+// import { ModeActions } from 'src/types';
 
-// export const Lasso: InteractionReducer = {
+// export const Lasso: ModeActions = {
 //   type: 'LASSO',
 //   mousemove: ({ uiState, scene }) => {
 //     if (uiState.mode.type !== 'LASSO') return;

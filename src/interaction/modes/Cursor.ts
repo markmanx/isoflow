@@ -1,8 +1,8 @@
 import { produce } from 'immer';
-import { ItemControlsTypeEnum, InteractionReducer } from 'src/types';
+import { ItemControlsTypeEnum, ModeActions } from 'src/types';
 import { filterNodesByTile, getItemById, hasMovedTile } from 'src/utils';
 
-export const Cursor: InteractionReducer = {
+export const Cursor: ModeActions = {
   type: 'CURSOR',
   mousemove: ({ uiState }) => {
     if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;

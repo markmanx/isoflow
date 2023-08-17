@@ -7,13 +7,13 @@ export interface State {
   isRendererInteraction: boolean;
 }
 
-export type InteractionReducerAction = (state: State) => void;
+export type ModeActionsAction = (state: State) => void;
 
-export type InteractionReducer = {
+export type ModeActions = {
   type: string;
-  entry?: InteractionReducerAction;
-  exit?: InteractionReducerAction;
-  mousemove?: InteractionReducerAction;
-  mousedown?: InteractionReducerAction;
-  mouseup?: InteractionReducerAction;
+  entry?: ModeActionsAction;
+  exit?: ModeActionsAction;
+  mousemove?: ModeActionsAction;
+  mousedown?: ModeActionsAction;
+  mouseup?: ModeActionsAction;
 };

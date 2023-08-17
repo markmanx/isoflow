@@ -1,8 +1,8 @@
 import { produce } from 'immer';
 import { CoordsUtils, setWindowCursor } from 'src/utils';
-import { InteractionReducer } from 'src/types';
+import { ModeActions } from 'src/types';
 
-export const Pan: InteractionReducer = {
+export const Pan: ModeActions = {
   type: 'PAN',
   entry: () => {
     setWindowCursor('grab');

@@ -229,7 +229,7 @@ interface GetMouse {
   zoom: number;
   scroll: Scroll;
   lastMouse: Mouse;
-  mouseEvent: MouseEvent;
+  mouseEvent: MouseEvent | TouchEvent;
   rendererSize: Size;
 }
 
@@ -247,9 +247,16 @@ export const getMouse = ({
     y: componentOffset?.top ?? 0
   };
 
+  const clientX =
+    (mouseEvent as MouseEvent).clientX ??
+    (mouseEvent as TouchEvent).touches[0].clientX;
+  const clientY =
+    (mouseEvent as MouseEvent).clientY ??
+    (mouseEvent as TouchEvent).touches[0].clientY;
+
   const mousePosition = {
-    x: mouseEvent.clientX - offset.x,
-    y: mouseEvent.clientY - offset.y
+    x: clientX - offset.x,
+    y: clientY - offset.y
   };
 
   const newPosition: Mouse['position'] = {

@@ -8,9 +8,9 @@ import {
   hasMovedTile,
   setWindowCursor
 } from 'src/utils';
-import { InteractionReducer } from 'src/types';
+import { ModeActions } from 'src/types';
 
-export const Connector: InteractionReducer = {
+export const Connector: ModeActions = {
   type: 'CONNECTOR',
   entry: () => {
     setWindowCursor('crosshair');
