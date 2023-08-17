@@ -41,8 +41,8 @@ export const Cursor: ModeActions = {
 
     uiState.actions.setMode(newMode);
   },
-  mouseup: ({ uiState, scene }) => {
-    if (uiState.mode.type !== 'CURSOR') return;
+  mouseup: ({ uiState, scene, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
     if (
       uiState.mode.mousedownItem &&
