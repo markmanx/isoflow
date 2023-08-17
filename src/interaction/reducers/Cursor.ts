@@ -1,24 +1,11 @@
 import { produce } from 'immer';
 import { ItemControlsTypeEnum, InteractionReducer } from 'src/types';
-import {
-  CoordsUtils,
-  filterNodesByTile,
-  getItemById,
-  hasMovedTile
-} from 'src/utils';
+import { filterNodesByTile, getItemById, hasMovedTile } from 'src/utils';
 
 export const Cursor: InteractionReducer = {
   type: 'CURSOR',
   mousemove: ({ uiState }) => {
-    if (
-      uiState.mode.type !== 'CURSOR' ||
-      !hasMovedTile(uiState.mouse) ||
-      !uiState.mouse.delta ||
-      CoordsUtils.isEqual(uiState.mouse.delta.tile, CoordsUtils.zero())
-    )
-      return;
-
-    // User has moved tile since the last event
+    if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
     if (uiState.mode.mousedown) {
       // User is in mousedown mode

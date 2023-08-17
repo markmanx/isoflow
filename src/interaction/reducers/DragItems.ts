@@ -3,9 +3,17 @@ import { InteractionReducer } from 'src/types';
 
 export const DragItems: InteractionReducer = {
   type: 'DRAG_ITEMS',
-  entry: ({ rendererRef }) => {
+  entry: ({ uiState, scene, rendererRef }) => {
     const renderer = rendererRef;
+    if (uiState.mode.type !== 'DRAG_ITEMS') return;
+
     renderer.style.userSelect = 'none';
+
+    uiState.mode.items.forEach((node) => {
+      scene.actions.updateNode(node.id, {
+        position: uiState.mouse.position.tile
+      });
+    });
   },
   exit: ({ rendererRef }) => {
     const renderer = rendererRef;

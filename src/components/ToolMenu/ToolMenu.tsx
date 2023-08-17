@@ -2,14 +2,14 @@ import React from 'react';
 import { Card, useTheme } from '@mui/material';
 import { ItemControlsTypeEnum } from 'src/types';
 import {
-  PanTool as PanToolIcon,
-  ZoomIn as ZoomInIcon,
-  ZoomOut as ZoomOutIcon,
-  NearMe as NearMeIcon,
-  CenterFocusStrong as CenterFocusStrongIcon,
-  Add as AddIcon,
+  PanToolOutlined as PanToolIcon,
+  ZoomInOutlined as ZoomInIcon,
+  ZoomOutOutlined as ZoomOutIcon,
+  NearMeOutlined as NearMeIcon,
+  CenterFocusStrongOutlined as CenterFocusStrongIcon,
+  AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
-  CropSquare as CropSquareIcon
+  CropSquareOutlined as CropSquareIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';

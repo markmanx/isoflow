@@ -390,7 +390,7 @@ export const getRectangleFromSize: GetRectangleFromSize = (from, size) => {
 };
 
 export const hasMovedTile = (mouse: Mouse) => {
-  return (
-    mouse.delta && !CoordsUtils.isEqual(mouse.delta.tile, CoordsUtils.zero())
-  );
+  if (!mouse.delta) return false;
+
+  return !CoordsUtils.isEqual(mouse.delta.tile, CoordsUtils.zero());
 };
