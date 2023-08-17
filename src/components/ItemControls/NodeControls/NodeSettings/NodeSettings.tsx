@@ -1,7 +1,6 @@
 import React from 'react';
-import { Slider, useTheme } from '@mui/material';
+import { Slider } from '@mui/material';
 import { Node } from 'src/types';
-import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { MarkdownEditor } from '../../../MarkdownEditor/MarkdownEditor';
 
 import { Section } from '../../components/Section';
@@ -10,17 +9,9 @@ interface Props {
   label: string;
   labelHeight: number;
   onUpdate: (updates: Partial<Node>) => void;
-  color: string;
 }
 
-export const NodeSettings = ({
-  color,
-  label,
-  labelHeight,
-  onUpdate
-}: Props) => {
-  const theme = useTheme();
-
+export const NodeSettings = ({ label, labelHeight, onUpdate }: Props) => {
   return (
     <>
       <Section title="Label">
@@ -35,20 +26,11 @@ export const NodeSettings = ({
         <Slider
           marks
           step={20}
-          min={0}
-          max={200}
+          min={60}
+          max={280}
           value={labelHeight}
           onChange={(e, newHeight) => {
             onUpdate({ labelHeight: newHeight as number });
-          }}
-        />
-      </Section>
-      <Section title="Color">
-        <ColorSelector
-          activeColor={color}
-          colors={Object.values(theme.customVars.diagramPalette)}
-          onChange={(col) => {
-            onUpdate({ color: col });
           }}
         />
       </Section>

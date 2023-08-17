@@ -21,7 +21,7 @@ export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
 };
 export const NODE_DEFAULTS = {
   label: '',
-  labelHeight: 100,
+  labelHeight: 140,
   color: DEFAULT_COLOR
 };
 export const ZOOM_INCREMENT = 0.2;

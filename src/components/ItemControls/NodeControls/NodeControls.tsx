@@ -50,7 +50,6 @@ export const NodeControls = ({ nodeId }: Props) => {
       {tab === 0 && (
         <NodeSettings
           key={node.id}
-          color={node.color}
           label={node.label}
           labelHeight={node.labelHeight}
           onUpdate={onNodeUpdated}

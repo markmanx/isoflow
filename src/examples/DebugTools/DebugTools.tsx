@@ -25,7 +25,6 @@ export const DebugTools = () => {
           {
             id: 'server',
             label: 'Requests per minute',
-            labelHeight: 40,
             iconId: 'server',
             position: {
               x: 0,
@@ -35,7 +34,6 @@ export const DebugTools = () => {
           {
             id: 'database',
             label: 'Transactions',
-            labelHeight: 40,
             iconId: 'block',
             position: {
               x: 5,

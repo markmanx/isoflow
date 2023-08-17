@@ -1,12 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
-import { Size } from 'src/types';
+import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
 
 interface Props {
   labelHeight: number;
-  tileSize: Size;
   children: React.ReactNode;
   connectorDotSize: number;
 }
@@ -14,11 +13,17 @@ interface Props {
 export const LabelContainer = ({
   children,
   labelHeight,
-  tileSize,
   connectorDotSize
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>();
   const { observe, size: contentSize } = useResizeObserver();
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+  const projectedTileSize = useProjectedTileSize();
+  const yOffset = useMemo(() => {
+    return projectedTileSize.height / 2;
+  }, [projectedTileSize]);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -26,35 +31,27 @@ export const LabelContainer = ({
     observe(contentRef.current);
   }, [observe]);
 
-  useEffect(() => {
-    if (!contentRef.current) return;
-
-    gsap.to(contentRef.current, {
-      duration: 0,
-      x: -contentSize.width * 0.5,
-      y: -(contentSize.height + labelHeight)
-    });
-  }, [contentSize, labelHeight]);
-
   return (
     <Box
       sx={{
         position: 'absolute',
-        width: 10,
-        height: 10
+        transformOrigin: 'top center',
+        transform: `scale(${zoom})`
       }}
     >
       <Box
         component="svg"
+        viewBox={`0 0 ${connectorDotSize} ${labelHeight}`}
+        width={connectorDotSize}
         sx={{
           position: 'absolute',
-          top: -(labelHeight + tileSize.height / 2),
+          top: -(labelHeight + yOffset),
           left: -connectorDotSize / 2
         }}
       >
         <line
           x1={connectorDotSize / 2}
-          y1={tileSize.height / 2}
+          y1={0}
           x2={connectorDotSize / 2}
           y2={labelHeight}
           strokeDasharray={`0, ${connectorDotSize * 2}`}
@@ -72,6 +69,8 @@ export const LabelContainer = ({
           borderColor: 'grey.500',
           borderRadius: 2,
           overflow: 'hidden',
+          left: -contentSize.width * 0.5,
+          top: -(contentSize.height + labelHeight + yOffset),
           py: 1,
           px: 1.5
         }}
