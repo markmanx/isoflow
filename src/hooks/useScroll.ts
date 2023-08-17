@@ -15,9 +15,6 @@ export const useScroll = () => {
   const rendererSize = useUiStateStore((state) => {
     return state.rendererSize;
   });
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
 
   const scrollToTile = useCallback(
     (tile: Coords, origin?: TileOriginEnum) => {
@@ -36,6 +33,7 @@ export const useScroll = () => {
   );
 
   return {
+    scroll,
     scrollToTile
   };
 };

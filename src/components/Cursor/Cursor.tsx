@@ -1,14 +1,12 @@
 import React from 'react';
 import { useTheme } from '@mui/material';
-import { Coords } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
-interface Props {
-  tile: Coords;
-}
-
-export const Cursor = ({ tile }: Props) => {
+export const Cursor = () => {
+  const tile = useUiStateStore((state) => {
+    return state.mouse.position.tile;
+  });
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });

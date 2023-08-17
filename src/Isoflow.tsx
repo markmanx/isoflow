@@ -16,7 +16,7 @@ import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { LabelContainer } from 'src/components/Node/LabelContainer';
+import { LabelContainer } from 'src/components/Nodes/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { EMPTY_SCENE } from 'src/config';

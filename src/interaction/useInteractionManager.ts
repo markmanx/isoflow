@@ -23,9 +23,10 @@ const reducers: { [k in string]: InteractionReducer } = {
 
 export const useInteractionManager = () => {
   const rendererRef = useRef<HTMLElement>();
-  const reducerTypeRef = useRef<string>();
-  const [isEnabled, setIsEnabled] = useState(true);
   const destroyListeners = useRef<() => void>();
+  const interactionsEnabled = useUiStateStore((state) => {
+    return state.interactionsEnabled;
+  });
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -151,7 +152,7 @@ export const useInteractionManager = () => {
 
   // TODO: Needs optimisation, listeners are added / removed every time the mouse position changes.  Very intensive.
   useEffect(() => {
-    if (!rendererRef.current || !isEnabled) {
+    if (!rendererRef.current || !interactionsEnabled) {
       destroyListeners.current?.();
       return;
     }
@@ -169,14 +170,13 @@ export const useInteractionManager = () => {
     };
 
     return destroyListeners.current;
-  }, [onMouseEvent, isEnabled]);
+  }, [onMouseEvent, interactionsEnabled]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
   }, []);
 
   return {
-    setElement,
-    setIsEnabled
+    setElement
   };
 };

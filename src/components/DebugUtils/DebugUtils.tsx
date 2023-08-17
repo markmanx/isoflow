@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
 import { SizeIndicator } from './SizeIndicator';
 import { LineItem } from './LineItem';
 
@@ -10,6 +11,9 @@ export const DebugUtils = () => {
   } = useTheme();
   const uiState = useUiStateStore(({ scroll, mouse, zoom, rendererSize }) => {
     return { scroll, mouse, zoom, rendererSize };
+  });
+  const scene = useSceneStore((state) => {
+    return state;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -73,6 +77,7 @@ export const DebugUtils = () => {
           title="Size"
           value={`${rendererSize.width}, ${rendererSize.height}`}
         />
+        <LineItem title="Scene info" value={`${scene.nodes.length} nodes`} />
         <LineItem title="Mode" value={mode.type} />
         <LineItem title="Mode data" value={JSON.stringify(mode)} />
       </Box>

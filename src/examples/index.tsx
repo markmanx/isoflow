@@ -4,8 +4,8 @@ import { Callbacks } from './Callbacks/Callbacks';
 import { DebugTools } from './DebugTools/DebugTools';
 
 const examples = [
-  { name: 'Callbacks', component: Callbacks },
-  { name: 'Debug tools', component: DebugTools }
+  { name: 'Debug tools', component: DebugTools },
+  { name: 'Callbacks', component: Callbacks }
 ];
 
 export const Examples = () => {

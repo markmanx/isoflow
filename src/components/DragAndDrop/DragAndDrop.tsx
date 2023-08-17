@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Coords, TileOriginEnum, IconInput } from 'src/types';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
-import { NodeIcon } from 'src/components/Node/NodeIcon';
+import { NodeIcon } from 'src/components/Nodes/Node/NodeIcon';
 
 interface Props {
   icon: IconInput;
