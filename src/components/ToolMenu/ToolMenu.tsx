@@ -59,12 +59,12 @@ export const ToolMenu = () => {
         Icon={<CropSquareIcon />}
         onClick={() => {
           uiStateStoreActions.setMode({
-            type: 'RECTANGLE_TOOL',
+            type: 'RECTANGLE.DRAW',
             showCursor: true,
             area: null
           });
         }}
-        isActive={mode.type === 'RECTANGLE_TOOL'}
+        isActive={mode.type === 'RECTANGLE.DRAW'}
         size={theme.customVars.toolMenu.height}
       />
       <IconButton

@@ -3,7 +3,7 @@ import { produce } from 'immer';
 import { generateId, hasMovedTile, setWindowCursor } from 'src/utils';
 import { DEFAULT_COLOR } from 'src/config';
 
-export const RectangleTool: ModeActions = {
+export const DrawRectangle: ModeActions = {
   entry: () => {
     setWindowCursor('crosshair');
   },
@@ -12,7 +12,7 @@ export const RectangleTool: ModeActions = {
   },
   mousemove: ({ uiState }) => {
     if (
-      uiState.mode.type !== 'RECTANGLE_TOOL' ||
+      uiState.mode.type !== 'RECTANGLE.DRAW' ||
       !hasMovedTile(uiState.mouse) ||
       !uiState.mode.area ||
       !uiState.mouse.mousedown
@@ -28,7 +28,7 @@ export const RectangleTool: ModeActions = {
     uiState.actions.setMode(newMode);
   },
   mousedown: ({ uiState }) => {
-    if (uiState.mode.type !== 'RECTANGLE_TOOL') return;
+    if (uiState.mode.type !== 'RECTANGLE.DRAW') return;
 
     const newMode = produce(uiState.mode, (draftState) => {
       draftState.area = {
@@ -41,7 +41,7 @@ export const RectangleTool: ModeActions = {
   },
   mouseup: ({ uiState, scene, isRendererInteraction }) => {
     if (
-      uiState.mode.type !== 'RECTANGLE_TOOL' ||
+      uiState.mode.type !== 'RECTANGLE.DRAW' ||
       !uiState.mode.area ||
       !isRendererInteraction
     )

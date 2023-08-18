@@ -82,13 +82,19 @@ export interface ConnectorMode {
   connector: Connector | null;
 }
 
-export interface AreaToolMode {
-  type: 'RECTANGLE_TOOL';
+export interface DrawRectangleMode {
+  type: 'RECTANGLE.DRAW';
   showCursor: boolean;
   area: {
     from: Coords;
     to: Coords;
   } | null;
+}
+
+export interface ResizeRectangleMode {
+  type: 'RECTANGLE.RESIZE';
+  showCursor: boolean;
+  id: string;
 }
 
 export type Mode =
@@ -99,7 +105,8 @@ export type Mode =
   | LassoMode
   | PlaceElementMode
   | ConnectorMode
-  | AreaToolMode;
+  | DrawRectangleMode
+  | ResizeRectangleMode;
 // End mode types
 
 export type ContextMenu =
