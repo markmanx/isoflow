@@ -4,7 +4,8 @@ import {
   SceneInput,
   RectangleInput,
   ConnectorInput,
-  NodeInput
+  NodeInput,
+  ConnectorStyleEnum
 } from './inputs';
 
 export enum TileOriginEnum {
@@ -47,6 +48,7 @@ export interface Connector {
   id: string;
   color: string;
   width: number;
+  style: ConnectorStyleEnum;
   anchors: ConnectorAnchor[];
   path: {
     tiles: Coords[];

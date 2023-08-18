@@ -59,6 +59,18 @@ export const Connector = ({ connector }: Props) => {
     return (unprojectedTileSize / 100) * connector.width;
   }, [connector.width, unprojectedTileSize]);
 
+  const strokeDashArray = useMemo(() => {
+    switch (connector.style) {
+      case 'DASHED':
+        return `${connectorWidthPx * 1.5}, ${connectorWidthPx * 1.5}`;
+      case 'DOTTED':
+        return `0, ${connectorWidthPx * 1.4}`;
+      case 'SOLID':
+      default:
+        return 'none';
+    }
+  }, [connector.style, connectorWidthPx]);
+
   return (
     <IsoTileArea
       {...getRectangleFromSize(connector.path.origin, connector.path.areaSize)}
@@ -72,6 +84,7 @@ export const Connector = ({ connector }: Props) => {
         strokeWidth={connectorWidthPx}
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeDasharray={strokeDashArray}
         fill="none"
       />
       {anchorPositions.map((anchor) => {

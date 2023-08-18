@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Connector } from 'src/types';
-import { useTheme, Box, Slider } from '@mui/material';
+import { Connector, ConnectorStyleEnum } from 'src/types';
+import { useTheme, Box, Slider, Select, MenuItem } from '@mui/material';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
@@ -58,6 +58,20 @@ export const ConnectorControls = ({ id }: Props) => {
             onConnectorUpdated({ width: newWidth as number });
           }}
         />
+      </Section>
+      <Section title="Style">
+        <Select
+          value={connector.style}
+          onChange={(e) => {
+            return onConnectorUpdated({
+              style: e.target.value as ConnectorStyleEnum
+            });
+          }}
+        >
+          {Object.values(ConnectorStyleEnum).map((style) => {
+            return <MenuItem value={style}>{style}</MenuItem>;
+          })}
+        </Select>
       </Section>
       <Section>
         <Box>

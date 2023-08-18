@@ -73,6 +73,7 @@ export const connectorInputToConnector = (
     id: connectorInput.id,
     color: connectorInput.color ?? DEFAULT_COLOR,
     width: connectorInput.width ?? CONNECTOR_DEFAULTS.width,
+    style: connectorInput.style ?? CONNECTOR_DEFAULTS.style,
     anchors,
     path: getConnectorPath({ anchors, nodes })
   };
