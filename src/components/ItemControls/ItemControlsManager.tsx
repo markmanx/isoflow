@@ -14,9 +14,9 @@ export const ItemControlsManager = () => {
   const Controls = useMemo(() => {
     switch (itemControls?.type) {
       case 'NODE':
-        return <NodeControls id={itemControls.id} />;
+        return <NodeControls key={itemControls.id} id={itemControls.id} />;
       case 'RECTANGLE':
-        return <RectangleControls id={itemControls.id} />;
+        return <RectangleControls key={itemControls.id} id={itemControls.id} />;
       case 'ADD_ITEM':
         return <IconSelection />;
       default:
