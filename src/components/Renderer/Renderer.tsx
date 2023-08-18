@@ -51,6 +51,9 @@ export const Renderer = () => {
       }}
     >
       <SceneLayer>
+        <Rectangles />
+      </SceneLayer>
+      <SceneLayer>
         <Grid />
       </SceneLayer>
       {mode.showCursor && (
@@ -58,9 +61,6 @@ export const Renderer = () => {
           <Cursor />
         </SceneLayer>
       )}
-      <SceneLayer>
-        <Rectangles />
-      </SceneLayer>
       <SceneLayer>
         <Connectors />
       </SceneLayer>

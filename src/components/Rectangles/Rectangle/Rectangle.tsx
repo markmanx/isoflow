@@ -1,8 +1,8 @@
 import React from 'react';
-import chroma from 'chroma-js';
 import { Coords } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { getColorVariant } from 'src/utils';
 
 interface Props {
   from: Coords;
@@ -19,11 +19,11 @@ export const Rectangle = ({ from, to, color }: Props) => {
     <IsoTileArea
       from={from}
       to={to}
-      fill={chroma(color).alpha(0.6).css()}
+      fill={color}
       zoom={zoom}
       cornerRadius={22 * zoom}
       stroke={{
-        color,
+        color: getColorVariant(color, 'dark', { grade: 2 }),
         width: 1 * zoom
       }}
     />

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141.38828 163.26061">
-  <g stroke="#cecece" stroke-width="1" stroke-alignment="center">
+  <g stroke="#000000" stroke-opacity="0.15" stroke-width="1" stroke-alignment="center">
     <polygon points="70.69436 122.44546 .00022 81.63018 70.69392 40.81515 141.38806 81.63043 70.69436 122.44546" fill="none"/>
     <line x1="70.69414" y1="40.81503" x2="141.38784" />
     <line y1="0" x2="70.69414" y2="40.81528" />
