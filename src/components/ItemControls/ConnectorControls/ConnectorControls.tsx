@@ -51,7 +51,7 @@ export const ConnectorControls = ({ id }: Props) => {
         <Slider
           marks
           step={5}
-          min={4}
+          min={5}
           max={100}
           value={connector.width}
           onChange={(e, newWidth) => {

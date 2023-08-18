@@ -69,7 +69,7 @@ export const Connector = ({ connector }: Props) => {
       <polyline
         points={pathString}
         stroke={connector.color}
-        strokeWidth={connectorWidthPx * zoom}
+        strokeWidth={connectorWidthPx}
         strokeLinecap="round"
         fill="none"
       />
