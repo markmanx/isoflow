@@ -19,7 +19,7 @@ export const NODE_DEFAULTS = {
 };
 
 export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
-  width: 15,
+  width: 20,
   // The boundaries of the search area for the pathfinder algorithm
   // is the grid that encompasses the two nodes + the offset below.
   searchOffset: { x: 3, y: 3 }

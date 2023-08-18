@@ -50,8 +50,8 @@ export const ConnectorControls = ({ id }: Props) => {
       <Section title="Width">
         <Slider
           marks
-          step={5}
-          min={5}
+          step={10}
+          min={10}
           max={100}
           value={connector.width}
           onChange={(e, newWidth) => {

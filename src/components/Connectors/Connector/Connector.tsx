@@ -71,6 +71,7 @@ export const Connector = ({ connector }: Props) => {
         stroke={connector.color}
         strokeWidth={connectorWidthPx}
         strokeLinecap="round"
+        strokeLinejoin="round"
         fill="none"
       />
       {anchorPositions.map((anchor) => {
