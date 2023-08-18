@@ -73,7 +73,7 @@ export const useInteractionManager = () => {
         isRendererInteraction: rendererRef.current === e.target
       };
 
-      if (reducerTypeRef.current !== mode.type) {
+      if (reducerTypeRef.current !== uiState.mode.type) {
         const prevReducer = reducerTypeRef.current
           ? modes[reducerTypeRef.current]
           : null;
@@ -88,7 +88,7 @@ export const useInteractionManager = () => {
       }
 
       modeFunction(baseState);
-      reducerTypeRef.current = mode.type;
+      reducerTypeRef.current = uiState.mode.type;
     },
     [scene, uiState]
   );

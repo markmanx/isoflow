@@ -2,7 +2,6 @@ import { hasMovedTile, CoordsUtils, getItemById } from 'src/utils';
 import { ModeActions } from 'src/types';
 
 export const DragItems: ModeActions = {
-  type: 'DRAG_ITEMS',
   entry: ({ uiState, scene, rendererRef }) => {
     const renderer = rendererRef;
     if (uiState.mode.type !== 'DRAG_ITEMS') return;

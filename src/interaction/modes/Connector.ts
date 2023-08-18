@@ -11,7 +11,6 @@ import {
 import { ModeActions } from 'src/types';
 
 export const Connector: ModeActions = {
-  type: 'CONNECTOR',
   entry: () => {
     setWindowCursor('crosshair');
   },

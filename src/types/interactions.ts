@@ -10,7 +10,6 @@ export interface State {
 export type ModeActionsAction = (state: State) => void;
 
 export type ModeActions = {
-  type: string;
   entry?: ModeActionsAction;
   exit?: ModeActionsAction;
   mousemove?: ModeActionsAction;

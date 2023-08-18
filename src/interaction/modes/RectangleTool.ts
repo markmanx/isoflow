@@ -4,7 +4,6 @@ import { generateId, hasMovedTile, setWindowCursor } from 'src/utils';
 import { DEFAULT_COLOR } from 'src/config';
 
 export const RectangleTool: ModeActions = {
-  type: 'RECTANGLE_TOOL',
   entry: () => {
     setWindowCursor('crosshair');
   },

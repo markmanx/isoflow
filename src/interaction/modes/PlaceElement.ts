@@ -3,7 +3,6 @@ import { ModeActions } from 'src/types';
 import { getItemAtTile, generateId } from 'src/utils';
 
 export const PlaceElement: ModeActions = {
-  type: 'PLACE_ELEMENT',
   mousemove: () => {},
   mousedown: ({ uiState, scene }) => {
     if (uiState.mode.type !== 'PLACE_ELEMENT') return;

@@ -3,7 +3,6 @@ import { ItemControlsTypeEnum, ModeActions } from 'src/types';
 import { getItemAtTile, getItemById, hasMovedTile } from 'src/utils';
 
 export const Cursor: ModeActions = {
-  type: 'CURSOR',
   mousemove: ({ uiState }) => {
     if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 

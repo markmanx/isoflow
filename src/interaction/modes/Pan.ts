@@ -3,7 +3,6 @@ import { CoordsUtils, setWindowCursor } from 'src/utils';
 import { ModeActions } from 'src/types';
 
 export const Pan: ModeActions = {
-  type: 'PAN',
   entry: () => {
     setWindowCursor('grab');
   },
