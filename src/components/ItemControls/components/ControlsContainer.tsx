@@ -14,7 +14,8 @@ export const ControlsContainer = ({ header, children }: Props) => {
         height: '100%',
         width: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        pb: 2
       }}
     >
       {header && (

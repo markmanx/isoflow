@@ -1,24 +1,29 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { Box, SxProps, Typography, Stack } from '@mui/material';
 
 interface Props {
   children: React.ReactNode;
   title?: string;
-  py?: number;
-  px?: number;
+  sx?: SxProps;
 }
 
-export const Section = ({ children, py, px, title }: Props) => (
-  <Box py={py ?? 3} px={px ?? 3}>
-    <Stack>
-      {title && (
-        <Typography variant="body2" color="text.secondary" pb={0.5}>
-          {title}
-        </Typography>
-      )}
-      {children}
-    </Stack>
-  </Box>
-);
+export const Section = ({ children, sx, title }: Props) => {
+  return (
+    <Box
+      sx={{
+        pt: 3,
+        px: 3,
+        ...sx
+      }}
+    >
+      <Stack>
+        {title && (
+          <Typography variant="body2" color="text.secondary" pb={0.5}>
+            {title}
+          </Typography>
+        )}
+        {children}
+      </Stack>
+    </Box>
+  );
+};

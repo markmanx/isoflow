@@ -49,7 +49,7 @@ export const NodeControls = ({ id }: Props) => {
           <Header title="Node settings" />
           <Tabs sx={{ px: 2 }} value={tab} onChange={onTabChanged}>
             <Tab label="Settings" />
-            <Tab label="Change icon" />
+            <Tab label="Icon" />
           </Tabs>
         </Box>
       }
