@@ -74,6 +74,7 @@ export interface SceneActions {
   setScene: (scene: SceneInput) => void;
   updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
+  deleteNode: (id: string) => void;
   updateConnector: (id: string, updates: Partial<Connector>) => void;
   updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
   createNode: (node: NodeInput) => void;

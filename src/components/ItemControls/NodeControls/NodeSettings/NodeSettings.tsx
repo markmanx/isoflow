@@ -1,5 +1,6 @@
 import React from 'react';
-import { Slider } from '@mui/material';
+import { Slider, Button, Box } from '@mui/material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import { Node } from 'src/types';
 import { MarkdownEditor } from '../../../MarkdownEditor/MarkdownEditor';
 
@@ -9,9 +10,15 @@ interface Props {
   label: string;
   labelHeight: number;
   onUpdate: (updates: Partial<Node>) => void;
+  onDelete: () => void;
 }
 
-export const NodeSettings = ({ label, labelHeight, onUpdate }: Props) => {
+export const NodeSettings = ({
+  label,
+  labelHeight,
+  onUpdate,
+  onDelete
+}: Props) => {
   return (
     <>
       <Section title="Label">
@@ -33,6 +40,19 @@ export const NodeSettings = ({ label, labelHeight, onUpdate }: Props) => {
             onUpdate({ labelHeight: newHeight as number });
           }}
         />
+      </Section>
+      <Section>
+        <Box>
+          <Button
+            color="error"
+            size="small"
+            variant="outlined"
+            startIcon={<DeleteIcon />}
+            onClick={onDelete}
+          >
+            Delete
+          </Button>
+        </Box>
       </Section>
     </>
   );

@@ -318,7 +318,7 @@ export function getItemById<T extends { id: string }>(
   });
 
   if (index === -1) {
-    throw new Error(`Item with id ${id} not found.`);
+    throw new Error(`Item with id "${id}" not found.`);
   }
 
   return { item: items[index], index };

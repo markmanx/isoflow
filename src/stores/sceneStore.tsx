@@ -70,6 +70,24 @@ const initialState = () => {
           set({ nodes: newScene.nodes, connectors: newScene.connectors });
         },
 
+        deleteNode: (id: string) => {
+          const newScene = produce(get(), (draftState) => {
+            const { index } = getItemById(draftState.nodes, id);
+
+            draftState.nodes.splice(index, 1);
+
+            draftState.connectors = draftState.connectors.filter(
+              (connector) => {
+                return !connector.anchors.find((anchor) => {
+                  return anchor.type === 'NODE' && anchor.id === id;
+                });
+              }
+            );
+          });
+
+          set({ nodes: newScene.nodes, connectors: newScene.connectors });
+        },
+
         updateConnector: (id, updates) => {
           const newScene = produce(get(), (draftState) => {
             const { item: connector, index } = getItemById(
