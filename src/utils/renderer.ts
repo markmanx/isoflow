@@ -416,12 +416,6 @@ export const getItemAtTile = ({
 
   if (node) return node;
 
-  const rectangle = scene.rectangles.find(({ from, to }) => {
-    return isWithinBounds(tile, [from, to]);
-  });
-
-  if (rectangle) return rectangle;
-
   const connector = scene.connectors.find((con) => {
     return con.path.tiles.find((pathTile) => {
       const globalPathTile = connectorPathTileToGlobal(
@@ -434,6 +428,12 @@ export const getItemAtTile = ({
   });
 
   if (connector) return connector;
+
+  const rectangle = scene.rectangles.find(({ from, to }) => {
+    return isWithinBounds(tile, [from, to]);
+  });
+
+  if (rectangle) return rectangle;
 
   return null;
 };

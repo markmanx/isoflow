@@ -62,9 +62,9 @@ export const Connector = ({ connector }: Props) => {
   const strokeDashArray = useMemo(() => {
     switch (connector.style) {
       case 'DASHED':
-        return `${connectorWidthPx * 1.5}, ${connectorWidthPx * 1.5}`;
+        return `${connectorWidthPx * 2}, ${connectorWidthPx * 2}`;
       case 'DOTTED':
-        return `0, ${connectorWidthPx * 1.4}`;
+        return `0, ${connectorWidthPx * 1.8}`;
       case 'SOLID':
       default:
         return 'none';
@@ -84,6 +84,7 @@ export const Connector = ({ connector }: Props) => {
         strokeWidth={connectorWidthPx * 1.4}
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeOpacity={0.7}
         strokeDasharray={strokeDashArray}
         fill="none"
       />
@@ -104,6 +105,7 @@ export const Connector = ({ connector }: Props) => {
               position={CoordsUtils.add(anchor, drawOffset)}
               radius={18 * zoom}
               fill={theme.palette.common.white}
+              fillOpacity={0.7}
             />
             <Circle
               position={CoordsUtils.add(anchor, drawOffset)}
