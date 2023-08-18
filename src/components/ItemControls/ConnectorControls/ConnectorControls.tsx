@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Connector } from 'src/types';
-import { useTheme, Box } from '@mui/material';
+import { useTheme, Box, Slider } from '@mui/material';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
@@ -22,7 +22,7 @@ export const ConnectorControls = ({ id }: Props) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const rectangle = useConnector(id);
+  const connector = useConnector(id);
 
   const onConnectorUpdated = useCallback(
     (updates: Partial<Connector>) => {
@@ -44,7 +44,19 @@ export const ConnectorControls = ({ id }: Props) => {
           onChange={(color) => {
             return onConnectorUpdated({ color });
           }}
-          activeColor={rectangle.color}
+          activeColor={connector.color}
+        />
+      </Section>
+      <Section title="Width">
+        <Slider
+          marks
+          step={5}
+          min={4}
+          max={100}
+          value={connector.width}
+          onChange={(e, newWidth) => {
+            onConnectorUpdated({ width: newWidth as number });
+          }}
         />
       </Section>
       <Section>

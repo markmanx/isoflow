@@ -46,6 +46,7 @@ export interface Connector {
   type: SceneItemTypeEnum.CONNECTOR;
   id: string;
   color: string;
+  width: number;
   anchors: ConnectorAnchor[];
   path: {
     tiles: Coords[];

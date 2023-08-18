@@ -40,6 +40,7 @@ export const connectorAnchorInput = z
 export const connectorInput = z.object({
   id: z.string(),
   color: z.string().optional(),
+  width: z.number().optional(),
   anchors: z.array(connectorAnchorInput)
 });
 

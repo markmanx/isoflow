@@ -55,6 +55,10 @@ export const Connector = ({ connector }: Props) => {
     });
   }, [connector.path.origin, connector.anchors, nodes, unprojectedTileSize]);
 
+  const connectorWidthPx = useMemo(() => {
+    return (unprojectedTileSize / 100) * connector.width;
+  }, [connector.width, unprojectedTileSize]);
+
   return (
     <IsoTileArea
       {...getRectangleFromSize(connector.path.origin, connector.path.areaSize)}
@@ -65,7 +69,8 @@ export const Connector = ({ connector }: Props) => {
       <polyline
         points={pathString}
         stroke={connector.color}
-        strokeWidth={10 * zoom}
+        strokeWidth={connectorWidthPx * zoom}
+        strokeLinecap="round"
         fill="none"
       />
       {anchorPositions.map((anchor) => {

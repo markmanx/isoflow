@@ -12,7 +12,7 @@ import {
   ConnectorAnchor,
   Coords
 } from 'src/types';
-import { NODE_DEFAULTS, DEFAULT_COLOR } from 'src/config';
+import { NODE_DEFAULTS, DEFAULT_COLOR, CONNECTOR_DEFAULTS } from 'src/config';
 import { getConnectorPath } from './renderer';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
@@ -72,6 +72,7 @@ export const connectorInputToConnector = (
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
     color: connectorInput.color ?? DEFAULT_COLOR,
+    width: connectorInput.width ?? CONNECTOR_DEFAULTS.width,
     anchors,
     path: getConnectorPath({ anchors, nodes })
   };

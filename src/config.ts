@@ -12,17 +12,17 @@ interface ConnectorDefaults {
   width: number;
   searchOffset: Coords;
 }
-
-export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
-  width: 4,
-  // The boundaries of the search area for the pathfinder algorithm
-  // is the grid that encompasses the two nodes + the offset below.
-  searchOffset: { x: 3, y: 3 }
-};
 export const NODE_DEFAULTS = {
   label: '',
   labelHeight: 140,
   color: DEFAULT_COLOR
+};
+
+export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
+  width: 15,
+  // The boundaries of the search area for the pathfinder algorithm
+  // is the grid that encompasses the two nodes + the offset below.
+  searchOffset: { x: 3, y: 3 }
 };
 export const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
