@@ -49,6 +49,11 @@ export const Cursor: ModeActions = {
           type: 'RECTANGLE',
           id: uiState.mode.mousedownItem.id
         });
+      } else if (uiState.mode.mousedownItem.type === 'CONNECTOR') {
+        uiState.actions.setItemControls({
+          type: 'CONNECTOR',
+          id: uiState.mode.mousedownItem.id
+        });
       }
     } else {
       uiState.actions.setItemControls(null);

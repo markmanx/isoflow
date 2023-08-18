@@ -120,6 +120,16 @@ const initialState = () => {
           set({ rectangles: newScene.rectangles });
         },
 
+        deleteConnector: (id: string) => {
+          const newScene = produce(get(), (draftState) => {
+            const { index } = getItemById(draftState.connectors, id);
+
+            draftState.connectors.splice(index, 1);
+          });
+
+          set({ connectors: newScene.connectors });
+        },
+
         deleteRectangle: (id: string) => {
           const newScene = produce(get(), (draftState) => {
             const { index } = getItemById(draftState.rectangles, id);

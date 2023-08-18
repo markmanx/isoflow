@@ -7,6 +7,11 @@ interface NodeControls {
   id: string;
 }
 
+interface ConnectorControls {
+  type: 'CONNECTOR';
+  id: string;
+}
+
 interface RectangleControls {
   type: 'RECTANGLE';
   id: string;
@@ -18,6 +23,7 @@ interface AddItemControls {
 
 export type ItemControls =
   | NodeControls
+  | ConnectorControls
   | RectangleControls
   | AddItemControls
   | null;

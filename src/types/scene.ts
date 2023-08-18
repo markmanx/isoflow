@@ -73,14 +73,15 @@ export type Icon = IconInput;
 export interface SceneActions {
   setScene: (scene: SceneInput) => void;
   updateScene: (scene: Scene) => void;
-  updateNode: (id: string, updates: Partial<Node>) => void;
-  deleteNode: (id: string) => void;
-  updateConnector: (id: string, updates: Partial<Connector>) => void;
-  updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
-  deleteRectangle: (id: string) => void;
   createNode: (node: NodeInput) => void;
   createConnector: (connector: ConnectorInput) => void;
   createRectangle: (rectangle: RectangleInput) => void;
+  updateNode: (id: string, updates: Partial<Node>) => void;
+  updateConnector: (id: string, updates: Partial<Connector>) => void;
+  updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
+  deleteNode: (id: string) => void;
+  deleteConnector: (id: string) => void;
+  deleteRectangle: (id: string) => void;
 }
 
 export type Scene = {

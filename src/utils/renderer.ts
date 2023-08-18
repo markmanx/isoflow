@@ -205,30 +205,6 @@ export const getTranslateCSS = (translate: Coords = { x: 0, y: 0 }) => {
   return `translate(${translate.x}px, ${translate.y}px)`;
 };
 
-interface GetItemAtTile {
-  tile: Coords;
-  scene: Scene;
-}
-
-export const getItemAtTile = ({
-  tile,
-  scene
-}: GetItemAtTile): SceneItem | null => {
-  const node = scene.nodes.find(({ position }) => {
-    return CoordsUtils.isEqual(position, tile);
-  });
-
-  if (node) return node;
-
-  const rectangle = scene.rectangles.find(({ from, to }) => {
-    return isWithinBounds(tile, [from, to]);
-  });
-
-  if (rectangle) return rectangle;
-
-  return null;
-};
-
 export const incrementZoom = (zoom: number) => {
   const newZoom = clamp(zoom + ZOOM_INCREMENT, MIN_ZOOM, MAX_ZOOM);
   return roundToOneDecimalPlace(newZoom);
@@ -380,9 +356,10 @@ export const getConnectorPath = ({
   const positionsNormalisedFromSearchArea = anchorPositions.map((position) => {
     return normalisePositionFromOrigin({ position, origin });
   });
+
   const tiles = positionsNormalisedFromSearchArea.reduce<Coords[]>(
     (acc, position, i) => {
-      if (i === 0) return [position];
+      if (i === 0) return acc;
 
       const prev = positionsNormalisedFromSearchArea[i - 1];
       const path = findPath({
@@ -415,4 +392,48 @@ export const hasMovedTile = (mouse: Mouse) => {
   if (!mouse.delta) return false;
 
   return !CoordsUtils.isEqual(mouse.delta.tile, CoordsUtils.zero());
+};
+
+export const connectorPathTileToGlobal = (tile: Coords, origin: Coords) => {
+  return CoordsUtils.subtract(
+    CoordsUtils.subtract(origin, CONNECTOR_DEFAULTS.searchOffset),
+    CoordsUtils.subtract(tile, CONNECTOR_DEFAULTS.searchOffset)
+  );
+};
+
+interface GetItemAtTile {
+  tile: Coords;
+  scene: Scene;
+}
+
+export const getItemAtTile = ({
+  tile,
+  scene
+}: GetItemAtTile): SceneItem | null => {
+  const node = scene.nodes.find(({ position }) => {
+    return CoordsUtils.isEqual(position, tile);
+  });
+
+  if (node) return node;
+
+  const rectangle = scene.rectangles.find(({ from, to }) => {
+    return isWithinBounds(tile, [from, to]);
+  });
+
+  if (rectangle) return rectangle;
+
+  const connector = scene.connectors.find((con) => {
+    return con.path.tiles.find((pathTile) => {
+      const globalPathTile = connectorPathTileToGlobal(
+        pathTile,
+        con.path.origin
+      );
+
+      return CoordsUtils.isEqual(globalPathTile, tile);
+    });
+  });
+
+  if (connector) return connector;
+
+  return null;
 };
