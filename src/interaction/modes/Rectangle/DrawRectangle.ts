@@ -47,7 +47,7 @@ export const DrawRectangle: ModeActions = {
     )
       return;
 
-    scene.actions.createGroup({
+    scene.actions.createRectangle({
       id: generateId(),
       color: DEFAULT_COLOR,
       from: uiState.mode.area.from,

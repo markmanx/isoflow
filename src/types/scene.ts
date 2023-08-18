@@ -2,7 +2,7 @@ import { Coords, Size } from './common';
 import {
   IconInput,
   SceneInput,
-  GroupInput,
+  RectangleInput,
   ConnectorInput,
   NodeInput
 } from './inputs';
@@ -18,7 +18,7 @@ export enum TileOriginEnum {
 export enum SceneItemTypeEnum {
   NODE = 'NODE',
   CONNECTOR = 'CONNECTOR',
-  GROUP = 'GROUP'
+  RECTANGLE = 'RECTANGLE'
 }
 
 export interface Node {
@@ -54,15 +54,15 @@ export interface Connector {
   };
 }
 
-export interface Group {
-  type: SceneItemTypeEnum.GROUP;
+export interface Rectangle {
+  type: SceneItemTypeEnum.RECTANGLE;
   id: string;
   color: string;
   from: Coords;
   to: Coords;
 }
 
-export type SceneItem = Node | Connector | Group;
+export type SceneItem = Node | Connector | Rectangle;
 export type SceneItemReference = {
   type: SceneItemTypeEnum;
   id: string;
@@ -75,16 +75,16 @@ export interface SceneActions {
   updateScene: (scene: Scene) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
   updateConnector: (id: string, updates: Partial<Connector>) => void;
-  updateGroup: (id: string, updates: Partial<Group>) => void;
+  updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
   createNode: (node: NodeInput) => void;
   createConnector: (connector: ConnectorInput) => void;
-  createGroup: (group: GroupInput) => void;
+  createRectangle: (rectangle: RectangleInput) => void;
 }
 
 export type Scene = {
   nodes: Node[];
   connectors: Connector[];
-  groups: Group[];
+  rectangles: Rectangle[];
   icons: IconInput[];
 };
 

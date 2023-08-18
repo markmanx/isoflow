@@ -9,7 +9,7 @@ import {
   IconInput,
   NodeInput,
   ConnectorInput,
-  GroupInput,
+  RectangleInput,
   Scene
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
@@ -47,8 +47,8 @@ const App = ({
   const prevInitialScene = useRef<SceneInput>(EMPTY_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
-  const scene = useSceneStore(({ nodes, connectors, groups, icons }) => {
-    return { nodes, connectors, groups, icons };
+  const scene = useSceneStore(({ nodes, connectors, rectangles, icons }) => {
+    return { nodes, connectors, rectangles, icons };
   }, shallow);
   const sceneActions = useSceneStore((state) => {
     return state.actions;
@@ -144,7 +144,7 @@ export {
   SceneInput,
   IconInput,
   NodeInput,
-  GroupInput,
+  RectangleInput,
   ConnectorInput,
   useIsoflow,
   LabelContainer,

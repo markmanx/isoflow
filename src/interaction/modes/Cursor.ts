@@ -43,20 +43,19 @@ export const Cursor: ModeActions = {
   mouseup: ({ uiState, scene, isRendererInteraction }) => {
     if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
-    if (
-      uiState.mode.mousedownItem &&
-      uiState.mode.mousedownItem.type === 'NODE'
-    ) {
-      const { item: node } = getItemById(
-        scene.nodes,
-        uiState.mode.mousedownItem.id
-      );
+    if (uiState.mode.mousedownItem) {
+      if (uiState.mode.mousedownItem.type === 'NODE') {
+        const { item: node } = getItemById(
+          scene.nodes,
+          uiState.mode.mousedownItem.id
+        );
 
-      uiState.actions.setContextMenu(node);
-      uiState.actions.setItemControls({
-        type: ItemControlsTypeEnum.SINGLE_NODE,
-        nodeId: node.id
-      });
+        uiState.actions.setContextMenu(node);
+        uiState.actions.setItemControls({
+          type: ItemControlsTypeEnum.SINGLE_NODE,
+          nodeId: node.id
+        });
+      }
     } else {
       // Empty tile selected
       uiState.actions.setContextMenu({

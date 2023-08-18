@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { Size, Coords, Node, Group, Connector } from 'src/types';
+import { Size, Coords, Node, Rectangle, Connector } from 'src/types';
 import {
   getBoundingBox,
   getBoundingBoxSize,
@@ -16,10 +16,10 @@ import { MAX_ZOOM } from 'src/config';
 const BOUNDING_BOX_PADDING = 3;
 
 export const useDiagramUtils = () => {
-  const scene = useSceneStore(({ nodes, groups, connectors, icons }) => {
+  const scene = useSceneStore(({ nodes, rectangles, connectors, icons }) => {
     return {
       nodes,
-      groups,
+      rectangles,
       connectors,
       icons
     };
@@ -34,7 +34,7 @@ export const useDiagramUtils = () => {
   const { getTilePosition } = useGetTilePosition();
 
   const getProjectBounds = useCallback(
-    (items: (Node | Group | Connector)[]): Coords[] => {
+    (items: (Node | Rectangle | Connector)[]): Coords[] => {
       const positions = items.reduce<Coords[]>((acc, item) => {
         switch (item.type) {
           case 'NODE':
@@ -46,7 +46,7 @@ export const useDiagramUtils = () => {
                 return getAnchorPosition({ anchor, nodes: scene.nodes });
               })
             ];
-          case 'GROUP':
+          case 'RECTANGLE':
             return [...acc, item.from, item.to];
           default:
             return acc;
@@ -67,7 +67,7 @@ export const useDiagramUtils = () => {
     const projectBounds = getProjectBounds([
       ...scene.nodes,
       ...scene.connectors,
-      ...scene.groups
+      ...scene.rectangles
     ]);
 
     const cornerPositions = projectBounds.map((corner) => {

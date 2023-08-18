@@ -43,7 +43,7 @@ export const connectorInput = z.object({
   anchors: z.array(connectorAnchorInput)
 });
 
-export const groupInput = z.object({
+export const rectangleInput = z.object({
   id: z.string(),
   color: z.string().optional(),
   from: coords,

@@ -6,7 +6,7 @@ import { sceneInput } from 'src/validation/scene';
 import {
   getItemById,
   getConnectorPath,
-  groupInputToGroup,
+  rectangleInputToRectangle,
   connectorInputToConnector,
   sceneInputtoScene,
   nodeInputToNode
@@ -17,7 +17,7 @@ const initialState = () => {
     return {
       nodes: [],
       connectors: [],
-      groups: [],
+      rectangles: [],
       icons: [],
       actions: {
         setScene: (scene) => {
@@ -32,7 +32,7 @@ const initialState = () => {
           set({
             nodes: scene.nodes,
             connectors: scene.connectors,
-            groups: scene.groups
+            rectangles: scene.rectangles
           });
         },
 
@@ -86,17 +86,20 @@ const initialState = () => {
           set({ connectors: newScene.connectors });
         },
 
-        updateGroup: (id, updates) => {
+        updateRectangle: (id, updates) => {
           const newScene = produce(get(), (draftState) => {
-            const { item: group, index } = getItemById(draftState.groups, id);
+            const { item: rectangle, index } = getItemById(
+              draftState.rectangles,
+              id
+            );
 
-            draftState.groups[index] = {
-              ...group,
+            draftState.rectangles[index] = {
+              ...rectangle,
               ...updates
             };
           });
 
-          set({ groups: newScene.groups });
+          set({ rectangles: newScene.rectangles });
         },
 
         createConnector: (connector) => {
@@ -109,12 +112,12 @@ const initialState = () => {
           set({ connectors: newScene.connectors });
         },
 
-        createGroup: (group) => {
+        createRectangle: (rectangle) => {
           const newScene = produce(get(), (draftState) => {
-            draftState.groups.push(groupInputToGroup(group));
+            draftState.rectangles.push(rectangleInputToRectangle(rectangle));
           });
 
-          set({ groups: newScene.groups });
+          set({ rectangles: newScene.rectangles });
         }
       }
     };

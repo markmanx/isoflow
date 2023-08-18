@@ -220,11 +220,11 @@ export const getItemAtTile = ({
 
   if (node) return node;
 
-  const group = scene.groups.find(({ from, to }) => {
+  const rectangle = scene.rectangles.find(({ from, to }) => {
     return isWithinBounds(tile, [from, to]);
   });
 
-  if (group) return group;
+  if (rectangle) return rectangle;
 
   return null;
 };

@@ -34,11 +34,14 @@ export const DragItems: ModeActions = {
         scene.actions.updateNode(item.id, {
           position: uiState.mouse.position.tile
         });
-      } else if (item.type === 'GROUP' && uiState.mouse.delta?.tile) {
-        const { item: group } = getItemById(scene.groups, item.id);
-        const newFrom = CoordsUtils.add(group.from, uiState.mouse.delta.tile);
-        const newTo = CoordsUtils.add(group.to, uiState.mouse.delta.tile);
-        // const bounds = getBoundingBox([group.from, group.to]);
+      } else if (item.type === 'RECTANGLE' && uiState.mouse.delta?.tile) {
+        const { item: rectangle } = getItemById(scene.rectangles, item.id);
+        const newFrom = CoordsUtils.add(
+          rectangle.from,
+          uiState.mouse.delta.tile
+        );
+        const newTo = CoordsUtils.add(rectangle.to, uiState.mouse.delta.tile);
+        // const bounds = getBoundingBox([rectangle.from, rectangle.to]);
 
         // scene.nodes.forEach((node) => {
         //   if (isWithinBounds(node.position, bounds)) {
@@ -48,7 +51,7 @@ export const DragItems: ModeActions = {
         //   }
         // });
 
-        scene.actions.updateGroup(item.id, { from: newFrom, to: newTo });
+        scene.actions.updateRectangle(item.id, { from: newFrom, to: newTo });
       }
     });
 

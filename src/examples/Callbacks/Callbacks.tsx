@@ -27,7 +27,7 @@ export const Callbacks = () => {
         }
       ],
       connectors: [],
-      groups: []
+      rectangles: []
     };
   }, []);
 

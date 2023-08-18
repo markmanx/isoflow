@@ -2,12 +2,12 @@ import {
   SceneInput,
   NodeInput,
   ConnectorInput,
-  GroupInput,
+  RectangleInput,
   SceneItemTypeEnum,
   Scene,
   Node,
   Connector,
-  Group,
+  Rectangle,
   ConnectorAnchorInput,
   ConnectorAnchor,
   Coords
@@ -28,13 +28,15 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   };
 };
 
-export const groupInputToGroup = (groupInput: GroupInput): Group => {
+export const rectangleInputToRectangle = (
+  rectangleInput: RectangleInput
+): Rectangle => {
   return {
-    type: SceneItemTypeEnum.GROUP,
-    id: groupInput.id,
-    from: groupInput.from,
-    to: groupInput.to,
-    color: groupInput.color ?? DEFAULT_COLOR
+    type: SceneItemTypeEnum.RECTANGLE,
+    id: rectangleInput.id,
+    from: rectangleInput.from,
+    to: rectangleInput.to,
+    color: rectangleInput.color ?? DEFAULT_COLOR
   };
 };
 
@@ -80,8 +82,8 @@ export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
     return nodeInputToNode(nodeInput);
   });
 
-  const groups = sceneInput.groups.map((groupInput) => {
-    return groupInputToGroup(groupInput);
+  const rectangles = sceneInput.rectangles.map((rectangleInput) => {
+    return rectangleInputToRectangle(rectangleInput);
   });
 
   const connectors = sceneInput.connectors.map((connectorInput) => {
@@ -91,7 +93,7 @@ export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
   return {
     ...sceneInput,
     nodes,
-    groups,
+    rectangles,
     connectors,
     icons: sceneInput.icons
   } as Scene;
@@ -143,12 +145,14 @@ export const connectorToConnectorInput = (
   };
 };
 
-export const groupToGroupInput = (group: Group): GroupInput => {
+export const rectangleToRectangleInput = (
+  rectangle: Rectangle
+): RectangleInput => {
   return {
-    id: group.id,
-    color: group.color,
-    from: group.from,
-    to: group.to
+    id: rectangle.id,
+    color: rectangle.color,
+    from: rectangle.from,
+    to: rectangle.to
   };
 };
 
@@ -158,12 +162,14 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
     connectorToConnectorInput,
     nodes
   );
-  const groups: GroupInput[] = scene.groups.map(groupToGroupInput);
+  const rectangles: RectangleInput[] = scene.rectangles.map(
+    rectangleToRectangleInput
+  );
 
   return {
     nodes,
     connectors,
-    groups,
+    rectangles,
     icons: scene.icons
   } as SceneInput;
 };

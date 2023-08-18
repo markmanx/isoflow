@@ -1,5 +1,5 @@
 // import { useRef, useCallback } from 'react';
-// import { Group, Shape } from 'paper';
+// import { Rectangle, Shape } from 'paper';
 // import gsap from 'gsap';
 // import { Coords } from 'src/types';
 // import { UNPROJECTED_TILE_SIZE, PIXEL_UNIT } from 'src/renderer/utils/constants';
@@ -11,7 +11,7 @@
 // import { applyProjectionMatrix } from 'src/renderer/utils/projection';
 
 // export const useLasso = () => {
-//   const containerRef = useRef(new Group());
+//   const containerRef = useRef(new Rectangle());
 //   const shapeRef = useRef<paper.Shape.Rectangle>();
 
 //   const setSelection = useCallback((startTile: Coords, endTile: Coords) => {

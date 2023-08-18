@@ -10,7 +10,7 @@ interface Props {
   color: string;
 }
 
-export const Group = ({ from, to, color }: Props) => {
+export const Rectangle = ({ from, to, color }: Props) => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });

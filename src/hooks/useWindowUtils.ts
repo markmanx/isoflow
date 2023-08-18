@@ -3,10 +3,10 @@ import { useSceneStore } from 'src/stores/sceneStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 
 export const useWindowUtils = () => {
-  const scene = useSceneStore(({ nodes, groups, connectors, icons }) => {
+  const scene = useSceneStore(({ nodes, rectangles, connectors, icons }) => {
     return {
       nodes,
-      groups,
+      rectangles,
       connectors,
       icons
     };

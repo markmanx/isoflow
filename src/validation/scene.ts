@@ -1,6 +1,11 @@
 // TODO: Split into individual files
 import { z } from 'zod';
-import { iconInput, nodeInput, connectorInput, groupInput } from './sceneItems';
+import {
+  iconInput,
+  nodeInput,
+  connectorInput,
+  rectangleInput
+} from './sceneItems';
 import { findInvalidConnector, findInvalidNode } from './utils';
 
 export const sceneInput = z
@@ -8,7 +13,7 @@ export const sceneInput = z
     icons: z.array(iconInput),
     nodes: z.array(nodeInput),
     connectors: z.array(connectorInput),
-    groups: z.array(groupInput)
+    rectangles: z.array(rectangleInput)
   })
   .superRefine((scene, ctx) => {
     const invalidNode = findInvalidNode(scene.nodes, scene.icons);

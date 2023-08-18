@@ -16,19 +16,19 @@ MIT licence | Source available on [Github](https://github.com/markmanx/isoflow) 
 - **Real-time:** Display real-time data on diagrams.
 - **Customizable:** Use your own isometric icon packs, or use our free set of networking icons (also under MIT).
 - **Export options:** Export diagrams as images, JSON or YAML.
-- **Powerful annotation tools:** Annotate nodes, groups and connectors.
+- **Powerful annotation tools:** Annotate nodes, rectangles and connectors.
 - **Step-by-step walkthroughs:** Create interactive tours of large diagrams to help viewers easily digest information.
 
 ## Roadmap
 
-Migration to open-source: ██░░░░░░░░░
+Version 1: ██████████░░
 
 - [x] Set up automated publishing to NPM registry
 - [ ] Migrate private JS project to public Typescript project
   - [x] Pan / Select / Zoom modes
   - [x] Display icons in itemControls
-  - [ ] Node controls
-  - [ ] Group controls
+  - [x] Node controls
+  - [ ] Rectangle controls
   - [ ] Connector controls
 - [ ] Publish icons as separate importable package
 
@@ -62,7 +62,7 @@ const scene = {
     },
   ],
   connectors: [],
-  groups: []
+  rectangles: []
 }
 
 const App = () => (

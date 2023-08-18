@@ -9,7 +9,7 @@ export const BasicEditor = () => {
         icons,
         nodes: [],
         connectors: [],
-        groups: []
+        rectangles: []
       }}
       height="100%"
     />

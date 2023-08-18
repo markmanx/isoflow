@@ -8,9 +8,9 @@ export const DebugTools = () => {
       initialScene={{
         icons,
         connectors: [],
-        groups: [
+        rectangles: [
           {
-            id: 'group1',
+            id: 'rectangle1',
             from: {
               x: 5,
               y: 5

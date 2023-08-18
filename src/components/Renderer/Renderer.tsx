@@ -5,7 +5,7 @@ import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';
 import { Nodes } from 'src/components/Nodes/Nodes';
-import { Groups } from 'src/components/Groups/Groups';
+import { Rectangles } from 'src/components/Rectangles/Rectangles';
 import { Connectors } from 'src/components/Connectors/Connectors';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
@@ -59,7 +59,7 @@ export const Renderer = () => {
         </SceneLayer>
       )}
       <SceneLayer>
-        <Groups />
+        <Rectangles />
       </SceneLayer>
       <SceneLayer>
         <Connectors />
