@@ -83,7 +83,7 @@ export interface ConnectorMode {
 }
 
 export interface AreaToolMode {
-  type: 'AREA_TOOL';
+  type: 'RECTANGLE_TOOL';
   showCursor: boolean;
   area: {
     from: Coords;

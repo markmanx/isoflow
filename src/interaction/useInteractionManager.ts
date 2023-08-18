@@ -5,7 +5,7 @@ import { ModeActions, State } from 'src/types';
 import { getMouse } from 'src/utils';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
-import { AreaTool } from './modes/AreaTool';
+import { RectangleTool } from './modes/RectangleTool';
 import { Connector } from './modes/Connector';
 import { Pan } from './modes/Pan';
 import { PlaceElement } from './modes/PlaceElement';
@@ -13,7 +13,7 @@ import { PlaceElement } from './modes/PlaceElement';
 const modes: { [k in string]: ModeActions } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
-  AREA_TOOL: AreaTool,
+  RECTANGLE_TOOL: RectangleTool,
   CONNECTOR: Connector,
   PAN: Pan,
   PLACE_ELEMENT: PlaceElement

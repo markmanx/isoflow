@@ -17,7 +17,7 @@ export const Groups = () => {
       {groups.map((group) => {
         return <Group key={group.id} {...group} />;
       })}
-      {mode.type === 'AREA_TOOL' && mode.area && (
+      {mode.type === 'RECTANGLE_TOOL' && mode.area && (
         <Group from={mode.area.from} to={mode.area.to} color={DEFAULT_COLOR} />
       )}
     </>
