@@ -99,7 +99,6 @@ export const useInteractionManager = () => {
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
-    el.addEventListener('touchmove', onMouseEvent, false);
 
     return () => {
       el.removeEventListener('mousemove', onMouseEvent);
