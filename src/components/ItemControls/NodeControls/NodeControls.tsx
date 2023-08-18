@@ -9,10 +9,10 @@ import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 
 interface Props {
-  nodeId: string;
+  id: string;
 }
 
-export const NodeControls = ({ nodeId }: Props) => {
+export const NodeControls = ({ id }: Props) => {
   const [tab, setTab] = useState(0);
   const icons = useSceneStore((state) => {
     return state.icons;
@@ -20,7 +20,7 @@ export const NodeControls = ({ nodeId }: Props) => {
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
-  const node = useNode(nodeId);
+  const node = useNode(id);
 
   const onTabChanged = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -28,12 +28,10 @@ export const NodeControls = ({ nodeId }: Props) => {
 
   const onNodeUpdated = useCallback(
     (updates: Partial<Node>) => {
-      sceneActions.updateNode(nodeId, updates);
+      sceneActions.updateNode(id, updates);
     },
-    [sceneActions, nodeId]
+    [sceneActions, id]
   );
-
-  if (!node) return null;
 
   return (
     <ControlsContainer

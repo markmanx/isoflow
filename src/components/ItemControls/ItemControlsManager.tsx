@@ -3,7 +3,7 @@ import { Card, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
 import { NodeControls } from './NodeControls/NodeControls';
-import { ProjectControls } from './ProjectControls/ProjectControls';
+import { RectangleControls } from './RectangleControls/RectangleControls';
 
 export const ItemControlsManager = () => {
   const itemControls = useUiStateStore((state) => {
@@ -13,11 +13,11 @@ export const ItemControlsManager = () => {
 
   const Controls = useMemo(() => {
     switch (itemControls?.type) {
-      case 'SINGLE_NODE':
-        return <NodeControls nodeId={itemControls.nodeId} />;
-      case 'PROJECT_SETTINGS':
-        return <ProjectControls />;
-      case 'PLACE_ELEMENT':
+      case 'NODE':
+        return <NodeControls id={itemControls.id} />;
+      case 'RECTANGLE':
+        return <RectangleControls id={itemControls.id} />;
+      case 'ADD_ITEM':
         return <IconSelection />;
       default:
         return null;

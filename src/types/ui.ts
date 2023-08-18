@@ -2,23 +2,24 @@ import { Coords, Size } from './common';
 import { SceneItem, Connector, SceneItemReference } from './scene';
 import { IconInput } from './inputs';
 
-export enum ItemControlsTypeEnum {
-  SINGLE_NODE = 'SINGLE_NODE',
-  PROJECT_SETTINGS = 'PROJECT_SETTINGS',
-  PLACE_ELEMENT = 'PLACE_ELEMENT'
+interface NodeControls {
+  type: 'NODE';
+  id: string;
+}
+
+interface RectangleControls {
+  type: 'RECTANGLE';
+  id: string;
+}
+
+interface AddItemControls {
+  type: 'ADD_ITEM';
 }
 
 export type ItemControls =
-  | {
-      type: ItemControlsTypeEnum.SINGLE_NODE;
-      nodeId: string;
-    }
-  | {
-      type: ItemControlsTypeEnum.PROJECT_SETTINGS;
-    }
-  | {
-      type: ItemControlsTypeEnum.PLACE_ELEMENT;
-    }
+  | NodeControls
+  | RectangleControls
+  | AddItemControls
   | null;
 
 export interface Mouse {

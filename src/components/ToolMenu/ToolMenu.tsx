@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, useTheme } from '@mui/material';
-import { ItemControlsTypeEnum } from 'src/types';
 import {
   PanToolOutlined as PanToolIcon,
   ZoomInOutlined as ZoomInIcon,
@@ -44,7 +43,7 @@ export const ToolMenu = () => {
         Icon={<AddIcon />}
         onClick={() => {
           uiStateStoreActions.setItemControls({
-            type: ItemControlsTypeEnum.PLACE_ELEMENT
+            type: 'ADD_ITEM'
           });
           uiStateStoreActions.setMode({
             type: 'PLACE_ELEMENT',

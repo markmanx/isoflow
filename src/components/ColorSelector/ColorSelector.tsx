@@ -8,15 +8,21 @@ interface Props {
   activeColor: string;
 }
 
-export const ColorSelector = ({ colors, onChange, activeColor }: Props) => (
-  <Box>
-    {colors.map((color) => (
-      <ColorSwatch
-        key={color}
-        hex={color}
-        onClick={() => onChange(color)}
-        isActive={activeColor === color}
-      />
-    ))}
-  </Box>
-);
+export const ColorSelector = ({ colors, onChange, activeColor }: Props) => {
+  return (
+    <Box>
+      {colors.map((color) => {
+        return (
+          <ColorSwatch
+            key={color}
+            hex={color}
+            onClick={() => {
+              return onChange(color);
+            }}
+            isActive={activeColor === color}
+          />
+        );
+      })}
+    </Box>
+  );
+};

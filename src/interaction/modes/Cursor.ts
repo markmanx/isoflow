@@ -1,13 +1,12 @@
 import { produce } from 'immer';
-import { ItemControlsTypeEnum, ModeActions } from 'src/types';
-import { getItemAtTile, getItemById } from 'src/utils';
+import { ModeActions } from 'src/types';
+import { getItemAtTile, hasMovedTile } from 'src/utils';
 
 export const Cursor: ModeActions = {
   mousemove: ({ uiState }) => {
-    if (uiState.mode.type !== 'CURSOR') return;
+    if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
     if (uiState.mode.mousedownItem) {
-      // User is in dragging mode
       uiState.actions.setMode({
         type: 'DRAG_ITEMS',
         showCursor: true,
@@ -23,42 +22,42 @@ export const Cursor: ModeActions = {
       scene
     });
 
-    const newMode = produce(uiState.mode, (draftState) => {
-      draftState.mousedownItem = itemAtTile;
-    });
-
-    uiState.actions.setMode(newMode);
+    uiState.actions.setMode(
+      produce(uiState.mode, (draftState) => {
+        if (itemAtTile) {
+          draftState.mousedownItem = {
+            type: itemAtTile.type,
+            id: itemAtTile.id
+          };
+        } else {
+          draftState.mousedownItem = null;
+        }
+      })
+    );
   },
-  mouseup: ({ uiState, scene, isRendererInteraction }) => {
+  mouseup: ({ uiState, isRendererInteraction }) => {
     if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
     if (uiState.mode.mousedownItem) {
       if (uiState.mode.mousedownItem.type === 'NODE') {
-        const { item: node } = getItemById(
-          scene.nodes,
-          uiState.mode.mousedownItem.id
-        );
-
-        uiState.actions.setContextMenu(node);
         uiState.actions.setItemControls({
-          type: ItemControlsTypeEnum.SINGLE_NODE,
-          nodeId: node.id
+          type: 'NODE',
+          id: uiState.mode.mousedownItem.id
+        });
+      } else if (uiState.mode.mousedownItem.type === 'RECTANGLE') {
+        uiState.actions.setItemControls({
+          type: 'RECTANGLE',
+          id: uiState.mode.mousedownItem.id
         });
       }
     } else {
-      // Empty tile selected
-      uiState.actions.setContextMenu({
-        type: 'EMPTY_TILE',
-        position: uiState.mouse.position.tile
-      });
-
       uiState.actions.setItemControls(null);
     }
 
-    const newMode = produce(uiState.mode, (draftState) => {
-      draftState.mousedownItem = null;
-    });
-
-    uiState.actions.setMode(newMode);
+    uiState.actions.setMode(
+      produce(uiState.mode, (draftState) => {
+        draftState.mousedownItem = null;
+      })
+    );
   }
 };

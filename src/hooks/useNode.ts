@@ -1,16 +1,15 @@
 import { useMemo } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
+import { getItemById } from 'src/utils';
 
-export const useNode = (nodeId: string) => {
+export const useNode = (id: string) => {
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
 
   const node = useMemo(() => {
-    return nodes.find((n) => {
-      return n.id === nodeId;
-    });
-  }, [nodes, nodeId]);
+    return getItemById(nodes, id).item;
+  }, [nodes, id]);
 
   return node;
 };
