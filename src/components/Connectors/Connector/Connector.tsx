@@ -80,6 +80,15 @@ export const Connector = ({ connector }: Props) => {
     >
       <polyline
         points={pathString}
+        stroke={theme.palette.common.white}
+        strokeWidth={connectorWidthPx * 1.4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeDasharray={strokeDashArray}
+        fill="none"
+      />
+      <polyline
+        points={pathString}
         stroke={connector.color}
         strokeWidth={connectorWidthPx}
         strokeLinecap="round"
@@ -87,15 +96,23 @@ export const Connector = ({ connector }: Props) => {
         strokeDasharray={strokeDashArray}
         fill="none"
       />
+
       {anchorPositions.map((anchor) => {
         return (
-          <Circle
-            position={CoordsUtils.add(anchor, drawOffset)}
-            radius={10 * zoom}
-            stroke={theme.palette.common.black}
-            fill={theme.palette.common.white}
-            strokeWidth={4 * zoom}
-          />
+          <>
+            <Circle
+              position={CoordsUtils.add(anchor, drawOffset)}
+              radius={18 * zoom}
+              fill={theme.palette.common.white}
+            />
+            <Circle
+              position={CoordsUtils.add(anchor, drawOffset)}
+              radius={12 * zoom}
+              stroke={theme.palette.common.black}
+              fill={theme.palette.common.white}
+              strokeWidth={6 * zoom}
+            />
+          </>
         );
       })}
     </IsoTileArea>
