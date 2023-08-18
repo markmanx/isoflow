@@ -48,26 +48,15 @@ export interface CursorMode {
   mousedownItem: SceneItemReference | null;
 }
 
-export interface PanMode {
-  type: 'PAN';
-  showCursor: boolean;
-}
-
-export interface LassoMode {
-  type: 'LASSO';
-  showCursor: boolean;
-  selection: {
-    startTile: Coords;
-    endTile: Coords;
-    items: SceneItemReference[];
-  };
-  isDragging: boolean;
-}
-
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';
   showCursor: boolean;
   items: SceneItemReference[];
+}
+
+export interface PanMode {
+  type: 'PAN';
+  showCursor: boolean;
 }
 
 export interface PlaceElementMode {
@@ -101,12 +90,11 @@ export type Mode =
   | InteractionsDisabled
   | CursorMode
   | PanMode
-  | DragItemsMode
-  | LassoMode
   | PlaceElementMode
   | ConnectorMode
   | DrawRectangleMode
-  | ResizeRectangleMode;
+  | ResizeRectangleMode
+  | DragItemsMode;
 // End mode types
 
 export type ContextMenu =

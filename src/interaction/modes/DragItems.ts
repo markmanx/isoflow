@@ -1,20 +1,12 @@
-import { hasMovedTile, CoordsUtils, getItemById } from 'src/utils';
 import { ModeActions } from 'src/types';
+import { getItemById, CoordsUtils, hasMovedTile } from 'src/utils';
 
 export const DragItems: ModeActions = {
-  entry: ({ uiState, scene, rendererRef }) => {
+  entry: ({ uiState, rendererRef }) => {
     const renderer = rendererRef;
     if (uiState.mode.type !== 'DRAG_ITEMS') return;
 
     renderer.style.userSelect = 'none';
-
-    uiState.mode.items.forEach((item) => {
-      if (item.type === 'NODE') {
-        scene.actions.updateNode(item.id, {
-          position: uiState.mouse.position.tile
-        });
-      }
-    });
   },
   exit: ({ rendererRef }) => {
     const renderer = rendererRef;
@@ -24,32 +16,22 @@ export const DragItems: ModeActions = {
     if (
       uiState.mode.type !== 'DRAG_ITEMS' ||
       !uiState.mouse.mousedown ||
-      !hasMovedTile(uiState.mouse)
+      !hasMovedTile(uiState.mouse) ||
+      !uiState.mouse.delta?.tile
     )
       return;
 
-    // User is dragging
+    const delta = uiState.mouse.delta.tile;
+
     uiState.mode.items.forEach((item) => {
       if (item.type === 'NODE') {
         scene.actions.updateNode(item.id, {
           position: uiState.mouse.position.tile
         });
-      } else if (item.type === 'RECTANGLE' && uiState.mouse.delta?.tile) {
+      } else if (item.type === 'RECTANGLE') {
         const { item: rectangle } = getItemById(scene.rectangles, item.id);
-        const newFrom = CoordsUtils.add(
-          rectangle.from,
-          uiState.mouse.delta.tile
-        );
-        const newTo = CoordsUtils.add(rectangle.to, uiState.mouse.delta.tile);
-        // const bounds = getBoundingBox([rectangle.from, rectangle.to]);
-
-        // scene.nodes.forEach((node) => {
-        //   if (isWithinBounds(node.position, bounds)) {
-        //     draftState.actions.updateNode(node.id, {
-        //       position: CoordsUtils.add(node.position, delta)
-        //     });
-        //   }
-        // });
+        const newFrom = CoordsUtils.add(rectangle.from, delta);
+        const newTo = CoordsUtils.add(rectangle.to, delta);
 
         scene.actions.updateRectangle(item.id, { from: newFrom, to: newTo });
       }

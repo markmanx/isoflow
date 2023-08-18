@@ -1,10 +1,10 @@
 import { produce } from 'immer';
 import { ItemControlsTypeEnum, ModeActions } from 'src/types';
-import { getItemAtTile, getItemById, hasMovedTile } from 'src/utils';
+import { getItemAtTile, getItemById } from 'src/utils';
 
 export const Cursor: ModeActions = {
   mousemove: ({ uiState }) => {
-    if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
+    if (uiState.mode.type !== 'CURSOR') return;
 
     if (uiState.mode.mousedownItem) {
       // User is in dragging mode
@@ -13,17 +13,6 @@ export const Cursor: ModeActions = {
         showCursor: true,
         items: [uiState.mode.mousedownItem]
       });
-
-      // draftState.mode = {
-      //   type: 'LASSO',
-      //   showCursor: false,
-      //   selection: {
-      //     startTile: draftState.mode.mousedown.tile,
-      //     endTile: draftState.mouse.position.tile,
-      //     items: []
-      //   },
-      //   isDragging: false
-      // };
     }
   },
   mousedown: ({ uiState, scene, isRendererInteraction }) => {
