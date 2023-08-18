@@ -30,7 +30,7 @@ export const ControlsContainer = ({ header, children }: Props) => {
           }
         }}
       >
-        <Box sx={{ width: '100%', pb: 6 }}>{children}</Box>
+        <Box sx={{ width: '100%' }}>{children}</Box>
       </Box>
     </Box>
   );

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Slider, Button, Box } from '@mui/material';
-import { Delete as DeleteIcon } from '@mui/icons-material';
+import { Slider, Box } from '@mui/material';
 import { Node } from 'src/types';
-import { MarkdownEditor } from '../../../MarkdownEditor/MarkdownEditor';
-
+import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
+import { DeleteButton } from '../../components/DeleteButton';
 import { Section } from '../../components/Section';
 
 interface Props {
@@ -43,15 +42,7 @@ export const NodeSettings = ({
       </Section>
       <Section>
         <Box>
-          <Button
-            color="error"
-            size="small"
-            variant="outlined"
-            startIcon={<DeleteIcon />}
-            onClick={onDelete}
-          >
-            Delete
-          </Button>
+          <DeleteButton onClick={onDelete} />
         </Box>
       </Section>
     </>
