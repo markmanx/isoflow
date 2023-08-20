@@ -5,13 +5,11 @@ import {
   ZoomInOutlined as ZoomInIcon,
   ZoomOutOutlined as ZoomOutIcon,
   NearMeOutlined as NearMeIcon,
-  CenterFocusStrongOutlined as CenterFocusStrongIcon,
   AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
   CropSquareOutlined as CropSquareIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
 import { IconButton } from '../IconButton/IconButton';
 
@@ -26,7 +24,6 @@ export const ToolMenu = () => {
   const uiStateStoreActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const { fitProjectToScreen } = useDiagramUtils();
 
   return (
     <Card
@@ -117,12 +114,6 @@ export const ToolMenu = () => {
         onClick={uiStateStoreActions.decrementZoom}
         size={theme.customVars.toolMenu.height}
         disabled={zoom === MIN_ZOOM}
-      />
-      <IconButton
-        name="Center"
-        Icon={<CenterFocusStrongIcon />}
-        onClick={fitProjectToScreen}
-        size={theme.customVars.toolMenu.height}
       />
     </Card>
   );
