@@ -1,10 +1,10 @@
 import { produce } from 'immer';
 import { ModeActions } from 'src/types';
-import { getItemAtTile, hasMovedTile } from 'src/utils';
+import { getItemAtTile } from 'src/utils';
 
 export const Cursor: ModeActions = {
   mousemove: ({ uiState }) => {
-    if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
+    if (uiState.mode.type !== 'CURSOR') return;
 
     if (uiState.mode.mousedownItem) {
       uiState.actions.setMode({
