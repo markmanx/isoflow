@@ -31,6 +31,12 @@ export const Node = ({ node, icon, order }: Props) => {
     });
   }, [node.position, getTilePosition]);
 
+  const label = useMemo(() => {
+    if (node.label === undefined || node.label === '<p><br></p>') return null;
+
+    return node.label;
+  }, [node.label]);
+
   return (
     <Box
       sx={{
@@ -47,21 +53,23 @@ export const Node = ({ node, icon, order }: Props) => {
           top: position.y
         }}
       >
-        <Box
-          sx={{
-            position: 'absolute'
-          }}
-        >
+        {label && (
           <Box
             sx={{
-              position: 'absolute',
-              top: -projectedTileSize.height
+              position: 'absolute'
             }}
-          />
-          <LabelContainer labelHeight={node.labelHeight} connectorDotSize={5}>
-            {node.label && <MarkdownLabel label={node.label} />}
-          </LabelContainer>
-        </Box>
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: -projectedTileSize.height
+              }}
+            />
+            <LabelContainer labelHeight={node.labelHeight} connectorDotSize={5}>
+              <MarkdownLabel label={label} />
+            </LabelContainer>
+          </Box>
+        )}
         {icon && (
           <Box
             sx={{

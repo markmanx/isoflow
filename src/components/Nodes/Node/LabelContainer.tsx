@@ -71,7 +71,8 @@ export const LabelContainer = ({
           left: -contentSize.width * 0.5,
           top: -(contentSize.height + labelHeight + yOffset),
           py: 1,
-          px: 1.5
+          px: 1.5,
+          overflow: 'hidden'
         }}
       >
         {children}

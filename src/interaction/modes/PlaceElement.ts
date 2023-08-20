@@ -29,7 +29,6 @@ export const PlaceElement: ModeActions = {
       scene.actions.createNode({
         id: generateId(),
         iconId: uiState.mode.icon.id,
-        label: 'New Node',
         position: uiState.mouse.position.tile
       });
 
