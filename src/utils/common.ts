@@ -25,19 +25,13 @@ interface GetColorVariantOpts {
 export const getColorVariant = (
   color: string,
   variant: 'light' | 'dark',
-  { alpha = 1, grade = 0 }: GetColorVariantOpts
+  { alpha = 1, grade = 1 }: GetColorVariantOpts
 ) => {
   switch (variant) {
     case 'light':
-      return chroma(color)
-        .brighten(grade ?? 1)
-        .alpha(alpha)
-        .css();
+      return chroma(color).brighten(grade).alpha(alpha).css();
     case 'dark':
-      return chroma(color)
-        .darken(grade ?? 1)
-        .alpha(alpha)
-        .css();
+      return chroma(color).darken(grade).saturate(grade).alpha(alpha).css();
     default:
       return chroma(color).alpha(alpha).css();
   }

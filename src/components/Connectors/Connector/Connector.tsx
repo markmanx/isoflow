@@ -5,7 +5,8 @@ import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import {
   getAnchorPosition,
   getRectangleFromSize,
-  CoordsUtils
+  CoordsUtils,
+  getColorVariant
 } from 'src/utils';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { Circle } from 'src/components/Circle/Circle';
@@ -90,7 +91,7 @@ export const Connector = ({ connector }: Props) => {
       />
       <polyline
         points={pathString}
-        stroke={connector.color}
+        stroke={getColorVariant(connector.color, 'dark', { grade: 1 })}
         strokeWidth={connectorWidthPx}
         strokeLinecap="round"
         strokeLinejoin="round"

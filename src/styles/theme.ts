@@ -32,13 +32,13 @@ export const customVars: CustomThemeVars = {
     height: 40
   },
   diagramPalette: {
-    purple: '#cabffa',
-    blue: '#b4c7f6',
-    yellow: '#efe9a3',
-    red: '#efbcba',
-    orange: '#f9debe',
-    green: '#b5dcad',
-    torquise: '#c2e7e6'
+    blue: '#a0b9f8',
+    purple: '#bbadfb',
+    yellow: '#f4eb8e',
+    red: '#f0aca9',
+    orange: '#fad6ac',
+    green: '#a8dc9d',
+    torquise: '#b3e5e3'
   }
 };
 
