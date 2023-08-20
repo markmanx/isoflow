@@ -32,18 +32,13 @@ export const customVars: CustomThemeVars = {
     height: 40
   },
   diagramPalette: {
-    green: '#53b435',
-    blue: '#4a82f7',
-    teal: '#5a9f9f',
-    salmon: '#e08079',
-    orange: '#e58b48',
-    white: '#ffffff',
-    pink: '#e1034c',
-    purple: '#5155ad',
-    lightPurple: '#8441fc',
-    lightBlue: '#f4f6fe',
-    yellow: '#ffdc73',
-    red: '#d62727'
+    purple: '#cabffa',
+    blue: '#b4c7f6',
+    yellow: '#efe9a3',
+    red: '#efbcba',
+    orange: '#f9debe',
+    green: '#b5dcad',
+    torquise: '#c2e7e6'
   }
 };
 
