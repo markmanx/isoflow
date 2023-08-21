@@ -28,18 +28,20 @@ export const NodeSettings = ({
           }}
         />
       </Section>
-      <Section title="Label height">
-        <Slider
-          marks
-          step={20}
-          min={60}
-          max={280}
-          value={labelHeight}
-          onChange={(e, newHeight) => {
-            onUpdate({ labelHeight: newHeight as number });
-          }}
-        />
-      </Section>
+      {label && (
+        <Section title="Label height">
+          <Slider
+            marks
+            step={20}
+            min={60}
+            max={280}
+            value={labelHeight}
+            onChange={(e, newHeight) => {
+              onUpdate({ labelHeight: newHeight as number });
+            }}
+          />
+        </Section>
+      )}
       <Section>
         <Box>
           <DeleteButton onClick={onDelete} />
