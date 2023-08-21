@@ -6,6 +6,7 @@ module.exports = {
   entry: {
     'index': './src/Isoflow.tsx',
     '/validation/scene': './src/validation/scene.ts',
+    '/isopacks': './src/isopacks/index.ts',
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
