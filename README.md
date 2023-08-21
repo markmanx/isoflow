@@ -25,15 +25,15 @@
 
 ## Roadmap
 
-Beta release progress: ██████░░░
+Beta release progress: ███████░░
 
 - [x] Basic view controls (pan & zoom)
 - [x] Create / delete nodes
 - [x] Create / delete rectangle areas
 - [x] Create / delete connectors
 - [x] onSceneUpdate callback
-- [ ] Drag items
-- [ ] Iconpacks
+- [x] Drag items
+- [x] Iconpacks
 - [ ] Export options
 
 ## Quick start
