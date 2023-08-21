@@ -15,6 +15,8 @@ export const Cursor: ModeActions = {
         items: [mousedownItem],
         isInitialMovement: true
       });
+
+      uiState.actions.setItemControls(null);
     }
   },
   mousedown: ({ uiState, scene, isRendererInteraction }) => {
