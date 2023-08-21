@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import { ModeActions, Coords, SceneItemReference, SceneStore } from 'src/types';
 import { getItemById, CoordsUtils, hasMovedTile } from 'src/utils';
 
@@ -24,36 +25,41 @@ const dragItems = (
 };
 
 export const DragItems: ModeActions = {
-  entry: ({ uiState, scene, rendererRef }) => {
+  entry: ({ uiState, rendererRef }) => {
     if (uiState.mode.type !== 'DRAG_ITEMS' || !uiState.mouse.mousedown) return;
 
     const renderer = rendererRef;
     renderer.style.userSelect = 'none';
-
-    const delta = CoordsUtils.subtract(
-      uiState.mouse.position.tile,
-      uiState.mouse.mousedown.tile
-    );
-    dragItems(uiState.mode.items, delta, scene);
   },
   exit: ({ rendererRef }) => {
     const renderer = rendererRef;
     renderer.style.userSelect = 'auto';
   },
   mousemove: ({ uiState, scene }) => {
-    if (
-      uiState.mode.type !== 'DRAG_ITEMS' ||
-      !uiState.mouse.mousedown ||
-      !hasMovedTile(uiState.mouse) ||
-      !uiState.mouse.delta?.tile
-    )
+    if (uiState.mode.type !== 'DRAG_ITEMS' || !uiState.mouse.mousedown) return;
+
+    if (uiState.mode.isInitialMovement) {
+      const delta = CoordsUtils.subtract(
+        uiState.mouse.position.tile,
+        uiState.mouse.mousedown.tile
+      );
+
+      dragItems(uiState.mode.items, delta, scene);
+
+      uiState.actions.setMode(
+        produce(uiState.mode, (draftState) => {
+          draftState.isInitialMovement = false;
+        })
+      );
+
       return;
+    }
+
+    if (!hasMovedTile(uiState.mouse) || !uiState.mouse.delta?.tile) return;
 
     const delta = uiState.mouse.delta.tile;
 
     dragItems(uiState.mode.items, delta, scene);
-
-    uiState.actions.setContextMenu(null);
   },
   mouseup: ({ uiState }) => {
     uiState.actions.setMode({

@@ -1,16 +1,19 @@
 import { produce } from 'immer';
 import { ModeActions } from 'src/types';
-import { getItemAtTile } from 'src/utils';
+import { getItemAtTile, hasMovedTile } from 'src/utils';
 
 export const Cursor: ModeActions = {
   mousemove: ({ uiState }) => {
-    if (uiState.mode.type !== 'CURSOR') return;
+    if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
-    if (uiState.mode.mousedownItem) {
+    const { mousedownItem } = uiState.mode;
+
+    if (mousedownItem) {
       uiState.actions.setMode({
         type: 'DRAG_ITEMS',
         showCursor: true,
-        items: [uiState.mode.mousedownItem]
+        items: [mousedownItem],
+        isInitialMovement: true
       });
     }
   },

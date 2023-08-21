@@ -59,6 +59,7 @@ export interface DragItemsMode {
   type: 'DRAG_ITEMS';
   showCursor: boolean;
   items: SceneItemReference[];
+  isInitialMovement: Boolean;
 }
 
 export interface PanMode {
