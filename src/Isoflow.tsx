@@ -24,6 +24,7 @@ import { ItemControlsManager } from './components/ItemControls/ItemControlsManag
 import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
 import { SceneLayer } from './components/SceneLayer/SceneLayer';
 import { DragAndDrop } from './components/DragAndDrop/DragAndDrop';
+import 'src/isopacks/networking/manifest';
 
 interface Props {
   initialScene?: SceneInput & {

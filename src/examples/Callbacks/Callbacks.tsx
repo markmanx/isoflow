@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo } from 'react';
 import { Alert, useTheme } from '@mui/material';
 import Isoflow from 'src/Isoflow';
-import { icons } from '../icons';
+import icons from '../icons';
 
 export const Callbacks = () => {
   const [updatesCounter, setUpdatesCounter] = useState(0);

@@ -1,16 +1,5 @@
-import { IconInput } from 'src/Isoflow';
+import basicIcons from 'src/isopacks/basic/manifest';
+import networkingIcons from 'src/isopacks/networking/manifest';
+import { mergeManifests } from 'src/isopacks/utils';
 
-export const icons: IconInput[] = [
-  {
-    id: 'block',
-    name: 'Block',
-    url: 'https://isoflow.io/static/assets/icons/networking/primitive.svg',
-    category: 'Networking'
-  },
-  {
-    id: 'server',
-    name: 'Server',
-    url: 'https://isoflow.io/static/assets/icons/networking/server.svg',
-    category: 'Networking'
-  }
-];
+export default mergeManifests([basicIcons, networkingIcons]);

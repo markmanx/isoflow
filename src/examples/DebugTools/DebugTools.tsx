@@ -1,6 +1,6 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { icons } from '../icons';
+import icons from '../icons';
 
 export const DebugTools = () => {
   return (
