@@ -24,11 +24,7 @@ export const ControlsContainer = ({ header, children }: Props) => {
       <Box
         sx={{
           width: '100%',
-          overflowY: 'scroll',
-          flexGrow: 1,
-          '&::-webkit-scrollbar': {
-            display: 'none'
-          }
+          flexGrow: 1
         }}
       >
         <Box sx={{ width: '100%' }}>{children}</Box>

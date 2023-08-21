@@ -31,7 +31,11 @@ export const ItemControlsManager = () => {
     <Card
       sx={{
         position: 'absolute',
-        width: '325px',
+        overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+          display: 'none'
+        },
+        width: '345px',
         maxHeight: `calc(100% - ${theme.customVars.appPadding.y * 2}px)`,
         left: theme.customVars.appPadding.x,
         top: theme.customVars.appPadding.y,
