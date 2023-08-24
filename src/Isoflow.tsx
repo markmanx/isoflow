@@ -39,7 +39,7 @@ interface Props {
 const App = ({
   initialScene,
   width,
-  height = 500,
+  height = '100%',
   interactionsEnabled: interactionsEnabledProp = true,
   onSceneUpdated,
   debugMode = false
