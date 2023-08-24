@@ -7,7 +7,7 @@
 </h4>
 
 <div align="center">
-  <h1>An open-source isometric whiteboard for React.</h2>
+  <h1>An open-source network diagram editor for React.</h2>
 </div>
 
 <div align="center">
@@ -19,7 +19,7 @@
 
 ## Key Features
 
-- **Annotation tools:** Annotate your whiteboard with isometric icons, labels, rectangles and connectors.
+- **Annotation tools:** Annotate your architecture with isometric icons, labels, regions and connectors.
 - **Customizable:** Use your own isometric icon packs, or the standard free set of networking icons (also under MIT).
 - **Export options:** Export diagrams as images, JSON or YAML.
 
