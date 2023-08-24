@@ -5,7 +5,7 @@ import icons from '../icons';
 export const DebugTools = () => {
   return (
     <Isoflow
-      initialScene={{
+      initialData={{
         icons,
         connectors: [],
         rectangles: [

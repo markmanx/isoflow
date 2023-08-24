@@ -12,7 +12,7 @@ export const Callbacks = () => {
     });
   }, []);
 
-  const initialScene = useMemo(() => {
+  const initialData = useMemo(() => {
     return {
       icons,
       nodes: [
@@ -34,7 +34,7 @@ export const Callbacks = () => {
   return (
     <>
       <Isoflow
-        initialScene={initialScene}
+        initialData={initialData}
         onSceneUpdated={onSceneUpdated}
         height="100%"
       />

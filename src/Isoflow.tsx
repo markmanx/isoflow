@@ -26,7 +26,7 @@ import { SceneLayer } from './components/SceneLayer/SceneLayer';
 import { DragAndDrop } from './components/DragAndDrop/DragAndDrop';
 
 interface Props {
-  initialScene?: SceneInput & {
+  initialData?: SceneInput & {
     zoom?: number;
   };
   disableInteractions?: boolean;
@@ -37,14 +37,14 @@ interface Props {
 }
 
 const App = ({
-  initialScene,
+  initialData,
   width,
   height = '100%',
   disableInteractions: disableInteractionsProp,
   onSceneUpdated,
   debugMode = false
 }: Props) => {
-  const prevInitialScene = useRef<SceneInput>(EMPTY_SCENE);
+  const previnitialData = useRef<SceneInput>(EMPTY_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(({ nodes, connectors, rectangles, icons }) => {
@@ -67,17 +67,17 @@ const App = ({
   });
 
   useEffect(() => {
-    uiActions.setZoom(initialScene?.zoom ?? 1);
+    uiActions.setZoom(initialData?.zoom ?? 1);
     uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
-  }, [initialScene?.zoom, disableInteractionsProp, sceneActions, uiActions]);
+  }, [initialData?.zoom, disableInteractionsProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    if (!initialScene || prevInitialScene.current === initialScene) return;
+    if (!initialData || previnitialData.current === initialData) return;
 
-    prevInitialScene.current = initialScene;
-    sceneActions.setScene(initialScene);
+    previnitialData.current = initialData;
+    sceneActions.setScene(initialData);
     setIsReady(true);
-  }, [initialScene, sceneActions]);
+  }, [initialData, sceneActions]);
 
   useEffect(() => {
     if (!isReady || !onSceneUpdated) return;

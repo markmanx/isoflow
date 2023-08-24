@@ -48,7 +48,7 @@ Render a diagram:
 ```
 import Isoflow from 'isoflow';
 
-const scene = {
+const initialData = {
   icons: [
     {
       id: "block",
@@ -73,7 +73,7 @@ const scene = {
 const App = () => (
   <Isoflow
     height={500}
-    initialScene={scene}
+    initialData={initialData}
   >
 )
 ```

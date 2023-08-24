@@ -5,7 +5,7 @@ import icons from '../icons';
 export const BasicEditor = () => {
   return (
     <Isoflow
-      initialScene={{
+      initialData={{
         icons,
         nodes: [],
         connectors: [],
