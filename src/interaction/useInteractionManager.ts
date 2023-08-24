@@ -31,7 +31,7 @@ export const useInteractionManager = () => {
 
   const onMouseEvent = useCallback(
     (e: MouseEvent | TouchEvent) => {
-      if (!rendererRef.current || !uiState.interactionsEnabled) return;
+      if (!rendererRef.current || uiState.disableInteractions) return;
 
       const mode = modes[uiState.mode.type];
 

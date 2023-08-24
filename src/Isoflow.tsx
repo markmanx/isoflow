@@ -29,7 +29,7 @@ interface Props {
   initialScene?: SceneInput & {
     zoom?: number;
   };
-  interactionsEnabled?: boolean;
+  disableInteractions?: boolean;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
@@ -40,7 +40,7 @@ const App = ({
   initialScene,
   width,
   height = '100%',
-  interactionsEnabled: interactionsEnabledProp = true,
+  disableInteractions: disableInteractionsProp,
   onSceneUpdated,
   debugMode = false
 }: Props) => {
@@ -56,8 +56,8 @@ const App = ({
   const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const interactionsEnabled = useUiStateStore((state) => {
-    return state.interactionsEnabled;
+  const disableInteractions = useUiStateStore((state) => {
+    return state.disableInteractions;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -68,9 +68,8 @@ const App = ({
 
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
-    // TODO: Rename setInteractionsEnabled to disableInteractions
-    uiActions.setInteractionsEnabled(interactionsEnabledProp);
-  }, [initialScene?.zoom, interactionsEnabledProp, sceneActions, uiActions]);
+    uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
+  }, [initialScene?.zoom, disableInteractionsProp, sceneActions, uiActions]);
 
   useEffect(() => {
     if (!initialScene || prevInitialScene.current === initialScene) return;
@@ -104,7 +103,7 @@ const App = ({
       >
         <Renderer />
         <ItemControlsManager />
-        {interactionsEnabled && <ToolMenu />}
+        {disableInteractions && <ToolMenu />}
         {mode.type === 'PLACE_ELEMENT' && mode.icon && (
           <SceneLayer>
             <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />

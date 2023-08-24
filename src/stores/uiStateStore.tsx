@@ -6,7 +6,7 @@ import { UiStateStore } from 'src/types';
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
-      interactionsEnabled: true,
+      disableInteractions: false,
       mode: {
         type: 'CURSOR',
         showCursor: true,
@@ -57,10 +57,10 @@ const initialState = () => {
         setRendererSize: (rendererSize) => {
           set({ rendererSize });
         },
-        setInteractionsEnabled: (enabled) => {
-          set({ interactionsEnabled: enabled });
+        setDisableInteractions: (isDisabled) => {
+          set({ disableInteractions: isDisabled });
 
-          if (!enabled) {
+          if (isDisabled) {
             set({ mode: { type: 'INTERACTIONS_DISABLED', showCursor: false } });
           } else {
             set({

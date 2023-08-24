@@ -119,7 +119,7 @@ export interface Scroll {
 }
 
 export interface UiState {
-  interactionsEnabled: boolean;
+  disableInteractions: boolean;
   mode: Mode;
   itemControls: ItemControls;
   contextMenu: ContextMenu;
@@ -140,7 +140,7 @@ export interface UiStateActions {
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
-  setInteractionsEnabled: (enabled: boolean) => void;
+  setDisableInteractions: (enabled: boolean) => void;
   setDebugMode: (enabled: boolean) => void;
 }
 
