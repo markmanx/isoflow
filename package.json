@@ -2,7 +2,7 @@
   "name": "isoflow",
   "version": "0.3.49",
   "private": false,
-  "description": "A highly customizable React component for building interactive flow diagrams.",
+  "description": "An open-source React component for drawing network diagrams.",
   "license": "MIT",
   "repository": {
     "type": "git",
