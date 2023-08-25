@@ -1,0 +1,60 @@
+# Quick Start
+
+Isoflow can be imported as an ES6 module:
+
+```jsx
+import Isoflow from "isoflow";
+```
+
+### Basic usage
+
+```jsx showLineNumbers
+import React from 'react';
+import Isoflow from 'isoflow';
+
+const App = () => {
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      <Isoflow />
+    </div>
+  );
+}
+
+export default App;
+```
+
+**Note**: this will display a blank Isoflow editor, without icons (which is not very useful!).  To initialise the editor with an iconset, see [Loading Isopacks](./isopacks).
+
+### Dimensions of Isoflow
+
+Isoflow takes _100%_ of `width` and `height` of the containing block so make sure the container in which you render Isoflow in has non-zero dimensions.
+
+### Integration with NextJS
+
+Isoflow cannot be server-side renderered and has to be imported slightly differently when using SSR frameworks like NextJS.
+
+```jsx showLineNumbers filename="IsoflowDynamic.jsx"
+import dynamic from 'next/dynamic';
+
+export const IsoflowDynamic = dynamic(() => {
+    return import('isoflow');
+  },
+  {
+    ssr: false
+  }
+);
+```
+
+```jsx showLineNumbers filename="App.jsx"
+import { IsoflowDynamic } from './IsoflowDynamic';
+
+const App = () => {
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      <IsoflowDynamic />
+    </div>
+  );
+}
+
+export default App;
+```

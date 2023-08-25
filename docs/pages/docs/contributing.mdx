@@ -1,0 +1,26 @@
+# Contributing
+
+### Branching Strategy:
+
+Branches are named using the following convention:
+
+- `feature/` for new feature implementations
+- `fix/` for broken code / build / bug fixes
+- `chore/` non-breaking & non-fixing code changes such as linting, formatting, etc.
+
+### Commit / PR Strategy:
+
+- Commits are to be squashed prior to merge
+- PRs are to target a singular issue in order to keep the commit history clean and easy to follow
+
+### Deploying to NPM
+
+CI is sensitive to any tag pushed to `main` branch. It will build and deploy the app to NPM.
+To deploy:
+
+1. Bump the version using `npm version patch` or similar
+2. `git push && git push --tags`
+
+## License
+
+Isoflow is MIT licensed (see [./LICENSE](https://github.com/markmanx/isoflow/blob/main/LICENSE)).

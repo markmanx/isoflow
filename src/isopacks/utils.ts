@@ -17,7 +17,7 @@ export const createCategoryIcon = (category: string) => {
   };
 };
 
-export const mergeManifests = (manifests: IconInput[][]) => {
+export const mergeIsopacks = (manifests: IconInput[][]) => {
   return manifests.reduce((acc, manifest) => {
     return [...acc, ...manifest];
   }, []);

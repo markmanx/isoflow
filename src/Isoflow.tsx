@@ -10,7 +10,9 @@ import {
   NodeInput,
   ConnectorInput,
   RectangleInput,
-  Scene
+  Scene,
+  ConnectorStyleEnum,
+  InitialData
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
@@ -26,9 +28,7 @@ import { SceneLayer } from './components/SceneLayer/SceneLayer';
 import { DragAndDrop } from './components/DragAndDrop/DragAndDrop';
 
 interface Props {
-  initialData?: SceneInput & {
-    zoom?: number;
-  };
+  initialData?: InitialData;
   disableInteractions?: boolean;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
@@ -139,6 +139,7 @@ const useIsoflow = () => {
 export default Isoflow;
 
 export {
+  InitialData,
   Scene,
   SceneInput,
   IconInput,
@@ -147,5 +148,6 @@ export {
   ConnectorInput,
   useIsoflow,
   LabelContainer,
-  sceneValidationSchema
+  sceneValidationSchema,
+  ConnectorStyleEnum
 };

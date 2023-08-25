@@ -1,4 +1,4 @@
-export * as BasicIsopack from './basic/manifest';
-export * as NetworkingIsopack from './networking/manifest';
+export { basicIsopack } from './basic/manifest';
+export { networkingIsopack } from './networking/manifest';
 
-export { mergeManifests } from './utils';
+export { mergeIsopacks } from './utils';

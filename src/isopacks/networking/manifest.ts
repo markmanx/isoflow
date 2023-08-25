@@ -1,4 +1,4 @@
-import type { IconInput } from 'src/types';
+import type { SceneInput } from 'src/types';
 import { createCategoryIcon } from '../utils';
 import Cache from './icons/cache.svg';
 import CardTerminal from './icons/cardterminal.svg';
@@ -29,14 +29,14 @@ import VM from './icons/vm.svg';
 
 const createIcon = createCategoryIcon('Networking');
 
-const manifest: IconInput[] = [
+export const networkingIsopack: SceneInput['icons'] = [
   createIcon({
     id: 'cache',
     name: 'Cache',
     url: Cache
   }),
   createIcon({
-    id: 'card-terminal',
+    id: 'cardterminal',
     name: 'Card Terminal',
     url: CardTerminal
   }),
@@ -66,9 +66,9 @@ const manifest: IconInput[] = [
     url: Firewall
   }),
   createIcon({
-    url: Function,
     id: 'function',
-    name: 'Function'
+    name: 'Function',
+    url: Function
   }),
   createIcon({
     id: 'laptop',
@@ -76,7 +76,7 @@ const manifest: IconInput[] = [
     url: Laptop
   }),
   createIcon({
-    id: 'load-balancer',
+    id: 'loadbalancer',
     name: 'Load balancer',
     url: LoadBalancer
   }),
@@ -91,12 +91,12 @@ const manifest: IconInput[] = [
     url: Mail
   }),
   createIcon({
-    id: 'mail-multiple',
+    id: 'mailmultiple',
     name: 'Mail multiple',
     url: MailMultiple
   }),
   createIcon({
-    id: 'mobile-device',
+    id: 'mobiledevice',
     name: 'Mobile device',
     url: MobileDevice
   }),
@@ -111,7 +111,7 @@ const manifest: IconInput[] = [
     url: Package
   }),
   createIcon({
-    id: 'payment-card',
+    id: 'paymentcard',
     name: 'Payment card',
     url: PaymentCard
   }),
@@ -156,15 +156,8 @@ const manifest: IconInput[] = [
     url: User
   }),
   createIcon({
-    id: 'virtual-machine',
+    id: 'vm',
     name: 'Virtual machine',
     url: VM
-  }),
-  createIcon({
-    url: Function,
-    id: 'function',
-    name: 'Function'
   })
 ];
-
-export default manifest;

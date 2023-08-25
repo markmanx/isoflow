@@ -22,6 +22,7 @@ export const nodeInput = z.object({
 });
 
 export const connectorAnchorInput = z
+  // TODO: See if we can use `z.discriminatedUnion` here. See https://github.com/colinhacks/zod#unions
   .object({
     nodeId: z.string(),
     tile: coords

@@ -16,7 +16,8 @@
     "build": "webpack --config ./webpack/prod.config.js && tsc --declaration --emitDeclarationOnly && tsc-alias",
     "test": "jest",
     "lint": "eslint ./src/**/*.{ts,tsx}",
-    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}"
+    "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
+    "start:docs": "cd ./docs && npm run dev"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

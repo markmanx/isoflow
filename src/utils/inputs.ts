@@ -10,7 +10,8 @@ import {
   Rectangle,
   ConnectorAnchorInput,
   ConnectorAnchor,
-  Coords
+  Coords,
+  ConnectorStyleEnum
 } from 'src/types';
 import { NODE_DEFAULTS, DEFAULT_COLOR, CONNECTOR_DEFAULTS } from 'src/config';
 import { getConnectorPath } from './renderer';

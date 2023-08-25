@@ -1,5 +1,3 @@
-import basicIcons from 'src/isopacks/basic/manifest';
-import networkingIcons from 'src/isopacks/networking/manifest';
-import { mergeManifests } from 'src/isopacks/utils';
+import { basicIsopack, networkingIsopack, mergeIsopacks } from 'src/isopacks';
 
-export default mergeManifests([basicIcons, networkingIcons]);
+export default mergeIsopacks([basicIsopack, networkingIsopack]);

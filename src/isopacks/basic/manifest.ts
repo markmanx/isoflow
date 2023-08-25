@@ -1,4 +1,4 @@
-import type { IconInput } from 'src/types';
+import type { SceneInput } from 'src/types';
 import { createCategoryIcon } from '../utils';
 import Block from './icons/block.svg';
 import Cube from './icons/cube.svg';
@@ -8,7 +8,7 @@ import Sphere from './icons/sphere.svg';
 
 const createIcon = createCategoryIcon('Basic shapes');
 
-const manifest: IconInput[] = [
+export const basicIsopack: SceneInput['icons'] = [
   createIcon({
     id: 'block',
     name: 'Block',
@@ -35,5 +35,3 @@ const manifest: IconInput[] = [
     url: Sphere
   })
 ];
-
-export default manifest;
