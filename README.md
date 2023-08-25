@@ -89,5 +89,5 @@ Demo the latest version of Isoflow on Codesandbox [here](https://codesandbox.io/
 The sandbox is always synced with the Github repo.
 
 ## Contributing
-- Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/efXxbsha).
+- Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/efXxbsha).
 - Want to contribute? See [good first issues](https://github.com/markmanx/isoflow/contribute).
