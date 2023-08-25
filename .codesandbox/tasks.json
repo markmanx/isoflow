@@ -7,6 +7,10 @@
     {
       "name": "Install documentation dependencies",
       "command": "cd docs && npm i"
+    },
+    {
+      "name": "Build Docs",
+      "command": "cd docs && npm run build"
     }
   ],
   "tasks": {
