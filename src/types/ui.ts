@@ -140,7 +140,7 @@ export interface UiStateActions {
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
-  setDisableInteractions: (enabled: boolean) => void;
+  setDisableInteractions: (isDisabled: boolean) => void;
   setDebugMode: (enabled: boolean) => void;
 }
 

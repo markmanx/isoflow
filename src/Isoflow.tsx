@@ -103,7 +103,7 @@ const App = ({
       >
         <Renderer />
         <ItemControlsManager />
-        {disableInteractions && <ToolMenu />}
+        {!disableInteractions && <ToolMenu />}
         {mode.type === 'PLACE_ELEMENT' && mode.icon && (
           <SceneLayer>
             <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
