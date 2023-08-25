@@ -26,6 +26,7 @@
     "docs":{
       "name":"Docs",
       "command":"npm run start:docs",
+      "runAtStart": true,
       "preview": {
         "port": 3002,
         "prLink": "direct"
