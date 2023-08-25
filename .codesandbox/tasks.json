@@ -21,7 +21,11 @@
     },
     "docs":{
       "name":"Docs",
-      "command":"npm run start:docs"
+      "command":"npm run start:docs",
+      "preview": {
+        "port": 3002,
+        "prLink": "direct"
+      }
     },
     "test": {
       "name": "Tests",
