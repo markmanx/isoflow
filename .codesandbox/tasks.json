@@ -1,13 +1,17 @@
 {
   "setupTasks": [
     {
-      "name": "Install dependencies",
+      "name": "Install app dependencies",
       "command": "npm i"
+    },
+    {
+      "name": "Install documentation dependencies",
+      "command": "cd docs && npm i"
     }
   ],
   "tasks": {
     "start": {
-      "name": "Start Isoflow",
+      "name": "Isoflow",
       "command": "npm run start",
       "runAtStart": true,
       "preview": {
@@ -15,8 +19,12 @@
         "prLink": "direct"
       }
     },
+    "docs":{
+      "name":"Docs",
+      "command":"npm run start:docs"
+    },
     "test": {
-      "name": "Run tests",
+      "name": "Tests",
       "command": "npm run test",
       "runAtStart": false
     }
