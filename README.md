@@ -68,7 +68,7 @@ const initialData = {
 };
 
 const App = () => (
-  <Isoflow initialData={initialData}>
+  <Isoflow initialData={initialData} />
 );
 ```
 
