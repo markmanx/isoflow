@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -48,6 +49,10 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, '../src/index.html')
+    }),
+    new webpack.DefinePlugin({
+      PACKAGE_VERSION: JSON.stringify(require("../package.json").version),
+      REPOSITORY_URL: JSON.stringify(require("../package.json").repository.url),
     })
   ]
 };

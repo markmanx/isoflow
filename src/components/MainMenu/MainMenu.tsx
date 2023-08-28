@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Typography } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
@@ -22,6 +22,10 @@ export const MainMenu = () => {
     [setIsMainMenuOpen]
   );
 
+  const gotoGithub = useCallback(() => {
+    window.open(REPOSITORY_URL, '_blank');
+  }, []);
+
   return (
     <UiElement>
       <IconButton Icon={<MenuIcon />} name="Main menu" onClick={onClick} />
@@ -43,6 +47,11 @@ export const MainMenu = () => {
         }}
       >
         <MenuItem>Export</MenuItem>
+        <MenuItem onClick={gotoGithub}>
+          <Typography variant="body2" color="text.secondary">
+            Isoflow v{PACKAGE_VERSION}
+          </Typography>
+        </MenuItem>
       </Menu>
     </UiElement>
   );
