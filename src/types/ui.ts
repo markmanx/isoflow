@@ -121,6 +121,7 @@ export interface Scroll {
 export interface UiState {
   disableInteractions: boolean;
   mode: Mode;
+  isMainMenuOpen: boolean;
   itemControls: ItemControls;
   contextMenu: ContextMenu;
   zoom: number;
@@ -134,6 +135,7 @@ export interface UiStateActions {
   setMode: (mode: Mode) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
+  setIsMainMenuOpen: (isOpen: boolean) => void;
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
   setItemControls: (itemControls: ItemControls) => void;

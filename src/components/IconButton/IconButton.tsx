@@ -6,7 +6,7 @@ interface Props {
   name: string;
   Icon: React.ReactNode;
   isActive?: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   tooltipPosition?: TooltipProps['placement'];
   disabled?: boolean;
 }

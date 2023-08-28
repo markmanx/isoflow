@@ -12,6 +12,7 @@ const initialState = () => {
         showCursor: true,
         mousedownItem: null
       },
+      isMainMenuOpen: false,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
         mousedown: null,
@@ -30,6 +31,9 @@ const initialState = () => {
       actions: {
         setMode: (mode) => {
           set({ mode });
+        },
+        setIsMainMenuOpen: (isMainMenuOpen) => {
+          set({ isMainMenuOpen, itemControls: null });
         },
         incrementZoom: () => {
           const { zoom } = get();
