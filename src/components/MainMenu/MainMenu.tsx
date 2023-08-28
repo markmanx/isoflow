@@ -3,6 +3,7 @@ import { Menu, Typography, Divider } from '@mui/material';
 import {
   Menu as MenuIcon,
   GitHub as GitHubIcon,
+  QuestionAnswer as QuestionAnswerIcon,
   Download as DownloadIcon,
   FolderOpen as FolderOpenIcon
 } from '@mui/icons-material';
@@ -42,8 +43,8 @@ export const MainMenu = () => {
     [setIsMainMenuOpen]
   );
 
-  const gotoGithub = useCallback(() => {
-    window.open(REPOSITORY_URL, '_blank');
+  const gotoUrl = useCallback((url: string) => {
+    window.open(url, '_blank');
   }, []);
 
   const onOpenScene = useCallback(async () => {
@@ -105,11 +106,24 @@ export const MainMenu = () => {
           Open
         </MenuItem>
         <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
-          Save as...
+          Download diagram
         </MenuItem>
         <Divider />
-        <MenuItem onClick={gotoGithub} Icon={<GitHubIcon />}>
+        <MenuItem
+          onClick={() => {
+            return gotoUrl(`${REPOSITORY_URL}`);
+          }}
+          Icon={<GitHubIcon />}
+        >
           GitHub
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            return gotoUrl('https://discord.gg/QYPkvZth7D');
+          }}
+          Icon={<QuestionAnswerIcon />}
+        >
+          Discord
         </MenuItem>
         <Divider />
         <MenuItem>
