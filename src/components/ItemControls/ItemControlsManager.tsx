@@ -31,7 +31,7 @@ export const ItemControlsManager = () => {
   return (
     <UiElement
       sx={{
-        top: theme.customVars.appPadding.y * 3
+        top: theme.customVars.appPadding.y * 2 + parseInt(theme.spacing(2), 10)
       }}
     >
       <Box

@@ -4,6 +4,7 @@ import { DragAndDrop } from 'src/components/DragAndDrop/DragAndDrop';
 import { ItemControlsManager } from 'src/components/ItemControls/ItemControlsManager';
 import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { MainMenu } from 'src/components/MainMenu/MainMenu';
 
 export const UiOverlay = () => {
   const disableInteractions = useUiStateStore((state) => {
@@ -27,6 +28,7 @@ export const UiOverlay = () => {
           <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
         </SceneLayer>
       )}
+      <MainMenu />
     </>
   );
 };
