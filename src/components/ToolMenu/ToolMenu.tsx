@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import {
   PanToolOutlined as PanToolIcon,
   ZoomInOutlined as ZoomInIcon,
@@ -11,7 +11,8 @@ import {
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from 'src/components/IconButton/IconButton';
+import { Menu } from 'src/components/Menu/Menu';
 
 export const ToolMenu = () => {
   const theme = useTheme();
@@ -26,13 +27,9 @@ export const ToolMenu = () => {
   });
 
   return (
-    <Card
+    <Menu
       sx={{
-        position: 'absolute',
-        top: theme.customVars.appPadding.y,
-        right: theme.customVars.appPadding.x,
-        height: theme.customVars.toolMenu.height,
-        borderRadius: 2
+        right: theme.customVars.appPadding.x
       }}
     >
       <IconButton
@@ -48,7 +45,6 @@ export const ToolMenu = () => {
             icon: null
           });
         }}
-        size={theme.customVars.toolMenu.height}
       />
       <IconButton
         name="Area"
@@ -61,7 +57,6 @@ export const ToolMenu = () => {
           });
         }}
         isActive={mode.type === 'RECTANGLE.DRAW'}
-        size={theme.customVars.toolMenu.height}
       />
       <IconButton
         name="Connector"
@@ -74,7 +69,6 @@ export const ToolMenu = () => {
           });
         }}
         isActive={mode.type === 'CONNECTOR'}
-        size={theme.customVars.toolMenu.height}
       />
       <IconButton
         name="Select"
@@ -86,7 +80,6 @@ export const ToolMenu = () => {
             mousedownItem: null
           });
         }}
-        size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'CURSOR'}
       />
       <IconButton
@@ -98,23 +91,20 @@ export const ToolMenu = () => {
             showCursor: false
           });
         }}
-        size={theme.customVars.toolMenu.height}
         isActive={mode.type === 'PAN'}
       />
       <IconButton
         name="Zoom in"
         Icon={<ZoomInIcon />}
         onClick={uiStateStoreActions.incrementZoom}
-        size={theme.customVars.toolMenu.height}
         disabled={zoom === MAX_ZOOM}
       />
       <IconButton
         name="Zoom out"
         Icon={<ZoomOutIcon />}
         onClick={uiStateStoreActions.decrementZoom}
-        size={theme.customVars.toolMenu.height}
         disabled={zoom === MIN_ZOOM}
       />
-    </Card>
+    </Menu>
   );
 };

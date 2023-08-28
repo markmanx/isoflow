@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button, Box } from '@mui/material';
+import { Button, Box, useTheme } from '@mui/material';
 import Tooltip, { TooltipProps } from '@mui/material/Tooltip';
 
 interface Props {
@@ -7,7 +7,6 @@ interface Props {
   Icon: React.ReactNode;
   isActive?: boolean;
   onClick: () => void;
-  size: number;
   tooltipPosition?: TooltipProps['placement'];
   disabled?: boolean;
 }
@@ -17,10 +16,10 @@ export const IconButton = ({
   Icon,
   onClick,
   isActive = false,
-  size,
   disabled = false,
   tooltipPosition = 'bottom'
 }: Props) => {
+  const theme = useTheme();
   const iconColor = useMemo(() => {
     if (isActive) {
       return 'grey.200';
@@ -47,8 +46,8 @@ export const IconButton = ({
         onClick={onClick}
         sx={{
           borderRadius: 0,
-          height: size,
-          width: size,
+          height: theme.customVars.toolMenu.height,
+          width: theme.customVars.toolMenu.height,
           maxWidth: '100%',
           minWidth: 'auto',
           bgcolor: isActive ? 'grey.800' : undefined,
