@@ -2,6 +2,7 @@
 
 <h4 align="center">
   <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Isoflow Editor</a> |
+  <a href="https://v2.isoflow.io/docs">Documentation</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
   <a href="https://discord.gg/QYPkvZth7D">Discord</a>
 </h4>
@@ -25,19 +26,18 @@
 
 ## Roadmap
 
-V1 release progress: █████████░
+v1 progress: █████████░
 
 - [x] Basic view controls (pan & zoom)
 - [x] Create / delete nodes
 - [x] Create / delete connectors
 - [x] Create / delete rectangle areas
-- [x] Node icons (e.g. server, router etc)
-- [ ] Cloud service icons (i.e. AWS + GCP icons)
+- [x] Generic networking icons (e.g. server, router etc)
 - [x] onSceneUpdate callback
 - [x] Drag items
 - [x] Documentation
-- [x] Load / save diagram (locally as JSON)
-
+- [x] Load / save diagrams locally as JSON
+- [ ] Cloud service icons (i.e. AWS + GCP icons)
 
 ## Quick start
 
@@ -87,13 +87,12 @@ To run Isoflow on a local development server with hot-reloading enabled:
 2. `npm run start`.
 
 ## Developer documentation
-For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  Or if you'd prefer to build and run the docs locally:
+For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  You can also build and run the docs locally:
 
 - `npm run start:docs`
 
 ## CodeSandbox
-
-You can demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).  The sandbox is always synced with the Github repo.
+Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
 ## Contributing
 - Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/QYPkvZth7D).
