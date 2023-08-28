@@ -83,6 +83,7 @@ const Isoflow = dynamic(() => import("isoflow"), {
 
 ## Developer documentation
 For more detailed API documentation, examples and more, see the [developer documentation](https://v2.isoflow.io/docs).
+Documentation is included in this package and is built with NextJS.  To run the docs locally, run `npm run start:docs`.
 
 ## CodeSandbox
 
