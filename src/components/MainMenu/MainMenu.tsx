@@ -70,11 +70,11 @@ export const MainMenu = () => {
       };
       fileReader.readAsText(file);
 
-      setIsMainMenuOpen(false);
       resetUiState();
     };
 
     await fileInput.click();
+    setIsMainMenuOpen(false);
   }, [setScene, setIsMainMenuOpen, resetUiState]);
 
   const onSaveAs = useCallback(async () => {
