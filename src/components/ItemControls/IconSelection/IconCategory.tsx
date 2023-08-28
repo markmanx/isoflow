@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
+import { Grid, Divider } from '@mui/material';
 import { Icon as IconI } from 'src/types';
 import { Icon } from './Icon';
 import { Section } from '../components/Section';
@@ -14,6 +14,7 @@ interface Props {
 export const IconCategory = ({ name, icons, onClick, onMouseDown }: Props) => {
   return (
     <Section title={name}>
+      <Divider sx={{ mt: 1 }} />
       <Grid container spacing={2}>
         {icons.map((icon) => {
           return (
