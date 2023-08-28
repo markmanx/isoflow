@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
+  target: 'web',
   entry: {
     'index': './src/Isoflow.tsx',
     '/validation/scene': './src/validation/scene.ts',

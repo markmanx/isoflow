@@ -5,9 +5,12 @@ import {
   GitHub as GitHubIcon,
   Download as DownloadIcon
 } from '@mui/icons-material';
+import FileSaver from 'file-saver';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useSceneStore } from 'src/stores/sceneStore';
+import { sceneToSceneInput } from 'src/utils';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
@@ -17,6 +20,14 @@ export const MainMenu = () => {
   });
   const setIsMainMenuOpen = useUiStateStore((state) => {
     return state.actions.setIsMainMenuOpen;
+  });
+  const scene = useSceneStore((state) => {
+    return {
+      icons: state.icons,
+      nodes: state.nodes,
+      connectors: state.connectors,
+      rectangles: state.rectangles
+    };
   });
 
   const onClick = useCallback(
@@ -30,6 +41,16 @@ export const MainMenu = () => {
   const gotoGithub = useCallback(() => {
     window.open(REPOSITORY_URL, '_blank');
   }, []);
+
+  const onSaveAs = useCallback(async () => {
+    const parsedScene = sceneToSceneInput(scene);
+
+    const blob = new Blob([JSON.stringify(parsedScene)], {
+      type: 'application/json;charset=utf-8'
+    });
+
+    FileSaver.saveAs(blob, `isoflow-${new Date().toISOString()}.json`);
+  }, [scene]);
 
   return (
     <UiElement>
@@ -51,7 +72,9 @@ export const MainMenu = () => {
           }
         }}
       >
-        <MenuItem Icon={<DownloadIcon />}>Save to...</MenuItem>
+        <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
+          Save as...
+        </MenuItem>
         <Divider />
         <MenuItem onClick={gotoGithub} Icon={<GitHubIcon />}>
           GitHub
