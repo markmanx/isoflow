@@ -1,9 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import { Menu, MenuItem, Typography } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { Menu, Typography, Divider } from '@mui/material';
+import {
+  Menu as MenuIcon,
+  GitHub as GitHubIcon,
+  Download as DownloadIcon
+} from '@mui/icons-material';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -46,8 +51,13 @@ export const MainMenu = () => {
           }
         }}
       >
-        <MenuItem>Export</MenuItem>
-        <MenuItem onClick={gotoGithub}>
+        <MenuItem Icon={<DownloadIcon />}>Save to...</MenuItem>
+        <Divider />
+        <MenuItem onClick={gotoGithub} Icon={<GitHubIcon />}>
+          GitHub
+        </MenuItem>
+        <Divider />
+        <MenuItem>
           <Typography variant="body2" color="text.secondary">
             Isoflow v{PACKAGE_VERSION}
           </Typography>
