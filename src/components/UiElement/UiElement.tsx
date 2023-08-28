@@ -17,7 +17,6 @@ export const UiElement = ({ children, sx, orientation = 'TOPLEFT' }: Props) => {
         top: theme.customVars.appPadding.y,
         [orientation === 'TOPLEFT' ? 'left' : 'right']:
           theme.customVars.appPadding.x,
-        height: theme.customVars.toolMenu.height,
         borderRadius: 2,
         ...sx
       }}

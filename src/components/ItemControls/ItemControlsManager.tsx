@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { Card, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
+import { UiElement } from 'components/UiElement/UiElement';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ConnectorControls } from './ConnectorControls/ConnectorControls';
 import { RectangleControls } from './RectangleControls/RectangleControls';
@@ -28,21 +29,23 @@ export const ItemControlsManager = () => {
   }, [itemControls]);
 
   return (
-    <Card
+    <UiElement
       sx={{
-        position: 'absolute',
-        overflowY: 'scroll',
-        '&::-webkit-scrollbar': {
-          display: 'none'
-        },
-        width: '345px',
-        maxHeight: `calc(100% - ${theme.customVars.appPadding.y * 2}px)`,
-        left: theme.customVars.appPadding.x,
-        top: theme.customVars.appPadding.y,
-        borderRadius: 2
+        top: theme.customVars.appPadding.y * 3
       }}
     >
-      {Controls}
-    </Card>
+      <Box
+        sx={{
+          overflowY: 'scroll',
+          '&::-webkit-scrollbar': {
+            display: 'none'
+          },
+          width: '345px',
+          maxHeight: `calc(100% - ${theme.customVars.appPadding.y * 2}px)`
+        }}
+      >
+        {Controls}
+      </Box>
+    </UiElement>
   );
 };
