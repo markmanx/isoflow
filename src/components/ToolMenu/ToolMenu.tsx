@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '@mui/material';
 import {
   PanToolOutlined as PanToolIcon,
   ZoomInOutlined as ZoomInIcon,
@@ -12,10 +11,9 @@ import {
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
 import { IconButton } from 'src/components/IconButton/IconButton';
-import { Menu } from 'src/components/Menu/Menu';
+import { UiElement } from 'src/components/UiElement/UiElement';
 
 export const ToolMenu = () => {
-  const theme = useTheme();
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
@@ -27,11 +25,7 @@ export const ToolMenu = () => {
   });
 
   return (
-    <Menu
-      sx={{
-        right: theme.customVars.appPadding.x
-      }}
-    >
+    <UiElement orientation="TOPRIGHT">
       <IconButton
         name="Add element"
         Icon={<AddIcon />}
@@ -105,6 +99,6 @@ export const ToolMenu = () => {
         onClick={uiStateStoreActions.decrementZoom}
         disabled={zoom === MIN_ZOOM}
       />
-    </Menu>
+    </UiElement>
   );
 };

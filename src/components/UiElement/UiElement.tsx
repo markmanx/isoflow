@@ -3,10 +3,11 @@ import { Card, useTheme, SxProps } from '@mui/material';
 
 interface Props {
   children: React.ReactNode;
+  orientation?: 'TOPLEFT' | 'TOPRIGHT';
   sx?: SxProps;
 }
 
-export const Menu = ({ children, sx }: Props) => {
+export const UiElement = ({ children, sx, orientation = 'TOPLEFT' }: Props) => {
   const theme = useTheme();
 
   return (
@@ -14,7 +15,8 @@ export const Menu = ({ children, sx }: Props) => {
       sx={{
         position: 'absolute',
         top: theme.customVars.appPadding.y,
-        right: theme.customVars.appPadding.x,
+        [orientation === 'TOPLEFT' ? 'left' : 'right']:
+          theme.customVars.appPadding.x,
         height: theme.customVars.toolMenu.height,
         borderRadius: 2,
         ...sx
