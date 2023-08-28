@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
 import { UiElement } from 'components/UiElement/UiElement';
@@ -28,24 +28,25 @@ export const ItemControlsManager = () => {
     }
   }, [itemControls]);
 
+  const topOffset = useMemo(() => {
+    return theme.customVars.appPadding.y * 2 + parseInt(theme.spacing(2), 10);
+  }, [theme]);
+
   return (
     <UiElement
       sx={{
-        top: theme.customVars.appPadding.y * 2 + parseInt(theme.spacing(2), 10)
+        top: topOffset,
+        maxHeight: `calc(100% - ${
+          topOffset + theme.customVars.appPadding.y
+        }px)`,
+        overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+          display: 'none'
+        },
+        width: '345px'
       }}
     >
-      <Box
-        sx={{
-          overflowY: 'scroll',
-          '&::-webkit-scrollbar': {
-            display: 'none'
-          },
-          width: '345px',
-          maxHeight: `calc(100% - ${theme.customVars.appPadding.y * 2}px)`
-        }}
-      >
-        {Controls}
-      </Box>
+      {Controls}
     </UiElement>
   );
 };
