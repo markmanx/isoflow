@@ -3,7 +3,6 @@ import { shallow } from 'zustand/shallow';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
-import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
 import {
   SceneInput,
   IconInput,
@@ -22,10 +21,8 @@ import { LabelContainer } from 'src/components/Nodes/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { EMPTY_SCENE } from 'src/config';
-import { ItemControlsManager } from './components/ItemControls/ItemControlsManager';
-import { UiStateProvider, useUiStateStore } from './stores/uiStateStore';
-import { SceneLayer } from './components/SceneLayer/SceneLayer';
-import { DragAndDrop } from './components/DragAndDrop/DragAndDrop';
+import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
+import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   initialData?: InitialData;
@@ -55,15 +52,6 @@ const App = ({
   });
   const uiActions = useUiStateStore((state) => {
     return state.actions;
-  });
-  const disableInteractions = useUiStateStore((state) => {
-    return state.disableInteractions;
-  });
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
-  const mouse = useUiStateStore((state) => {
-    return state.mouse;
   });
 
   useEffect(() => {
@@ -102,13 +90,7 @@ const App = ({
         }}
       >
         <Renderer />
-        <ItemControlsManager />
-        {!disableInteractions && <ToolMenu />}
-        {mode.type === 'PLACE_ELEMENT' && mode.icon && (
-          <SceneLayer>
-            <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
-          </SceneLayer>
-        )}
+        <UiOverlay />
       </Box>
     </>
   );
