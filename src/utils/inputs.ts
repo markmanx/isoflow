@@ -80,7 +80,7 @@ export const connectorInputToConnector = (
   };
 };
 
-export const sceneInputtoScene = (sceneInput: SceneInput): Scene => {
+export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
   const nodes = sceneInput.nodes.map((nodeInput) => {
     return nodeInputToNode(nodeInput);
   });

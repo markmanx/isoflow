@@ -8,7 +8,7 @@ import {
   getConnectorPath,
   rectangleInputToRectangle,
   connectorInputToConnector,
-  sceneInputtoScene,
+  sceneInputToScene,
   nodeInputToNode
 } from 'src/utils';
 
@@ -23,7 +23,7 @@ const initialState = () => {
         setScene: (scene) => {
           sceneInput.parse(scene);
 
-          const newScene = sceneInputtoScene(scene);
+          const newScene = sceneInputToScene(scene);
 
           set(newScene);
         },

@@ -3,7 +3,8 @@ import { Menu, Typography, Divider } from '@mui/material';
 import {
   Menu as MenuIcon,
   GitHub as GitHubIcon,
-  Download as DownloadIcon
+  Download as DownloadIcon,
+  FolderOpen as FolderOpenIcon
 } from '@mui/icons-material';
 import FileSaver from 'file-saver';
 import { UiElement } from 'src/components/UiElement/UiElement';
@@ -29,8 +30,11 @@ export const MainMenu = () => {
       rectangles: state.rectangles
     };
   });
+  const setScene = useSceneStore((state) => {
+    return state.actions.setScene;
+  });
 
-  const onClick = useCallback(
+  const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
       setIsMainMenuOpen(true);
@@ -41,6 +45,31 @@ export const MainMenu = () => {
   const gotoGithub = useCallback(() => {
     window.open(REPOSITORY_URL, '_blank');
   }, []);
+
+  const onOpenScene = useCallback(async () => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'application/json';
+
+    fileInput.onchange = async (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+
+      if (!file) {
+        return;
+      }
+
+      const fileReader = new FileReader();
+
+      fileReader.onload = async (e) => {
+        const sceneInput = JSON.parse(e.target?.result as string);
+        setScene(sceneInput);
+      };
+      fileReader.readAsText(file);
+    };
+
+    fileInput.click();
+    setIsMainMenuOpen(false);
+  }, [setScene, setIsMainMenuOpen]);
 
   const onSaveAs = useCallback(async () => {
     const parsedScene = sceneToSceneInput(scene);
@@ -54,7 +83,7 @@ export const MainMenu = () => {
 
   return (
     <UiElement>
-      <IconButton Icon={<MenuIcon />} name="Main menu" onClick={onClick} />
+      <IconButton Icon={<MenuIcon />} name="Main menu" onClick={onToggleMenu} />
 
       <Menu
         anchorEl={anchorEl}
@@ -72,6 +101,9 @@ export const MainMenu = () => {
           }
         }}
       >
+        <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
+          Open
+        </MenuItem>
         <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
           Save as...
         </MenuItem>
