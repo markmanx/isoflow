@@ -41,12 +41,11 @@ V1 release progress: █████████░
 
 ## Quick start
 
-Install the Isoflow [npm package](https://www.npmjs.com/package/isoflow):
-```bash
-npm install isoflow
-```
+To integrate with your existing React app, install the Isoflow [npm package](https://www.npmjs.com/package/isoflow):
 
-Basic usage is as follows:
+- `npm install isoflow`
+
+## Basic integration:
 
 ```jsx
 import Isoflow from 'isoflow';
@@ -81,15 +80,21 @@ const Isoflow = dynamic(() => import("isoflow"), {
 });
 ```
 
+## Running Isoflow in development mode
+To run Isoflow on a local development server with hot-reloading enabled:
+
+1. `npm i`
+2. `npm run start`.
+
 ## Developer documentation
-For more detailed API documentation, examples and more, see the [developer documentation](https://v2.isoflow.io/docs).
-Documentation is included in this package and is built with NextJS.  To run the docs locally, run `npm run start:docs`.
+For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  Or if you'd prefer to build and run the docs locally:
+
+- `npm run start:docs`
 
 ## CodeSandbox
 
-Demo the latest version of Isoflow on Codesandbox [here](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).
-The sandbox is always synced with the Github repo.
+You can demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).  The sandbox is always synced with the Github repo.
 
 ## Contributing
-- Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/efXxbsha).
+- Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/QYPkvZth7D).
 - Want to contribute? See [good first issues](https://github.com/markmanx/isoflow/contribute).
