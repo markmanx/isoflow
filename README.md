@@ -3,7 +3,7 @@
 <h4 align="center">
   <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Isoflow Editor</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
-  <a href="https://discord.gg/efXxbsha">Discord</a>
+  <a href="https://discord.gg/QYPkvZth7D">Discord</a>
 </h4>
 
 <div align="center">
@@ -25,17 +25,18 @@
 
 ## Roadmap
 
-Beta release progress: ████████░
+V1 release progress: █████████░
 
 - [x] Basic view controls (pan & zoom)
 - [x] Create / delete nodes
 - [x] Create / delete connectors
 - [x] Create / delete rectangle areas
+- [x] Node icons (e.g. server, router etc)
+- [ ] Cloud service icons (i.e. AWS + GCP icons)
 - [x] onSceneUpdate callback
 - [x] Drag items
-- [x] Iconpacks
 - [x] Documentation
-- [ ] Export options
+- [x] Load / save diagram (locally as JSON)
 
 
 ## Quick start
