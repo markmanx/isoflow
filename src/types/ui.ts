@@ -132,6 +132,7 @@ export interface UiState {
 }
 
 export interface UiStateActions {
+  resetUiState: () => void;
   setMode: (mode: Mode) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;

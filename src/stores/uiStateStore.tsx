@@ -27,8 +27,23 @@ const initialState = () => {
       debugMode: false,
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
-      // TODO: Are all these actions needed?
       actions: {
+        resetUiState: () => {
+          set({
+            mode: {
+              type: 'CURSOR',
+              showCursor: true,
+              mousedownItem: null
+            },
+            scroll: {
+              position: CoordsUtils.zero(),
+              offset: CoordsUtils.zero()
+            },
+            itemControls: null,
+            contextMenu: null,
+            zoom: 1
+          });
+        },
         setMode: (mode) => {
           set({ mode });
         },

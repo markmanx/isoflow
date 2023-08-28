@@ -34,6 +34,9 @@ export const MainMenu = () => {
   const setScene = useSceneStore((state) => {
     return state.actions.setScene;
   });
+  const resetUiState = useUiStateStore((state) => {
+    return state.actions.resetUiState;
+  });
 
   const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,7 +59,7 @@ export const MainMenu = () => {
       const file = (event.target as HTMLInputElement).files?.[0];
 
       if (!file) {
-        return;
+        throw new Error('No file selected');
       }
 
       const fileReader = new FileReader();
@@ -66,11 +69,13 @@ export const MainMenu = () => {
         setScene(sceneInput);
       };
       fileReader.readAsText(file);
+
+      setIsMainMenuOpen(false);
+      resetUiState();
     };
 
-    fileInput.click();
-    setIsMainMenuOpen(false);
-  }, [setScene, setIsMainMenuOpen]);
+    await fileInput.click();
+  }, [setScene, setIsMainMenuOpen, resetUiState]);
 
   const onSaveAs = useCallback(async () => {
     const parsedScene = sceneToSceneInput(scene);
