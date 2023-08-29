@@ -1,8 +1,8 @@
 ![readme-header](https://user-images.githubusercontent.com/1769678/223572353-788d5d38-cd28-40fa-96cd-9d29226f7e4b.png)
 
 <h4 align="center">
-  <a href="https://v2.isoflow.io">Isoflow Editor</a> |
-  <a href="https://v2.isoflow.io/docs">Documentation</a> |
+  <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Isoflow Editor</a> |
+  <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Documentation</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
   <a href="https://discord.gg/QYPkvZth7D">Discord</a>
 </h4>
@@ -92,7 +92,7 @@ For detailed API documentation, examples and more, see the online [developer doc
 - `npm run start:docs`
 
 ## CodeSandbox
-Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
+Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
 ## Contributing
 - Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/QYPkvZth7D).
