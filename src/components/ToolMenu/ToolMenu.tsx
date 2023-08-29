@@ -6,7 +6,8 @@ import {
   NearMeOutlined as NearMeIcon,
   AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
-  CropSquareOutlined as CropSquareIcon
+  CropSquareOutlined as CropSquareIcon,
+  Title as TitleIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
@@ -27,6 +28,29 @@ export const ToolMenu = () => {
   return (
     <UiElement orientation="TOPRIGHT">
       <IconButton
+        name="Select"
+        Icon={<NearMeIcon />}
+        onClick={() => {
+          uiStateStoreActions.setMode({
+            type: 'CURSOR',
+            showCursor: true,
+            mousedownItem: null
+          });
+        }}
+        isActive={mode.type === 'CURSOR' || mode.type === 'DRAG_ITEMS'}
+      />
+      <IconButton
+        name="Pan"
+        Icon={<PanToolIcon />}
+        onClick={() => {
+          uiStateStoreActions.setMode({
+            type: 'PAN',
+            showCursor: false
+          });
+        }}
+        isActive={mode.type === 'PAN'}
+      />
+      <IconButton
         name="Add element"
         Icon={<AddIcon />}
         onClick={() => {
@@ -39,9 +63,10 @@ export const ToolMenu = () => {
             icon: null
           });
         }}
+        isActive={mode.type === 'PLACE_ELEMENT'}
       />
       <IconButton
-        name="Area"
+        name="Rectangle"
         Icon={<CropSquareIcon />}
         onClick={() => {
           uiStateStoreActions.setMode({
@@ -65,27 +90,15 @@ export const ToolMenu = () => {
         isActive={mode.type === 'CONNECTOR'}
       />
       <IconButton
-        name="Select"
-        Icon={<NearMeIcon />}
+        name="Text"
+        Icon={<TitleIcon />}
         onClick={() => {
           uiStateStoreActions.setMode({
-            type: 'CURSOR',
-            showCursor: true,
-            mousedownItem: null
-          });
-        }}
-        isActive={mode.type === 'CURSOR'}
-      />
-      <IconButton
-        name="Pan"
-        Icon={<PanToolIcon />}
-        onClick={() => {
-          uiStateStoreActions.setMode({
-            type: 'PAN',
+            type: 'TEXTBOX',
             showCursor: false
           });
         }}
-        isActive={mode.type === 'PAN'}
+        isActive={mode.type === 'TEXTBOX'}
       />
       <IconButton
         name="Zoom in"
