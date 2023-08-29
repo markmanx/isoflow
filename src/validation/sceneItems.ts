@@ -58,6 +58,11 @@ export const connectorInput = z.object({
   anchors: z.array(connectorAnchorInput)
 });
 
+export const textBoxInput = z.object({
+  id: z.string(),
+  text: z.string()
+});
+
 export const rectangleInput = z.object({
   id: z.string(),
   color: z.string().optional(),

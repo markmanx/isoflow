@@ -44,9 +44,12 @@ const App = ({
   const previnitialData = useRef<SceneInput>(EMPTY_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
-  const scene = useSceneStore(({ nodes, connectors, rectangles, icons }) => {
-    return { nodes, connectors, rectangles, icons };
-  }, shallow);
+  const scene = useSceneStore(
+    ({ nodes, connectors, textBoxes, rectangles, icons }) => {
+      return { nodes, connectors, textBoxes, rectangles, icons };
+    },
+    shallow
+  );
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });

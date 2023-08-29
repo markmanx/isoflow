@@ -2,16 +2,17 @@ import {
   SceneInput,
   NodeInput,
   ConnectorInput,
+  TextBoxInput,
   RectangleInput,
   SceneItemTypeEnum,
   Scene,
   Node,
   Connector,
+  TextBox,
   Rectangle,
   ConnectorAnchorInput,
   ConnectorAnchor,
-  Coords,
-  ConnectorStyleEnum
+  Coords
 } from 'src/types';
 import { NODE_DEFAULTS, DEFAULT_COLOR, CONNECTOR_DEFAULTS } from 'src/config';
 import { getConnectorPath } from './renderer';
@@ -77,6 +78,14 @@ export const connectorInputToConnector = (
     style: connectorInput.style ?? CONNECTOR_DEFAULTS.style,
     anchors,
     path: getConnectorPath({ anchors, nodes })
+  };
+};
+
+export const textBoxInputToTextBox = (textBoxInput: TextBoxInput): TextBox => {
+  return {
+    type: SceneItemTypeEnum.TEXTBOX,
+    id: textBoxInput.id,
+    text: textBoxInput.text
   };
 };
 

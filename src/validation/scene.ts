@@ -4,7 +4,8 @@ import {
   iconInput,
   nodeInput,
   connectorInput,
-  rectangleInput
+  rectangleInput,
+  textBoxInput
 } from './sceneItems';
 import { findInvalidConnector, findInvalidNode } from './utils';
 
@@ -13,6 +14,7 @@ export const sceneInput = z
     icons: z.array(iconInput),
     nodes: z.array(nodeInput),
     connectors: z.array(connectorInput),
+    textBoxes: z.array(textBoxInput),
     rectangles: z.array(rectangleInput)
   })
   .superRefine((scene, ctx) => {

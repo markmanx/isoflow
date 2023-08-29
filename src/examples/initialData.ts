@@ -52,6 +52,7 @@ export const initialData: InitialData = {
       ]
     }
   ],
+  textBoxes: [],
   rectangles: [
     {
       id: 'rect1',

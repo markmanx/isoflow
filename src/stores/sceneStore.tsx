@@ -17,6 +17,7 @@ const initialState = () => {
     return {
       nodes: [],
       connectors: [],
+      textBoxes: [],
       rectangles: [],
       icons: [],
       actions: {

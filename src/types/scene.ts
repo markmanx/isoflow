@@ -19,6 +19,7 @@ export enum TileOriginEnum {
 export enum SceneItemTypeEnum {
   NODE = 'NODE',
   CONNECTOR = 'CONNECTOR',
+  TEXTBOX = 'TEXTBOX',
   RECTANGLE = 'RECTANGLE'
 }
 
@@ -57,6 +58,12 @@ export interface Connector {
   };
 }
 
+export interface TextBox {
+  type: SceneItemTypeEnum.TEXTBOX;
+  id: string;
+  text: string;
+}
+
 export interface Rectangle {
   type: SceneItemTypeEnum.RECTANGLE;
   id: string;
@@ -90,6 +97,7 @@ export interface SceneActions {
 export type Scene = {
   nodes: Node[];
   connectors: Connector[];
+  textBoxes: TextBox[];
   rectangles: Rectangle[];
   icons: IconInput[];
 };
