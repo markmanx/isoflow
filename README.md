@@ -1,8 +1,8 @@
 ![readme-header](https://user-images.githubusercontent.com/1769678/223572353-788d5d38-cd28-40fa-96cd-9d29226f7e4b.png)
 
 <h4 align="center">
-  <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Isoflow Editor</a> |
-  <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Documentation</a> |
+  <a href="https://v2.isoflow.io/">Isoflow Editor</a> |
+  <a href="https://v2.isoflow.io/docs">Documentation</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
   <a href="https://discord.gg/QYPkvZth7D">Discord</a>
 </h4>
