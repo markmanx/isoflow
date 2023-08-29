@@ -43,7 +43,7 @@ export interface Mouse {
   } | null;
 }
 
-// Begin mode types
+// Mode types
 export interface InteractionsDisabled {
   type: 'INTERACTIONS_DISABLED';
   showCursor: boolean;
@@ -94,6 +94,11 @@ export interface ResizeRectangleMode {
   id: string;
 }
 
+export interface TextBoxMode {
+  type: 'TEXTBOX';
+  showCursor: boolean;
+}
+
 export type Mode =
   | InteractionsDisabled
   | CursorMode
@@ -102,7 +107,8 @@ export type Mode =
   | ConnectorMode
   | DrawRectangleMode
   | ResizeRectangleMode
-  | DragItemsMode;
+  | DragItemsMode
+  | TextBoxMode;
 // End mode types
 
 export type ContextMenu =

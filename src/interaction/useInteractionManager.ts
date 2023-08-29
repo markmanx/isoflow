@@ -9,6 +9,7 @@ import { DrawRectangle } from './modes/Rectangle/DrawRectangle';
 import { Connector } from './modes/Connector';
 import { Pan } from './modes/Pan';
 import { PlaceElement } from './modes/PlaceElement';
+import { TextBox } from './modes/TextBox';
 
 const modes: { [k in string]: ModeActions } = {
   CURSOR: Cursor,
@@ -16,7 +17,8 @@ const modes: { [k in string]: ModeActions } = {
   'RECTANGLE.DRAW': DrawRectangle,
   CONNECTOR: Connector,
   PAN: Pan,
-  PLACE_ELEMENT: PlaceElement
+  PLACE_ELEMENT: PlaceElement,
+  TEXTBOX: TextBox
 };
 
 export const useInteractionManager = () => {
