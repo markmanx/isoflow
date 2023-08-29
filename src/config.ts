@@ -40,5 +40,6 @@ export const EMPTY_SCENE: SceneInput = {
   icons: [],
   nodes: [],
   connectors: [],
+  textBoxes: [],
   rectangles: []
 };

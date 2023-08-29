@@ -28,6 +28,7 @@ export const MainMenu = () => {
       icons: state.icons,
       nodes: state.nodes,
       connectors: state.connectors,
+      textBoxes: state.textBoxes,
       rectangles: state.rectangles
     };
   });

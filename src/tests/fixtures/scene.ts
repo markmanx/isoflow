@@ -52,5 +52,6 @@ export const scene: SceneInput = {
       anchors: [{ nodeId: 'node2' }, { nodeId: 'node3' }]
     }
   ],
+  textBoxes: [],
   rectangles: [{ id: 'rectangle1', from: { x: 0, y: 0 }, to: { x: 2, y: 2 } }]
 };

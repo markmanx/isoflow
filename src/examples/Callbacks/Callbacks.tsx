@@ -17,6 +17,7 @@ const initialData: InitialData = {
     }
   ],
   connectors: [],
+  textBoxes: [],
   rectangles: []
 };
 
