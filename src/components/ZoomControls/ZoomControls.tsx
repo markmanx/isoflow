@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  ZoomInOutlined as ZoomInIcon,
-  ZoomOutOutlined as ZoomOutIcon
-} from '@mui/icons-material';
+import { Add as ZoomInIcon, Remove as ZoomOutIcon } from '@mui/icons-material';
 import { Stack, Box, Typography, Divider } from '@mui/material';
 import { toPx } from 'src/utils';
 import { UiElement } from 'src/components/UiElement/UiElement';
@@ -22,10 +19,10 @@ export const ZoomControls = () => {
     <UiElement>
       <Stack direction="row">
         <IconButton
-          name="Zoom in"
-          Icon={<ZoomInIcon />}
-          onClick={uiStateStoreActions.incrementZoom}
-          disabled={zoom === MAX_ZOOM}
+          name="Zoom out"
+          Icon={<ZoomOutIcon />}
+          onClick={uiStateStoreActions.decrementZoom}
+          disabled={zoom === MIN_ZOOM}
         />
         <Divider orientation="vertical" flexItem />
         <Box
@@ -42,10 +39,10 @@ export const ZoomControls = () => {
         </Box>
         <Divider orientation="vertical" flexItem />
         <IconButton
-          name="Zoom out"
-          Icon={<ZoomOutIcon />}
-          onClick={uiStateStoreActions.decrementZoom}
-          disabled={zoom === MIN_ZOOM}
+          name="Zoom in"
+          Icon={<ZoomInIcon />}
+          onClick={uiStateStoreActions.incrementZoom}
+          disabled={zoom === MAX_ZOOM}
         />
       </Stack>
     </UiElement>
