@@ -65,7 +65,7 @@ export const Node = ({ node, icon, order }: Props) => {
                 top: -projectedTileSize.height
               }}
             />
-            <LabelContainer labelHeight={node.labelHeight} connectorDotSize={5}>
+            <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>
               <MarkdownLabel label={label} />
             </LabelContainer>
           </Box>
