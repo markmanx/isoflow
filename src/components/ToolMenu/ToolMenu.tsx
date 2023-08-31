@@ -2,8 +2,6 @@ import React from 'react';
 import { Stack } from '@mui/material';
 import {
   PanToolOutlined as PanToolIcon,
-  ZoomInOutlined as ZoomInIcon,
-  ZoomOutOutlined as ZoomOutIcon,
   NearMeOutlined as NearMeIcon,
   AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
@@ -11,14 +9,10 @@ import {
   Title as TitleIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';
 
 export const ToolMenu = () => {
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -101,18 +95,6 @@ export const ToolMenu = () => {
             });
           }}
           isActive={mode.type === 'TEXTBOX'}
-        />
-        <IconButton
-          name="Zoom in"
-          Icon={<ZoomInIcon />}
-          onClick={uiStateStoreActions.incrementZoom}
-          disabled={zoom === MAX_ZOOM}
-        />
-        <IconButton
-          name="Zoom out"
-          Icon={<ZoomOutIcon />}
-          onClick={uiStateStoreActions.decrementZoom}
-          disabled={zoom === MIN_ZOOM}
         />
       </Stack>
     </UiElement>
