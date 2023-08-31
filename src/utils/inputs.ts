@@ -3,6 +3,7 @@ import {
   NodeInput,
   ConnectorInput,
   TextBoxInput,
+  ProjectionOrientationEnum,
   RectangleInput,
   SceneItemTypeEnum,
   Scene,
@@ -14,7 +15,12 @@ import {
   ConnectorAnchor,
   Coords
 } from 'src/types';
-import { NODE_DEFAULTS, DEFAULT_COLOR, CONNECTOR_DEFAULTS } from 'src/config';
+import {
+  NODE_DEFAULTS,
+  DEFAULT_COLOR,
+  CONNECTOR_DEFAULTS,
+  TEXTBOX_DEFAULTS
+} from 'src/config';
 import { getConnectorPath } from './renderer';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
@@ -85,6 +91,9 @@ export const textBoxInputToTextBox = (textBoxInput: TextBoxInput): TextBox => {
   return {
     type: SceneItemTypeEnum.TEXTBOX,
     id: textBoxInput.id,
+    orientation: textBoxInput.orientation ?? ProjectionOrientationEnum.X,
+    fontSize: textBoxInput.fontSize ?? TEXTBOX_DEFAULTS.fontSize,
+    tile: textBoxInput.tile,
     text: textBoxInput.text
   };
 };
@@ -174,6 +183,7 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
     connectorToConnectorInput,
     nodes
   );
+  const textBoxes: TextBoxInput[] = scene.textBoxes.map(textBoxInputToTextBox);
   const rectangles: RectangleInput[] = scene.rectangles.map(
     rectangleToRectangleInput
   );
@@ -181,6 +191,7 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
   return {
     nodes,
     connectors,
+    textBoxes,
     rectangles,
     icons: scene.icons
   } as SceneInput;

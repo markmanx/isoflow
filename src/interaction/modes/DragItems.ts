@@ -20,6 +20,12 @@ const dragItems = (
       const newTo = CoordsUtils.add(rectangle.to, delta);
 
       scene.actions.updateRectangle(item.id, { from: newFrom, to: newTo });
+    } else if (item.type === 'TEXTBOX') {
+      const textBox = getItemById(scene.textBoxes, item.id).item;
+
+      scene.actions.updateTextBox(item.id, {
+        tile: CoordsUtils.add(textBox.tile, delta)
+      });
     }
   });
 };

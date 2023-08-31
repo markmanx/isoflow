@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { Connector } from './Connector/Connector';
+import { Connector } from './Connector';
 
 export const Connectors = () => {
   const connectors = useSceneStore((state) => {

@@ -1,5 +1,5 @@
 import { Coords, Size } from './common';
-import { SceneItem, Connector, SceneItemReference } from './scene';
+import { SceneItem, Connector, SceneItemReference, TextBox } from './scene';
 import { IconInput } from './inputs';
 
 interface NodeControls {
@@ -9,6 +9,11 @@ interface NodeControls {
 
 interface ConnectorControls {
   type: 'CONNECTOR';
+  id: string;
+}
+
+interface TextBoxControls {
+  type: 'TEXTBOX';
   id: string;
 }
 
@@ -26,6 +31,7 @@ export type ItemControls =
   | ConnectorControls
   | RectangleControls
   | AddItemControls
+  | TextBoxControls
   | null;
 
 export interface Mouse {

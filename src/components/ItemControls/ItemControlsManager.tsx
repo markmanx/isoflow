@@ -5,6 +5,7 @@ import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSel
 import { UiElement } from 'components/UiElement/UiElement';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ConnectorControls } from './ConnectorControls/ConnectorControls';
+import { TextBoxControls } from './TextBoxControls/TextBoxControls';
 import { RectangleControls } from './RectangleControls/RectangleControls';
 
 export const ItemControlsManager = () => {
@@ -19,6 +20,8 @@ export const ItemControlsManager = () => {
         return <NodeControls key={itemControls.id} id={itemControls.id} />;
       case 'CONNECTOR':
         return <ConnectorControls key={itemControls.id} id={itemControls.id} />;
+      case 'TEXTBOX':
+        return <TextBoxControls key={itemControls.id} id={itemControls.id} />;
       case 'RECTANGLE':
         return <RectangleControls key={itemControls.id} id={itemControls.id} />;
       case 'ADD_ITEM':

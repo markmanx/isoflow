@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
+import { useTileSize } from 'src/hooks/useTileSize';
 
 interface Props {
   labelHeight: number;
@@ -20,7 +20,7 @@ export const LabelContainer = ({
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
-  const projectedTileSize = useProjectedTileSize();
+  const { projectedTileSize } = useTileSize();
   const yOffset = useMemo(() => {
     return projectedTileSize.height / 2;
   }, [projectedTileSize]);

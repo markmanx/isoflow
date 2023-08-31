@@ -13,3 +13,13 @@ export interface Size {
   width: number;
   height: number;
 }
+
+export interface Rect {
+  from: Coords;
+  to: Coords;
+}
+
+export enum ProjectionOrientationEnum {
+  X = 'X',
+  Y = 'Y'
+}

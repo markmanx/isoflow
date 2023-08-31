@@ -10,7 +10,7 @@ import {
   Title as TitleIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
+import { MAX_ZOOM, MIN_ZOOM, TEXTBOX_DEFAULTS } from 'src/config';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';
 

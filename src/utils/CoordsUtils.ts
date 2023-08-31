@@ -13,8 +13,8 @@ export class CoordsUtils {
     return { x: base.x + operand.x, y: base.y + operand.y };
   }
 
-  static multiply(base: Coords, operand: Coords): Coords {
-    return { x: base.x * operand.x, y: base.y * operand.y };
+  static multiply(base: Coords, operand: number): Coords {
+    return { x: base.x * operand, y: base.y * operand };
   }
 
   static toString(coords: Coords) {

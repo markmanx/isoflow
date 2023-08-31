@@ -59,6 +59,11 @@ export const Cursor: ModeActions = {
           type: 'CONNECTOR',
           id: uiState.mode.mousedownItem.id
         });
+      } else if (uiState.mode.mousedownItem.type === 'TEXTBOX') {
+        uiState.actions.setItemControls({
+          type: 'TEXTBOX',
+          id: uiState.mode.mousedownItem.id
+        });
       }
     } else {
       uiState.actions.setItemControls(null);

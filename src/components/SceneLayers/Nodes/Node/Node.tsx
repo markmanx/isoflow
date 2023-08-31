@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Node as NodeI, IconInput, TileOriginEnum } from 'src/types';
-import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
+import { useTileSize } from 'src/hooks/useTileSize';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
@@ -15,7 +15,7 @@ interface Props {
 
 export const Node = ({ node, icon, order }: Props) => {
   const nodeRef = useRef<HTMLDivElement>();
-  const projectedTileSize = useProjectedTileSize();
+  const { projectedTileSize } = useTileSize();
   const { getTilePosition } = useGetTilePosition();
 
   const onImageLoaded = useCallback(() => {

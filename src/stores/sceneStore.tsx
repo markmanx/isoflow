@@ -8,6 +8,7 @@ import {
   getConnectorPath,
   rectangleInputToRectangle,
   connectorInputToConnector,
+  textBoxInputToTextBox,
   sceneInputToScene,
   nodeInputToNode
 } from 'src/utils';
@@ -89,6 +90,16 @@ const initialState = () => {
           set({ nodes: newScene.nodes, connectors: newScene.connectors });
         },
 
+        createConnector: (connector) => {
+          const newScene = produce(get(), (draftState) => {
+            draftState.connectors.push(
+              connectorInputToConnector(connector, draftState.nodes)
+            );
+          });
+
+          set({ connectors: newScene.connectors });
+        },
+
         updateConnector: (id, updates) => {
           const newScene = produce(get(), (draftState) => {
             const { item: connector, index } = getItemById(
@@ -103,6 +114,58 @@ const initialState = () => {
           });
 
           set({ connectors: newScene.connectors });
+        },
+
+        deleteConnector: (id: string) => {
+          const newScene = produce(get(), (draftState) => {
+            const { index } = getItemById(draftState.connectors, id);
+
+            draftState.connectors.splice(index, 1);
+          });
+
+          set({ connectors: newScene.connectors });
+        },
+
+        createRectangle: (rectangle) => {
+          const newScene = produce(get(), (draftState) => {
+            draftState.rectangles.push(rectangleInputToRectangle(rectangle));
+          });
+
+          set({ rectangles: newScene.rectangles });
+        },
+
+        createTextBox: (textBox) => {
+          const newScene = produce(get(), (draftState) => {
+            draftState.textBoxes.push(textBoxInputToTextBox(textBox));
+          });
+
+          set({ textBoxes: newScene.textBoxes });
+        },
+
+        updateTextBox: (id, updates) => {
+          const newScene = produce(get(), (draftState) => {
+            const { item: textBox, index } = getItemById(
+              draftState.textBoxes,
+              id
+            );
+
+            draftState.textBoxes[index] = {
+              ...textBox,
+              ...updates
+            };
+          });
+
+          set({ textBoxes: newScene.textBoxes });
+        },
+
+        deleteTextBox: (id: string) => {
+          const newScene = produce(get(), (draftState) => {
+            const { index } = getItemById(draftState.textBoxes, id);
+
+            draftState.textBoxes.splice(index, 1);
+          });
+
+          set({ textBoxes: newScene.textBoxes });
         },
 
         updateRectangle: (id, updates) => {
@@ -121,39 +184,11 @@ const initialState = () => {
           set({ rectangles: newScene.rectangles });
         },
 
-        deleteConnector: (id: string) => {
-          const newScene = produce(get(), (draftState) => {
-            const { index } = getItemById(draftState.connectors, id);
-
-            draftState.connectors.splice(index, 1);
-          });
-
-          set({ connectors: newScene.connectors });
-        },
-
         deleteRectangle: (id: string) => {
           const newScene = produce(get(), (draftState) => {
             const { index } = getItemById(draftState.rectangles, id);
 
             draftState.rectangles.splice(index, 1);
-          });
-
-          set({ rectangles: newScene.rectangles });
-        },
-
-        createConnector: (connector) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.connectors.push(
-              connectorInputToConnector(connector, draftState.nodes)
-            );
-          });
-
-          set({ connectors: newScene.connectors });
-        },
-
-        createRectangle: (rectangle) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.rectangles.push(rectangleInputToRectangle(rectangle));
           });
 
           set({ rectangles: newScene.rectangles });

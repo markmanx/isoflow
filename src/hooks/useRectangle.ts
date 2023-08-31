@@ -7,9 +7,9 @@ export const useRectangle = (id: string) => {
     return state.rectangles;
   });
 
-  const node = useMemo(() => {
+  const rectangle = useMemo(() => {
     return getItemById(rectangles, id).item;
   }, [rectangles, id]);
 
-  return node;
+  return rectangle;
 };

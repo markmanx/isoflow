@@ -18,7 +18,7 @@ export const Section = ({ children, sx, title }: Props) => {
     >
       <Stack>
         {title && (
-          <Typography variant="body2" color="text.secondary" pb={0.5}>
+          <Typography variant="body2" color="text.secondary" pb={1}>
             {title}
           </Typography>
         )}

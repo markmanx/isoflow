@@ -1,12 +1,14 @@
-import { Coords, Size } from './common';
 import {
   IconInput,
   SceneInput,
   RectangleInput,
   ConnectorInput,
+  TextBoxInput,
   NodeInput,
   ConnectorStyleEnum
-} from './inputs';
+} from 'src/types/inputs';
+import { ProjectionOrientationEnum } from 'src/types/common';
+import { Coords, Rect } from './common';
 
 export enum TileOriginEnum {
   CENTER = 'CENTER',
@@ -53,15 +55,17 @@ export interface Connector {
   anchors: ConnectorAnchor[];
   path: {
     tiles: Coords[];
-    origin: Coords;
-    areaSize: Size;
+    rectangle: Rect;
   };
 }
 
 export interface TextBox {
   type: SceneItemTypeEnum.TEXTBOX;
   id: string;
+  fontSize: number;
+  tile: Coords;
   text: string;
+  orientation: ProjectionOrientationEnum;
 }
 
 export interface Rectangle {
@@ -72,7 +76,7 @@ export interface Rectangle {
   to: Coords;
 }
 
-export type SceneItem = Node | Connector | Rectangle;
+export type SceneItem = Node | Connector | TextBox | Rectangle;
 export type SceneItemReference = {
   type: SceneItemTypeEnum;
   id: string;
@@ -84,13 +88,16 @@ export interface SceneActions {
   setScene: (scene: SceneInput) => void;
   updateScene: (scene: Scene) => void;
   createNode: (node: NodeInput) => void;
-  createConnector: (connector: ConnectorInput) => void;
-  createRectangle: (rectangle: RectangleInput) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;
-  updateConnector: (id: string, updates: Partial<Connector>) => void;
-  updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
   deleteNode: (id: string) => void;
+  createConnector: (connector: ConnectorInput) => void;
+  updateConnector: (id: string, updates: Partial<Connector>) => void;
   deleteConnector: (id: string) => void;
+  createTextBox: (textBox: TextBoxInput) => void;
+  updateTextBox: (id: string, updates: Partial<TextBox>) => void;
+  deleteTextBox: (id: string) => void;
+  createRectangle: (rectangle: RectangleInput) => void;
+  updateRectangle: (id: string, updates: Partial<Rectangle>) => void;
   deleteRectangle: (id: string) => void;
 }
 

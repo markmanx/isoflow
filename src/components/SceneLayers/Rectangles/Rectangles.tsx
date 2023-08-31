@@ -2,7 +2,7 @@ import React from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { DEFAULT_COLOR } from 'src/config';
-import { Rectangle } from './Rectangle/Rectangle';
+import { Rectangle } from './Rectangle';
 
 export const Rectangles = () => {
   const rectangles = useSceneStore((state) => {

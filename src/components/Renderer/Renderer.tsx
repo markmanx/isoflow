@@ -4,9 +4,10 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
 import { Grid } from 'src/components/Grid/Grid';
 import { Cursor } from 'src/components/Cursor/Cursor';
-import { Nodes } from 'src/components/Nodes/Nodes';
-import { Rectangles } from 'src/components/Rectangles/Rectangles';
-import { Connectors } from 'src/components/Connectors/Connectors';
+import { Nodes } from 'src/components/SceneLayers/Nodes/Nodes';
+import { Rectangles } from 'src/components/SceneLayers/Rectangles/Rectangles';
+import { Connectors } from 'src/components/SceneLayers/Connectors/Connectors';
+import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
@@ -63,6 +64,9 @@ export const Renderer = () => {
       )}
       <SceneLayer>
         <Connectors />
+      </SceneLayer>
+      <SceneLayer>
+        <TextBoxes />
       </SceneLayer>
       <SceneLayer>
         <Nodes />

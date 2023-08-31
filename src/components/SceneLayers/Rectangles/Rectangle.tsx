@@ -20,7 +20,6 @@ export const Rectangle = ({ from, to, color }: Props) => {
       from={from}
       to={to}
       fill={color}
-      zoom={zoom}
       cornerRadius={22 * zoom}
       stroke={{
         color: getColorVariant(color, 'dark', { grade: 2 }),

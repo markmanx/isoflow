@@ -45,8 +45,13 @@ export const customVars: CustomThemeVars = {
 export const themeConfig: ThemeOptions = {
   customVars,
   typography: {
+    h2: {
+      fontSize: '4em',
+      fontStyle: 'bold',
+      lineHeight: 1.2
+    },
     h5: {
-      fontSize: '1.3rem',
+      fontSize: '1.3em',
       lineHeight: 1.2
     }
   },

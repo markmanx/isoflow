@@ -1,4 +1,5 @@
 import z from 'zod';
+import { ProjectionOrientationEnum } from 'src/types/common';
 
 const coords = z.object({
   x: z.number(),
@@ -60,7 +61,15 @@ export const connectorInput = z.object({
 
 export const textBoxInput = z.object({
   id: z.string(),
-  text: z.string()
+  tile: coords,
+  text: z.string(),
+  fontSize: z.number().optional(),
+  orientation: z
+    .union([
+      z.literal(ProjectionOrientationEnum.X),
+      z.literal(ProjectionOrientationEnum.Y)
+    ])
+    .optional()
 });
 
 export const rectangleInput = z.object({

@@ -13,7 +13,7 @@ export const TILE_PROJECTION_MULTIPLIERS: Size = {
   height: 0.819
 };
 export const DEFAULT_COLOR = customVars.diagramPalette.blue;
-
+export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
 export const NODE_DEFAULTS = {
   label: '',
   labelHeight: 140,
@@ -30,9 +30,15 @@ export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
   width: 10,
   // The boundaries of the search area for the pathfinder algorithm
   // is the grid that encompasses the two nodes + the offset below.
-  searchOffset: { x: 3, y: 3 },
+  searchOffset: { x: 1, y: 1 },
   style: ConnectorStyleEnum.SOLID
 };
+
+export const TEXTBOX_DEFAULTS = {
+  fontSize: 0.6,
+  text: 'Text'
+};
+
 export const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;

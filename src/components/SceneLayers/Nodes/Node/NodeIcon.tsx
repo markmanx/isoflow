@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { useProjectedTileSize } from 'src/hooks/useProjectedTileSize';
+import { useTileSize } from 'src/hooks/useTileSize';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { IconInput } from 'src/types';
 
@@ -11,7 +11,7 @@ interface Props {
 
 export const NodeIcon = ({ icon, onImageLoaded }: Props) => {
   const ref = useRef();
-  const projectedTileSize = useProjectedTileSize();
+  const { projectedTileSize } = useTileSize();
   const { size, observe, disconnect } = useResizeObserver();
 
   useEffect(() => {

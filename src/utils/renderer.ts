@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import {
   TILE_PROJECTION_MULTIPLIERS,
   UNPROJECTED_TILE_SIZE,
@@ -15,7 +16,9 @@ import {
   Mouse,
   ConnectorAnchor,
   SceneItem,
-  Scene
+  Scene,
+  Rect,
+  ProjectionOrientationEnum
 } from 'src/types';
 import {
   CoordsUtils,
@@ -197,8 +200,25 @@ export const getBoundingBoxSize = (boundingBox: Coords[]): Size => {
   };
 };
 
-export const getIsoMatrixCSS = () => {
-  return `matrix(-0.707, 0.409, 0.707, 0.409, 0, -0.816)`;
+const isoProjectionBaseValues = [0.707, -0.409, 0.707, 0.409, 0, -0.816];
+
+export const getIsoMatrix = (orientation?: ProjectionOrientationEnum) => {
+  switch (orientation) {
+    case ProjectionOrientationEnum.Y:
+      return produce(isoProjectionBaseValues, (draftState) => {
+        draftState[1] = -draftState[1];
+        draftState[2] = -draftState[2];
+      });
+    case ProjectionOrientationEnum.X:
+    default:
+      return isoProjectionBaseValues;
+  }
+};
+
+export const getIsoMatrixCSS = (orientation?: ProjectionOrientationEnum) => {
+  const matrixTransformValues = getIsoMatrix(orientation);
+
+  return `matrix(${matrixTransformValues.join(', ')})`;
 };
 
 export const getTranslateCSS = (translate: Coords = { x: 0, y: 0 }) => {
@@ -337,7 +357,10 @@ interface GetConnectorPath {
 export const getConnectorPath = ({
   anchors,
   nodes
-}: GetConnectorPath): { tiles: Coords[]; origin: Coords; areaSize: Size } => {
+}: GetConnectorPath): {
+  tiles: Coords[];
+  rectangle: Rect;
+} => {
   if (anchors.length < 2)
     throw new Error(
       `Connector needs at least two anchors (receieved: ${anchors.length})`
@@ -346,15 +369,21 @@ export const getConnectorPath = ({
   const anchorPositions = anchors.map((anchor) => {
     return getAnchorPosition({ anchor, nodes });
   });
+
   const searchArea = getBoundingBox(
     anchorPositions,
     CONNECTOR_DEFAULTS.searchOffset
   );
-  const searchAreaSize = getBoundingBoxSize(searchArea);
+
   const sorted = sortByPosition(searchArea);
-  const origin = { x: sorted.highX, y: sorted.highY };
+  const searchAreaSize = getBoundingBoxSize(searchArea);
+  const rectangle = {
+    from: { x: sorted.highX, y: sorted.highY },
+    to: { x: sorted.lowX, y: sorted.lowY }
+  };
+
   const positionsNormalisedFromSearchArea = anchorPositions.map((position) => {
-    return normalisePositionFromOrigin({ position, origin });
+    return normalisePositionFromOrigin({ position, origin: rectangle.from });
   });
 
   const tiles = positionsNormalisedFromSearchArea.reduce<Coords[]>(
@@ -373,7 +402,7 @@ export const getConnectorPath = ({
     []
   );
 
-  return { tiles, origin, areaSize: searchAreaSize };
+  return { tiles, rectangle };
 };
 
 type GetRectangleFromSize = (
@@ -416,11 +445,17 @@ export const getItemAtTile = ({
 
   if (node) return node;
 
+  const textBox = scene.textBoxes.find((tb) => {
+    return CoordsUtils.isEqual(tb.tile, tile);
+  });
+
+  if (textBox) return textBox;
+
   const connector = scene.connectors.find((con) => {
     return con.path.tiles.find((pathTile) => {
       const globalPathTile = connectorPathTileToGlobal(
         pathTile,
-        con.path.origin
+        con.path.rectangle.from
       );
 
       return CoordsUtils.isEqual(globalPathTile, tile);
@@ -436,4 +471,24 @@ export const getItemAtTile = ({
   if (rectangle) return rectangle;
 
   return null;
+};
+
+interface FontProps {
+  fontWeight: number | string;
+  fontSize: string;
+  fontFamily: string;
+}
+
+export const getTextWidth = (text: string, fontProps: FontProps) => {
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+
+  if (!context) {
+    throw new Error('Could not get canvas context');
+  }
+
+  context.font = `${fontProps.fontWeight} ${fontProps.fontSize} ${fontProps.fontFamily}`;
+  const metrics = context.measureText(text);
+
+  return metrics.width;
 };

@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { getProjectedTileSize } from 'src/utils';
+import { UNPROJECTED_TILE_SIZE } from 'src/config';
 
-export const useProjectedTileSize = () => {
+export const useTileSize = () => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
@@ -11,5 +12,9 @@ export const useProjectedTileSize = () => {
     return getProjectedTileSize({ zoom });
   }, [zoom]);
 
-  return projectedTileSize;
+  const unprojectedTileSize = useMemo(() => {
+    return UNPROJECTED_TILE_SIZE * zoom;
+  }, [zoom]);
+
+  return { projectedTileSize, unprojectedTileSize };
 };

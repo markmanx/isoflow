@@ -40,17 +40,17 @@ export const initialData: InitialData = {
     {
       id: 'connector1',
       anchors: [{ nodeId: 'server' }, { nodeId: 'database' }]
-    },
-    {
-      id: 'connector2',
-      style: ConnectorStyleEnum.DOTTED,
-      width: 10,
-      anchors: [
-        { nodeId: 'server' },
-        { tile: { x: -1, y: 2 } },
-        { nodeId: 'client' }
-      ]
     }
+    // {
+    //   id: 'connector2',
+    //   style: ConnectorStyleEnum.DOTTED,
+    //   width: 10,
+    //   anchors: [
+    //     { nodeId: 'server' },
+    //     { tile: { x: -1, y: 2 } },
+    //     { nodeId: 'client' }
+    //   ]
+    // }
   ],
   textBoxes: [],
   rectangles: [

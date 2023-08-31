@@ -40,3 +40,7 @@ export const getColorVariant = (
 export const setWindowCursor = (cursor: string) => {
   window.document.body.style.cursor = cursor;
 };
+
+export const toPx = (value: number | string) => {
+  return `${value}px`;
+};

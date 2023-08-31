@@ -7,6 +7,7 @@ interface Props {
   onChange?: (value: string) => void;
   readOnly?: boolean;
   height?: number;
+  styles?: React.CSSProperties;
 }
 
 const tools = ['bold', 'italic', 'underline', 'strike', 'link'];
@@ -15,7 +16,8 @@ export const MarkdownEditor = ({
   value,
   onChange,
   readOnly,
-  height = 120
+  height = 120,
+  styles
 }: Props) => {
   const modules = useMemo(() => {
     if (!readOnly)
@@ -42,7 +44,8 @@ export const MarkdownEditor = ({
           height
         },
         '.ql-container.ql-snow': {
-          ...(readOnly ? { border: 'none' } : {})
+          ...(readOnly ? { border: 'none' } : {}),
+          ...styles
         },
         '.ql-editor': {
           ...(readOnly ? { p: 0 } : {})
