@@ -94,6 +94,9 @@ For detailed API documentation, examples and more, see the online [developer doc
 ## CodeSandbox
 Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
+## Using Isoflow commercially?
+Isoflow is free to use for personal and commercial projects.  If you're using Isoflow commercially, please consider sponsoring the project (please get in touch).
+
 ## Contributing
 - Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/QYPkvZth7D).
 - Want to contribute? See [good first issues](https://github.com/markmanx/isoflow/contribute).
