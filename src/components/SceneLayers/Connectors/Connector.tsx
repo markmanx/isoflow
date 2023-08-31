@@ -8,7 +8,6 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { Svg } from 'src/components/Svg/Svg';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
-import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 
 interface Props {
   connector: ConnectorI;
@@ -102,7 +101,7 @@ export const Connector = ({ connector }: Props) => {
           fill="none"
         />
 
-        {anchorPositions.map((anchor, i) => {
+        {anchorPositions.map((anchor) => {
           return (
             <>
               <Circle
@@ -115,7 +114,7 @@ export const Connector = ({ connector }: Props) => {
                 position={CoordsUtils.add(anchor, drawOffset)}
                 radius={12 * zoom}
                 stroke={theme.palette.common.black}
-                fill={i === 0 ? 'red' : theme.palette.common.white}
+                fill={theme.palette.common.white}
                 strokeWidth={6 * zoom}
               />
             </>

@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import { useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
-import { UiElement } from 'components/UiElement/UiElement';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ConnectorControls } from './ConnectorControls/ConnectorControls';
 import { TextBoxControls } from './TextBoxControls/TextBoxControls';
@@ -12,7 +11,6 @@ export const ItemControlsManager = () => {
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
   });
-  const theme = useTheme();
 
   const Controls = useMemo(() => {
     switch (itemControls?.type) {
@@ -31,25 +29,13 @@ export const ItemControlsManager = () => {
     }
   }, [itemControls]);
 
-  const topOffset = useMemo(() => {
-    return theme.customVars.appPadding.y * 2 + parseInt(theme.spacing(2), 10);
-  }, [theme]);
-
   return (
-    <UiElement
+    <Box
       sx={{
-        top: topOffset,
-        maxHeight: `calc(100% - ${
-          topOffset + theme.customVars.appPadding.y
-        }px)`,
-        overflowY: 'scroll',
-        '&::-webkit-scrollbar': {
-          display: 'none'
-        },
-        width: '345px'
+        width: '100%'
       }}
     >
       {Controls}
-    </UiElement>
+    </Box>
   );
 };

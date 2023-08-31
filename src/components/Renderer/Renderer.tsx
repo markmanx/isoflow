@@ -76,7 +76,7 @@ export const Renderer = () => {
           <DebugUtils />
         </SceneLayer>
       )}
-      {/* Interaction layer */}
+      {/* Interaction layer: this is where events are detected */}
       <SceneLayer ref={containerRef} />
     </Box>
   );
