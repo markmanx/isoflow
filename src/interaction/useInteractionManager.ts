@@ -6,6 +6,7 @@ import { getMouse } from 'src/utils';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
 import { DrawRectangle } from './modes/Rectangle/DrawRectangle';
+import { TransformRectangle } from './modes/Rectangle/TransformRectangle';
 import { Connector } from './modes/Connector';
 import { Pan } from './modes/Pan';
 import { PlaceElement } from './modes/PlaceElement';
@@ -14,7 +15,9 @@ import { TextBox } from './modes/TextBox';
 const modes: { [k in string]: ModeActions } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
+  // TODO: Adopt this notation for all modes (i.e. {node.type}.{action})
   'RECTANGLE.DRAW': DrawRectangle,
+  'RECTANGLE.TRANSFORM': TransformRectangle,
   CONNECTOR: Connector,
   PAN: Pan,
   PLACE_ELEMENT: PlaceElement,

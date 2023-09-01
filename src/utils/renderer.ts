@@ -18,7 +18,9 @@ import {
   SceneItem,
   Scene,
   Rect,
-  ProjectionOrientationEnum
+  ProjectionOrientationEnum,
+  AnchorPositionsEnum,
+  BoundingBox
 } from 'src/types';
 import {
   CoordsUtils,
@@ -180,7 +182,7 @@ export const isWithinBounds = (tile: Coords, bounds: Coords[]) => {
 export const getBoundingBox = (
   tiles: Coords[],
   offset: Coords = CoordsUtils.zero()
-): Coords[] => {
+): BoundingBox => {
   const { lowX, lowY, highX, highY } = sortByPosition(tiles);
 
   return [
@@ -215,7 +217,9 @@ export const getIsoMatrix = (orientation?: ProjectionOrientationEnum) => {
   }
 };
 
-export const getIsoMatrixCSS = (orientation?: ProjectionOrientationEnum) => {
+export const getIsoProjectionCss = (
+  orientation?: ProjectionOrientationEnum
+) => {
   const matrixTransformValues = getIsoMatrix(orientation);
 
   return `matrix(${matrixTransformValues.join(', ')})`;
@@ -491,4 +495,20 @@ export const getTextWidth = (text: string, fontProps: FontProps) => {
   const metrics = context.measureText(text);
 
   return metrics.width;
+};
+
+export const outermostCornerPositions = [
+  TileOriginEnum.BOTTOM,
+  TileOriginEnum.RIGHT,
+  TileOriginEnum.TOP,
+  TileOriginEnum.LEFT
+];
+
+export const convertBoundsToNamedAnchors = (boundingBox: BoundingBox) => {
+  return {
+    [AnchorPositionsEnum.BOTTOM_LEFT]: boundingBox[0],
+    [AnchorPositionsEnum.BOTTOM_RIGHT]: boundingBox[1],
+    [AnchorPositionsEnum.TOP_RIGHT]: boundingBox[2],
+    [AnchorPositionsEnum.TOP_LEFT]: boundingBox[3]
+  };
 };

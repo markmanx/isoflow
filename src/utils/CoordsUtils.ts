@@ -21,6 +21,10 @@ export class CoordsUtils {
     return `x: ${coords.x}, y: ${coords.y}`;
   }
 
+  static sum(coords: Coords) {
+    return coords.x + coords.y;
+  }
+
   static zero() {
     return { x: 0, y: 0 };
   }

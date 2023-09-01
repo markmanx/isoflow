@@ -5,7 +5,7 @@ import {
   Size,
   ProjectionOrientationEnum
 } from 'src/types';
-import { getBoundingBox, getIsoMatrixCSS } from 'src/utils';
+import { getBoundingBox, getIsoProjectionCss } from 'src/utils';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useGetTilePosition } from './useGetTilePosition';
@@ -71,7 +71,7 @@ export const useIsoProjection = ({
       top: position.y,
       width: `${pxSize.width}px`,
       height: `${pxSize.height}px`,
-      transform: getIsoMatrixCSS(orientation),
+      transform: getIsoProjectionCss(orientation),
       transformOrigin: 'top left'
     },
     position,

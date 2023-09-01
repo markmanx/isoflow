@@ -1,5 +1,5 @@
 import { Coords, Size } from './common';
-import { SceneItem, Connector, SceneItemReference, TextBox } from './scene';
+import { SceneItem, Connector, SceneItemReference } from './scene';
 import { IconInput } from './inputs';
 
 interface NodeControls {
@@ -94,10 +94,18 @@ export interface DrawRectangleMode {
   } | null;
 }
 
-export interface ResizeRectangleMode {
-  type: 'RECTANGLE.RESIZE';
+export enum AnchorPositionsEnum {
+  BOTTOM_LEFT = 'BOTTOM_LEFT',
+  BOTTOM_RIGHT = 'BOTTOM_RIGHT',
+  TOP_RIGHT = 'TOP_RIGHT',
+  TOP_LEFT = 'TOP_LEFT'
+}
+
+export interface TransformRectangleMode {
+  type: 'RECTANGLE.TRANSFORM';
   showCursor: boolean;
   id: string;
+  selectedAnchor: AnchorPositionsEnum | null;
 }
 
 export interface TextBoxMode {
@@ -112,7 +120,7 @@ export type Mode =
   | PlaceElementMode
   | ConnectorMode
   | DrawRectangleMode
-  | ResizeRectangleMode
+  | TransformRectangleMode
   | DragItemsMode
   | TextBoxMode;
 // End mode types

@@ -23,3 +23,5 @@ export enum ProjectionOrientationEnum {
   X = 'X',
   Y = 'Y'
 }
+
+export type BoundingBox = [Coords, Coords, Coords, Coords];

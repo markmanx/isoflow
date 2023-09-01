@@ -54,6 +54,15 @@ export const Cursor: ModeActions = {
           type: 'RECTANGLE',
           id: uiState.mode.mousedownItem.id
         });
+
+        uiState.actions.setMode({
+          type: 'RECTANGLE.TRANSFORM',
+          id: uiState.mode.mousedownItem.id,
+          showCursor: true,
+          selectedAnchor: null
+        });
+
+        return;
       } else if (uiState.mode.mousedownItem.type === 'CONNECTOR') {
         uiState.actions.setItemControls({
           type: 'CONNECTOR',

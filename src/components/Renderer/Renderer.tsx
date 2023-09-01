@@ -11,6 +11,7 @@ import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
+import { TransformControlsManager } from 'src/components/TransformControlsManager/TransformControlsManager';
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLDivElement>();
@@ -20,6 +21,7 @@ export const Renderer = () => {
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
+
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -76,6 +78,9 @@ export const Renderer = () => {
           <DebugUtils />
         </SceneLayer>
       )}
+      <SceneLayer>
+        <TransformControlsManager />
+      </SceneLayer>
       {/* Interaction layer: this is where events are detected */}
       <SceneLayer ref={containerRef} />
     </Box>

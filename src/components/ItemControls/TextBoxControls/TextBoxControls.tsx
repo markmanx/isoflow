@@ -11,7 +11,7 @@ import { TextRotationNone as TextRotationNoneIcon } from '@mui/icons-material';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useTextBox } from 'src/hooks/useTextBox';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { getIsoMatrixCSS } from 'src/utils';
+import { getIsoProjectionCss } from 'src/utils';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
 import { Header } from '../components/Header';
@@ -76,12 +76,12 @@ export const TextBoxControls = ({ id }: Props) => {
           }}
         >
           <ToggleButton value={ProjectionOrientationEnum.X}>
-            <TextRotationNoneIcon sx={{ transform: getIsoMatrixCSS() }} />
+            <TextRotationNoneIcon sx={{ transform: getIsoProjectionCss() }} />
           </ToggleButton>
           <ToggleButton value={ProjectionOrientationEnum.Y}>
             <TextRotationNoneIcon
               sx={{
-                transform: `scale(-1, 1) ${getIsoMatrixCSS()} scale(-1, 1)`
+                transform: `scale(-1, 1) ${getIsoProjectionCss()} scale(-1, 1)`
               }}
             />
           </ToggleButton>

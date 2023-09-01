@@ -7,6 +7,7 @@ import {
 } from 'src/types';
 import { customVars } from './styles/theme';
 
+// TODO: This file could do with better organisation and convention for easier reading.
 export const UNPROJECTED_TILE_SIZE = 100;
 export const TILE_PROJECTION_MULTIPLIERS: Size = {
   width: 1.415,
@@ -49,3 +50,5 @@ export const EMPTY_SCENE: SceneInput = {
   textBoxes: [],
   rectangles: []
 };
+export const TRANSFORM_ANCHOR_SIZE = 30;
+export const TRANSFORM_CONTROLS_COLOR = '#0392ff';
