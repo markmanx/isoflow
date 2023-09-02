@@ -467,7 +467,11 @@ export const getItemAtTile = ({
   if (node) return node;
 
   const textBox = scene.textBoxes.find((tb) => {
-    const textBoxBounds = getBoundingBox([tb.tile, getTextBoxTo(tb)]);
+    const textBoxTo = getTextBoxTo(tb);
+    const textBoxBounds = getBoundingBox([
+      tb.tile,
+      { x: Math.ceil(textBoxTo.x), y: Math.ceil(textBoxTo.y) }
+    ]);
 
     return isWithinBounds(tile, textBoxBounds);
   });
