@@ -1,8 +1,51 @@
 import { produce } from 'immer';
-import { ModeActions } from 'src/types';
+import { ModeActions, ModeActionsAction } from 'src/types';
 import { getItemAtTile, hasMovedTile } from 'src/utils';
 
+const mousedown: ModeActionsAction = ({
+  uiState,
+  scene,
+  isRendererInteraction
+}) => {
+  if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
+
+  const itemAtTile = getItemAtTile({
+    tile: uiState.mouse.position.tile,
+    scene
+  });
+
+  if (itemAtTile) {
+    uiState.actions.setMode(
+      produce(uiState.mode, (draftState) => {
+        draftState.mousedownItem = {
+          type: itemAtTile.type,
+          id: itemAtTile.id
+        };
+      })
+    );
+
+    uiState.actions.setItemControls(itemAtTile);
+  } else {
+    uiState.actions.setMode(
+      produce(uiState.mode, (draftState) => {
+        draftState.mousedownItem = null;
+      })
+    );
+
+    uiState.actions.setItemControls(null);
+  }
+};
+
 export const Cursor: ModeActions = {
+  entry: (state) => {
+    const { uiState } = state;
+
+    if (uiState.mode.type !== 'CURSOR') return;
+
+    if (uiState.mode.mousedownItem) {
+      mousedown(state);
+    }
+  },
   mousemove: ({ uiState }) => {
     if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
@@ -15,30 +58,10 @@ export const Cursor: ModeActions = {
         items: [mousedownItem],
         isInitialMovement: true
       });
-
-      uiState.actions.setItemControls(null);
     }
   },
-  mousedown: ({ uiState, scene, isRendererInteraction }) => {
-    if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
-
-    const itemAtTile = getItemAtTile({
-      tile: uiState.mouse.position.tile,
-      scene
-    });
-
-    uiState.actions.setMode(
-      produce(uiState.mode, (draftState) => {
-        if (itemAtTile) {
-          draftState.mousedownItem = {
-            type: itemAtTile.type,
-            id: itemAtTile.id
-          };
-        } else {
-          draftState.mousedownItem = null;
-        }
-      })
-    );
+  mousedown: (state) => {
+    mousedown(state);
   },
   mouseup: ({ uiState, isRendererInteraction }) => {
     if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
