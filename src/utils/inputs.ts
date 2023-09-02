@@ -20,8 +20,7 @@ import {
   DEFAULT_COLOR,
   CONNECTOR_DEFAULTS,
   TEXTBOX_DEFAULTS,
-  DEFAULT_FONT_FAMILY,
-  UNPROJECTED_TILE_SIZE
+  DEFAULT_FONT_FAMILY
 } from 'src/config';
 import { getConnectorPath, getTextWidth } from 'src/utils';
 
@@ -110,6 +109,16 @@ export const textBoxInputToTextBox = (textBoxInput: TextBoxInput): TextBox => {
   };
 };
 
+export const textBoxToTextBoxInput = (textBox: TextBox): TextBoxInput => {
+  return {
+    id: textBox.id,
+    orientation: textBox.orientation,
+    fontSize: textBox.fontSize,
+    tile: textBox.tile,
+    text: textBox.text
+  };
+};
+
 export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
   const nodes = sceneInput.nodes.map((nodeInput) => {
     return nodeInputToNode(nodeInput);
@@ -195,7 +204,9 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
     connectorToConnectorInput,
     nodes
   );
-  const textBoxes: TextBoxInput[] = scene.textBoxes.map(textBoxInputToTextBox);
+  const textBoxes: TextBoxInput[] = scene.textBoxes.map((textBox) => {
+    return textBoxToTextBoxInput(textBox);
+  });
   const rectangles: RectangleInput[] = scene.rectangles.map(
     rectangleToRectangleInput
   );
