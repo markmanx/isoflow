@@ -21,7 +21,8 @@ import {
   Rect,
   ProjectionOrientationEnum,
   AnchorPositionsEnum,
-  BoundingBox
+  BoundingBox,
+  TextBox
 } from 'src/types';
 import {
   CoordsUtils,
@@ -436,6 +437,20 @@ export const connectorPathTileToGlobal = (tile: Coords, origin: Coords) => {
   );
 };
 
+export const getTextBoxTo = (textBox: TextBox) => {
+  if (textBox.orientation === ProjectionOrientationEnum.X) {
+    return CoordsUtils.add(textBox.tile, {
+      x: textBox.size.width,
+      y: 0
+    });
+  }
+
+  return CoordsUtils.add(textBox.tile, {
+    x: 0,
+    y: -textBox.size.width
+  });
+};
+
 interface GetItemAtTile {
   tile: Coords;
   scene: Scene;
@@ -452,7 +467,9 @@ export const getItemAtTile = ({
   if (node) return node;
 
   const textBox = scene.textBoxes.find((tb) => {
-    return CoordsUtils.isEqual(tb.tile, tile);
+    const textBoxBounds = getBoundingBox([tb.tile, getTextBoxTo(tb)]);
+
+    return isWithinBounds(tile, textBoxBounds);
   });
 
   if (textBox) return textBox;
