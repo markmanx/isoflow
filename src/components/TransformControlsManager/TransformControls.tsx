@@ -23,7 +23,6 @@ export const TransformControls = ({
   onMouseOver,
   showCornerAnchors
 }: Props) => {
-  const theme = useTheme();
   const { css, pxSize } = useIsoProjection({
     from,
     to

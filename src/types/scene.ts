@@ -7,8 +7,7 @@ import {
   NodeInput,
   ConnectorStyleEnum
 } from 'src/types/inputs';
-import { ProjectionOrientationEnum } from 'src/types/common';
-import { Coords, Rect } from './common';
+import { ProjectionOrientationEnum, Coords, Rect, Size } from 'src/types';
 
 export enum TileOriginEnum {
   CENTER = 'CENTER',
@@ -66,6 +65,7 @@ export interface TextBox {
   tile: Coords;
   text: string;
   orientation: ProjectionOrientationEnum;
+  size: Size;
 }
 
 export interface Rectangle {

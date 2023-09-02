@@ -37,7 +37,9 @@ export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
 
 export const TEXTBOX_DEFAULTS = {
   fontSize: 0.6,
-  text: 'Text'
+  paddingX: 0.2,
+  text: 'Text',
+  fontWeight: 'bold'
 };
 
 export const ZOOM_INCREMENT = 0.2;

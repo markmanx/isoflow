@@ -2,6 +2,7 @@ import React, { createContext, useRef, useContext } from 'react';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
 import { SceneStore } from 'src/types';
+import { DEFAULT_FONT_FAMILY, TEXTBOX_DEFAULTS } from 'src/config';
 import { sceneInput } from 'src/validation/scene';
 import {
   getItemById,
@@ -10,7 +11,8 @@ import {
   connectorInputToConnector,
   textBoxInputToTextBox,
   sceneInputToScene,
-  nodeInputToNode
+  nodeInputToNode,
+  getTextWidth
 } from 'src/utils';
 
 const initialState = () => {
@@ -148,6 +150,17 @@ const initialState = () => {
               draftState.textBoxes,
               id
             );
+
+            if (updates.text || updates.fontSize) {
+              draftState.textBoxes[index].size = {
+                width: getTextWidth(updates.text ?? textBox.text, {
+                  fontSize: updates.fontSize ?? textBox.fontSize,
+                  fontFamily: DEFAULT_FONT_FAMILY,
+                  fontWeight: TEXTBOX_DEFAULTS.fontWeight
+                }),
+                height: 1
+              };
+            }
 
             draftState.textBoxes[index] = {
               ...textBox,

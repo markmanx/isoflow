@@ -5,7 +5,8 @@ import {
   ZOOM_INCREMENT,
   MAX_ZOOM,
   MIN_ZOOM,
-  CONNECTOR_DEFAULTS
+  CONNECTOR_DEFAULTS,
+  TEXTBOX_DEFAULTS
 } from 'src/config';
 import {
   Coords,
@@ -26,7 +27,8 @@ import {
   CoordsUtils,
   clamp,
   roundToOneDecimalPlace,
-  findPath
+  findPath,
+  toPx
 } from 'src/utils';
 
 interface GetProjectedTileSize {
@@ -479,11 +481,13 @@ export const getItemAtTile = ({
 
 interface FontProps {
   fontWeight: number | string;
-  fontSize: string;
+  fontSize: number;
   fontFamily: string;
 }
 
 export const getTextWidth = (text: string, fontProps: FontProps) => {
+  const paddingX = TEXTBOX_DEFAULTS.paddingX * UNPROJECTED_TILE_SIZE;
+  const fontSizePx = toPx(fontProps.fontSize * UNPROJECTED_TILE_SIZE);
   const canvas: HTMLCanvasElement = document.createElement('canvas');
   const context = canvas.getContext('2d');
 
@@ -491,10 +495,12 @@ export const getTextWidth = (text: string, fontProps: FontProps) => {
     throw new Error('Could not get canvas context');
   }
 
-  context.font = `${fontProps.fontWeight} ${fontProps.fontSize} ${fontProps.fontFamily}`;
+  context.font = `${fontProps.fontWeight} ${fontSizePx} ${fontProps.fontFamily}`;
   const metrics = context.measureText(text);
 
-  return metrics.width;
+  canvas.remove();
+
+  return Math.ceil((metrics.width + paddingX * 2) / UNPROJECTED_TILE_SIZE);
 };
 
 export const outermostCornerPositions = [

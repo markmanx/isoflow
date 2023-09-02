@@ -12,9 +12,6 @@ export const TextBoxes = () => {
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
-  const itemControls = useUiStateStore((state) => {
-    return state.itemControls;
-  });
   const textBoxes = useSceneStore((state) => {
     return state.textBoxes;
   });
@@ -22,14 +19,7 @@ export const TextBoxes = () => {
   return (
     <>
       {textBoxes.map((textBox) => {
-        return (
-          <TextBox
-            textBox={textBox}
-            isSelected={
-              itemControls?.type === 'TEXTBOX' && itemControls.id === textBox.id
-            }
-          />
-        );
+        return <TextBox textBox={textBox} />;
       })}
       {mode.type === 'TEXTBOX' && (
         <TextBox
@@ -38,7 +28,6 @@ export const TextBoxes = () => {
             ...TEXTBOX_DEFAULTS,
             tile: mouse.position.tile
           })}
-          isSelected
         />
       )}
     </>

@@ -19,9 +19,11 @@ import {
   NODE_DEFAULTS,
   DEFAULT_COLOR,
   CONNECTOR_DEFAULTS,
-  TEXTBOX_DEFAULTS
+  TEXTBOX_DEFAULTS,
+  DEFAULT_FONT_FAMILY,
+  UNPROJECTED_TILE_SIZE
 } from 'src/config';
-import { getConnectorPath } from './renderer';
+import { getConnectorPath, getTextWidth } from 'src/utils';
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   return {
@@ -88,13 +90,23 @@ export const connectorInputToConnector = (
 };
 
 export const textBoxInputToTextBox = (textBoxInput: TextBoxInput): TextBox => {
+  const fontSize = textBoxInput.fontSize ?? TEXTBOX_DEFAULTS.fontSize;
+
   return {
     type: SceneItemTypeEnum.TEXTBOX,
     id: textBoxInput.id,
     orientation: textBoxInput.orientation ?? ProjectionOrientationEnum.X,
-    fontSize: textBoxInput.fontSize ?? TEXTBOX_DEFAULTS.fontSize,
+    fontSize,
     tile: textBoxInput.tile,
-    text: textBoxInput.text
+    text: textBoxInput.text,
+    size: {
+      width: getTextWidth(textBoxInput.text, {
+        fontSize,
+        fontFamily: DEFAULT_FONT_FAMILY,
+        fontWeight: TEXTBOX_DEFAULTS.fontWeight
+      }),
+      height: 1
+    }
   };
 };
 
