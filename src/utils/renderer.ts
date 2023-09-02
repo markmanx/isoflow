@@ -470,7 +470,13 @@ export const getItemAtTile = ({
     const textBoxTo = getTextBoxTo(tb);
     const textBoxBounds = getBoundingBox([
       tb.tile,
-      { x: Math.ceil(textBoxTo.x), y: Math.ceil(textBoxTo.y) }
+      {
+        x: Math.ceil(textBoxTo.x),
+        y:
+          tb.orientation === 'X'
+            ? Math.ceil(textBoxTo.y)
+            : Math.floor(textBoxTo.y)
+      }
     ]);
 
     return isWithinBounds(tile, textBoxBounds);
