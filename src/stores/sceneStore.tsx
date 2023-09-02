@@ -151,7 +151,7 @@ const initialState = () => {
               id
             );
 
-            if (updates.text || updates.fontSize) {
+            if (updates.text !== undefined || updates.fontSize !== undefined) {
               draftState.textBoxes[index].size = {
                 width: getTextWidth(updates.text ?? textBox.text, {
                   fontSize: updates.fontSize ?? textBox.fontSize,

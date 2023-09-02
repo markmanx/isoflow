@@ -503,6 +503,8 @@ interface FontProps {
 }
 
 export const getTextWidth = (text: string, fontProps: FontProps) => {
+  if (!text) return 0;
+
   const paddingX = TEXTBOX_DEFAULTS.paddingX * UNPROJECTED_TILE_SIZE;
   const fontSizePx = toPx(fontProps.fontSize * UNPROJECTED_TILE_SIZE);
   const canvas: HTMLCanvasElement = document.createElement('canvas');
@@ -517,7 +519,7 @@ export const getTextWidth = (text: string, fontProps: FontProps) => {
 
   canvas.remove();
 
-  return Math.ceil((metrics.width + paddingX * 2) / UNPROJECTED_TILE_SIZE);
+  return (metrics.width + paddingX * 2) / UNPROJECTED_TILE_SIZE - 0.8;
 };
 
 export const outermostCornerPositions = [

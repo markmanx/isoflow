@@ -2,6 +2,7 @@ import React from 'react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { RectangleTransformControls } from './RectangleTransformControls';
 import { TextBoxTransformControls } from './TextBoxTransformControls';
+import { NodeTransformControls } from './NodeTransformControls';
 
 export const TransformControlsManager = () => {
   const itemControls = useUiStateStore((state) => {
@@ -9,6 +10,8 @@ export const TransformControlsManager = () => {
   });
 
   switch (itemControls?.type) {
+    case 'NODE':
+      return <NodeTransformControls id={itemControls.id} />;
     case 'RECTANGLE':
       return <RectangleTransformControls id={itemControls.id} />;
     case 'TEXTBOX':
