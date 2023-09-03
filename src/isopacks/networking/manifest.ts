@@ -33,131 +33,131 @@ export const networkingIsopack: SceneInput['icons'] = [
   createIcon({
     id: 'cache',
     name: 'Cache',
-    url: Cache
+    url: Cache.toString()
   }),
   createIcon({
     id: 'cardterminal',
     name: 'Card Terminal',
-    url: CardTerminal
+    url: CardTerminal.toString()
   }),
   createIcon({
     id: 'cloud',
     name: 'Cloud',
-    url: Cloud
+    url: Cloud.toString()
   }),
   createIcon({
     id: 'cronjob',
     name: 'Cronjob',
-    url: Cronjob
+    url: Cronjob.toString()
   }),
   createIcon({
     id: 'desktop',
     name: 'Desktop',
-    url: Desktop
+    url: Desktop.toString()
   }),
   createIcon({
     id: 'dns',
     name: 'DNS',
-    url: Dns
+    url: Dns.toString()
   }),
   createIcon({
     id: 'firewall',
     name: 'Firewall',
-    url: Firewall
+    url: Firewall.toString()
   }),
   createIcon({
     id: 'function',
     name: 'Function',
-    url: Function
+    url: Function.toString()
   }),
   createIcon({
     id: 'laptop',
     name: 'Laptop',
-    url: Laptop
+    url: Laptop.toString()
   }),
   createIcon({
     id: 'loadbalancer',
     name: 'Load balancer',
-    url: LoadBalancer
+    url: LoadBalancer.toString()
   }),
   createIcon({
     id: 'lock',
     name: 'Lock',
-    url: Lock
+    url: Lock.toString()
   }),
   createIcon({
     id: 'mail',
     name: 'Mail',
-    url: Mail
+    url: Mail.toString()
   }),
   createIcon({
     id: 'mailmultiple',
     name: 'Mail multiple',
-    url: MailMultiple
+    url: MailMultiple.toString()
   }),
   createIcon({
     id: 'mobiledevice',
     name: 'Mobile device',
-    url: MobileDevice
+    url: MobileDevice.toString()
   }),
   createIcon({
     id: 'office',
     name: 'Office',
-    url: Office
+    url: Office.toString()
   }),
   createIcon({
     id: 'package',
     name: 'Package',
-    url: Package
+    url: Package.toString()
   }),
   createIcon({
     id: 'paymentcard',
     name: 'Payment card',
-    url: PaymentCard
+    url: PaymentCard.toString()
   }),
   createIcon({
     id: 'printer',
     name: 'Printer',
-    url: Printer
+    url: Printer.toString()
   }),
   createIcon({
     id: 'queue',
     name: 'Queue',
-    url: Queue
+    url: Queue.toString()
   }),
   createIcon({
     id: 'router',
     name: 'Router',
-    url: Router
+    url: Router.toString()
   }),
   createIcon({
     id: 'server',
     name: 'Server',
-    url: Server
+    url: Server.toString()
   }),
   createIcon({
     id: 'speech',
     name: 'Speech',
-    url: Speech
+    url: Speech.toString()
   }),
   createIcon({
     id: 'storage',
     name: 'Storage',
-    url: Storage
+    url: Storage.toString()
   }),
   createIcon({
     id: 'switch',
     name: 'Switch',
-    url: Switch
+    url: Switch.toString()
   }),
   createIcon({
     id: 'user',
     name: 'User',
-    url: User
+    url: User.toString()
   }),
   createIcon({
     id: 'vm',
     name: 'Virtual machine',
-    url: VM
+    url: VM.toString()
   })
 ];

@@ -12,26 +12,26 @@ export const basicIsopack: SceneInput['icons'] = [
   createIcon({
     id: 'block',
     name: 'Block',
-    url: Block
+    url: Block.toString()
   }),
   createIcon({
     id: 'cube',
     name: 'Cube',
-    url: Cube
+    url: Cube.toString()
   }),
   createIcon({
     id: 'diamond',
     name: 'Diamond',
-    url: Diamond
+    url: Diamond.toString()
   }),
   createIcon({
     id: 'pyramid',
     name: 'Pyramid',
-    url: Pyramid
+    url: Pyramid.toString()
   }),
   createIcon({
     id: 'sphere',
     name: 'Sphere',
-    url: Sphere
+    url: Sphere.toString()
   })
 ];
