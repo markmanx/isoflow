@@ -4,8 +4,8 @@ import { getItemAtTile, generateId } from 'src/utils';
 
 export const PlaceElement: ModeActions = {
   mousemove: () => {},
-  mousedown: ({ uiState, scene }) => {
-    if (uiState.mode.type !== 'PLACE_ELEMENT') return;
+  mousedown: ({ uiState, scene, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'PLACE_ELEMENT' || !isRendererInteraction) return;
 
     if (!uiState.mode.icon) {
       const itemAtTile = getItemAtTile({

@@ -62,6 +62,11 @@ export const themeConfig: ThemeOptions = {
     }
   },
   components: {
+    MuiCard: {
+      defaultProps: {
+        elevation: 0
+      }
+    },
     MuiToolbar: {
       styleOverrides: {
         root: {
@@ -85,6 +90,11 @@ export const themeConfig: ThemeOptions = {
     MuiTextField: {
       defaultProps: {
         variant: 'standard'
+      },
+      styleOverrides: {
+        root: {
+          '.MuiInputBase-input': {}
+        }
       }
     }
   }

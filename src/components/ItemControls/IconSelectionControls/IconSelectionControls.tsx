@@ -1,20 +1,20 @@
 import React, { useCallback } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { ControlsContainer } from 'src/components/ItemControls/components/ControlsContainer';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Icon } from 'src/types';
+import { Section } from 'src/components/ItemControls/components/Section';
+import { Searchbox } from 'src/components/ItemControls/IconSelectionControls/Searchbox';
+import { useIconFiltering } from 'src/hooks/useIconFiltering';
 import { Icons } from './Icons';
 
-export const IconSelection = () => {
+export const IconSelectionControls = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
-  const icons = useSceneStore((state) => {
-    return state.icons;
-  });
+  const { setFilter, filter, icons } = useIconFiltering();
 
   const onMouseDown = useCallback(
     (icon: Icon) => {
@@ -30,7 +30,13 @@ export const IconSelection = () => {
   );
 
   return (
-    <ControlsContainer>
+    <ControlsContainer
+      header={
+        <Section sx={{ position: 'sticky', top: 0, pt: 6, pb: 3 }}>
+          <Searchbox value={filter} onChange={setFilter} />
+        </Section>
+      }
+    >
       <Icons icons={icons} onMouseDown={onMouseDown} />
     </ControlsContainer>
   );

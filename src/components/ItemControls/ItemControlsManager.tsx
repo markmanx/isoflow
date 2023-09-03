@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { IconSelection } from 'src/components/ItemControls/IconSelection/IconSelection';
+import { IconSelectionControls } from 'src/components/ItemControls/IconSelectionControls/IconSelectionControls';
 import { NodeControls } from './NodeControls/NodeControls';
 import { ConnectorControls } from './ConnectorControls/ConnectorControls';
 import { TextBoxControls } from './TextBoxControls/TextBoxControls';
@@ -23,7 +23,7 @@ export const ItemControlsManager = () => {
       case 'RECTANGLE':
         return <RectangleControls key={itemControls.id} id={itemControls.id} />;
       case 'ADD_ITEM':
-        return <IconSelection />;
+        return <IconSelectionControls />;
       default:
         return null;
     }

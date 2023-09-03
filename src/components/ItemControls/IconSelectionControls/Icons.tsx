@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import Grid from '@mui/material/Grid';
+import { Grid } from '@mui/material';
 import { Icon } from 'src/types';
 import { IconCategory } from './IconCategory';
 

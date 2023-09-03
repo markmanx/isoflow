@@ -5,7 +5,7 @@ import { useSceneStore } from 'src/stores/sceneStore';
 import { useNode } from 'src/hooks/useNode';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ControlsContainer } from '../components/ControlsContainer';
-import { Icons } from '../IconSelection/Icons';
+import { Icons } from '../IconSelectionControls/Icons';
 import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 
