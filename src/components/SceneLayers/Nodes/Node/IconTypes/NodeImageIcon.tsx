@@ -9,7 +9,7 @@ interface Props {
   onImageLoaded?: () => void;
 }
 
-export const NodeIcon = ({ icon, onImageLoaded }: Props) => {
+export const NodeImageIcon = ({ icon, onImageLoaded }: Props) => {
   const ref = useRef();
   const { projectedTileSize } = useTileSize();
   const { size, observe, disconnect } = useResizeObserver();

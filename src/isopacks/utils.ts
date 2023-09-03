@@ -1,18 +1,17 @@
 import type { IconInput } from 'src/types';
 
-interface CreateIconArgs {
-  id: string;
-  name: string;
+type CreateIconArgs = Omit<IconInput, 'url'> & {
   url: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-}
+};
 
 export const createCategoryIcon = (category: string) => {
-  return ({ id, name, url }: CreateIconArgs) => {
+  return ({ id, name, url, component }: CreateIconArgs) => {
     return {
       id,
       name,
       url: url.toString(),
-      category
+      category,
+      component
     };
   };
 };

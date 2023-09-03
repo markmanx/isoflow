@@ -1,28 +1,21 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
-import { Node as NodeI, IconInput, TileOriginEnum } from 'src/types';
+import { Node as NodeI, TileOriginEnum } from 'src/types';
 import { useTileSize } from 'src/hooks/useTileSize';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { useIcon } from 'src/hooks/useIcon';
 import { LabelContainer } from './LabelContainer';
 import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
-import { NodeIcon } from './NodeIcon';
 
 interface Props {
   node: NodeI;
-  icon?: IconInput;
   order: number;
 }
 
-export const Node = ({ node, icon, order }: Props) => {
-  const nodeRef = useRef<HTMLDivElement>();
+export const Node = ({ node, order }: Props) => {
   const { projectedTileSize } = useTileSize();
   const { getTilePosition } = useGetTilePosition();
-
-  const onImageLoaded = useCallback(() => {
-    if (!nodeRef.current) return;
-
-    nodeRef.current.style.opacity = '1';
-  }, []);
+  const { iconComponent } = useIcon(node.iconId);
 
   const position = useMemo(() => {
     return getTilePosition({
@@ -45,10 +38,8 @@ export const Node = ({ node, icon, order }: Props) => {
       }}
     >
       <Box
-        ref={nodeRef}
         sx={{
           position: 'absolute',
-          opacity: 0,
           left: position.x,
           top: position.y
         }}
@@ -70,13 +61,13 @@ export const Node = ({ node, icon, order }: Props) => {
             </LabelContainer>
           </Box>
         )}
-        {icon && (
+        {iconComponent && (
           <Box
             sx={{
               position: 'absolute'
             }}
           >
-            <NodeIcon icon={icon} onImageLoaded={onImageLoaded} />
+            {iconComponent}
           </Box>
         )}
       </Box>

@@ -212,10 +212,10 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
   );
 
   return {
+    icons: scene.icons,
     nodes,
     connectors,
     textBoxes,
-    rectangles,
-    icons: scene.icons
+    rectangles
   } as SceneInput;
 };

@@ -1,7 +1,16 @@
 import { InitialData, ConnectorStyleEnum } from 'src/Isoflow';
-import { basicIsopack, networkingIsopack, mergeIsopacks } from 'src/isopacks';
+import {
+  basicIsopack,
+  networkingIsopack,
+  awsIsopack,
+  mergeIsopacks
+} from 'src/isopacks';
 
-const mergedIsopacks = mergeIsopacks([basicIsopack, networkingIsopack]);
+const mergedIsopacks = mergeIsopacks([
+  basicIsopack,
+  networkingIsopack,
+  awsIsopack
+]);
 
 export const initialData: InitialData = {
   icons: mergedIsopacks,
@@ -40,17 +49,17 @@ export const initialData: InitialData = {
     {
       id: 'connector1',
       anchors: [{ nodeId: 'server' }, { nodeId: 'database' }]
+    },
+    {
+      id: 'connector2',
+      style: ConnectorStyleEnum.DOTTED,
+      width: 10,
+      anchors: [
+        { nodeId: 'server' },
+        { tile: { x: -1, y: 2 } },
+        { nodeId: 'client' }
+      ]
     }
-    // {
-    //   id: 'connector2',
-    //   style: ConnectorStyleEnum.DOTTED,
-    //   width: 10,
-    //   anchors: [
-    //     { nodeId: 'server' },
-    //     { tile: { x: -1, y: 2 } },
-    //     { nodeId: 'client' }
-    //   ]
-    // }
   ],
   textBoxes: [],
   rectangles: [
