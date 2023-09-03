@@ -26,7 +26,7 @@ export const useIcon = (id: string) => {
 
     return (
       <NodeImageIcon
-        icon={icon}
+        url={icon.url}
         onImageLoaded={() => {
           setHasLoaded(true);
         }}

@@ -2,14 +2,13 @@ import React, { useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useTileSize } from 'src/hooks/useTileSize';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
-import { IconInput } from 'src/types';
 
 interface Props {
-  icon: IconInput;
+  url: string;
   onImageLoaded?: () => void;
 }
 
-export const NodeImageIcon = ({ icon, onImageLoaded }: Props) => {
+export const NodeImageIcon = ({ url, onImageLoaded }: Props) => {
   const ref = useRef();
   const { projectedTileSize } = useTileSize();
   const { size, observe, disconnect } = useResizeObserver();
@@ -27,7 +26,7 @@ export const NodeImageIcon = ({ icon, onImageLoaded }: Props) => {
       ref={ref}
       component="img"
       onLoad={onImageLoaded}
-      src={icon.url}
+      src={url}
       sx={{
         position: 'absolute',
         width: projectedTileSize.width * 0.8,
