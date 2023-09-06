@@ -90,6 +90,7 @@ To run Isoflow on a local development server with hot-reloading enabled:
 For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  You can also build and run the docs locally:
 
 - `npm run start:docs`
+- Visit `http://localhost:3002` in your browser.
 
 ## CodeSandbox
 Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
