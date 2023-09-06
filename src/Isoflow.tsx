@@ -9,7 +9,6 @@ import {
   NodeInput,
   ConnectorInput,
   RectangleInput,
-  Scene,
   ConnectorStyleEnum,
   InitialData
 } from 'src/types';
@@ -17,7 +16,7 @@ import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { LabelContainer } from 'src/components/SceneLayers/Nodes/Node/LabelContainer';
+
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { EMPTY_SCENE } from 'src/config';
@@ -112,27 +111,25 @@ export const Isoflow = (props: Props) => {
 };
 
 const useIsoflow = () => {
-  const updateNode = useSceneStore((state) => {
-    return state.actions.updateNode;
+  const actions = useSceneStore((state) => {
+    return state.actions;
   });
 
-  return {
-    updateNode
-  };
+  return actions;
 };
 
-export default Isoflow;
-
 export {
+  useIsoflow,
   InitialData,
-  Scene,
   SceneInput,
   IconInput,
   NodeInput,
   RectangleInput,
   ConnectorInput,
-  useIsoflow,
-  LabelContainer,
   sceneValidationSchema,
   ConnectorStyleEnum
 };
+
+export const version = PACKAGE_VERSION;
+
+export default Isoflow;
