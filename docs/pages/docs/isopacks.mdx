@@ -25,7 +25,7 @@ This will enable the standard set of networking icons within the Isoflow editor.
 import Isoflow from 'isoflow';
 import { networkingIsopack } from 'isoflow/dist/isopacks';
 
-const initialData = {
+const initialScene = {
   icons: networkingIsopack,
   nodes: [],
   connectors: [],
@@ -35,7 +35,7 @@ const initialData = {
 const App = () => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Isoflow initialData={initialData} />
+      <Isoflow initialScene={initialScene} />
     </div>
   );
 }
@@ -52,7 +52,7 @@ import { networkingIsopack, basicIsopack, mergeIsopacks } from 'isoflow/dist/iso
 
 const mergedIsopacks = mergeIsopacks(basicIsopack, networkingIsopack);
 
-const initialData = {
+const initialScene = {
   icons: mergedIsopacks,
   nodes: [],
   connectors: [],

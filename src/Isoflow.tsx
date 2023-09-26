@@ -10,21 +10,20 @@ import {
   ConnectorInput,
   RectangleInput,
   ConnectorStyleEnum,
-  InitialData
+  InitialScene
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
-import { EMPTY_SCENE } from 'src/config';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
+import { INITIAL_SCENE } from 'src/config';
 
 interface Props {
-  initialData?: InitialData;
+  initialScene?: Partial<InitialScene>;
   disableInteractions?: boolean;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
@@ -33,14 +32,14 @@ interface Props {
 }
 
 const App = ({
-  initialData,
+  initialScene,
   width,
   height = '100%',
   disableInteractions: disableInteractionsProp,
   onSceneUpdated,
   debugMode = false
 }: Props) => {
-  const previnitialData = useRef<SceneInput>(EMPTY_SCENE);
+  const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(
@@ -57,17 +56,19 @@ const App = ({
   });
 
   useEffect(() => {
-    uiActions.setZoom(initialData?.zoom ?? 1);
+    uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
-  }, [initialData?.zoom, disableInteractionsProp, sceneActions, uiActions]);
+  }, [initialScene?.zoom, disableInteractionsProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    if (!initialData || previnitialData.current === initialData) return;
+    if (!initialScene || prevInitialScene.current === initialScene) return;
 
-    previnitialData.current = initialData;
-    sceneActions.setScene(initialData);
+    const fullInitialScene = { ...INITIAL_SCENE, ...initialScene };
+
+    prevInitialScene.current = fullInitialScene;
+    sceneActions.setScene(fullInitialScene);
     setIsReady(true);
-  }, [initialData, sceneActions]);
+  }, [initialScene, sceneActions]);
 
   useEffect(() => {
     if (!isReady || !onSceneUpdated) return;
@@ -120,7 +121,7 @@ const useIsoflow = () => {
 
 export {
   useIsoflow,
-  InitialData,
+  InitialScene,
   SceneInput,
   IconInput,
   NodeInput,
@@ -131,5 +132,6 @@ export {
 };
 
 export const version = PACKAGE_VERSION;
+export const initialScene = INITIAL_SCENE;
 
 export default Isoflow;

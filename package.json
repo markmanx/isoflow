@@ -17,8 +17,9 @@
     "test": "jest",
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
-    "dev:docs": "cd ./docs && npm run dev",
-    "start:docs": "cd ./docs && npm run start"
+    "docs:dev": "cd ./docs && npm run dev",
+    "docs:build": "cd ./docs && npm run build",
+    "docs:start": "cd ./docs && npm run start"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

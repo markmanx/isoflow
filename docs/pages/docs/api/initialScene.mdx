@@ -1,6 +1,6 @@
-# `initialData`
+# `initialScene`
 
-The `initialData` object contains the following properties:
+The `initialScene` object contains the following properties:
 
 | Name | Type | Required |
 | --- | --- | :---: |
@@ -89,7 +89,7 @@ If the reference is another `node`, the anchor's position is dynamic and will be
 }
 ```
 
-## `initialData` example
+## `initialScene` example
 Open this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree/main).
 
 **Note:** This example assumes the `networkingIsopack` is imported from `isoflow/dist/isopacks`. See [Loading Isopacks](/docs/isopacks).
@@ -161,7 +161,7 @@ Open this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/markm
 ```
 
 ## Validation
-`initialData` is validated before Isoflow renders the scene, and an error is thrown if the data is invalid.
+`initialScene` is validated before Isoflow renders the scene, and an error is thrown if the data is invalid.
 
 Examples of common errors are as follows:
 - A `connector` references a `nodeId` that does not exist in the `nodes` array.

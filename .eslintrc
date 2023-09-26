@@ -1,5 +1,4 @@
-module.exports = {
-    "tsconfigRootDir": __dirname,
+{
     "env": {
         "browser": true,
         "es2021": true

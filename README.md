@@ -51,7 +51,7 @@ To integrate with your existing React app, install the Isoflow [npm package](htt
 import Isoflow from 'isoflow';
 import { networkingIsopack } from 'isoflow/dist/iconpacks';
 
-const initialData = {
+const initialScene = {
   icons: networkingIsopack,
   nodes: [
     {
@@ -68,7 +68,7 @@ const initialData = {
 };
 
 const App = () => (
-  <Isoflow initialData={initialData} />
+  <Isoflow initialScene={initialScene} />
 );
 ```
 
@@ -89,7 +89,8 @@ To run Isoflow on a local development server with hot-reloading enabled:
 ## Developer documentation
 For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  You can also build and run the docs locally:
 
-- `npm run start:docs`
+- `npm run docs:build`
+- `npm run docs:start`
 - Visit `http://localhost:3002` in your browser.
 
 ## CodeSandbox

@@ -1,7 +1,7 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { initialData } from '../initialData';
+import { initialScene } from '../initialScene';
 
 export const DebugTools = () => {
-  return <Isoflow initialData={initialData} debugMode height="100%" />;
+  return <Isoflow initialScene={initialScene} debugMode height="100%" />;
 };

@@ -1,4 +1,4 @@
-import { InitialData, ConnectorStyleEnum } from 'src/Isoflow';
+import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
 import {
   basicIsopack,
   networkingIsopack,
@@ -12,7 +12,7 @@ const mergedIsopacks = mergeIsopacks([
   awsIsopack
 ]);
 
-export const initialData: InitialData = {
+export const initialScene: InitialScene = {
   icons: mergedIsopacks,
   nodes: [
     {
