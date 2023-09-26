@@ -7,7 +7,7 @@ module.exports = {
   target: 'web',
   entry: {
     'index': './src/Isoflow.tsx',
-    '/validation/scene': './src/validation/scene.ts',
+    '/nodeExports': './src/nodeExports.ts',
     '/isopacks': './src/isopacks/index.ts',
   },
   output: {
