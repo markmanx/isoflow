@@ -23,7 +23,7 @@ import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
 import { INITIAL_SCENE } from 'src/config';
 
 interface Props {
-  initialScene?: Partial<InitialScene>;
+  initialScene?: InitialScene;
   disableInteractions?: boolean;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;

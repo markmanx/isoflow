@@ -1,6 +1,6 @@
 import type { SceneInput } from './inputs';
 
-export type InitialScene = SceneInput & {
+export type InitialScene = Partial<SceneInput> & {
   zoom?: number;
 };
 
