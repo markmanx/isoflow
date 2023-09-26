@@ -1,4 +1,5 @@
-{
+module.exports = {
+    "tsconfigRootDir": __dirname,
     "env": {
         "browser": true,
         "es2021": true
@@ -17,7 +18,7 @@
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
-        "project": "./tsconfig.json"
+        "project": "./tsconfig.json",
     },
     "rules": {
         "prettier/prettier": 2,

@@ -1,5 +1,3 @@
-// Although we don't normally test third party libraries,
-// this is useful to explore the behaviour of immer
 import { produce } from 'immer';
 
 const createItem = (x: number, y: number) => {
@@ -9,6 +7,8 @@ const createItem = (x: number, y: number) => {
   };
 };
 
+// Although we don't normally test third party libraries,
+// this is useful to explore the behaviour of immer
 describe('Tests immer', () => {
   test('Array equivalence without immer', () => {
     const arr = [createItem(0, 0), createItem(1, 1)];
