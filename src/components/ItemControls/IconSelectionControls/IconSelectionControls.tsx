@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { Box } from '@mui/material';
 import { ControlsContainer } from 'src/components/ItemControls/components/ControlsContainer';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Icon } from 'src/types';

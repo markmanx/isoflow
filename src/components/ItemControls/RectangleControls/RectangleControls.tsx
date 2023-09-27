@@ -37,7 +37,7 @@ export const RectangleControls = ({ id }: Props) => {
   }, [sceneActions, id, uiStateActions]);
 
   return (
-    <ControlsContainer header={<Header title="Rectangle settings" />}>
+    <ControlsContainer>
       <Section>
         <ColorSelector
           colors={Object.values(theme.customVars.diagramPalette)}

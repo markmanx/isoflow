@@ -46,7 +46,6 @@ export const NodeControls = ({ id }: Props) => {
     <ControlsContainer
       header={
         <Box>
-          <Header title="Node settings" />
           <Tabs sx={{ px: 2 }} value={tab} onChange={onTabChanged}>
             <Tab label="Settings" />
             <Tab label="Icon" />
