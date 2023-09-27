@@ -1,5 +1,5 @@
 import React from 'react';
-import { Delete as DeleteIcon } from '@mui/icons-material';
+import { DeleteOutlined as DeleteIcon } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 interface Props {
@@ -12,7 +12,7 @@ export const DeleteButton = ({ onClick }: Props) => {
       color="error"
       size="small"
       variant="outlined"
-      startIcon={<DeleteIcon />}
+      startIcon={<DeleteIcon color="error" />}
       onClick={onClick}
     >
       Delete
