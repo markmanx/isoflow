@@ -13,9 +13,9 @@ interface Props {
 
 export const IconCategory = ({ name, icons, onClick, onMouseDown }: Props) => {
   return (
-    <Section title={name}>
-      <Divider sx={{ mt: 1 }} />
-      <Grid container spacing={2}>
+    <Section title={name} sx={{ pt: 0 }}>
+      <Divider />
+      <Grid container spacing={2} sx={{ pt: 1 }}>
         {icons.map((icon) => {
           return (
             <Grid item xs={3} key={icon.id}>

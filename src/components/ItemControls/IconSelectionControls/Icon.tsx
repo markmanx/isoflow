@@ -16,20 +16,25 @@ export const Icon = ({ icon, onClick, onMouseDown }: Props) => {
       variant="text"
       onClick={onClick}
       onMouseDown={onMouseDown}
-      sx={{ userSelect: 'none' }}
+      sx={{ userSelect: 'none', height: 100 }}
     >
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        sx={{ height: '100%' }}
-      >
+      <Stack sx={{ height: '100%' }} spacing={1}>
         <Box
-          component="img"
-          draggable={false}
-          src={icon.url}
-          alt={`Icon ${icon.name}`}
-          sx={{ width: '100%', height: 80 }}
-        />
+          sx={{
+            height: 50,
+            width: '100%',
+            display: 'flex',
+            alignItems: 'flex-end'
+          }}
+        >
+          <Box
+            component="img"
+            draggable={false}
+            src={icon.url}
+            alt={`Icon ${icon.name}`}
+            sx={{ width: '100%', maxHeight: '100%' }}
+          />
+        </Box>
         <Typography variant="body2" color="text.secondary">
           {icon.name}
         </Typography>

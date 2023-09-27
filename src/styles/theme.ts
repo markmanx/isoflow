@@ -59,7 +59,7 @@ export const themeConfig: ThemeOptions = {
       lineHeight: 1.2
     },
     body2: {
-      fontSize: '0.8em',
+      fontSize: '0.75em',
       lineHeight: 1.2
     }
   },
