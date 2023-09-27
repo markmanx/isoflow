@@ -103,7 +103,7 @@ export const themeConfig: ThemeOptions = {
     },
     MuiSvgIcon: {
       defaultProps: {
-        color: 'primary'
+        color: 'action'
       },
       styleOverrides: {
         root: {
@@ -114,7 +114,7 @@ export const themeConfig: ThemeOptions = {
     },
     MuiTextField: {
       defaultProps: {
-        variant: 'standard'
+        variant: 'outlined'
       },
       styleOverrides: {
         root: {
