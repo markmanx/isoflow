@@ -50,7 +50,7 @@ export const IconButton = ({
           width: theme.customVars.toolMenu.height,
           maxWidth: '100%',
           minWidth: 'auto',
-          bgcolor: isActive ? 'grey.800' : undefined,
+          bgcolor: isActive ? 'primary.light' : undefined,
           p: 0,
           m: 0
         }}
