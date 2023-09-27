@@ -1,5 +1,4 @@
 import type { IconInput } from 'src/types';
-import { createFlatIcon } from '../FlatIcon';
 import azureaadlicenses from './icons/azure-aad-licenses.svg';
 import azureabsmember from './icons/azure-abs-member.svg';
 import azureacssolutionsbuilder from './icons/azure-acs-solutions-builder.svg';
@@ -457,7 +456,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-aad-licenses',
     category,
     url: azureaadlicenses.toString(),
-    component: createFlatIcon(azureaadlicenses)
+    isIsometric: false
   },
 
   {
@@ -465,7 +464,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-abs-member',
     category,
     url: azureabsmember.toString(),
-    component: createFlatIcon(azureabsmember)
+    isIsometric: false
   },
 
   {
@@ -473,7 +472,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-acs-solutions-builder',
     category,
     url: azureacssolutionsbuilder.toString(),
-    component: createFlatIcon(azureacssolutionsbuilder)
+    isIsometric: false
   },
 
   {
@@ -481,7 +480,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-active-directory-connect-health',
     category,
     url: azureactivedirectoryconnecthealth.toString(),
-    component: createFlatIcon(azureactivedirectoryconnecthealth)
+    isIsometric: false
   },
 
   {
@@ -489,7 +488,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-active-directory',
     category,
     url: azureactivedirectory.toString(),
-    component: createFlatIcon(azureactivedirectory)
+    isIsometric: false
   },
 
   {
@@ -497,7 +496,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-activity-log',
     category,
     url: azureactivitylog.toString(),
-    component: createFlatIcon(azureactivitylog)
+    isIsometric: false
   },
 
   {
@@ -505,7 +504,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ad-b2c',
     category,
     url: azureadb2c.toString(),
-    component: createFlatIcon(azureadb2c)
+    isIsometric: false
   },
 
   {
@@ -513,7 +512,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ad-domain-services',
     category,
     url: azureaddomainservices.toString(),
-    component: createFlatIcon(azureaddomainservices)
+    isIsometric: false
   },
 
   {
@@ -521,7 +520,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ad-identity-protection',
     category,
     url: azureadidentityprotection.toString(),
-    component: createFlatIcon(azureadidentityprotection)
+    isIsometric: false
   },
 
   {
@@ -529,7 +528,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ad-privilege-identity-management',
     category,
     url: azureadprivilegeidentitymanagement.toString(),
-    component: createFlatIcon(azureadprivilegeidentitymanagement)
+    isIsometric: false
   },
 
   {
@@ -537,7 +536,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ad-roles-and-administrators',
     category,
     url: azureadrolesandadministrators.toString(),
-    component: createFlatIcon(azureadrolesandadministrators)
+    isIsometric: false
   },
 
   {
@@ -545,7 +544,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-advisor',
     category,
     url: azureadvisor.toString(),
-    component: createFlatIcon(azureadvisor)
+    isIsometric: false
   },
 
   {
@@ -553,7 +552,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-alerts',
     category,
     url: azurealerts.toString(),
-    component: createFlatIcon(azurealerts)
+    isIsometric: false
   },
 
   {
@@ -561,7 +560,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-all-resources',
     category,
     url: azureallresources.toString(),
-    component: createFlatIcon(azureallresources)
+    isIsometric: false
   },
 
   {
@@ -569,7 +568,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-analysis-services',
     category,
     url: azureanalysisservices.toString(),
-    component: createFlatIcon(azureanalysisservices)
+    isIsometric: false
   },
 
   {
@@ -577,7 +576,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-api-connections',
     category,
     url: azureapiconnections.toString(),
-    component: createFlatIcon(azureapiconnections)
+    isIsometric: false
   },
 
   {
@@ -585,7 +584,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-api-for-fhir',
     category,
     url: azureapiforfhir.toString(),
-    component: createFlatIcon(azureapiforfhir)
+    isIsometric: false
   },
 
   {
@@ -593,7 +592,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-api-management-services',
     category,
     url: azureapimanagementservices.toString(),
-    component: createFlatIcon(azureapimanagementservices)
+    isIsometric: false
   },
 
   {
@@ -601,7 +600,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-api-proxy',
     category,
     url: azureapiproxy.toString(),
-    component: createFlatIcon(azureapiproxy)
+    isIsometric: false
   },
 
   {
@@ -609,7 +608,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-configuration',
     category,
     url: azureappconfiguration.toString(),
-    component: createFlatIcon(azureappconfiguration)
+    isIsometric: false
   },
 
   {
@@ -617,7 +616,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-registrations',
     category,
     url: azureappregistrations.toString(),
-    component: createFlatIcon(azureappregistrations)
+    isIsometric: false
   },
 
   {
@@ -625,7 +624,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-service-certificates',
     category,
     url: azureappservicecertificates.toString(),
-    component: createFlatIcon(azureappservicecertificates)
+    isIsometric: false
   },
 
   {
@@ -633,7 +632,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-service-domains',
     category,
     url: azureappservicedomains.toString(),
-    component: createFlatIcon(azureappservicedomains)
+    isIsometric: false
   },
 
   {
@@ -641,7 +640,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-service-environments',
     category,
     url: azureappserviceenvironments.toString(),
-    component: createFlatIcon(azureappserviceenvironments)
+    isIsometric: false
   },
 
   {
@@ -649,7 +648,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-service-plans',
     category,
     url: azureappserviceplans.toString(),
-    component: createFlatIcon(azureappserviceplans)
+    isIsometric: false
   },
 
   {
@@ -657,7 +656,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-app-services',
     category,
     url: azureappservices.toString(),
-    component: createFlatIcon(azureappservices)
+    isIsometric: false
   },
 
   {
@@ -665,7 +664,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-applens',
     category,
     url: azureapplens.toString(),
-    component: createFlatIcon(azureapplens)
+    isIsometric: false
   },
 
   {
@@ -673,7 +672,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-application-gateways',
     category,
     url: azureapplicationgateways.toString(),
-    component: createFlatIcon(azureapplicationgateways)
+    isIsometric: false
   },
 
   {
@@ -681,7 +680,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-application-insights',
     category,
     url: azureapplicationinsights.toString(),
-    component: createFlatIcon(azureapplicationinsights)
+    isIsometric: false
   },
 
   {
@@ -689,7 +688,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-application-security-groups',
     category,
     url: azureapplicationsecuritygroups.toString(),
-    component: createFlatIcon(azureapplicationsecuritygroups)
+    isIsometric: false
   },
 
   {
@@ -697,7 +696,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-applied-ai',
     category,
     url: azureappliedai.toString(),
-    component: createFlatIcon(azureappliedai)
+    isIsometric: false
   },
 
   {
@@ -705,7 +704,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-aquila',
     category,
     url: azureaquila.toString(),
-    component: createFlatIcon(azureaquila)
+    isIsometric: false
   },
 
   {
@@ -713,7 +712,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-arc',
     category,
     url: azurearc.toString(),
-    component: createFlatIcon(azurearc)
+    isIsometric: false
   },
 
   {
@@ -721,7 +720,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-automanaged-vm',
     category,
     url: azureautomanagedvm.toString(),
-    component: createFlatIcon(azureautomanagedvm)
+    isIsometric: false
   },
 
   {
@@ -729,7 +728,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-automation-accounts',
     category,
     url: azureautomationaccounts.toString(),
-    component: createFlatIcon(azureautomationaccounts)
+    isIsometric: false
   },
 
   {
@@ -737,7 +736,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-availability-sets',
     category,
     url: azureavailabilitysets.toString(),
-    component: createFlatIcon(azureavailabilitysets)
+    isIsometric: false
   },
 
   {
@@ -745,7 +744,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-avs-vm',
     category,
     url: azureavsvm.toString(),
-    component: createFlatIcon(azureavsvm)
+    isIsometric: false
   },
 
   {
@@ -753,7 +752,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-avs',
     category,
     url: azureavs.toString(),
-    component: createFlatIcon(azureavs)
+    isIsometric: false
   },
 
   {
@@ -761,7 +760,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-azurite',
     category,
     url: azureazurite.toString(),
-    component: createFlatIcon(azureazurite)
+    isIsometric: false
   },
 
   {
@@ -769,7 +768,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-backlog',
     category,
     url: azurebacklog.toString(),
-    component: createFlatIcon(azurebacklog)
+    isIsometric: false
   },
 
   {
@@ -777,7 +776,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-backup-center',
     category,
     url: azurebackupcenter.toString(),
-    component: createFlatIcon(azurebackupcenter)
+    isIsometric: false
   },
 
   {
@@ -785,7 +784,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-bare-metal-infrastructure',
     category,
     url: azurebaremetalinfrastructure.toString(),
-    component: createFlatIcon(azurebaremetalinfrastructure)
+    isIsometric: false
   },
 
   {
@@ -793,7 +792,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-bastions',
     category,
     url: azurebastions.toString(),
-    component: createFlatIcon(azurebastions)
+    isIsometric: false
   },
 
   {
@@ -801,7 +800,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-batch-accounts',
     category,
     url: azurebatchaccounts.toString(),
-    component: createFlatIcon(azurebatchaccounts)
+    isIsometric: false
   },
 
   {
@@ -809,7 +808,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-batch-ai',
     category,
     url: azurebatchai.toString(),
-    component: createFlatIcon(azurebatchai)
+    isIsometric: false
   },
 
   {
@@ -817,7 +816,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-biz-talk',
     category,
     url: azurebiztalk.toString(),
-    component: createFlatIcon(azurebiztalk)
+    isIsometric: false
   },
 
   {
@@ -825,7 +824,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-blob-block',
     category,
     url: azureblobblock.toString(),
-    component: createFlatIcon(azureblobblock)
+    isIsometric: false
   },
 
   {
@@ -833,7 +832,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-blob-page',
     category,
     url: azureblobpage.toString(),
-    component: createFlatIcon(azureblobpage)
+    isIsometric: false
   },
 
   {
@@ -841,7 +840,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-blockchain-applications',
     category,
     url: azureblockchainapplications.toString(),
-    component: createFlatIcon(azureblockchainapplications)
+    isIsometric: false
   },
 
   {
@@ -849,7 +848,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-blockchain-service',
     category,
     url: azureblockchainservice.toString(),
-    component: createFlatIcon(azureblockchainservice)
+    isIsometric: false
   },
 
   {
@@ -857,7 +856,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-blueprints',
     category,
     url: azureblueprints.toString(),
-    component: createFlatIcon(azureblueprints)
+    isIsometric: false
   },
 
   {
@@ -865,7 +864,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-bot-services',
     category,
     url: azurebotservices.toString(),
-    component: createFlatIcon(azurebotservices)
+    isIsometric: false
   },
 
   {
@@ -873,7 +872,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-branch',
     category,
     url: azurebranch.toString(),
-    component: createFlatIcon(azurebranch)
+    isIsometric: false
   },
 
   {
@@ -881,7 +880,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-browser',
     category,
     url: azurebrowser.toString(),
-    component: createFlatIcon(azurebrowser)
+    isIsometric: false
   },
 
   {
@@ -889,7 +888,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-bug',
     category,
     url: azurebug.toString(),
-    component: createFlatIcon(azurebug)
+    isIsometric: false
   },
 
   {
@@ -897,7 +896,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-builds',
     category,
     url: azurebuilds.toString(),
-    component: createFlatIcon(azurebuilds)
+    isIsometric: false
   },
 
   {
@@ -905,7 +904,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cache-redis',
     category,
     url: azurecacheredis.toString(),
-    component: createFlatIcon(azurecacheredis)
+    isIsometric: false
   },
 
   {
@@ -913,7 +912,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cache',
     category,
     url: azurecache.toString(),
-    component: createFlatIcon(azurecache)
+    isIsometric: false
   },
 
   {
@@ -921,7 +920,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-capacity',
     category,
     url: azurecapacity.toString(),
-    component: createFlatIcon(azurecapacity)
+    isIsometric: false
   },
 
   {
@@ -929,7 +928,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cdn-profiles',
     category,
     url: azurecdnprofiles.toString(),
-    component: createFlatIcon(azurecdnprofiles)
+    isIsometric: false
   },
 
   {
@@ -937,7 +936,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ceres',
     category,
     url: azureceres.toString(),
-    component: createFlatIcon(azureceres)
+    isIsometric: false
   },
 
   {
@@ -945,7 +944,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-chaos-studio',
     category,
     url: azurechaosstudio.toString(),
-    component: createFlatIcon(azurechaosstudio)
+    isIsometric: false
   },
 
   {
@@ -953,7 +952,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-client-apps',
     category,
     url: azureclientapps.toString(),
-    component: createFlatIcon(azureclientapps)
+    isIsometric: false
   },
 
   {
@@ -961,7 +960,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cloud-services-classic',
     category,
     url: azurecloudservicesclassic.toString(),
-    component: createFlatIcon(azurecloudservicesclassic)
+    isIsometric: false
   },
 
   {
@@ -969,7 +968,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cloud-services-extended-support',
     category,
     url: azurecloudservicesextendedsupport.toString(),
-    component: createFlatIcon(azurecloudservicesextendedsupport)
+    isIsometric: false
   },
 
   {
@@ -977,7 +976,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cloud-shell',
     category,
     url: azurecloudshell.toString(),
-    component: createFlatIcon(azurecloudshell)
+    isIsometric: false
   },
 
   {
@@ -985,7 +984,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cloudtest',
     category,
     url: azurecloudtest.toString(),
-    component: createFlatIcon(azurecloudtest)
+    isIsometric: false
   },
 
   {
@@ -993,7 +992,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-code',
     category,
     url: azurecode.toString(),
-    component: createFlatIcon(azurecode)
+    isIsometric: false
   },
 
   {
@@ -1001,7 +1000,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cognitive-services',
     category,
     url: azurecognitiveservices.toString(),
-    component: createFlatIcon(azurecognitiveservices)
+    isIsometric: false
   },
 
   {
@@ -1009,7 +1008,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-collaborative-service',
     category,
     url: azurecollaborativeservice.toString(),
-    component: createFlatIcon(azurecollaborativeservice)
+    isIsometric: false
   },
 
   {
@@ -1017,7 +1016,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-commit',
     category,
     url: azurecommit.toString(),
-    component: createFlatIcon(azurecommit)
+    isIsometric: false
   },
 
   {
@@ -1025,7 +1024,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-communication-services',
     category,
     url: azurecommunicationservices.toString(),
-    component: createFlatIcon(azurecommunicationservices)
+    isIsometric: false
   },
 
   {
@@ -1033,7 +1032,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-compliance-center',
     category,
     url: azurecompliancecenter.toString(),
-    component: createFlatIcon(azurecompliancecenter)
+    isIsometric: false
   },
 
   {
@@ -1041,7 +1040,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-compliance',
     category,
     url: azurecompliance.toString(),
-    component: createFlatIcon(azurecompliance)
+    isIsometric: false
   },
 
   {
@@ -1049,7 +1048,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-compute-galleries',
     category,
     url: azurecomputegalleries.toString(),
-    component: createFlatIcon(azurecomputegalleries)
+    isIsometric: false
   },
 
   {
@@ -1057,7 +1056,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-conditional-access',
     category,
     url: azureconditionalaccess.toString(),
-    component: createFlatIcon(azureconditionalaccess)
+    isIsometric: false
   },
 
   {
@@ -1065,7 +1064,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-confidential-ledger',
     category,
     url: azureconfidentialledger.toString(),
-    component: createFlatIcon(azureconfidentialledger)
+    isIsometric: false
   },
 
   {
@@ -1073,7 +1072,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-connected-cache',
     category,
     url: azureconnectedcache.toString(),
-    component: createFlatIcon(azureconnectedcache)
+    isIsometric: false
   },
 
   {
@@ -1081,7 +1080,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-connected-vehicle-platform',
     category,
     url: azureconnectedvehicleplatform.toString(),
-    component: createFlatIcon(azureconnectedvehicleplatform)
+    isIsometric: false
   },
 
   {
@@ -1089,7 +1088,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-connections',
     category,
     url: azureconnections.toString(),
-    component: createFlatIcon(azureconnections)
+    isIsometric: false
   },
 
   {
@@ -1097,7 +1096,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-consortium',
     category,
     url: azureconsortium.toString(),
-    component: createFlatIcon(azureconsortium)
+    isIsometric: false
   },
 
   {
@@ -1105,7 +1104,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-container-app-environments',
     category,
     url: azurecontainerappenvironments.toString(),
-    component: createFlatIcon(azurecontainerappenvironments)
+    isIsometric: false
   },
 
   {
@@ -1113,7 +1112,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-container-instances',
     category,
     url: azurecontainerinstances.toString(),
-    component: createFlatIcon(azurecontainerinstances)
+    isIsometric: false
   },
 
   {
@@ -1121,7 +1120,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-container-registries',
     category,
     url: azurecontainerregistries.toString(),
-    component: createFlatIcon(azurecontainerregistries)
+    isIsometric: false
   },
 
   {
@@ -1129,7 +1128,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-controls-horizontal',
     category,
     url: azurecontrolshorizontal.toString(),
-    component: createFlatIcon(azurecontrolshorizontal)
+    isIsometric: false
   },
 
   {
@@ -1137,7 +1136,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-controls',
     category,
     url: azurecontrols.toString(),
-    component: createFlatIcon(azurecontrols)
+    isIsometric: false
   },
 
   {
@@ -1145,7 +1144,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cosmos-db',
     category,
     url: azurecosmosdb.toString(),
-    component: createFlatIcon(azurecosmosdb)
+    isIsometric: false
   },
 
   {
@@ -1153,7 +1152,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cost-alerts',
     category,
     url: azurecostalerts.toString(),
-    component: createFlatIcon(azurecostalerts)
+    isIsometric: false
   },
 
   {
@@ -1161,7 +1160,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cost-analysis',
     category,
     url: azurecostanalysis.toString(),
-    component: createFlatIcon(azurecostanalysis)
+    isIsometric: false
   },
 
   {
@@ -1169,7 +1168,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cost-budgets',
     category,
     url: azurecostbudgets.toString(),
-    component: createFlatIcon(azurecostbudgets)
+    isIsometric: false
   },
 
   {
@@ -1177,7 +1176,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cost-management-and-billing',
     category,
     url: azurecostmanagementandbilling.toString(),
-    component: createFlatIcon(azurecostmanagementandbilling)
+    isIsometric: false
   },
 
   {
@@ -1185,7 +1184,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cost-management',
     category,
     url: azurecostmanagement.toString(),
-    component: createFlatIcon(azurecostmanagement)
+    isIsometric: false
   },
 
   {
@@ -1193,7 +1192,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-counter',
     category,
     url: azurecounter.toString(),
-    component: createFlatIcon(azurecounter)
+    isIsometric: false
   },
 
   {
@@ -1201,7 +1200,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-cubes',
     category,
     url: azurecubes.toString(),
-    component: createFlatIcon(azurecubes)
+    isIsometric: false
   },
 
   {
@@ -1209,7 +1208,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-custom-azure-ad-roles',
     category,
     url: azurecustomazureadroles.toString(),
-    component: createFlatIcon(azurecustomazureadroles)
+    isIsometric: false
   },
 
   {
@@ -1217,7 +1216,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-custom-ip-prefix',
     category,
     url: azurecustomipprefix.toString(),
-    component: createFlatIcon(azurecustomipprefix)
+    isIsometric: false
   },
 
   {
@@ -1225,7 +1224,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-customer-lockbox-for-microsoft-azure',
     category,
     url: azurecustomerlockboxformicrosoftazure.toString(),
-    component: createFlatIcon(azurecustomerlockboxformicrosoftazure)
+    isIsometric: false
   },
 
   {
@@ -1233,7 +1232,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dashboard-hub',
     category,
     url: azuredashboardhub.toString(),
-    component: createFlatIcon(azuredashboardhub)
+    isIsometric: false
   },
 
   {
@@ -1241,7 +1240,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dashboard',
     category,
     url: azuredashboard.toString(),
-    component: createFlatIcon(azuredashboard)
+    isIsometric: false
   },
 
   {
@@ -1249,7 +1248,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-box-edge',
     category,
     url: azuredataboxedge.toString(),
-    component: createFlatIcon(azuredataboxedge)
+    isIsometric: false
   },
 
   {
@@ -1257,7 +1256,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-box',
     category,
     url: azuredatabox.toString(),
-    component: createFlatIcon(azuredatabox)
+    isIsometric: false
   },
 
   {
@@ -1265,7 +1264,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-catalog',
     category,
     url: azuredatacatalog.toString(),
-    component: createFlatIcon(azuredatacatalog)
+    isIsometric: false
   },
 
   {
@@ -1273,7 +1272,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-explorer-clusters',
     category,
     url: azuredataexplorerclusters.toString(),
-    component: createFlatIcon(azuredataexplorerclusters)
+    isIsometric: false
   },
 
   {
@@ -1281,7 +1280,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-factory',
     category,
     url: azuredatafactory.toString(),
-    component: createFlatIcon(azuredatafactory)
+    isIsometric: false
   },
 
   {
@@ -1289,7 +1288,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-lake-analytics',
     category,
     url: azuredatalakeanalytics.toString(),
-    component: createFlatIcon(azuredatalakeanalytics)
+    isIsometric: false
   },
 
   {
@@ -1297,7 +1296,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-lake-storage-gen1',
     category,
     url: azuredatalakestoragegen1.toString(),
-    component: createFlatIcon(azuredatalakestoragegen1)
+    isIsometric: false
   },
 
   {
@@ -1305,7 +1304,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-lake-store-gen1',
     category,
     url: azuredatalakestoregen1.toString(),
-    component: createFlatIcon(azuredatalakestoregen1)
+    isIsometric: false
   },
 
   {
@@ -1313,7 +1312,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-share-invitations',
     category,
     url: azuredatashareinvitations.toString(),
-    component: createFlatIcon(azuredatashareinvitations)
+    isIsometric: false
   },
 
   {
@@ -1321,7 +1320,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-data-shares',
     category,
     url: azuredatashares.toString(),
-    component: createFlatIcon(azuredatashares)
+    isIsometric: false
   },
 
   {
@@ -1329,7 +1328,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-database-mariadb-server',
     category,
     url: azuredatabasemariadbserver.toString(),
-    component: createFlatIcon(azuredatabasemariadbserver)
+    isIsometric: false
   },
 
   {
@@ -1337,7 +1336,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-database-migration-services',
     category,
     url: azuredatabasemigrationservices.toString(),
-    component: createFlatIcon(azuredatabasemigrationservices)
+    isIsometric: false
   },
 
   {
@@ -1345,7 +1344,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-database-mysql-server',
     category,
     url: azuredatabasemysqlserver.toString(),
-    component: createFlatIcon(azuredatabasemysqlserver)
+    isIsometric: false
   },
 
   {
@@ -1353,7 +1352,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-database-postgresql-server-group',
     category,
     url: azuredatabasepostgresqlservergroup.toString(),
-    component: createFlatIcon(azuredatabasepostgresqlservergroup)
+    isIsometric: false
   },
 
   {
@@ -1361,7 +1360,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-database-postgresql-server',
     category,
     url: azuredatabasepostgresqlserver.toString(),
-    component: createFlatIcon(azuredatabasepostgresqlserver)
+    isIsometric: false
   },
 
   {
@@ -1369,7 +1368,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-databricks',
     category,
     url: azuredatabricks.toString(),
-    component: createFlatIcon(azuredatabricks)
+    isIsometric: false
   },
 
   {
@@ -1377,7 +1376,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ddos-protection-plans',
     category,
     url: azureddosprotectionplans.toString(),
-    component: createFlatIcon(azureddosprotectionplans)
+    isIsometric: false
   },
 
   {
@@ -1385,7 +1384,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dedicated-hsm',
     category,
     url: azurededicatedhsm.toString(),
-    component: createFlatIcon(azurededicatedhsm)
+    isIsometric: false
   },
 
   {
@@ -1393,7 +1392,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-defender',
     category,
     url: azuredefender.toString(),
-    component: createFlatIcon(azuredefender)
+    isIsometric: false
   },
 
   {
@@ -1401,7 +1400,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-detonation',
     category,
     url: azuredetonation.toString(),
-    component: createFlatIcon(azuredetonation)
+    isIsometric: false
   },
 
   {
@@ -1409,7 +1408,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dev-console',
     category,
     url: azuredevconsole.toString(),
-    component: createFlatIcon(azuredevconsole)
+    isIsometric: false
   },
 
   {
@@ -1417,7 +1416,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-compliance',
     category,
     url: azuredevicecompliance.toString(),
-    component: createFlatIcon(azuredevicecompliance)
+    isIsometric: false
   },
 
   {
@@ -1425,7 +1424,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-configuration',
     category,
     url: azuredeviceconfiguration.toString(),
-    component: createFlatIcon(azuredeviceconfiguration)
+    isIsometric: false
   },
 
   {
@@ -1433,7 +1432,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-enrollment',
     category,
     url: azuredeviceenrollment.toString(),
-    component: createFlatIcon(azuredeviceenrollment)
+    isIsometric: false
   },
 
   {
@@ -1441,7 +1440,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-provisioning-services',
     category,
     url: azuredeviceprovisioningservices.toString(),
-    component: createFlatIcon(azuredeviceprovisioningservices)
+    isIsometric: false
   },
 
   {
@@ -1449,7 +1448,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-security-apple',
     category,
     url: azuredevicesecurityapple.toString(),
-    component: createFlatIcon(azuredevicesecurityapple)
+    isIsometric: false
   },
 
   {
@@ -1457,7 +1456,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-security-google',
     category,
     url: azuredevicesecuritygoogle.toString(),
-    component: createFlatIcon(azuredevicesecuritygoogle)
+    isIsometric: false
   },
 
   {
@@ -1465,7 +1464,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-security-windows',
     category,
     url: azuredevicesecuritywindows.toString(),
-    component: createFlatIcon(azuredevicesecuritywindows)
+    isIsometric: false
   },
 
   {
@@ -1473,7 +1472,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-device-update-iot-hub',
     category,
     url: azuredeviceupdateiothub.toString(),
-    component: createFlatIcon(azuredeviceupdateiothub)
+    isIsometric: false
   },
 
   {
@@ -1481,7 +1480,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-devices',
     category,
     url: azuredevices.toString(),
-    component: createFlatIcon(azuredevices)
+    isIsometric: false
   },
 
   {
@@ -1489,7 +1488,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-devops',
     category,
     url: azuredevops.toString(),
-    component: createFlatIcon(azuredevops)
+    isIsometric: false
   },
 
   {
@@ -1497,7 +1496,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-devtest-labs',
     category,
     url: azuredevtestlabs.toString(),
-    component: createFlatIcon(azuredevtestlabs)
+    isIsometric: false
   },
 
   {
@@ -1505,7 +1504,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-diagnostics-settings',
     category,
     url: azurediagnosticssettings.toString(),
-    component: createFlatIcon(azurediagnosticssettings)
+    isIsometric: false
   },
 
   {
@@ -1513,7 +1512,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-digital-twins',
     category,
     url: azuredigitaltwins.toString(),
-    component: createFlatIcon(azuredigitaltwins)
+    isIsometric: false
   },
 
   {
@@ -1521,7 +1520,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-disk-encryption-sets',
     category,
     url: azurediskencryptionsets.toString(),
-    component: createFlatIcon(azurediskencryptionsets)
+    isIsometric: false
   },
 
   {
@@ -1529,7 +1528,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-disk-pool',
     category,
     url: azurediskpool.toString(),
-    component: createFlatIcon(azurediskpool)
+    isIsometric: false
   },
 
   {
@@ -1537,7 +1536,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-disks-classic',
     category,
     url: azuredisksclassic.toString(),
-    component: createFlatIcon(azuredisksclassic)
+    isIsometric: false
   },
 
   {
@@ -1545,7 +1544,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-disks-snapshots',
     category,
     url: azurediskssnapshots.toString(),
-    component: createFlatIcon(azurediskssnapshots)
+    isIsometric: false
   },
 
   {
@@ -1553,7 +1552,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-disks',
     category,
     url: azuredisks.toString(),
-    component: createFlatIcon(azuredisks)
+    isIsometric: false
   },
 
   {
@@ -1561,7 +1560,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dns-private-resolver',
     category,
     url: azurednsprivateresolver.toString(),
-    component: createFlatIcon(azurednsprivateresolver)
+    isIsometric: false
   },
 
   {
@@ -1569,7 +1568,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-dns-zones',
     category,
     url: azurednszones.toString(),
-    component: createFlatIcon(azurednszones)
+    isIsometric: false
   },
 
   {
@@ -1577,7 +1576,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-download',
     category,
     url: azuredownload.toString(),
-    component: createFlatIcon(azuredownload)
+    isIsometric: false
   },
 
   {
@@ -1585,7 +1584,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ebooks',
     category,
     url: azureebooks.toString(),
-    component: createFlatIcon(azureebooks)
+    isIsometric: false
   },
 
   {
@@ -1593,7 +1592,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-edge-hardware-center',
     category,
     url: azureedgehardwarecenter.toString(),
-    component: createFlatIcon(azureedgehardwarecenter)
+    isIsometric: false
   },
 
   {
@@ -1601,7 +1600,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-edge-management',
     category,
     url: azureedgemanagement.toString(),
-    component: createFlatIcon(azureedgemanagement)
+    isIsometric: false
   },
 
   {
@@ -1609,7 +1608,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-education',
     category,
     url: azureeducation.toString(),
-    component: createFlatIcon(azureeducation)
+    isIsometric: false
   },
 
   {
@@ -1617,7 +1616,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-elastic-job-agents',
     category,
     url: azureelasticjobagents.toString(),
-    component: createFlatIcon(azureelasticjobagents)
+    isIsometric: false
   },
 
   {
@@ -1625,7 +1624,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-endpoint-analytics',
     category,
     url: azureendpointanalytics.toString(),
-    component: createFlatIcon(azureendpointanalytics)
+    isIsometric: false
   },
 
   {
@@ -1633,7 +1632,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-enterprise-applications',
     category,
     url: azureenterpriseapplications.toString(),
-    component: createFlatIcon(azureenterpriseapplications)
+    isIsometric: false
   },
 
   {
@@ -1641,7 +1640,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-error',
     category,
     url: azureerror.toString(),
-    component: createFlatIcon(azureerror)
+    isIsometric: false
   },
 
   {
@@ -1649,7 +1648,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-event-grid-domains',
     category,
     url: azureeventgriddomains.toString(),
-    component: createFlatIcon(azureeventgriddomains)
+    isIsometric: false
   },
 
   {
@@ -1657,7 +1656,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-event-grid-subscriptions',
     category,
     url: azureeventgridsubscriptions.toString(),
-    component: createFlatIcon(azureeventgridsubscriptions)
+    isIsometric: false
   },
 
   {
@@ -1665,7 +1664,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-event-grid-topics',
     category,
     url: azureeventgridtopics.toString(),
-    component: createFlatIcon(azureeventgridtopics)
+    isIsometric: false
   },
 
   {
@@ -1673,7 +1672,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-event-hub-clusters',
     category,
     url: azureeventhubclusters.toString(),
-    component: createFlatIcon(azureeventhubclusters)
+    isIsometric: false
   },
 
   {
@@ -1681,7 +1680,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-event-hubs',
     category,
     url: azureeventhubs.toString(),
-    component: createFlatIcon(azureeventhubs)
+    isIsometric: false
   },
 
   {
@@ -1689,7 +1688,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-exchange-access',
     category,
     url: azureexchangeaccess.toString(),
-    component: createFlatIcon(azureexchangeaccess)
+    isIsometric: false
   },
 
   {
@@ -1697,7 +1696,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-exchange-on-premises-access',
     category,
     url: azureexchangeonpremisesaccess.toString(),
-    component: createFlatIcon(azureexchangeonpremisesaccess)
+    isIsometric: false
   },
 
   {
@@ -1705,7 +1704,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-experimentation-studio',
     category,
     url: azureexperimentationstudio.toString(),
-    component: createFlatIcon(azureexperimentationstudio)
+    isIsometric: false
   },
 
   {
@@ -1713,7 +1712,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-expressroute-circuits',
     category,
     url: azureexpressroutecircuits.toString(),
-    component: createFlatIcon(azureexpressroutecircuits)
+    isIsometric: false
   },
 
   {
@@ -1721,7 +1720,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-expressroute-direct',
     category,
     url: azureexpressroutedirect.toString(),
-    component: createFlatIcon(azureexpressroutedirect)
+    isIsometric: false
   },
 
   {
@@ -1729,7 +1728,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-extendedsecurityupdates',
     category,
     url: azureextendedsecurityupdates.toString(),
-    component: createFlatIcon(azureextendedsecurityupdates)
+    isIsometric: false
   },
 
   {
@@ -1737,7 +1736,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-extensions',
     category,
     url: azureextensions.toString(),
-    component: createFlatIcon(azureextensions)
+    isIsometric: false
   },
 
   {
@@ -1745,7 +1744,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-fiji',
     category,
     url: azurefiji.toString(),
-    component: createFlatIcon(azurefiji)
+    isIsometric: false
   },
 
   {
@@ -1753,7 +1752,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-file',
     category,
     url: azurefile.toString(),
-    component: createFlatIcon(azurefile)
+    isIsometric: false
   },
 
   {
@@ -1761,7 +1760,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-files',
     category,
     url: azurefiles.toString(),
-    component: createFlatIcon(azurefiles)
+    isIsometric: false
   },
 
   {
@@ -1769,7 +1768,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-fileshare',
     category,
     url: azurefileshare.toString(),
-    component: createFlatIcon(azurefileshare)
+    isIsometric: false
   },
 
   {
@@ -1777,7 +1776,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-firewall-manager',
     category,
     url: azurefirewallmanager.toString(),
-    component: createFlatIcon(azurefirewallmanager)
+    isIsometric: false
   },
 
   {
@@ -1785,7 +1784,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-firewalls',
     category,
     url: azurefirewalls.toString(),
-    component: createFlatIcon(azurefirewalls)
+    isIsometric: false
   },
 
   {
@@ -1793,7 +1792,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-folder-blank',
     category,
     url: azurefolderblank.toString(),
-    component: createFlatIcon(azurefolderblank)
+    isIsometric: false
   },
 
   {
@@ -1801,7 +1800,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-folder-website',
     category,
     url: azurefolderwebsite.toString(),
-    component: createFlatIcon(azurefolderwebsite)
+    isIsometric: false
   },
 
   {
@@ -1809,7 +1808,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-free-services',
     category,
     url: azurefreeservices.toString(),
-    component: createFlatIcon(azurefreeservices)
+    isIsometric: false
   },
 
   {
@@ -1817,7 +1816,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-front-doors',
     category,
     url: azurefrontdoors.toString(),
-    component: createFlatIcon(azurefrontdoors)
+    isIsometric: false
   },
 
   {
@@ -1825,7 +1824,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ftp',
     category,
     url: azureftp.toString(),
-    component: createFlatIcon(azureftp)
+    isIsometric: false
   },
 
   {
@@ -1833,7 +1832,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-function-apps',
     category,
     url: azurefunctionapps.toString(),
-    component: createFlatIcon(azurefunctionapps)
+    isIsometric: false
   },
 
   {
@@ -1841,7 +1840,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-gear',
     category,
     url: azuregear.toString(),
-    component: createFlatIcon(azuregear)
+    isIsometric: false
   },
 
   {
@@ -1849,7 +1848,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-genomics-accounts',
     category,
     url: azuregenomicsaccounts.toString(),
-    component: createFlatIcon(azuregenomicsaccounts)
+    isIsometric: false
   },
 
   {
@@ -1857,7 +1856,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-genomics',
     category,
     url: azuregenomics.toString(),
-    component: createFlatIcon(azuregenomics)
+    isIsometric: false
   },
 
   {
@@ -1865,7 +1864,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-globe-error',
     category,
     url: azureglobeerror.toString(),
-    component: createFlatIcon(azureglobeerror)
+    isIsometric: false
   },
 
   {
@@ -1873,7 +1872,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-globe-success',
     category,
     url: azureglobesuccess.toString(),
-    component: createFlatIcon(azureglobesuccess)
+    isIsometric: false
   },
 
   {
@@ -1881,7 +1880,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-globe-warning',
     category,
     url: azureglobewarning.toString(),
-    component: createFlatIcon(azureglobewarning)
+    isIsometric: false
   },
 
   {
@@ -1889,7 +1888,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-grafana',
     category,
     url: azuregrafana.toString(),
-    component: createFlatIcon(azuregrafana)
+    isIsometric: false
   },
 
   {
@@ -1897,7 +1896,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-groups',
     category,
     url: azuregroups.toString(),
-    component: createFlatIcon(azuregroups)
+    isIsometric: false
   },
 
   {
@@ -1905,7 +1904,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-guide',
     category,
     url: azureguide.toString(),
-    component: createFlatIcon(azureguide)
+    isIsometric: false
   },
 
   {
@@ -1913,7 +1912,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-hcp-cache',
     category,
     url: azurehcpcache.toString(),
-    component: createFlatIcon(azurehcpcache)
+    isIsometric: false
   },
 
   {
@@ -1921,7 +1920,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-hd-insight-clusters',
     category,
     url: azurehdinsightclusters.toString(),
-    component: createFlatIcon(azurehdinsightclusters)
+    isIsometric: false
   },
 
   {
@@ -1929,7 +1928,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-heart',
     category,
     url: azureheart.toString(),
-    component: createFlatIcon(azureheart)
+    isIsometric: false
   },
 
   {
@@ -1937,7 +1936,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-help-and-support',
     category,
     url: azurehelpandsupport.toString(),
-    component: createFlatIcon(azurehelpandsupport)
+    isIsometric: false
   },
 
   {
@@ -1945,7 +1944,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-host-groups',
     category,
     url: azurehostgroups.toString(),
-    component: createFlatIcon(azurehostgroups)
+    isIsometric: false
   },
 
   {
@@ -1953,7 +1952,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-hosts',
     category,
     url: azurehosts.toString(),
-    component: createFlatIcon(azurehosts)
+    isIsometric: false
   },
 
   {
@@ -1961,7 +1960,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-hpc-workbench',
     category,
     url: azurehpcworkbench.toString(),
-    component: createFlatIcon(azurehpcworkbench)
+    isIsometric: false
   },
 
   {
@@ -1969,7 +1968,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-hybrid-center',
     category,
     url: azurehybridcenter.toString(),
-    component: createFlatIcon(azurehybridcenter)
+    isIsometric: false
   },
 
   {
@@ -1977,7 +1976,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-identity-governance',
     category,
     url: azureidentitygovernance.toString(),
-    component: createFlatIcon(azureidentitygovernance)
+    isIsometric: false
   },
 
   {
@@ -1985,7 +1984,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image-definition',
     category,
     url: azureimagedefinition.toString(),
-    component: createFlatIcon(azureimagedefinition)
+    isIsometric: false
   },
 
   {
@@ -1993,7 +1992,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image-definitions',
     category,
     url: azureimagedefinitions.toString(),
-    component: createFlatIcon(azureimagedefinitions)
+    isIsometric: false
   },
 
   {
@@ -2001,7 +2000,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image-templates',
     category,
     url: azureimagetemplates.toString(),
-    component: createFlatIcon(azureimagetemplates)
+    isIsometric: false
   },
 
   {
@@ -2009,7 +2008,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image-version',
     category,
     url: azureimageversion.toString(),
-    component: createFlatIcon(azureimageversion)
+    isIsometric: false
   },
 
   {
@@ -2017,7 +2016,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image-versions',
     category,
     url: azureimageversions.toString(),
-    component: createFlatIcon(azureimageversions)
+    isIsometric: false
   },
 
   {
@@ -2025,7 +2024,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-image',
     category,
     url: azureimage.toString(),
-    component: createFlatIcon(azureimage)
+    isIsometric: false
   },
 
   {
@@ -2033,7 +2032,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-images',
     category,
     url: azureimages.toString(),
-    component: createFlatIcon(azureimages)
+    isIsometric: false
   },
 
   {
@@ -2041,7 +2040,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-import-export-jobs',
     category,
     url: azureimportexportjobs.toString(),
-    component: createFlatIcon(azureimportexportjobs)
+    isIsometric: false
   },
 
   {
@@ -2049,7 +2048,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-industrial-iot',
     category,
     url: azureindustrialiot.toString(),
-    component: createFlatIcon(azureindustrialiot)
+    isIsometric: false
   },
 
   {
@@ -2057,7 +2056,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-information-protection',
     category,
     url: azureinformationprotection.toString(),
-    component: createFlatIcon(azureinformationprotection)
+    isIsometric: false
   },
 
   {
@@ -2065,7 +2064,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-information',
     category,
     url: azureinformation.toString(),
-    component: createFlatIcon(azureinformation)
+    isIsometric: false
   },
 
   {
@@ -2073,7 +2072,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-infrastructure-backup',
     category,
     url: azureinfrastructurebackup.toString(),
-    component: createFlatIcon(azureinfrastructurebackup)
+    isIsometric: false
   },
 
   {
@@ -2081,7 +2080,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-input-output',
     category,
     url: azureinputoutput.toString(),
-    component: createFlatIcon(azureinputoutput)
+    isIsometric: false
   },
 
   {
@@ -2089,7 +2088,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-instance-pools',
     category,
     url: azureinstancepools.toString(),
-    component: createFlatIcon(azureinstancepools)
+    isIsometric: false
   },
 
   {
@@ -2097,7 +2096,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-integration-accounts',
     category,
     url: azureintegrationaccounts.toString(),
-    component: createFlatIcon(azureintegrationaccounts)
+    isIsometric: false
   },
 
   {
@@ -2105,7 +2104,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-integration-service-environments',
     category,
     url: azureintegrationserviceenvironments.toString(),
-    component: createFlatIcon(azureintegrationserviceenvironments)
+    isIsometric: false
   },
 
   {
@@ -2113,7 +2112,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-internet-analyzer-profiles',
     category,
     url: azureinternetanalyzerprofiles.toString(),
-    component: createFlatIcon(azureinternetanalyzerprofiles)
+    isIsometric: false
   },
 
   {
@@ -2121,7 +2120,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-intune-app-protection',
     category,
     url: azureintuneappprotection.toString(),
-    component: createFlatIcon(azureintuneappprotection)
+    isIsometric: false
   },
 
   {
@@ -2129,7 +2128,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-intune-for-education',
     category,
     url: azureintuneforeducation.toString(),
-    component: createFlatIcon(azureintuneforeducation)
+    isIsometric: false
   },
 
   {
@@ -2137,7 +2136,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-intune-trends',
     category,
     url: azureintunetrends.toString(),
-    component: createFlatIcon(azureintunetrends)
+    isIsometric: false
   },
 
   {
@@ -2145,7 +2144,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-intune',
     category,
     url: azureintune.toString(),
-    component: createFlatIcon(azureintune)
+    isIsometric: false
   },
 
   {
@@ -2153,7 +2152,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-iot-central-applications',
     category,
     url: azureiotcentralapplications.toString(),
-    component: createFlatIcon(azureiotcentralapplications)
+    isIsometric: false
   },
 
   {
@@ -2161,7 +2160,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-iot-edge',
     category,
     url: azureiotedge.toString(),
-    component: createFlatIcon(azureiotedge)
+    isIsometric: false
   },
 
   {
@@ -2169,7 +2168,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-iot-hub',
     category,
     url: azureiothub.toString(),
-    component: createFlatIcon(azureiothub)
+    isIsometric: false
   },
 
   {
@@ -2177,7 +2176,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ip-groups',
     category,
     url: azureipgroups.toString(),
-    component: createFlatIcon(azureipgroups)
+    isIsometric: false
   },
 
   {
@@ -2185,7 +2184,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-journey-hub',
     category,
     url: azurejourneyhub.toString(),
-    component: createFlatIcon(azurejourneyhub)
+    isIsometric: false
   },
 
   {
@@ -2193,7 +2192,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-key-vaults',
     category,
     url: azurekeyvaults.toString(),
-    component: createFlatIcon(azurekeyvaults)
+    isIsometric: false
   },
 
   {
@@ -2201,7 +2200,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-keys',
     category,
     url: azurekeys.toString(),
-    component: createFlatIcon(azurekeys)
+    isIsometric: false
   },
 
   {
@@ -2209,7 +2208,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-kubernetes-services',
     category,
     url: azurekubernetesservices.toString(),
-    component: createFlatIcon(azurekubernetesservices)
+    isIsometric: false
   },
 
   {
@@ -2217,7 +2216,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-lab-services',
     category,
     url: azurelabservices.toString(),
-    component: createFlatIcon(azurelabservices)
+    isIsometric: false
   },
 
   {
@@ -2225,7 +2224,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-language-services',
     category,
     url: azurelanguageservices.toString(),
-    component: createFlatIcon(azurelanguageservices)
+    isIsometric: false
   },
 
   {
@@ -2233,7 +2232,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-launch-portal',
     category,
     url: azurelaunchportal.toString(),
-    component: createFlatIcon(azurelaunchportal)
+    isIsometric: false
   },
 
   {
@@ -2241,7 +2240,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-learn',
     category,
     url: azurelearn.toString(),
-    component: createFlatIcon(azurelearn)
+    isIsometric: false
   },
 
   {
@@ -2249,7 +2248,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-lighthouse',
     category,
     url: azurelighthouse.toString(),
-    component: createFlatIcon(azurelighthouse)
+    isIsometric: false
   },
 
   {
@@ -2257,7 +2256,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-load-balancer-hub',
     category,
     url: azureloadbalancerhub.toString(),
-    component: createFlatIcon(azureloadbalancerhub)
+    isIsometric: false
   },
 
   {
@@ -2265,7 +2264,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-load-balancers',
     category,
     url: azureloadbalancers.toString(),
-    component: createFlatIcon(azureloadbalancers)
+    isIsometric: false
   },
 
   {
@@ -2273,7 +2272,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-load-test',
     category,
     url: azureloadtest.toString(),
-    component: createFlatIcon(azureloadtest)
+    isIsometric: false
   },
 
   {
@@ -2281,7 +2280,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-load-testing',
     category,
     url: azureloadtesting.toString(),
-    component: createFlatIcon(azureloadtesting)
+    isIsometric: false
   },
 
   {
@@ -2289,7 +2288,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-local-network-gateways',
     category,
     url: azurelocalnetworkgateways.toString(),
-    component: createFlatIcon(azurelocalnetworkgateways)
+    isIsometric: false
   },
 
   {
@@ -2297,7 +2296,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-location',
     category,
     url: azurelocation.toString(),
-    component: createFlatIcon(azurelocation)
+    isIsometric: false
   },
 
   {
@@ -2305,7 +2304,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-log-analytics-workspaces',
     category,
     url: azureloganalyticsworkspaces.toString(),
-    component: createFlatIcon(azureloganalyticsworkspaces)
+    isIsometric: false
   },
 
   {
@@ -2313,7 +2312,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-log-streaming',
     category,
     url: azurelogstreaming.toString(),
-    component: createFlatIcon(azurelogstreaming)
+    isIsometric: false
   },
 
   {
@@ -2321,7 +2320,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-logic-apps-custom-connector',
     category,
     url: azurelogicappscustomconnector.toString(),
-    component: createFlatIcon(azurelogicappscustomconnector)
+    isIsometric: false
   },
 
   {
@@ -2329,7 +2328,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-logic-apps',
     category,
     url: azurelogicapps.toString(),
-    component: createFlatIcon(azurelogicapps)
+    isIsometric: false
   },
 
   {
@@ -2337,7 +2336,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-machine-learning-studio-classic-web-services',
     category,
     url: azuremachinelearningstudioclassicwebservices.toString(),
-    component: createFlatIcon(azuremachinelearningstudioclassicwebservices)
+    isIsometric: false
   },
 
   {
@@ -2345,7 +2344,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-machine-learning-studio-web-service-plans',
     category,
     url: azuremachinelearningstudiowebserviceplans.toString(),
-    component: createFlatIcon(azuremachinelearningstudiowebserviceplans)
+    isIsometric: false
   },
 
   {
@@ -2353,7 +2352,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-machine-learning-studio-workspaces',
     category,
     url: azuremachinelearningstudioworkspaces.toString(),
-    component: createFlatIcon(azuremachinelearningstudioworkspaces)
+    isIsometric: false
   },
 
   {
@@ -2361,7 +2360,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-machine-learning',
     category,
     url: azuremachinelearning.toString(),
-    component: createFlatIcon(azuremachinelearning)
+    isIsometric: false
   },
 
   {
@@ -2369,7 +2368,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-machinesazurearc',
     category,
     url: azuremachinesazurearc.toString(),
-    component: createFlatIcon(azuremachinesazurearc)
+    isIsometric: false
   },
 
   {
@@ -2377,7 +2376,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-maintenance-configuration',
     category,
     url: azuremaintenanceconfiguration.toString(),
-    component: createFlatIcon(azuremaintenanceconfiguration)
+    isIsometric: false
   },
 
   {
@@ -2385,7 +2384,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-applications-center',
     category,
     url: azuremanagedapplicationscenter.toString(),
-    component: createFlatIcon(azuremanagedapplicationscenter)
+    isIsometric: false
   },
 
   {
@@ -2393,7 +2392,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-database',
     category,
     url: azuremanageddatabase.toString(),
-    component: createFlatIcon(azuremanageddatabase)
+    isIsometric: false
   },
 
   {
@@ -2401,7 +2400,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-desktop',
     category,
     url: azuremanageddesktop.toString(),
-    component: createFlatIcon(azuremanageddesktop)
+    isIsometric: false
   },
 
   {
@@ -2409,7 +2408,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-identities',
     category,
     url: azuremanagedidentities.toString(),
-    component: createFlatIcon(azuremanagedidentities)
+    isIsometric: false
   },
 
   {
@@ -2417,7 +2416,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-instance-apache-cassandra',
     category,
     url: azuremanagedinstanceapachecassandra.toString(),
-    component: createFlatIcon(azuremanagedinstanceapachecassandra)
+    isIsometric: false
   },
 
   {
@@ -2425,7 +2424,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-managed-service-fabric',
     category,
     url: azuremanagedservicefabric.toString(),
-    component: createFlatIcon(azuremanagedservicefabric)
+    isIsometric: false
   },
 
   {
@@ -2433,7 +2432,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-management-groups',
     category,
     url: azuremanagementgroups.toString(),
-    component: createFlatIcon(azuremanagementgroups)
+    isIsometric: false
   },
 
   {
@@ -2441,7 +2440,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-management-portal',
     category,
     url: azuremanagementportal.toString(),
-    component: createFlatIcon(azuremanagementportal)
+    isIsometric: false
   },
 
   {
@@ -2449,7 +2448,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-maps-accounts',
     category,
     url: azuremapsaccounts.toString(),
-    component: createFlatIcon(azuremapsaccounts)
+    isIsometric: false
   },
 
   {
@@ -2457,7 +2456,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-marketplace-management',
     category,
     url: azuremarketplacemanagement.toString(),
-    component: createFlatIcon(azuremarketplacemanagement)
+    isIsometric: false
   },
 
   {
@@ -2465,7 +2464,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-marketplace',
     category,
     url: azuremarketplace.toString(),
-    component: createFlatIcon(azuremarketplace)
+    isIsometric: false
   },
 
   {
@@ -2473,7 +2472,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-media-file',
     category,
     url: azuremediafile.toString(),
-    component: createFlatIcon(azuremediafile)
+    isIsometric: false
   },
 
   {
@@ -2481,7 +2480,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-media-service',
     category,
     url: azuremediaservice.toString(),
-    component: createFlatIcon(azuremediaservice)
+    isIsometric: false
   },
 
   {
@@ -2489,7 +2488,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-media',
     category,
     url: azuremedia.toString(),
-    component: createFlatIcon(azuremedia)
+    isIsometric: false
   },
 
   {
@@ -2497,7 +2496,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-mesh-applications',
     category,
     url: azuremeshapplications.toString(),
-    component: createFlatIcon(azuremeshapplications)
+    isIsometric: false
   },
 
   {
@@ -2505,7 +2504,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-metrics-advisor',
     category,
     url: azuremetricsadvisor.toString(),
-    component: createFlatIcon(azuremetricsadvisor)
+    isIsometric: false
   },
 
   {
@@ -2513,7 +2512,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-metrics',
     category,
     url: azuremetrics.toString(),
-    component: createFlatIcon(azuremetrics)
+    isIsometric: false
   },
 
   {
@@ -2521,7 +2520,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-migrate',
     category,
     url: azuremigrate.toString(),
-    component: createFlatIcon(azuremigrate)
+    isIsometric: false
   },
 
   {
@@ -2529,7 +2528,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-mindaro',
     category,
     url: azuremindaro.toString(),
-    component: createFlatIcon(azuremindaro)
+    isIsometric: false
   },
 
   {
@@ -2537,7 +2536,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-mission-landing-zone',
     category,
     url: azuremissionlandingzone.toString(),
-    component: createFlatIcon(azuremissionlandingzone)
+    isIsometric: false
   },
 
   {
@@ -2545,7 +2544,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-mobile-engagement',
     category,
     url: azuremobileengagement.toString(),
-    component: createFlatIcon(azuremobileengagement)
+    isIsometric: false
   },
 
   {
@@ -2553,7 +2552,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-mobile',
     category,
     url: azuremobile.toString(),
-    component: createFlatIcon(azuremobile)
+    isIsometric: false
   },
 
   {
@@ -2561,7 +2560,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-modular-data-center',
     category,
     url: azuremodulardatacenter.toString(),
-    component: createFlatIcon(azuremodulardatacenter)
+    isIsometric: false
   },
 
   {
@@ -2569,7 +2568,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-module',
     category,
     url: azuremodule.toString(),
-    component: createFlatIcon(azuremodule)
+    isIsometric: false
   },
 
   {
@@ -2577,7 +2576,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-monitor-dashboard',
     category,
     url: azuremonitordashboard.toString(),
-    component: createFlatIcon(azuremonitordashboard)
+    isIsometric: false
   },
 
   {
@@ -2585,7 +2584,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-monitor',
     category,
     url: azuremonitor.toString(),
-    component: createFlatIcon(azuremonitor)
+    isIsometric: false
   },
 
   {
@@ -2593,7 +2592,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-multi-tenancy',
     category,
     url: azuremultitenancy.toString(),
-    component: createFlatIcon(azuremultitenancy)
+    isIsometric: false
   },
 
   {
@@ -2601,7 +2600,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-my-customers',
     category,
     url: azuremycustomers.toString(),
-    component: createFlatIcon(azuremycustomers)
+    isIsometric: false
   },
 
   {
@@ -2609,7 +2608,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-nat',
     category,
     url: azurenat.toString(),
-    component: createFlatIcon(azurenat)
+    isIsometric: false
   },
 
   {
@@ -2617,7 +2616,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-netapp-files',
     category,
     url: azurenetappfiles.toString(),
-    component: createFlatIcon(azurenetappfiles)
+    isIsometric: false
   },
 
   {
@@ -2625,7 +2624,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-network-function-manager',
     category,
     url: azurenetworkfunctionmanager.toString(),
-    component: createFlatIcon(azurenetworkfunctionmanager)
+    isIsometric: false
   },
 
   {
@@ -2633,7 +2632,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-network-interfaces',
     category,
     url: azurenetworkinterfaces.toString(),
-    component: createFlatIcon(azurenetworkinterfaces)
+    isIsometric: false
   },
 
   {
@@ -2641,7 +2640,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-network-manager',
     category,
     url: azurenetworkmanager.toString(),
-    component: createFlatIcon(azurenetworkmanager)
+    isIsometric: false
   },
 
   {
@@ -2649,7 +2648,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-network-security-groups',
     category,
     url: azurenetworksecuritygroups.toString(),
-    component: createFlatIcon(azurenetworksecuritygroups)
+    isIsometric: false
   },
 
   {
@@ -2657,7 +2656,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-network-watcher',
     category,
     url: azurenetworkwatcher.toString(),
-    component: createFlatIcon(azurenetworkwatcher)
+    isIsometric: false
   },
 
   {
@@ -2665,7 +2664,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-notification-hub-namespaces',
     category,
     url: azurenotificationhubnamespaces.toString(),
-    component: createFlatIcon(azurenotificationhubnamespaces)
+    isIsometric: false
   },
 
   {
@@ -2673,7 +2672,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-notification-hubs',
     category,
     url: azurenotificationhubs.toString(),
-    component: createFlatIcon(azurenotificationhubs)
+    isIsometric: false
   },
 
   {
@@ -2681,7 +2680,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-object-understanding',
     category,
     url: azureobjectunderstanding.toString(),
-    component: createFlatIcon(azureobjectunderstanding)
+    isIsometric: false
   },
 
   {
@@ -2689,7 +2688,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-offers',
     category,
     url: azureoffers.toString(),
-    component: createFlatIcon(azureoffers)
+    isIsometric: false
   },
 
   {
@@ -2697,7 +2696,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-on-premises-data-gateways',
     category,
     url: azureonpremisesdatagateways.toString(),
-    component: createFlatIcon(azureonpremisesdatagateways)
+    isIsometric: false
   },
 
   {
@@ -2705,7 +2704,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-open-supply-chain-platform',
     category,
     url: azureopensupplychainplatform.toString(),
-    component: createFlatIcon(azureopensupplychainplatform)
+    isIsometric: false
   },
 
   {
@@ -2713,7 +2712,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-operation-log-classic',
     category,
     url: azureoperationlogclassic.toString(),
-    component: createFlatIcon(azureoperationlogclassic)
+    isIsometric: false
   },
 
   {
@@ -2721,7 +2720,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-orbital',
     category,
     url: azureorbital.toString(),
-    component: createFlatIcon(azureorbital)
+    isIsometric: false
   },
 
   {
@@ -2729,7 +2728,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-os-images-classic',
     category,
     url: azureosimagesclassic.toString(),
-    component: createFlatIcon(azureosimagesclassic)
+    isIsometric: false
   },
 
   {
@@ -2737,7 +2736,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-outbound-connection',
     category,
     url: azureoutboundconnection.toString(),
-    component: createFlatIcon(azureoutboundconnection)
+    isIsometric: false
   },
 
   {
@@ -2745,7 +2744,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-partner-namespace',
     category,
     url: azurepartnernamespace.toString(),
-    component: createFlatIcon(azurepartnernamespace)
+    isIsometric: false
   },
 
   {
@@ -2753,7 +2752,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-partner-registration',
     category,
     url: azurepartnerregistration.toString(),
-    component: createFlatIcon(azurepartnerregistration)
+    isIsometric: false
   },
 
   {
@@ -2761,7 +2760,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-partner-topic',
     category,
     url: azurepartnertopic.toString(),
-    component: createFlatIcon(azurepartnertopic)
+    isIsometric: false
   },
 
   {
@@ -2769,7 +2768,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-peering-service',
     category,
     url: azurepeeringservice.toString(),
-    component: createFlatIcon(azurepeeringservice)
+    isIsometric: false
   },
 
   {
@@ -2777,7 +2776,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-pim',
     category,
     url: azurepim.toString(),
-    component: createFlatIcon(azurepim)
+    isIsometric: false
   },
 
   {
@@ -2785,7 +2784,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-plans',
     category,
     url: azureplans.toString(),
-    component: createFlatIcon(azureplans)
+    isIsometric: false
   },
 
   {
@@ -2793,7 +2792,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-policy',
     category,
     url: azurepolicy.toString(),
-    component: createFlatIcon(azurepolicy)
+    isIsometric: false
   },
 
   {
@@ -2801,7 +2800,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-power-up',
     category,
     url: azurepowerup.toString(),
-    component: createFlatIcon(azurepowerup)
+    isIsometric: false
   },
 
   {
@@ -2809,7 +2808,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-power',
     category,
     url: azurepower.toString(),
-    component: createFlatIcon(azurepower)
+    isIsometric: false
   },
 
   {
@@ -2817,7 +2816,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-powershell',
     category,
     url: azurepowershell.toString(),
-    component: createFlatIcon(azurepowershell)
+    isIsometric: false
   },
 
   {
@@ -2825,7 +2824,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-preview-features',
     category,
     url: azurepreviewfeatures.toString(),
-    component: createFlatIcon(azurepreviewfeatures)
+    isIsometric: false
   },
 
   {
@@ -2833,7 +2832,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-preview',
     category,
     url: azurepreview.toString(),
-    component: createFlatIcon(azurepreview)
+    isIsometric: false
   },
 
   {
@@ -2841,7 +2840,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-private-link-hub',
     category,
     url: azureprivatelinkhub.toString(),
-    component: createFlatIcon(azureprivatelinkhub)
+    isIsometric: false
   },
 
   {
@@ -2849,7 +2848,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-private-link-service',
     category,
     url: azureprivatelinkservice.toString(),
-    component: createFlatIcon(azureprivatelinkservice)
+    isIsometric: false
   },
 
   {
@@ -2857,7 +2856,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-private-link',
     category,
     url: azureprivatelink.toString(),
-    component: createFlatIcon(azureprivatelink)
+    isIsometric: false
   },
 
   {
@@ -2865,7 +2864,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-private-mobile-network',
     category,
     url: azureprivatemobilenetwork.toString(),
-    component: createFlatIcon(azureprivatemobilenetwork)
+    isIsometric: false
   },
 
   {
@@ -2873,7 +2872,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-process-explorer',
     category,
     url: azureprocessexplorer.toString(),
-    component: createFlatIcon(azureprocessexplorer)
+    isIsometric: false
   },
 
   {
@@ -2881,7 +2880,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-production-ready-database',
     category,
     url: azureproductionreadydatabase.toString(),
-    component: createFlatIcon(azureproductionreadydatabase)
+    isIsometric: false
   },
 
   {
@@ -2889,7 +2888,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-proximity-placement-groups',
     category,
     url: azureproximityplacementgroups.toString(),
-    component: createFlatIcon(azureproximityplacementgroups)
+    isIsometric: false
   },
 
   {
@@ -2897,7 +2896,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-public-ip-addresses-classic',
     category,
     url: azurepublicipaddressesclassic.toString(),
-    component: createFlatIcon(azurepublicipaddressesclassic)
+    isIsometric: false
   },
 
   {
@@ -2905,7 +2904,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-public-ip-addresses',
     category,
     url: azurepublicipaddresses.toString(),
-    component: createFlatIcon(azurepublicipaddresses)
+    isIsometric: false
   },
 
   {
@@ -2913,7 +2912,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-public-ip-prefixes',
     category,
     url: azurepublicipprefixes.toString(),
-    component: createFlatIcon(azurepublicipprefixes)
+    isIsometric: false
   },
 
   {
@@ -2921,7 +2920,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-purview-accounts',
     category,
     url: azurepurviewaccounts.toString(),
-    component: createFlatIcon(azurepurviewaccounts)
+    isIsometric: false
   },
 
   {
@@ -2929,7 +2928,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-quickstart-center',
     category,
     url: azurequickstartcenter.toString(),
-    component: createFlatIcon(azurequickstartcenter)
+    isIsometric: false
   },
 
   {
@@ -2937,7 +2936,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-quotas',
     category,
     url: azurequotas.toString(),
-    component: createFlatIcon(azurequotas)
+    isIsometric: false
   },
 
   {
@@ -2945,7 +2944,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-recent',
     category,
     url: azurerecent.toString(),
-    component: createFlatIcon(azurerecent)
+    isIsometric: false
   },
 
   {
@@ -2953,7 +2952,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-recovery-services-vaults',
     category,
     url: azurerecoveryservicesvaults.toString(),
-    component: createFlatIcon(azurerecoveryservicesvaults)
+    isIsometric: false
   },
 
   {
@@ -2961,7 +2960,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-region-management',
     category,
     url: azureregionmanagement.toString(),
-    component: createFlatIcon(azureregionmanagement)
+    isIsometric: false
   },
 
   {
@@ -2969,7 +2968,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-relays',
     category,
     url: azurerelays.toString(),
-    component: createFlatIcon(azurerelays)
+    isIsometric: false
   },
 
   {
@@ -2977,7 +2976,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-remote-rendering',
     category,
     url: azureremoterendering.toString(),
-    component: createFlatIcon(azureremoterendering)
+    isIsometric: false
   },
 
   {
@@ -2985,7 +2984,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-reservations',
     category,
     url: azurereservations.toString(),
-    component: createFlatIcon(azurereservations)
+    isIsometric: false
   },
 
   {
@@ -2993,7 +2992,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-reserved-capacity-groups',
     category,
     url: azurereservedcapacitygroups.toString(),
-    component: createFlatIcon(azurereservedcapacitygroups)
+    isIsometric: false
   },
 
   {
@@ -3001,7 +3000,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-reserved-capacity',
     category,
     url: azurereservedcapacity.toString(),
-    component: createFlatIcon(azurereservedcapacity)
+    isIsometric: false
   },
 
   {
@@ -3009,7 +3008,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-reserved-ip-addresses-classic',
     category,
     url: azurereservedipaddressesclassic.toString(),
-    component: createFlatIcon(azurereservedipaddressesclassic)
+    isIsometric: false
   },
 
   {
@@ -3017,7 +3016,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-explorer',
     category,
     url: azureresourceexplorer.toString(),
-    component: createFlatIcon(azureresourceexplorer)
+    isIsometric: false
   },
 
   {
@@ -3025,7 +3024,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-graph-explorer',
     category,
     url: azureresourcegraphexplorer.toString(),
-    component: createFlatIcon(azureresourcegraphexplorer)
+    isIsometric: false
   },
 
   {
@@ -3033,7 +3032,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-group-list',
     category,
     url: azureresourcegrouplist.toString(),
-    component: createFlatIcon(azureresourcegrouplist)
+    isIsometric: false
   },
 
   {
@@ -3041,7 +3040,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-groups',
     category,
     url: azureresourcegroups.toString(),
-    component: createFlatIcon(azureresourcegroups)
+    isIsometric: false
   },
 
   {
@@ -3049,7 +3048,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-linked',
     category,
     url: azureresourcelinked.toString(),
-    component: createFlatIcon(azureresourcelinked)
+    isIsometric: false
   },
 
   {
@@ -3057,7 +3056,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-management-private-link',
     category,
     url: azureresourcemanagementprivatelink.toString(),
-    component: createFlatIcon(azureresourcemanagementprivatelink)
+    isIsometric: false
   },
 
   {
@@ -3065,7 +3064,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-resource-mover',
     category,
     url: azureresourcemover.toString(),
-    component: createFlatIcon(azureresourcemover)
+    isIsometric: false
   },
 
   {
@@ -3073,7 +3072,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-restore-points-collections',
     category,
     url: azurerestorepointscollections.toString(),
-    component: createFlatIcon(azurerestorepointscollections)
+    isIsometric: false
   },
 
   {
@@ -3081,7 +3080,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-restore-points',
     category,
     url: azurerestorepoints.toString(),
-    component: createFlatIcon(azurerestorepoints)
+    isIsometric: false
   },
 
   {
@@ -3089,7 +3088,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-route-filters',
     category,
     url: azureroutefilters.toString(),
-    component: createFlatIcon(azureroutefilters)
+    isIsometric: false
   },
 
   {
@@ -3097,7 +3096,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-route-tables',
     category,
     url: azureroutetables.toString(),
-    component: createFlatIcon(azureroutetables)
+    isIsometric: false
   },
 
   {
@@ -3105,7 +3104,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-rtos',
     category,
     url: azurertos.toString(),
-    component: createFlatIcon(azurertos)
+    isIsometric: false
   },
 
   {
@@ -3113,7 +3112,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sap-azure-monitor',
     category,
     url: azuresapazuremonitor.toString(),
-    component: createFlatIcon(azuresapazuremonitor)
+    isIsometric: false
   },
 
   {
@@ -3121,7 +3120,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-savings-plan',
     category,
     url: azuresavingsplan.toString(),
-    component: createFlatIcon(azuresavingsplan)
+    isIsometric: false
   },
 
   {
@@ -3129,7 +3128,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-scale',
     category,
     url: azurescale.toString(),
-    component: createFlatIcon(azurescale)
+    isIsometric: false
   },
 
   {
@@ -3137,7 +3136,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-scheduler-job-collections',
     category,
     url: azureschedulerjobcollections.toString(),
-    component: createFlatIcon(azureschedulerjobcollections)
+    isIsometric: false
   },
 
   {
@@ -3145,7 +3144,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-scheduler',
     category,
     url: azurescheduler.toString(),
-    component: createFlatIcon(azurescheduler)
+    isIsometric: false
   },
 
   {
@@ -3153,7 +3152,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-search-grid',
     category,
     url: azuresearchgrid.toString(),
-    component: createFlatIcon(azuresearchgrid)
+    isIsometric: false
   },
 
   {
@@ -3161,7 +3160,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-search-services',
     category,
     url: azuresearchservices.toString(),
-    component: createFlatIcon(azuresearchservices)
+    isIsometric: false
   },
 
   {
@@ -3169,7 +3168,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-search',
     category,
     url: azuresearch.toString(),
-    component: createFlatIcon(azuresearch)
+    isIsometric: false
   },
 
   {
@@ -3177,7 +3176,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-security-baselines',
     category,
     url: azuresecuritybaselines.toString(),
-    component: createFlatIcon(azuresecuritybaselines)
+    isIsometric: false
   },
 
   {
@@ -3185,7 +3184,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-security-center',
     category,
     url: azuresecuritycenter.toString(),
-    component: createFlatIcon(azuresecuritycenter)
+    isIsometric: false
   },
 
   {
@@ -3193,7 +3192,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sendgrid-accounts',
     category,
     url: azuresendgridaccounts.toString(),
-    component: createFlatIcon(azuresendgridaccounts)
+    isIsometric: false
   },
 
   {
@@ -3201,7 +3200,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sentinel',
     category,
     url: azuresentinel.toString(),
-    component: createFlatIcon(azuresentinel)
+    isIsometric: false
   },
 
   {
@@ -3209,7 +3208,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-server-farm',
     category,
     url: azureserverfarm.toString(),
-    component: createFlatIcon(azureserverfarm)
+    isIsometric: false
   },
 
   {
@@ -3217,7 +3216,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-bus',
     category,
     url: azureservicebus.toString(),
-    component: createFlatIcon(azureservicebus)
+    isIsometric: false
   },
 
   {
@@ -3225,7 +3224,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-catalog-mad',
     category,
     url: azureservicecatalogmad.toString(),
-    component: createFlatIcon(azureservicecatalogmad)
+    isIsometric: false
   },
 
   {
@@ -3233,7 +3232,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-endpoint-policies',
     category,
     url: azureserviceendpointpolicies.toString(),
-    component: createFlatIcon(azureserviceendpointpolicies)
+    isIsometric: false
   },
 
   {
@@ -3241,7 +3240,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-fabric-clusters',
     category,
     url: azureservicefabricclusters.toString(),
-    component: createFlatIcon(azureservicefabricclusters)
+    isIsometric: false
   },
 
   {
@@ -3249,7 +3248,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-health',
     category,
     url: azureservicehealth.toString(),
-    component: createFlatIcon(azureservicehealth)
+    isIsometric: false
   },
 
   {
@@ -3257,7 +3256,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-service-providers',
     category,
     url: azureserviceproviders.toString(),
-    component: createFlatIcon(azureserviceproviders)
+    isIsometric: false
   },
 
   {
@@ -3265,7 +3264,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-shared-image-galleries',
     category,
     url: azuresharedimagegalleries.toString(),
-    component: createFlatIcon(azuresharedimagegalleries)
+    isIsometric: false
   },
 
   {
@@ -3273,7 +3272,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-signalr',
     category,
     url: azuresignalr.toString(),
-    component: createFlatIcon(azuresignalr)
+    isIsometric: false
   },
 
   {
@@ -3281,7 +3280,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-software-as-a-service',
     category,
     url: azuresoftwareasaservice.toString(),
-    component: createFlatIcon(azuresoftwareasaservice)
+    isIsometric: false
   },
 
   {
@@ -3289,7 +3288,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-software-updates',
     category,
     url: azuresoftwareupdates.toString(),
-    component: createFlatIcon(azuresoftwareupdates)
+    isIsometric: false
   },
 
   {
@@ -3297,7 +3296,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-solutions',
     category,
     url: azuresolutions.toString(),
-    component: createFlatIcon(azuresolutions)
+    isIsometric: false
   },
 
   {
@@ -3305,7 +3304,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sonic-dash',
     category,
     url: azuresonicdash.toString(),
-    component: createFlatIcon(azuresonicdash)
+    isIsometric: false
   },
 
   {
@@ -3313,7 +3312,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-spatial-anchor-accounts',
     category,
     url: azurespatialanchoraccounts.toString(),
-    component: createFlatIcon(azurespatialanchoraccounts)
+    isIsometric: false
   },
 
   {
@@ -3321,7 +3320,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sphere',
     category,
     url: azuresphere.toString(),
-    component: createFlatIcon(azuresphere)
+    isIsometric: false
   },
 
   {
@@ -3329,7 +3328,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-spot-vm',
     category,
     url: azurespotvm.toString(),
-    component: createFlatIcon(azurespotvm)
+    isIsometric: false
   },
 
   {
@@ -3337,7 +3336,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-spot-vmss',
     category,
     url: azurespotvmss.toString(),
-    component: createFlatIcon(azurespotvmss)
+    isIsometric: false
   },
 
   {
@@ -3345,7 +3344,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-spring-cloud',
     category,
     url: azurespringcloud.toString(),
-    component: createFlatIcon(azurespringcloud)
+    isIsometric: false
   },
 
   {
@@ -3353,7 +3352,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-data-warehouses',
     category,
     url: azuresqldatawarehouses.toString(),
-    component: createFlatIcon(azuresqldatawarehouses)
+    isIsometric: false
   },
 
   {
@@ -3361,7 +3360,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-database',
     category,
     url: azuresqldatabase.toString(),
-    component: createFlatIcon(azuresqldatabase)
+    isIsometric: false
   },
 
   {
@@ -3369,7 +3368,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-edge',
     category,
     url: azuresqledge.toString(),
-    component: createFlatIcon(azuresqledge)
+    isIsometric: false
   },
 
   {
@@ -3377,7 +3376,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-elastic-pools',
     category,
     url: azuresqlelasticpools.toString(),
-    component: createFlatIcon(azuresqlelasticpools)
+    isIsometric: false
   },
 
   {
@@ -3385,7 +3384,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-managed-instance',
     category,
     url: azuresqlmanagedinstance.toString(),
-    component: createFlatIcon(azuresqlmanagedinstance)
+    isIsometric: false
   },
 
   {
@@ -3393,7 +3392,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-server-registries',
     category,
     url: azuresqlserverregistries.toString(),
-    component: createFlatIcon(azuresqlserverregistries)
+    isIsometric: false
   },
 
   {
@@ -3401,7 +3400,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-server-stretch-databases',
     category,
     url: azuresqlserverstretchdatabases.toString(),
-    component: createFlatIcon(azuresqlserverstretchdatabases)
+    isIsometric: false
   },
 
   {
@@ -3409,7 +3408,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-server',
     category,
     url: azuresqlserver.toString(),
-    component: createFlatIcon(azuresqlserver)
+    isIsometric: false
   },
 
   {
@@ -3417,7 +3416,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql-vm',
     category,
     url: azuresqlvm.toString(),
-    component: createFlatIcon(azuresqlvm)
+    isIsometric: false
   },
 
   {
@@ -3425,7 +3424,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-sql',
     category,
     url: azuresql.toString(),
-    component: createFlatIcon(azuresql)
+    isIsometric: false
   },
 
   {
@@ -3433,7 +3432,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ssd',
     category,
     url: azuressd.toString(),
-    component: createFlatIcon(azuressd)
+    isIsometric: false
   },
 
   {
@@ -3441,7 +3440,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ssh-keys',
     category,
     url: azuresshkeys.toString(),
-    component: createFlatIcon(azuresshkeys)
+    isIsometric: false
   },
 
   {
@@ -3449,7 +3448,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-ssis-lift-and-shift-ir',
     category,
     url: azuressisliftandshiftir.toString(),
-    component: createFlatIcon(azuressisliftandshiftir)
+    isIsometric: false
   },
 
   {
@@ -3457,7 +3456,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-stack-edge',
     category,
     url: azurestackedge.toString(),
-    component: createFlatIcon(azurestackedge)
+    isIsometric: false
   },
 
   {
@@ -3465,7 +3464,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-stack',
     category,
     url: azurestack.toString(),
-    component: createFlatIcon(azurestack)
+    isIsometric: false
   },
 
   {
@@ -3473,7 +3472,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-static-apps',
     category,
     url: azurestaticapps.toString(),
-    component: createFlatIcon(azurestaticapps)
+    isIsometric: false
   },
 
   {
@@ -3481,7 +3480,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-accounts-classic',
     category,
     url: azurestorageaccountsclassic.toString(),
-    component: createFlatIcon(azurestorageaccountsclassic)
+    isIsometric: false
   },
 
   {
@@ -3489,7 +3488,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-accounts',
     category,
     url: azurestorageaccounts.toString(),
-    component: createFlatIcon(azurestorageaccounts)
+    isIsometric: false
   },
 
   {
@@ -3497,7 +3496,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-azure-files',
     category,
     url: azurestorageazurefiles.toString(),
-    component: createFlatIcon(azurestorageazurefiles)
+    isIsometric: false
   },
 
   {
@@ -3505,7 +3504,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-container',
     category,
     url: azurestoragecontainer.toString(),
-    component: createFlatIcon(azurestoragecontainer)
+    isIsometric: false
   },
 
   {
@@ -3513,7 +3512,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-explorer',
     category,
     url: azurestorageexplorer.toString(),
-    component: createFlatIcon(azurestorageexplorer)
+    isIsometric: false
   },
 
   {
@@ -3521,7 +3520,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-queue',
     category,
     url: azurestoragequeue.toString(),
-    component: createFlatIcon(azurestoragequeue)
+    isIsometric: false
   },
 
   {
@@ -3529,7 +3528,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-sync-services',
     category,
     url: azurestoragesyncservices.toString(),
-    component: createFlatIcon(azurestoragesyncservices)
+    isIsometric: false
   },
 
   {
@@ -3537,7 +3536,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storage-tasks',
     category,
     url: azurestoragetasks.toString(),
-    component: createFlatIcon(azurestoragetasks)
+    isIsometric: false
   },
 
   {
@@ -3545,7 +3544,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storsimple-data-managers',
     category,
     url: azurestorsimpledatamanagers.toString(),
-    component: createFlatIcon(azurestorsimpledatamanagers)
+    isIsometric: false
   },
 
   {
@@ -3553,7 +3552,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-storsimple-device-managers',
     category,
     url: azurestorsimpledevicemanagers.toString(),
-    component: createFlatIcon(azurestorsimpledevicemanagers)
+    isIsometric: false
   },
 
   {
@@ -3561,7 +3560,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-stream-analytics-jobs',
     category,
     url: azurestreamanalyticsjobs.toString(),
-    component: createFlatIcon(azurestreamanalyticsjobs)
+    isIsometric: false
   },
 
   {
@@ -3569,7 +3568,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-subscriptions',
     category,
     url: azuresubscriptions.toString(),
-    component: createFlatIcon(azuresubscriptions)
+    isIsometric: false
   },
 
   {
@@ -3577,7 +3576,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-support-center-blue',
     category,
     url: azuresupportcenterblue.toString(),
-    component: createFlatIcon(azuresupportcenterblue)
+    isIsometric: false
   },
 
   {
@@ -3585,7 +3584,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-synapse-analytics',
     category,
     url: azuresynapseanalytics.toString(),
-    component: createFlatIcon(azuresynapseanalytics)
+    isIsometric: false
   },
 
   {
@@ -3593,7 +3592,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-system-topic',
     category,
     url: azuresystemtopic.toString(),
-    component: createFlatIcon(azuresystemtopic)
+    isIsometric: false
   },
 
   {
@@ -3601,7 +3600,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-table',
     category,
     url: azuretable.toString(),
-    component: createFlatIcon(azuretable)
+    isIsometric: false
   },
 
   {
@@ -3609,7 +3608,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-tag',
     category,
     url: azuretag.toString(),
-    component: createFlatIcon(azuretag)
+    isIsometric: false
   },
 
   {
@@ -3617,7 +3616,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-tags',
     category,
     url: azuretags.toString(),
-    component: createFlatIcon(azuretags)
+    isIsometric: false
   },
 
   {
@@ -3625,7 +3624,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-template-specs',
     category,
     url: azuretemplatespecs.toString(),
-    component: createFlatIcon(azuretemplatespecs)
+    isIsometric: false
   },
 
   {
@@ -3633,7 +3632,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-templates',
     category,
     url: azuretemplates.toString(),
-    component: createFlatIcon(azuretemplates)
+    isIsometric: false
   },
 
   {
@@ -3641,7 +3640,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-tenant-properties',
     category,
     url: azuretenantproperties.toString(),
-    component: createFlatIcon(azuretenantproperties)
+    isIsometric: false
   },
 
   {
@@ -3649,7 +3648,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-tenant-status',
     category,
     url: azuretenantstatus.toString(),
-    component: createFlatIcon(azuretenantstatus)
+    isIsometric: false
   },
 
   {
@@ -3657,7 +3656,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-test-base',
     category,
     url: azuretestbase.toString(),
-    component: createFlatIcon(azuretestbase)
+    isIsometric: false
   },
 
   {
@@ -3665,7 +3664,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-tfs-vc-repository',
     category,
     url: azuretfsvcrepository.toString(),
-    component: createFlatIcon(azuretfsvcrepository)
+    isIsometric: false
   },
 
   {
@@ -3673,7 +3672,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-time-series-data-sets',
     category,
     url: azuretimeseriesdatasets.toString(),
-    component: createFlatIcon(azuretimeseriesdatasets)
+    isIsometric: false
   },
 
   {
@@ -3681,7 +3680,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-time-series-insights-access-policies',
     category,
     url: azuretimeseriesinsightsaccesspolicies.toString(),
-    component: createFlatIcon(azuretimeseriesinsightsaccesspolicies)
+    isIsometric: false
   },
 
   {
@@ -3689,7 +3688,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-time-series-insights-environments',
     category,
     url: azuretimeseriesinsightsenvironments.toString(),
-    component: createFlatIcon(azuretimeseriesinsightsenvironments)
+    isIsometric: false
   },
 
   {
@@ -3697,7 +3696,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-time-series-insights-event-sources',
     category,
     url: azuretimeseriesinsightseventsources.toString(),
-    component: createFlatIcon(azuretimeseriesinsightseventsources)
+    isIsometric: false
   },
 
   {
@@ -3705,7 +3704,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-token-service',
     category,
     url: azuretokenservice.toString(),
-    component: createFlatIcon(azuretokenservice)
+    isIsometric: false
   },
 
   {
@@ -3713,7 +3712,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-toolbox',
     category,
     url: azuretoolbox.toString(),
-    component: createFlatIcon(azuretoolbox)
+    isIsometric: false
   },
 
   {
@@ -3721,7 +3720,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-traffic-manager-profiles',
     category,
     url: azuretrafficmanagerprofiles.toString(),
-    component: createFlatIcon(azuretrafficmanagerprofiles)
+    isIsometric: false
   },
 
   {
@@ -3729,7 +3728,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-translator-text',
     category,
     url: azuretranslatortext.toString(),
-    component: createFlatIcon(azuretranslatortext)
+    isIsometric: false
   },
 
   {
@@ -3737,7 +3736,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-troubleshoot',
     category,
     url: azuretroubleshoot.toString(),
-    component: createFlatIcon(azuretroubleshoot)
+    isIsometric: false
   },
 
   {
@@ -3745,7 +3744,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-universal-print',
     category,
     url: azureuniversalprint.toString(),
-    component: createFlatIcon(azureuniversalprint)
+    isIsometric: false
   },
 
   {
@@ -3753,7 +3752,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-update-center',
     category,
     url: azureupdatecenter.toString(),
-    component: createFlatIcon(azureupdatecenter)
+    isIsometric: false
   },
 
   {
@@ -3761,7 +3760,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-updates',
     category,
     url: azureupdates.toString(),
-    component: createFlatIcon(azureupdates)
+    isIsometric: false
   },
 
   {
@@ -3769,7 +3768,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-user-privacy',
     category,
     url: azureuserprivacy.toString(),
-    component: createFlatIcon(azureuserprivacy)
+    isIsometric: false
   },
 
   {
@@ -3777,7 +3776,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-user-subscriptions',
     category,
     url: azureusersubscriptions.toString(),
-    component: createFlatIcon(azureusersubscriptions)
+    isIsometric: false
   },
 
   {
@@ -3785,7 +3784,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-users',
     category,
     url: azureusers.toString(),
-    component: createFlatIcon(azureusers)
+    isIsometric: false
   },
 
   {
@@ -3793,7 +3792,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-verifiable-credentials',
     category,
     url: azureverifiablecredentials.toString(),
-    component: createFlatIcon(azureverifiablecredentials)
+    isIsometric: false
   },
 
   {
@@ -3801,7 +3800,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-versions',
     category,
     url: azureversions.toString(),
-    component: createFlatIcon(azureversions)
+    isIsometric: false
   },
 
   {
@@ -3809,7 +3808,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-clusters',
     category,
     url: azurevirtualclusters.toString(),
-    component: createFlatIcon(azurevirtualclusters)
+    isIsometric: false
   },
 
   {
@@ -3817,7 +3816,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-machine',
     category,
     url: azurevirtualmachine.toString(),
-    component: createFlatIcon(azurevirtualmachine)
+    isIsometric: false
   },
 
   {
@@ -3825,7 +3824,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-machines-classic',
     category,
     url: azurevirtualmachinesclassic.toString(),
-    component: createFlatIcon(azurevirtualmachinesclassic)
+    isIsometric: false
   },
 
   {
@@ -3833,7 +3832,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-network-gateways',
     category,
     url: azurevirtualnetworkgateways.toString(),
-    component: createFlatIcon(azurevirtualnetworkgateways)
+    isIsometric: false
   },
 
   {
@@ -3841,7 +3840,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-networks-classic',
     category,
     url: azurevirtualnetworksclassic.toString(),
-    component: createFlatIcon(azurevirtualnetworksclassic)
+    isIsometric: false
   },
 
   {
@@ -3849,7 +3848,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-networks',
     category,
     url: azurevirtualnetworks.toString(),
-    component: createFlatIcon(azurevirtualnetworks)
+    isIsometric: false
   },
 
   {
@@ -3857,7 +3856,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-router',
     category,
     url: azurevirtualrouter.toString(),
-    component: createFlatIcon(azurevirtualrouter)
+    isIsometric: false
   },
 
   {
@@ -3865,7 +3864,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-virtual-wans',
     category,
     url: azurevirtualwans.toString(),
-    component: createFlatIcon(azurevirtualwans)
+    isIsometric: false
   },
 
   {
@@ -3873,7 +3872,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-vm-application-definition',
     category,
     url: azurevmapplicationdefinition.toString(),
-    component: createFlatIcon(azurevmapplicationdefinition)
+    isIsometric: false
   },
 
   {
@@ -3881,7 +3880,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-vm-application-version',
     category,
     url: azurevmapplicationversion.toString(),
-    component: createFlatIcon(azurevmapplicationversion)
+    isIsometric: false
   },
 
   {
@@ -3889,7 +3888,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-vm-images-classic',
     category,
     url: azurevmimagesclassic.toString(),
-    component: createFlatIcon(azurevmimagesclassic)
+    isIsometric: false
   },
 
   {
@@ -3897,7 +3896,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-vm-scale-sets',
     category,
     url: azurevmscalesets.toString(),
-    component: createFlatIcon(azurevmscalesets)
+    isIsometric: false
   },
 
   {
@@ -3905,7 +3904,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-wac',
     category,
     url: azurewac.toString(),
-    component: createFlatIcon(azurewac)
+    isIsometric: false
   },
 
   {
@@ -3913,7 +3912,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-web-app-database',
     category,
     url: azurewebappdatabase.toString(),
-    component: createFlatIcon(azurewebappdatabase)
+    isIsometric: false
   },
 
   {
@@ -3921,7 +3920,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-web-application-firewall-policieswaf',
     category,
     url: azurewebapplicationfirewallpolicieswaf.toString(),
-    component: createFlatIcon(azurewebapplicationfirewallpolicieswaf)
+    isIsometric: false
   },
 
   {
@@ -3929,7 +3928,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-web-jobs',
     category,
     url: azurewebjobs.toString(),
-    component: createFlatIcon(azurewebjobs)
+    isIsometric: false
   },
 
   {
@@ -3937,7 +3936,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-web-slots',
     category,
     url: azurewebslots.toString(),
-    component: createFlatIcon(azurewebslots)
+    isIsometric: false
   },
 
   {
@@ -3945,7 +3944,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-web-test',
     category,
     url: azurewebtest.toString(),
-    component: createFlatIcon(azurewebtest)
+    isIsometric: false
   },
 
   {
@@ -3953,7 +3952,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-website-power',
     category,
     url: azurewebsitepower.toString(),
-    component: createFlatIcon(azurewebsitepower)
+    isIsometric: false
   },
 
   {
@@ -3961,7 +3960,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-website-staging',
     category,
     url: azurewebsitestaging.toString(),
-    component: createFlatIcon(azurewebsitestaging)
+    isIsometric: false
   },
 
   {
@@ -3969,7 +3968,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-windows-notification-services',
     category,
     url: azurewindowsnotificationservices.toString(),
-    component: createFlatIcon(azurewindowsnotificationservices)
+    isIsometric: false
   },
 
   {
@@ -3977,7 +3976,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-windows-virtual-desktop',
     category,
     url: azurewindowsvirtualdesktop.toString(),
-    component: createFlatIcon(azurewindowsvirtualdesktop)
+    isIsometric: false
   },
 
   {
@@ -3985,7 +3984,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-windows10-core-services',
     category,
     url: azurewindows10coreservices.toString(),
-    component: createFlatIcon(azurewindows10coreservices)
+    isIsometric: false
   },
 
   {
@@ -3993,7 +3992,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-workbooks',
     category,
     url: azureworkbooks.toString(),
-    component: createFlatIcon(azureworkbooks)
+    isIsometric: false
   },
 
   {
@@ -4001,7 +4000,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-worker-container-app',
     category,
     url: azureworkercontainerapp.toString(),
-    component: createFlatIcon(azureworkercontainerapp)
+    isIsometric: false
   },
 
   {
@@ -4009,7 +4008,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-workflow',
     category,
     url: azureworkflow.toString(),
-    component: createFlatIcon(azureworkflow)
+    isIsometric: false
   },
 
   {
@@ -4017,7 +4016,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure-workspaces',
     category,
     url: azureworkspaces.toString(),
-    component: createFlatIcon(azureworkspaces)
+    isIsometric: false
   },
 
   {
@@ -4025,7 +4024,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azure',
     category,
     url: azure.toString(),
-    component: createFlatIcon(azure)
+    isIsometric: false
   },
 
   {
@@ -4033,7 +4032,7 @@ const AzureIsopack: IconInput[] = [
     name: 'azureattestation',
     category,
     url: azureattestation.toString(),
-    component: createFlatIcon(azureattestation)
+    isIsometric: false
   }
 ];
 

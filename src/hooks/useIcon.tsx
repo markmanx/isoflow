@@ -1,8 +1,8 @@
 import React, { useMemo, useEffect } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { getItemById } from 'src/utils';
-import { NodeImageIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/NodeImageIcon';
-import { NodeComponentIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/NodeComponentIcon';
+import { IsometricIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/IsometricIcon';
+import { NonIsometricIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/NonIsometricIcon';
 
 export const useIcon = (id: string) => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
@@ -16,16 +16,16 @@ export const useIcon = (id: string) => {
 
   useEffect(() => {
     setHasLoaded(false);
-  }, [icon.component, icon.url]);
+  }, [icon.url]);
 
   const iconComponent = useMemo(() => {
-    if (icon.component) {
+    if (!icon.isIsometric) {
       setHasLoaded(true);
-      return <NodeComponentIcon IconComponent={icon.component} />;
+      return <NonIsometricIcon icon={icon} />;
     }
 
     return (
-      <NodeImageIcon
+      <IsometricIcon
         url={icon.url}
         onImageLoaded={() => {
           setHasLoaded(true);

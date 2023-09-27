@@ -8,7 +8,7 @@ interface Props {
   onImageLoaded?: () => void;
 }
 
-export const NodeImageIcon = ({ url, onImageLoaded }: Props) => {
+export const IsometricIcon = ({ url, onImageLoaded }: Props) => {
   const ref = useRef();
   const { projectedTileSize } = useTileSize();
   const { size, observe, disconnect } = useResizeObserver();

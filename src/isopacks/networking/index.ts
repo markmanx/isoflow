@@ -1,190 +1,224 @@
 import type { IconInput } from 'src/types';
-import Cache from './icons/cache.svg';
-import CardTerminal from './icons/cardterminal.svg';
-import Cloud from './icons/cloud.svg';
-import Cronjob from './icons/cronjob.svg';
-import Desktop from './icons/desktop.svg';
-import Dns from './icons/dns.svg';
-import Firewall from './icons/firewall.svg';
-import Function from './icons/function.svg';
-import Laptop from './icons/laptop.svg';
-import LoadBalancer from './icons/loadbalancer.svg';
-import Lock from './icons/lock.svg';
-import Mail from './icons/mail.svg';
-import MailMultiple from './icons/mailmultiple.svg';
-import MobileDevice from './icons/mobiledevice.svg';
-import Office from './icons/office.svg';
-import Package from './icons/package.svg';
-import PaymentCard from './icons/paymentcard.svg';
-import Printer from './icons/printer.svg';
-import Queue from './icons/queue.svg';
-import Router from './icons/router.svg';
-import Server from './icons/server.svg';
-import Speech from './icons/speech.svg';
-import Storage from './icons/storage.svg';
-import Switch from './icons/switch.svg';
-import User from './icons/user.svg';
-import VM from './icons/vm.svg';
+import cache from './icons/cache.svg';
+import cardterminal from './icons/cardterminal.svg';
+import cloud from './icons/cloud.svg';
+import cronjob from './icons/cronjob.svg';
+import desktop from './icons/desktop.svg';
+import dns from './icons/dns.svg';
+import firewall from './icons/firewall.svg';
+import functionmodule from './icons/function-module.svg';
+import laptop from './icons/laptop.svg';
+import loadbalancer from './icons/loadbalancer.svg';
+import lock from './icons/lock.svg';
+import mail from './icons/mail.svg';
+import mailmultiple from './icons/mailmultiple.svg';
+import mobiledevice from './icons/mobiledevice.svg';
+import office from './icons/office.svg';
+import packagemodule from './icons/package-module.svg';
+import paymentcard from './icons/paymentcard.svg';
+import printer from './icons/printer.svg';
+import queue from './icons/queue.svg';
+import router from './icons/router.svg';
+import server from './icons/server.svg';
+import speech from './icons/speech.svg';
+import storage from './icons/storage.svg';
+import switchmodule from './icons/switch-module.svg';
+import tower from './icons/tower.svg';
+import user from './icons/user.svg';
+import vm from './icons/vm.svg';
 
 const category = 'Networking';
 
-const networkingIsopack: IconInput[] = [
+const NetworkingIsopack: IconInput[] = [
   {
     id: 'cache',
-    name: 'Cache',
-    url: Cache.toString(),
-    category
+    name: 'cache',
+    category,
+    url: cache.toString(),
+    isIsometric: true
   },
   {
     id: 'cardterminal',
-    name: 'Card Terminal',
-    url: CardTerminal.toString(),
-    category
+    name: 'cardterminal',
+    category,
+    url: cardterminal.toString(),
+    isIsometric: true
   },
   {
     id: 'cloud',
-    name: 'Cloud',
-    url: Cloud.toString(),
-    category
+    name: 'cloud',
+    category,
+    url: cloud.toString(),
+    isIsometric: true
   },
   {
     id: 'cronjob',
-    name: 'Cronjob',
-    url: Cronjob.toString(),
-    category
+    name: 'cronjob',
+    category,
+    url: cronjob.toString(),
+    isIsometric: true
   },
   {
     id: 'desktop',
-    name: 'Desktop',
-    url: Desktop.toString(),
-    category
+    name: 'desktop',
+    category,
+    url: desktop.toString(),
+    isIsometric: true
   },
   {
     id: 'dns',
-    name: 'DNS',
-    url: Dns.toString(),
-    category
+    name: 'dns',
+    category,
+    url: dns.toString(),
+    isIsometric: true
   },
   {
     id: 'firewall',
-    name: 'Firewall',
-    url: Firewall.toString(),
-    category
+    name: 'firewall',
+    category,
+    url: firewall.toString(),
+    isIsometric: true
   },
   {
-    id: 'function',
-    name: 'Function',
-    url: Function.toString(),
-    category
+    id: 'function-module',
+    name: 'function-module',
+    category,
+    url: functionmodule.toString(),
+    isIsometric: true
   },
   {
     id: 'laptop',
-    name: 'Laptop',
-    url: Laptop.toString(),
-    category
+    name: 'laptop',
+    category,
+    url: laptop.toString(),
+    isIsometric: true
   },
   {
     id: 'loadbalancer',
-    name: 'Load balancer',
-    url: LoadBalancer.toString(),
-    category
+    name: 'loadbalancer',
+    category,
+    url: loadbalancer.toString(),
+    isIsometric: true
   },
   {
     id: 'lock',
-    name: 'Lock',
-    url: Lock.toString(),
-    category
+    name: 'lock',
+    category,
+    url: lock.toString(),
+    isIsometric: true
   },
   {
     id: 'mail',
-    name: 'Mail',
-    url: Mail.toString(),
-    category
+    name: 'mail',
+    category,
+    url: mail.toString(),
+    isIsometric: true
   },
   {
     id: 'mailmultiple',
-    name: 'Mail multiple',
-    url: MailMultiple.toString(),
-    category
+    name: 'mailmultiple',
+    category,
+    url: mailmultiple.toString(),
+    isIsometric: true
   },
   {
     id: 'mobiledevice',
-    name: 'Mobile device',
-    url: MobileDevice.toString(),
-    category
+    name: 'mobiledevice',
+    category,
+    url: mobiledevice.toString(),
+    isIsometric: true
   },
   {
     id: 'office',
-    name: 'Office',
-    url: Office.toString(),
-    category
+    name: 'office',
+    category,
+    url: office.toString(),
+    isIsometric: true
   },
   {
-    id: 'package',
-    name: 'Package',
-    url: Package.toString(),
-    category
+    id: 'package-module',
+    name: 'package-module',
+    category,
+    url: packagemodule.toString(),
+    isIsometric: true
   },
   {
     id: 'paymentcard',
-    name: 'Payment card',
-    url: PaymentCard.toString(),
-    category
+    name: 'paymentcard',
+    category,
+    url: paymentcard.toString(),
+    isIsometric: true
   },
   {
     id: 'printer',
-    name: 'Printer',
-    url: Printer.toString(),
-    category
+    name: 'printer',
+    category,
+    url: printer.toString(),
+    isIsometric: true
   },
   {
     id: 'queue',
-    name: 'Queue',
-    url: Queue.toString(),
-    category
+    name: 'queue',
+    category,
+    url: queue.toString(),
+    isIsometric: true
   },
   {
     id: 'router',
-    name: 'Router',
-    url: Router.toString(),
-    category
+    name: 'router',
+    category,
+    url: router.toString(),
+    isIsometric: true
   },
   {
     id: 'server',
-    name: 'Server',
-    url: Server.toString(),
-    category
+    name: 'server',
+    category,
+    url: server.toString(),
+    isIsometric: true
   },
   {
     id: 'speech',
-    name: 'Speech',
-    url: Speech.toString(),
-    category
+    name: 'speech',
+    category,
+    url: speech.toString(),
+    isIsometric: true
   },
   {
     id: 'storage',
-    name: 'Storage',
-    url: Storage.toString(),
-    category
+    name: 'storage',
+    category,
+    url: storage.toString(),
+    isIsometric: true
   },
   {
-    id: 'switch',
-    name: 'Switch',
-    url: Switch.toString(),
-    category
+    id: 'switch-module',
+    name: 'switch-module',
+    category,
+    url: switchmodule.toString(),
+    isIsometric: true
+  },
+  {
+    id: 'tower',
+    name: 'tower',
+    category,
+    url: tower.toString(),
+    isIsometric: true
   },
   {
     id: 'user',
-    name: 'User',
-    url: User.toString(),
-    category
+    name: 'user',
+    category,
+    url: user.toString(),
+    isIsometric: true
   },
   {
     id: 'vm',
-    name: 'Virtual machine',
-    url: VM.toString(),
-    category
+    name: 'vm',
+    category,
+    url: vm.toString(),
+    isIsometric: true
   }
 ];
 
-export default networkingIsopack;
+export default NetworkingIsopack;

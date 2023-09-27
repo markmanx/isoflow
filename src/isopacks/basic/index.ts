@@ -1,43 +1,52 @@
 import type { IconInput } from 'src/types';
-import Block from './icons/block.svg';
-import Cube from './icons/cube.svg';
-import Diamond from './icons/diamond.svg';
-import Pyramid from './icons/pyramid.svg';
-import Sphere from './icons/sphere.svg';
+import block from './icons/block.svg';
+import cube from './icons/cube.svg';
+import diamond from './icons/diamond.svg';
+import pyramid from './icons/pyramid.svg';
+import sphere from './icons/sphere.svg';
 
-const category = 'Basic shapes';
+const category = 'Basic';
 
-const basicIsopack: IconInput[] = [
+const BasicIsopack: IconInput[] = [
   {
     id: 'block',
-    name: 'Block',
-    url: Block.toString(),
-    category
+    name: 'block',
+    category,
+    url: block.toString(),
+    isIsometric: true
   },
+
   {
     id: 'cube',
-    name: 'Cube',
-    url: Cube.toString(),
-    category
+    name: 'cube',
+    category,
+    url: cube.toString(),
+    isIsometric: true
   },
+
   {
     id: 'diamond',
-    name: 'Diamond',
-    url: Diamond.toString(),
-    category
+    name: 'diamond',
+    category,
+    url: diamond.toString(),
+    isIsometric: true
   },
+
   {
     id: 'pyramid',
-    name: 'Pyramid',
-    url: Pyramid.toString(),
-    category
+    name: 'pyramid',
+    category,
+    url: pyramid.toString(),
+    isIsometric: true
   },
+
   {
     id: 'sphere',
-    name: 'Sphere',
-    url: Sphere.toString(),
-    category
+    name: 'sphere',
+    category,
+    url: sphere.toString(),
+    isIsometric: true
   }
 ];
 
-export default basicIsopack;
+export default BasicIsopack;

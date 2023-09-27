@@ -10,7 +10,8 @@ export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
   url: z.string(),
-  category: z.string().optional()
+  category: z.string().optional(),
+  isIsometric: z.boolean().optional()
 });
 
 export const nodeInput = z.object({

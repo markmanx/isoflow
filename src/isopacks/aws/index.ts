@@ -1,5 +1,4 @@
 import type { IconInput } from 'src/types';
-import { createFlatIcon } from '../FlatIcon';
 import awsactivate from './icons/aws-activate.svg';
 import awsalexaforbusiness from './icons/aws-alexa-for-business.svg';
 import awsamplify from './icons/aws-amplify.svg';
@@ -329,7 +328,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-activate',
     category,
     url: awsactivate.toString(),
-    component: createFlatIcon(awsactivate)
+    isIsometric: false
   },
 
   {
@@ -337,7 +336,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-alexa-for-business',
     category,
     url: awsalexaforbusiness.toString(),
-    component: createFlatIcon(awsalexaforbusiness)
+    isIsometric: false
   },
 
   {
@@ -345,7 +344,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-amplify',
     category,
     url: awsamplify.toString(),
-    component: createFlatIcon(awsamplify)
+    isIsometric: false
   },
 
   {
@@ -353,7 +352,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-analytics',
     category,
     url: awsanalytics.toString(),
-    component: createFlatIcon(awsanalytics)
+    isIsometric: false
   },
 
   {
@@ -361,7 +360,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-apache-mxnet-on-aws',
     category,
     url: awsapachemxnetonaws.toString(),
-    component: createFlatIcon(awsapachemxnetonaws)
+    isIsometric: false
   },
 
   {
@@ -369,7 +368,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-api-gateway',
     category,
     url: awsapigateway.toString(),
-    component: createFlatIcon(awsapigateway)
+    isIsometric: false
   },
 
   {
@@ -377,7 +376,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-app-mesh',
     category,
     url: awsappmesh.toString(),
-    component: createFlatIcon(awsappmesh)
+    isIsometric: false
   },
 
   {
@@ -385,7 +384,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-app-runner',
     category,
     url: awsapprunner.toString(),
-    component: createFlatIcon(awsapprunner)
+    isIsometric: false
   },
 
   {
@@ -393,7 +392,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-appconfig',
     category,
     url: awsappconfig.toString(),
-    component: createFlatIcon(awsappconfig)
+    isIsometric: false
   },
 
   {
@@ -401,7 +400,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-appflow',
     category,
     url: awsappflow.toString(),
-    component: createFlatIcon(awsappflow)
+    isIsometric: false
   },
 
   {
@@ -409,7 +408,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-application-auto-scaling',
     category,
     url: awsapplicationautoscaling.toString(),
-    component: createFlatIcon(awsapplicationautoscaling)
+    isIsometric: false
   },
 
   {
@@ -417,7 +416,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-application-cost-profiler',
     category,
     url: awsapplicationcostprofiler.toString(),
-    component: createFlatIcon(awsapplicationcostprofiler)
+    isIsometric: false
   },
 
   {
@@ -425,7 +424,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-application-discovery-service',
     category,
     url: awsapplicationdiscoveryservice.toString(),
-    component: createFlatIcon(awsapplicationdiscoveryservice)
+    isIsometric: false
   },
 
   {
@@ -433,7 +432,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-application-integration',
     category,
     url: awsapplicationintegration.toString(),
-    component: createFlatIcon(awsapplicationintegration)
+    isIsometric: false
   },
 
   {
@@ -441,7 +440,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-application-migration-service',
     category,
     url: awsapplicationmigrationservice.toString(),
-    component: createFlatIcon(awsapplicationmigrationservice)
+    isIsometric: false
   },
 
   {
@@ -449,7 +448,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-appstream',
     category,
     url: awsappstream.toString(),
-    component: createFlatIcon(awsappstream)
+    isIsometric: false
   },
 
   {
@@ -457,7 +456,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-appsync',
     category,
     url: awsappsync.toString(),
-    component: createFlatIcon(awsappsync)
+    isIsometric: false
   },
 
   {
@@ -465,7 +464,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-artifact',
     category,
     url: awsartifact.toString(),
-    component: createFlatIcon(awsartifact)
+    isIsometric: false
   },
 
   {
@@ -473,7 +472,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-athena',
     category,
     url: awsathena.toString(),
-    component: createFlatIcon(awsathena)
+    isIsometric: false
   },
 
   {
@@ -481,7 +480,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-audit-manager',
     category,
     url: awsauditmanager.toString(),
-    component: createFlatIcon(awsauditmanager)
+    isIsometric: false
   },
 
   {
@@ -489,7 +488,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-augmented-ai-a2i',
     category,
     url: awsaugmentedaia2i.toString(),
-    component: createFlatIcon(awsaugmentedaia2i)
+    isIsometric: false
   },
 
   {
@@ -497,7 +496,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-aurora',
     category,
     url: awsaurora.toString(),
-    component: createFlatIcon(awsaurora)
+    isIsometric: false
   },
 
   {
@@ -505,7 +504,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-auto-scaling',
     category,
     url: awsautoscaling.toString(),
-    component: createFlatIcon(awsautoscaling)
+    isIsometric: false
   },
 
   {
@@ -513,7 +512,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-backint-agent',
     category,
     url: awsbackintagent.toString(),
-    component: createFlatIcon(awsbackintagent)
+    isIsometric: false
   },
 
   {
@@ -521,7 +520,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-backup',
     category,
     url: awsbackup.toString(),
-    component: createFlatIcon(awsbackup)
+    isIsometric: false
   },
 
   {
@@ -529,7 +528,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-batch',
     category,
     url: awsbatch.toString(),
-    component: createFlatIcon(awsbatch)
+    isIsometric: false
   },
 
   {
@@ -537,7 +536,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-billing-conductor',
     category,
     url: awsbillingconductor.toString(),
-    component: createFlatIcon(awsbillingconductor)
+    isIsometric: false
   },
 
   {
@@ -545,7 +544,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-blockchain',
     category,
     url: awsblockchain.toString(),
-    component: createFlatIcon(awsblockchain)
+    isIsometric: false
   },
 
   {
@@ -553,7 +552,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-bottlerocket',
     category,
     url: awsbottlerocket.toString(),
-    component: createFlatIcon(awsbottlerocket)
+    isIsometric: false
   },
 
   {
@@ -561,7 +560,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-braket',
     category,
     url: awsbraket.toString(),
-    component: createFlatIcon(awsbraket)
+    isIsometric: false
   },
 
   {
@@ -569,7 +568,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-budgets',
     category,
     url: awsbudgets.toString(),
-    component: createFlatIcon(awsbudgets)
+    isIsometric: false
   },
 
   {
@@ -577,7 +576,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-business-applications',
     category,
     url: awsbusinessapplications.toString(),
-    component: createFlatIcon(awsbusinessapplications)
+    isIsometric: false
   },
 
   {
@@ -585,7 +584,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-certificate-manager',
     category,
     url: awscertificatemanager.toString(),
-    component: createFlatIcon(awscertificatemanager)
+    isIsometric: false
   },
 
   {
@@ -593,7 +592,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-chatbot',
     category,
     url: awschatbot.toString(),
-    component: createFlatIcon(awschatbot)
+    isIsometric: false
   },
 
   {
@@ -601,7 +600,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-chime-sdk',
     category,
     url: awschimesdk.toString(),
-    component: createFlatIcon(awschimesdk)
+    isIsometric: false
   },
 
   {
@@ -609,7 +608,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-chime-voice-connector',
     category,
     url: awschimevoiceconnector.toString(),
-    component: createFlatIcon(awschimevoiceconnector)
+    isIsometric: false
   },
 
   {
@@ -617,7 +616,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-chime',
     category,
     url: awschime.toString(),
-    component: createFlatIcon(awschime)
+    isIsometric: false
   },
 
   {
@@ -625,7 +624,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-client-vpn',
     category,
     url: awsclientvpn.toString(),
-    component: createFlatIcon(awsclientvpn)
+    isIsometric: false
   },
 
   {
@@ -633,7 +632,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-control-api',
     category,
     url: awscloudcontrolapi.toString(),
-    component: createFlatIcon(awscloudcontrolapi)
+    isIsometric: false
   },
 
   {
@@ -641,7 +640,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-development-kit',
     category,
     url: awsclouddevelopmentkit.toString(),
-    component: createFlatIcon(awsclouddevelopmentkit)
+    isIsometric: false
   },
 
   {
@@ -649,7 +648,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-directory',
     category,
     url: awsclouddirectory.toString(),
-    component: createFlatIcon(awsclouddirectory)
+    isIsometric: false
   },
 
   {
@@ -657,7 +656,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-financial-management',
     category,
     url: awscloudfinancialmanagement.toString(),
-    component: createFlatIcon(awscloudfinancialmanagement)
+    isIsometric: false
   },
 
   {
@@ -665,7 +664,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-map',
     category,
     url: awscloudmap.toString(),
-    component: createFlatIcon(awscloudmap)
+    isIsometric: false
   },
 
   {
@@ -673,7 +672,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud-wan',
     category,
     url: awscloudwan.toString(),
-    component: createFlatIcon(awscloudwan)
+    isIsometric: false
   },
 
   {
@@ -681,7 +680,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloud9',
     category,
     url: awscloud9.toString(),
-    component: createFlatIcon(awscloud9)
+    isIsometric: false
   },
 
   {
@@ -689,7 +688,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudendure-disaster-recovery',
     category,
     url: awscloudenduredisasterrecovery.toString(),
-    component: createFlatIcon(awscloudenduredisasterrecovery)
+    isIsometric: false
   },
 
   {
@@ -697,7 +696,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudformation',
     category,
     url: awscloudformation.toString(),
-    component: createFlatIcon(awscloudformation)
+    isIsometric: false
   },
 
   {
@@ -705,7 +704,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudfront',
     category,
     url: awscloudfront.toString(),
-    component: createFlatIcon(awscloudfront)
+    isIsometric: false
   },
 
   {
@@ -713,7 +712,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudhsm',
     category,
     url: awscloudhsm.toString(),
-    component: createFlatIcon(awscloudhsm)
+    isIsometric: false
   },
 
   {
@@ -721,7 +720,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudsearch',
     category,
     url: awscloudsearch.toString(),
-    component: createFlatIcon(awscloudsearch)
+    isIsometric: false
   },
 
   {
@@ -729,7 +728,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudshell',
     category,
     url: awscloudshell.toString(),
-    component: createFlatIcon(awscloudshell)
+    isIsometric: false
   },
 
   {
@@ -737,7 +736,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudtrail',
     category,
     url: awscloudtrail.toString(),
-    component: createFlatIcon(awscloudtrail)
+    isIsometric: false
   },
 
   {
@@ -745,7 +744,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cloudwatch',
     category,
     url: awscloudwatch.toString(),
-    component: createFlatIcon(awscloudwatch)
+    isIsometric: false
   },
 
   {
@@ -753,7 +752,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codeartifact',
     category,
     url: awscodeartifact.toString(),
-    component: createFlatIcon(awscodeartifact)
+    isIsometric: false
   },
 
   {
@@ -761,7 +760,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codebuild',
     category,
     url: awscodebuild.toString(),
-    component: createFlatIcon(awscodebuild)
+    isIsometric: false
   },
 
   {
@@ -769,7 +768,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codecommit',
     category,
     url: awscodecommit.toString(),
-    component: createFlatIcon(awscodecommit)
+    isIsometric: false
   },
 
   {
@@ -777,7 +776,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codedeploy',
     category,
     url: awscodedeploy.toString(),
-    component: createFlatIcon(awscodedeploy)
+    isIsometric: false
   },
 
   {
@@ -785,7 +784,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codeguru',
     category,
     url: awscodeguru.toString(),
-    component: createFlatIcon(awscodeguru)
+    isIsometric: false
   },
 
   {
@@ -793,7 +792,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codepipeline',
     category,
     url: awscodepipeline.toString(),
-    component: createFlatIcon(awscodepipeline)
+    isIsometric: false
   },
 
   {
@@ -801,7 +800,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codestar',
     category,
     url: awscodestar.toString(),
-    component: createFlatIcon(awscodestar)
+    isIsometric: false
   },
 
   {
@@ -809,7 +808,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-codewhisperer',
     category,
     url: awscodewhisperer.toString(),
-    component: createFlatIcon(awscodewhisperer)
+    isIsometric: false
   },
 
   {
@@ -817,7 +816,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cognito',
     category,
     url: awscognito.toString(),
-    component: createFlatIcon(awscognito)
+    isIsometric: false
   },
 
   {
@@ -825,7 +824,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-command-line-interface',
     category,
     url: awscommandlineinterface.toString(),
-    component: createFlatIcon(awscommandlineinterface)
+    isIsometric: false
   },
 
   {
@@ -833,7 +832,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-comprehend-medical',
     category,
     url: awscomprehendmedical.toString(),
-    component: createFlatIcon(awscomprehendmedical)
+    isIsometric: false
   },
 
   {
@@ -841,7 +840,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-comprehend',
     category,
     url: awscomprehend.toString(),
-    component: createFlatIcon(awscomprehend)
+    isIsometric: false
   },
 
   {
@@ -849,7 +848,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-compute-optimizer',
     category,
     url: awscomputeoptimizer.toString(),
-    component: createFlatIcon(awscomputeoptimizer)
+    isIsometric: false
   },
 
   {
@@ -857,7 +856,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-compute',
     category,
     url: awscompute.toString(),
-    component: createFlatIcon(awscompute)
+    isIsometric: false
   },
 
   {
@@ -865,7 +864,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-config',
     category,
     url: awsconfig.toString(),
-    component: createFlatIcon(awsconfig)
+    isIsometric: false
   },
 
   {
@@ -873,7 +872,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-connect',
     category,
     url: awsconnect.toString(),
-    component: createFlatIcon(awsconnect)
+    isIsometric: false
   },
 
   {
@@ -881,7 +880,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-console-mobile-application',
     category,
     url: awsconsolemobileapplication.toString(),
-    component: createFlatIcon(awsconsolemobileapplication)
+    isIsometric: false
   },
 
   {
@@ -889,7 +888,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-containers',
     category,
     url: awscontainers.toString(),
-    component: createFlatIcon(awscontainers)
+    isIsometric: false
   },
 
   {
@@ -897,7 +896,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-control-tower',
     category,
     url: awscontroltower.toString(),
-    component: createFlatIcon(awscontroltower)
+    isIsometric: false
   },
 
   {
@@ -905,7 +904,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-corretto',
     category,
     url: awscorretto.toString(),
-    component: createFlatIcon(awscorretto)
+    isIsometric: false
   },
 
   {
@@ -913,7 +912,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cost-and-usage-report',
     category,
     url: awscostandusagereport.toString(),
-    component: createFlatIcon(awscostandusagereport)
+    isIsometric: false
   },
 
   {
@@ -921,7 +920,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-cost-explorer',
     category,
     url: awscostexplorer.toString(),
-    component: createFlatIcon(awscostexplorer)
+    isIsometric: false
   },
 
   {
@@ -929,7 +928,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-customer-enablement',
     category,
     url: awscustomerenablement.toString(),
-    component: createFlatIcon(awscustomerenablement)
+    isIsometric: false
   },
 
   {
@@ -937,7 +936,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-data-exchange',
     category,
     url: awsdataexchange.toString(),
-    component: createFlatIcon(awsdataexchange)
+    isIsometric: false
   },
 
   {
@@ -945,7 +944,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-data-pipeline',
     category,
     url: awsdatapipeline.toString(),
-    component: createFlatIcon(awsdatapipeline)
+    isIsometric: false
   },
 
   {
@@ -953,7 +952,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-database-migration-service',
     category,
     url: awsdatabasemigrationservice.toString(),
-    component: createFlatIcon(awsdatabasemigrationservice)
+    isIsometric: false
   },
 
   {
@@ -961,7 +960,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-database',
     category,
     url: awsdatabase.toString(),
-    component: createFlatIcon(awsdatabase)
+    isIsometric: false
   },
 
   {
@@ -969,7 +968,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-datasync',
     category,
     url: awsdatasync.toString(),
-    component: createFlatIcon(awsdatasync)
+    isIsometric: false
   },
 
   {
@@ -977,7 +976,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-deep-learning-amis',
     category,
     url: awsdeeplearningamis.toString(),
-    component: createFlatIcon(awsdeeplearningamis)
+    isIsometric: false
   },
 
   {
@@ -985,7 +984,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-deep-learning-containers',
     category,
     url: awsdeeplearningcontainers.toString(),
-    component: createFlatIcon(awsdeeplearningcontainers)
+    isIsometric: false
   },
 
   {
@@ -993,7 +992,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-deepcomposer',
     category,
     url: awsdeepcomposer.toString(),
-    component: createFlatIcon(awsdeepcomposer)
+    isIsometric: false
   },
 
   {
@@ -1001,7 +1000,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-deeplens',
     category,
     url: awsdeeplens.toString(),
-    component: createFlatIcon(awsdeeplens)
+    isIsometric: false
   },
 
   {
@@ -1009,7 +1008,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-deepracer',
     category,
     url: awsdeepracer.toString(),
-    component: createFlatIcon(awsdeepracer)
+    isIsometric: false
   },
 
   {
@@ -1017,7 +1016,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-detective',
     category,
     url: awsdetective.toString(),
-    component: createFlatIcon(awsdetective)
+    isIsometric: false
   },
 
   {
@@ -1025,7 +1024,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-developer-tools',
     category,
     url: awsdevelopertools.toString(),
-    component: createFlatIcon(awsdevelopertools)
+    isIsometric: false
   },
 
   {
@@ -1033,7 +1032,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-device-farm',
     category,
     url: awsdevicefarm.toString(),
-    component: createFlatIcon(awsdevicefarm)
+    isIsometric: false
   },
 
   {
@@ -1041,7 +1040,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-devops-guru',
     category,
     url: awsdevopsguru.toString(),
-    component: createFlatIcon(awsdevopsguru)
+    isIsometric: false
   },
 
   {
@@ -1049,7 +1048,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-direct-connect',
     category,
     url: awsdirectconnect.toString(),
-    component: createFlatIcon(awsdirectconnect)
+    isIsometric: false
   },
 
   {
@@ -1057,7 +1056,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-directory-service',
     category,
     url: awsdirectoryservice.toString(),
-    component: createFlatIcon(awsdirectoryservice)
+    isIsometric: false
   },
 
   {
@@ -1065,7 +1064,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-distro-for-opentelemetry',
     category,
     url: awsdistroforopentelemetry.toString(),
-    component: createFlatIcon(awsdistroforopentelemetry)
+    isIsometric: false
   },
 
   {
@@ -1073,7 +1072,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-documentdb',
     category,
     url: awsdocumentdb.toString(),
-    component: createFlatIcon(awsdocumentdb)
+    isIsometric: false
   },
 
   {
@@ -1081,7 +1080,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-dynamodb',
     category,
     url: awsdynamodb.toString(),
-    component: createFlatIcon(awsdynamodb)
+    isIsometric: false
   },
 
   {
@@ -1089,7 +1088,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ec2-auto-scaling',
     category,
     url: awsec2autoscaling.toString(),
-    component: createFlatIcon(awsec2autoscaling)
+    isIsometric: false
   },
 
   {
@@ -1097,7 +1096,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ec2-image-builder',
     category,
     url: awsec2imagebuilder.toString(),
-    component: createFlatIcon(awsec2imagebuilder)
+    isIsometric: false
   },
 
   {
@@ -1105,7 +1104,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ec2-m5n',
     category,
     url: awsec2m5n.toString(),
-    component: createFlatIcon(awsec2m5n)
+    isIsometric: false
   },
 
   {
@@ -1113,7 +1112,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ec2-r5n',
     category,
     url: awsec2r5n.toString(),
-    component: createFlatIcon(awsec2r5n)
+    isIsometric: false
   },
 
   {
@@ -1121,7 +1120,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ec2',
     category,
     url: awsec2.toString(),
-    component: createFlatIcon(awsec2)
+    isIsometric: false
   },
 
   {
@@ -1129,7 +1128,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ecs-anywhere',
     category,
     url: awsecsanywhere.toString(),
-    component: createFlatIcon(awsecsanywhere)
+    isIsometric: false
   },
 
   {
@@ -1137,7 +1136,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-efs',
     category,
     url: awsefs.toString(),
-    component: createFlatIcon(awsefs)
+    isIsometric: false
   },
 
   {
@@ -1145,7 +1144,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-eks-anywhere',
     category,
     url: awseksanywhere.toString(),
-    component: createFlatIcon(awseksanywhere)
+    isIsometric: false
   },
 
   {
@@ -1153,7 +1152,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-eks-cloud',
     category,
     url: awsekscloud.toString(),
-    component: createFlatIcon(awsekscloud)
+    isIsometric: false
   },
 
   {
@@ -1161,7 +1160,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-eks-distro',
     category,
     url: awseksdistro.toString(),
-    component: createFlatIcon(awseksdistro)
+    isIsometric: false
   },
 
   {
@@ -1169,7 +1168,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-beanstalk',
     category,
     url: awselasticbeanstalk.toString(),
-    component: createFlatIcon(awselasticbeanstalk)
+    isIsometric: false
   },
 
   {
@@ -1177,7 +1176,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-block-store',
     category,
     url: awselasticblockstore.toString(),
-    component: createFlatIcon(awselasticblockstore)
+    isIsometric: false
   },
 
   {
@@ -1185,7 +1184,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-container-kubernetes',
     category,
     url: awselasticcontainerkubernetes.toString(),
-    component: createFlatIcon(awselasticcontainerkubernetes)
+    isIsometric: false
   },
 
   {
@@ -1193,7 +1192,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-container-registry',
     category,
     url: awselasticcontainerregistry.toString(),
-    component: createFlatIcon(awselasticcontainerregistry)
+    isIsometric: false
   },
 
   {
@@ -1201,7 +1200,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-container-service',
     category,
     url: awselasticcontainerservice.toString(),
-    component: createFlatIcon(awselasticcontainerservice)
+    isIsometric: false
   },
 
   {
@@ -1209,7 +1208,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-fabric-adapter',
     category,
     url: awselasticfabricadapter.toString(),
-    component: createFlatIcon(awselasticfabricadapter)
+    isIsometric: false
   },
 
   {
@@ -1217,7 +1216,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-inference',
     category,
     url: awselasticinference.toString(),
-    component: createFlatIcon(awselasticinference)
+    isIsometric: false
   },
 
   {
@@ -1225,7 +1224,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-kubernetes-service',
     category,
     url: awselastickubernetesservice.toString(),
-    component: createFlatIcon(awselastickubernetesservice)
+    isIsometric: false
   },
 
   {
@@ -1233,7 +1232,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-load-balancing',
     category,
     url: awselasticloadbalancing.toString(),
-    component: createFlatIcon(awselasticloadbalancing)
+    isIsometric: false
   },
 
   {
@@ -1241,7 +1240,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elastic-transcoder',
     category,
     url: awselastictranscoder.toString(),
-    component: createFlatIcon(awselastictranscoder)
+    isIsometric: false
   },
 
   {
@@ -1249,7 +1248,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elasticache',
     category,
     url: awselasticache.toString(),
-    component: createFlatIcon(awselasticache)
+    isIsometric: false
   },
 
   {
@@ -1257,7 +1256,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-appliances-&-software',
     category,
     url: awselementalappliancessoftware.toString(),
-    component: createFlatIcon(awselementalappliancessoftware)
+    isIsometric: false
   },
 
   {
@@ -1265,7 +1264,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-conductor',
     category,
     url: awselementalconductor.toString(),
-    component: createFlatIcon(awselementalconductor)
+    isIsometric: false
   },
 
   {
@@ -1273,7 +1272,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-delta',
     category,
     url: awselementaldelta.toString(),
-    component: createFlatIcon(awselementaldelta)
+    isIsometric: false
   },
 
   {
@@ -1281,7 +1280,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-link',
     category,
     url: awselementallink.toString(),
-    component: createFlatIcon(awselementallink)
+    isIsometric: false
   },
 
   {
@@ -1289,7 +1288,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-live',
     category,
     url: awselementallive.toString(),
-    component: createFlatIcon(awselementallive)
+    isIsometric: false
   },
 
   {
@@ -1297,7 +1296,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-mediaconnect',
     category,
     url: awselementalmediaconnect.toString(),
-    component: createFlatIcon(awselementalmediaconnect)
+    isIsometric: false
   },
 
   {
@@ -1305,7 +1304,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-mediaconvert',
     category,
     url: awselementalmediaconvert.toString(),
-    component: createFlatIcon(awselementalmediaconvert)
+    isIsometric: false
   },
 
   {
@@ -1313,7 +1312,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-medialive',
     category,
     url: awselementalmedialive.toString(),
-    component: createFlatIcon(awselementalmedialive)
+    isIsometric: false
   },
 
   {
@@ -1321,7 +1320,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-mediapackage',
     category,
     url: awselementalmediapackage.toString(),
-    component: createFlatIcon(awselementalmediapackage)
+    isIsometric: false
   },
 
   {
@@ -1329,7 +1328,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-mediastore',
     category,
     url: awselementalmediastore.toString(),
-    component: createFlatIcon(awselementalmediastore)
+    isIsometric: false
   },
 
   {
@@ -1337,7 +1336,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-mediatailor',
     category,
     url: awselementalmediatailor.toString(),
-    component: createFlatIcon(awselementalmediatailor)
+    isIsometric: false
   },
 
   {
@@ -1345,7 +1344,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-elemental-server',
     category,
     url: awselementalserver.toString(),
-    component: createFlatIcon(awselementalserver)
+    isIsometric: false
   },
 
   {
@@ -1353,7 +1352,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-emr',
     category,
     url: awsemr.toString(),
-    component: createFlatIcon(awsemr)
+    isIsometric: false
   },
 
   {
@@ -1361,7 +1360,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-end-user-computing',
     category,
     url: awsendusercomputing.toString(),
-    component: createFlatIcon(awsendusercomputing)
+    isIsometric: false
   },
 
   {
@@ -1369,7 +1368,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-eventbridge',
     category,
     url: awseventbridge.toString(),
-    component: createFlatIcon(awseventbridge)
+    isIsometric: false
   },
 
   {
@@ -1377,7 +1376,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-express-workflows',
     category,
     url: awsexpressworkflows.toString(),
-    component: createFlatIcon(awsexpressworkflows)
+    isIsometric: false
   },
 
   {
@@ -1385,7 +1384,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fargate',
     category,
     url: awsfargate.toString(),
-    component: createFlatIcon(awsfargate)
+    isIsometric: false
   },
 
   {
@@ -1393,7 +1392,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fault-injection-simulator',
     category,
     url: awsfaultinjectionsimulator.toString(),
-    component: createFlatIcon(awsfaultinjectionsimulator)
+    isIsometric: false
   },
 
   {
@@ -1401,7 +1400,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-finspace',
     category,
     url: awsfinspace.toString(),
-    component: createFlatIcon(awsfinspace)
+    isIsometric: false
   },
 
   {
@@ -1409,7 +1408,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-firewall-manager',
     category,
     url: awsfirewallmanager.toString(),
-    component: createFlatIcon(awsfirewallmanager)
+    isIsometric: false
   },
 
   {
@@ -1417,7 +1416,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-forecast',
     category,
     url: awsforecast.toString(),
-    component: createFlatIcon(awsforecast)
+    isIsometric: false
   },
 
   {
@@ -1425,7 +1424,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fraud-detector',
     category,
     url: awsfrauddetector.toString(),
-    component: createFlatIcon(awsfrauddetector)
+    isIsometric: false
   },
 
   {
@@ -1433,7 +1432,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-freertos',
     category,
     url: awsfreertos.toString(),
-    component: createFlatIcon(awsfreertos)
+    isIsometric: false
   },
 
   {
@@ -1441,7 +1440,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-front-end-web-mobile',
     category,
     url: awsfrontendwebmobile.toString(),
-    component: createFlatIcon(awsfrontendwebmobile)
+    isIsometric: false
   },
 
   {
@@ -1449,7 +1448,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fsx-for-lustre',
     category,
     url: awsfsxforlustre.toString(),
-    component: createFlatIcon(awsfsxforlustre)
+    isIsometric: false
   },
 
   {
@@ -1457,7 +1456,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fsx-for-netapp-ontap',
     category,
     url: awsfsxfornetappontap.toString(),
-    component: createFlatIcon(awsfsxfornetappontap)
+    isIsometric: false
   },
 
   {
@@ -1465,7 +1464,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fsx-for-openzfs',
     category,
     url: awsfsxforopenzfs.toString(),
-    component: createFlatIcon(awsfsxforopenzfs)
+    isIsometric: false
   },
 
   {
@@ -1473,7 +1472,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fsx-for-wfs',
     category,
     url: awsfsxforwfs.toString(),
-    component: createFlatIcon(awsfsxforwfs)
+    isIsometric: false
   },
 
   {
@@ -1481,7 +1480,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-fsx',
     category,
     url: awsfsx.toString(),
-    component: createFlatIcon(awsfsx)
+    isIsometric: false
   },
 
   {
@@ -1489,7 +1488,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-game-tech',
     category,
     url: awsgametech.toString(),
-    component: createFlatIcon(awsgametech)
+    isIsometric: false
   },
 
   {
@@ -1497,7 +1496,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-gamekit',
     category,
     url: awsgamekit.toString(),
-    component: createFlatIcon(awsgamekit)
+    isIsometric: false
   },
 
   {
@@ -1505,7 +1504,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-gamelift',
     category,
     url: awsgamelift.toString(),
-    component: createFlatIcon(awsgamelift)
+    isIsometric: false
   },
 
   {
@@ -1513,7 +1512,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-gamesparks',
     category,
     url: awsgamesparks.toString(),
-    component: createFlatIcon(awsgamesparks)
+    isIsometric: false
   },
 
   {
@@ -1521,7 +1520,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-genomics-cli',
     category,
     url: awsgenomicscli.toString(),
-    component: createFlatIcon(awsgenomicscli)
+    isIsometric: false
   },
 
   {
@@ -1529,7 +1528,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-global-accelerator',
     category,
     url: awsglobalaccelerator.toString(),
-    component: createFlatIcon(awsglobalaccelerator)
+    isIsometric: false
   },
 
   {
@@ -1537,7 +1536,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-glue-databrew',
     category,
     url: awsgluedatabrew.toString(),
-    component: createFlatIcon(awsgluedatabrew)
+    isIsometric: false
   },
 
   {
@@ -1545,7 +1544,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-glue-elastic-views',
     category,
     url: awsglueelasticviews.toString(),
-    component: createFlatIcon(awsglueelasticviews)
+    isIsometric: false
   },
 
   {
@@ -1553,7 +1552,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-glue',
     category,
     url: awsglue.toString(),
-    component: createFlatIcon(awsglue)
+    isIsometric: false
   },
 
   {
@@ -1561,7 +1560,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-ground-station',
     category,
     url: awsgroundstation.toString(),
-    component: createFlatIcon(awsgroundstation)
+    isIsometric: false
   },
 
   {
@@ -1569,7 +1568,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-guardduty',
     category,
     url: awsguardduty.toString(),
-    component: createFlatIcon(awsguardduty)
+    isIsometric: false
   },
 
   {
@@ -1577,7 +1576,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-healthlake',
     category,
     url: awshealthlake.toString(),
-    component: createFlatIcon(awshealthlake)
+    isIsometric: false
   },
 
   {
@@ -1585,7 +1584,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-honeycode',
     category,
     url: awshoneycode.toString(),
-    component: createFlatIcon(awshoneycode)
+    isIsometric: false
   },
 
   {
@@ -1593,7 +1592,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iam-identity-center',
     category,
     url: awsiamidentitycenter.toString(),
-    component: createFlatIcon(awsiamidentitycenter)
+    isIsometric: false
   },
 
   {
@@ -1601,7 +1600,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-identity-and-access-management',
     category,
     url: awsidentityandaccessmanagement.toString(),
-    component: createFlatIcon(awsidentityandaccessmanagement)
+    isIsometric: false
   },
 
   {
@@ -1609,7 +1608,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-inspector',
     category,
     url: awsinspector.toString(),
-    component: createFlatIcon(awsinspector)
+    isIsometric: false
   },
 
   {
@@ -1617,7 +1616,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-interactive-video-service',
     category,
     url: awsinteractivevideoservice.toString(),
-    component: createFlatIcon(awsinteractivevideoservice)
+    isIsometric: false
   },
 
   {
@@ -1625,7 +1624,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-internet-of-things',
     category,
     url: awsinternetofthings.toString(),
-    component: createFlatIcon(awsinternetofthings)
+    isIsometric: false
   },
 
   {
@@ -1633,7 +1632,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-1-click',
     category,
     url: awsiot1click.toString(),
-    component: createFlatIcon(awsiot1click)
+    isIsometric: false
   },
 
   {
@@ -1641,7 +1640,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-analytics',
     category,
     url: awsiotanalytics.toString(),
-    component: createFlatIcon(awsiotanalytics)
+    isIsometric: false
   },
 
   {
@@ -1649,7 +1648,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-button',
     category,
     url: awsiotbutton.toString(),
-    component: createFlatIcon(awsiotbutton)
+    isIsometric: false
   },
 
   {
@@ -1657,7 +1656,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-core',
     category,
     url: awsiotcore.toString(),
-    component: createFlatIcon(awsiotcore)
+    isIsometric: false
   },
 
   {
@@ -1665,7 +1664,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-device-defender',
     category,
     url: awsiotdevicedefender.toString(),
-    component: createFlatIcon(awsiotdevicedefender)
+    isIsometric: false
   },
 
   {
@@ -1673,7 +1672,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-device-management',
     category,
     url: awsiotdevicemanagement.toString(),
-    component: createFlatIcon(awsiotdevicemanagement)
+    isIsometric: false
   },
 
   {
@@ -1681,7 +1680,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-edukit',
     category,
     url: awsiotedukit.toString(),
-    component: createFlatIcon(awsiotedukit)
+    isIsometric: false
   },
 
   {
@@ -1689,7 +1688,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-events',
     category,
     url: awsiotevents.toString(),
-    component: createFlatIcon(awsiotevents)
+    isIsometric: false
   },
 
   {
@@ -1697,7 +1696,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-expresslink',
     category,
     url: awsiotexpresslink.toString(),
-    component: createFlatIcon(awsiotexpresslink)
+    isIsometric: false
   },
 
   {
@@ -1705,7 +1704,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-fleetwise',
     category,
     url: awsiotfleetwise.toString(),
-    component: createFlatIcon(awsiotfleetwise)
+    isIsometric: false
   },
 
   {
@@ -1713,7 +1712,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-greengrass',
     category,
     url: awsiotgreengrass.toString(),
-    component: createFlatIcon(awsiotgreengrass)
+    isIsometric: false
   },
 
   {
@@ -1721,7 +1720,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-roborunner',
     category,
     url: awsiotroborunner.toString(),
-    component: createFlatIcon(awsiotroborunner)
+    isIsometric: false
   },
 
   {
@@ -1729,7 +1728,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-sitewise',
     category,
     url: awsiotsitewise.toString(),
-    component: createFlatIcon(awsiotsitewise)
+    isIsometric: false
   },
 
   {
@@ -1737,7 +1736,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-things-graph',
     category,
     url: awsiotthingsgraph.toString(),
-    component: createFlatIcon(awsiotthingsgraph)
+    isIsometric: false
   },
 
   {
@@ -1745,7 +1744,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iot-twinmaker',
     category,
     url: awsiottwinmaker.toString(),
-    component: createFlatIcon(awsiottwinmaker)
+    isIsometric: false
   },
 
   {
@@ -1753,7 +1752,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-iq',
     category,
     url: awsiq.toString(),
-    component: createFlatIcon(awsiq)
+    isIsometric: false
   },
 
   {
@@ -1761,7 +1760,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kendra',
     category,
     url: awskendra.toString(),
-    component: createFlatIcon(awskendra)
+    isIsometric: false
   },
 
   {
@@ -1769,7 +1768,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-key-management-service',
     category,
     url: awskeymanagementservice.toString(),
-    component: createFlatIcon(awskeymanagementservice)
+    isIsometric: false
   },
 
   {
@@ -1777,7 +1776,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-keyspaces',
     category,
     url: awskeyspaces.toString(),
-    component: createFlatIcon(awskeyspaces)
+    isIsometric: false
   },
 
   {
@@ -1785,7 +1784,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kinesis-data-analytics',
     category,
     url: awskinesisdataanalytics.toString(),
-    component: createFlatIcon(awskinesisdataanalytics)
+    isIsometric: false
   },
 
   {
@@ -1793,7 +1792,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kinesis-data-streams',
     category,
     url: awskinesisdatastreams.toString(),
-    component: createFlatIcon(awskinesisdatastreams)
+    isIsometric: false
   },
 
   {
@@ -1801,7 +1800,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kinesis-firehose',
     category,
     url: awskinesisfirehose.toString(),
-    component: createFlatIcon(awskinesisfirehose)
+    isIsometric: false
   },
 
   {
@@ -1809,7 +1808,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kinesis-video-streams',
     category,
     url: awskinesisvideostreams.toString(),
-    component: createFlatIcon(awskinesisvideostreams)
+    isIsometric: false
   },
 
   {
@@ -1817,7 +1816,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-kinesis',
     category,
     url: awskinesis.toString(),
-    component: createFlatIcon(awskinesis)
+    isIsometric: false
   },
 
   {
@@ -1825,7 +1824,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lake-formation',
     category,
     url: awslakeformation.toString(),
-    component: createFlatIcon(awslakeformation)
+    isIsometric: false
   },
 
   {
@@ -1833,7 +1832,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lambda',
     category,
     url: awslambda.toString(),
-    component: createFlatIcon(awslambda)
+    isIsometric: false
   },
 
   {
@@ -1841,7 +1840,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-launch-wizard',
     category,
     url: awslaunchwizard.toString(),
-    component: createFlatIcon(awslaunchwizard)
+    isIsometric: false
   },
 
   {
@@ -1849,7 +1848,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lex',
     category,
     url: awslex.toString(),
-    component: createFlatIcon(awslex)
+    isIsometric: false
   },
 
   {
@@ -1857,7 +1856,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-license-manager',
     category,
     url: awslicensemanager.toString(),
-    component: createFlatIcon(awslicensemanager)
+    isIsometric: false
   },
 
   {
@@ -1865,7 +1864,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lightsail',
     category,
     url: awslightsail.toString(),
-    component: createFlatIcon(awslightsail)
+    isIsometric: false
   },
 
   {
@@ -1873,7 +1872,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-local-zones',
     category,
     url: awslocalzones.toString(),
-    component: createFlatIcon(awslocalzones)
+    isIsometric: false
   },
 
   {
@@ -1881,7 +1880,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-location-service',
     category,
     url: awslocationservice.toString(),
-    component: createFlatIcon(awslocationservice)
+    isIsometric: false
   },
 
   {
@@ -1889,7 +1888,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lookout-for-equipment',
     category,
     url: awslookoutforequipment.toString(),
-    component: createFlatIcon(awslookoutforequipment)
+    isIsometric: false
   },
 
   {
@@ -1897,7 +1896,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lookout-for-metrics',
     category,
     url: awslookoutformetrics.toString(),
-    component: createFlatIcon(awslookoutformetrics)
+    isIsometric: false
   },
 
   {
@@ -1905,7 +1904,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-lookout-for-vision',
     category,
     url: awslookoutforvision.toString(),
-    component: createFlatIcon(awslookoutforvision)
+    isIsometric: false
   },
 
   {
@@ -1913,7 +1912,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-machine-learning',
     category,
     url: awsmachinelearning.toString(),
-    component: createFlatIcon(awsmachinelearning)
+    isIsometric: false
   },
 
   {
@@ -1921,7 +1920,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-macie',
     category,
     url: awsmacie.toString(),
-    component: createFlatIcon(awsmacie)
+    isIsometric: false
   },
 
   {
@@ -1929,7 +1928,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-mainframe-modernization',
     category,
     url: awsmainframemodernization.toString(),
-    component: createFlatIcon(awsmainframemodernization)
+    isIsometric: false
   },
 
   {
@@ -1937,7 +1936,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-blockchain',
     category,
     url: awsmanagedblockchain.toString(),
-    component: createFlatIcon(awsmanagedblockchain)
+    isIsometric: false
   },
 
   {
@@ -1945,7 +1944,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-grafana',
     category,
     url: awsmanagedgrafana.toString(),
-    component: createFlatIcon(awsmanagedgrafana)
+    isIsometric: false
   },
 
   {
@@ -1953,7 +1952,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-service-for-prometheus',
     category,
     url: awsmanagedserviceforprometheus.toString(),
-    component: createFlatIcon(awsmanagedserviceforprometheus)
+    isIsometric: false
   },
 
   {
@@ -1961,7 +1960,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-services',
     category,
     url: awsmanagedservices.toString(),
-    component: createFlatIcon(awsmanagedservices)
+    isIsometric: false
   },
 
   {
@@ -1969,7 +1968,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-streaming-for-apache-kafka',
     category,
     url: awsmanagedstreamingforapachekafka.toString(),
-    component: createFlatIcon(awsmanagedstreamingforapachekafka)
+    isIsometric: false
   },
 
   {
@@ -1977,7 +1976,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-managed-workflows-for-apache-airflow',
     category,
     url: awsmanagedworkflowsforapacheairflow.toString(),
-    component: createFlatIcon(awsmanagedworkflowsforapacheairflow)
+    isIsometric: false
   },
 
   {
@@ -1985,7 +1984,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-management-console',
     category,
     url: awsmanagementconsole.toString(),
-    component: createFlatIcon(awsmanagementconsole)
+    isIsometric: false
   },
 
   {
@@ -1993,7 +1992,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-management-governance',
     category,
     url: awsmanagementgovernance.toString(),
-    component: createFlatIcon(awsmanagementgovernance)
+    isIsometric: false
   },
 
   {
@@ -2001,7 +2000,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-marketplace',
     category,
     url: awsmarketplace.toString(),
-    component: createFlatIcon(awsmarketplace)
+    isIsometric: false
   },
 
   {
@@ -2009,7 +2008,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-media-services',
     category,
     url: awsmediaservices.toString(),
-    component: createFlatIcon(awsmediaservices)
+    isIsometric: false
   },
 
   {
@@ -2017,7 +2016,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-memorydb-for-redis',
     category,
     url: awsmemorydbforredis.toString(),
-    component: createFlatIcon(awsmemorydbforredis)
+    isIsometric: false
   },
 
   {
@@ -2025,7 +2024,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-migration-evaluator',
     category,
     url: awsmigrationevaluator.toString(),
-    component: createFlatIcon(awsmigrationevaluator)
+    isIsometric: false
   },
 
   {
@@ -2033,7 +2032,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-migration-hub',
     category,
     url: awsmigrationhub.toString(),
-    component: createFlatIcon(awsmigrationhub)
+    isIsometric: false
   },
 
   {
@@ -2041,7 +2040,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-migration-transfer',
     category,
     url: awsmigrationtransfer.toString(),
-    component: createFlatIcon(awsmigrationtransfer)
+    isIsometric: false
   },
 
   {
@@ -2049,7 +2048,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-monitron',
     category,
     url: awsmonitron.toString(),
-    component: createFlatIcon(awsmonitron)
+    isIsometric: false
   },
 
   {
@@ -2057,7 +2056,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-mq',
     category,
     url: awsmq.toString(),
-    component: createFlatIcon(awsmq)
+    isIsometric: false
   },
 
   {
@@ -2065,7 +2064,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-neptune',
     category,
     url: awsneptune.toString(),
-    component: createFlatIcon(awsneptune)
+    isIsometric: false
   },
 
   {
@@ -2073,7 +2072,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-network-firewall',
     category,
     url: awsnetworkfirewall.toString(),
-    component: createFlatIcon(awsnetworkfirewall)
+    isIsometric: false
   },
 
   {
@@ -2081,7 +2080,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-networking-content-delivery',
     category,
     url: awsnetworkingcontentdelivery.toString(),
-    component: createFlatIcon(awsnetworkingcontentdelivery)
+    isIsometric: false
   },
 
   {
@@ -2089,7 +2088,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-neuron',
     category,
     url: awsneuron.toString(),
-    component: createFlatIcon(awsneuron)
+    isIsometric: false
   },
 
   {
@@ -2097,7 +2096,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-nice-dcv',
     category,
     url: awsnicedcv.toString(),
-    component: createFlatIcon(awsnicedcv)
+    isIsometric: false
   },
 
   {
@@ -2105,7 +2104,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-nice-enginframe',
     category,
     url: awsniceenginframe.toString(),
-    component: createFlatIcon(awsniceenginframe)
+    isIsometric: false
   },
 
   {
@@ -2113,7 +2112,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-nimble-studio',
     category,
     url: awsnimblestudio.toString(),
-    component: createFlatIcon(awsnimblestudio)
+    isIsometric: false
   },
 
   {
@@ -2121,7 +2120,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-nitro-enclaves',
     category,
     url: awsnitroenclaves.toString(),
-    component: createFlatIcon(awsnitroenclaves)
+    isIsometric: false
   },
 
   {
@@ -2129,7 +2128,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-open-3d-engine',
     category,
     url: awsopen3dengine.toString(),
-    component: createFlatIcon(awsopen3dengine)
+    isIsometric: false
   },
 
   {
@@ -2137,7 +2136,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-opensearch-service',
     category,
     url: awsopensearchservice.toString(),
-    component: createFlatIcon(awsopensearchservice)
+    isIsometric: false
   },
 
   {
@@ -2145,7 +2144,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-opsworks',
     category,
     url: awsopsworks.toString(),
-    component: createFlatIcon(awsopsworks)
+    isIsometric: false
   },
 
   {
@@ -2153,7 +2152,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-organizations',
     category,
     url: awsorganizations.toString(),
-    component: createFlatIcon(awsorganizations)
+    isIsometric: false
   },
 
   {
@@ -2161,7 +2160,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-outposts-family',
     category,
     url: awsoutpostsfamily.toString(),
-    component: createFlatIcon(awsoutpostsfamily)
+    isIsometric: false
   },
 
   {
@@ -2169,7 +2168,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-outposts-rack',
     category,
     url: awsoutpostsrack.toString(),
-    component: createFlatIcon(awsoutpostsrack)
+    isIsometric: false
   },
 
   {
@@ -2177,7 +2176,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-outposts-servers',
     category,
     url: awsoutpostsservers.toString(),
-    component: createFlatIcon(awsoutpostsservers)
+    isIsometric: false
   },
 
   {
@@ -2185,7 +2184,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-panorama',
     category,
     url: awspanorama.toString(),
-    component: createFlatIcon(awspanorama)
+    isIsometric: false
   },
 
   {
@@ -2193,7 +2192,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-parallelcluster',
     category,
     url: awsparallelcluster.toString(),
-    component: createFlatIcon(awsparallelcluster)
+    isIsometric: false
   },
 
   {
@@ -2201,7 +2200,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-personal-health-dashboard',
     category,
     url: awspersonalhealthdashboard.toString(),
-    component: createFlatIcon(awspersonalhealthdashboard)
+    isIsometric: false
   },
 
   {
@@ -2209,7 +2208,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-personalize',
     category,
     url: awspersonalize.toString(),
-    component: createFlatIcon(awspersonalize)
+    isIsometric: false
   },
 
   {
@@ -2217,7 +2216,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-pinpoint-apis',
     category,
     url: awspinpointapis.toString(),
-    component: createFlatIcon(awspinpointapis)
+    isIsometric: false
   },
 
   {
@@ -2225,7 +2224,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-pinpoint',
     category,
     url: awspinpoint.toString(),
-    component: createFlatIcon(awspinpoint)
+    isIsometric: false
   },
 
   {
@@ -2233,7 +2232,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-polly',
     category,
     url: awspolly.toString(),
-    component: createFlatIcon(awspolly)
+    isIsometric: false
   },
 
   {
@@ -2241,7 +2240,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-private-5g',
     category,
     url: awsprivate5g.toString(),
-    component: createFlatIcon(awsprivate5g)
+    isIsometric: false
   },
 
   {
@@ -2249,7 +2248,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-privatelink',
     category,
     url: awsprivatelink.toString(),
-    component: createFlatIcon(awsprivatelink)
+    isIsometric: false
   },
 
   {
@@ -2257,7 +2256,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-professional-services',
     category,
     url: awsprofessionalservices.toString(),
-    component: createFlatIcon(awsprofessionalservices)
+    isIsometric: false
   },
 
   {
@@ -2265,7 +2264,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-proton',
     category,
     url: awsproton.toString(),
-    component: createFlatIcon(awsproton)
+    isIsometric: false
   },
 
   {
@@ -2273,7 +2272,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-quantum-ledger-database',
     category,
     url: awsquantumledgerdatabase.toString(),
-    component: createFlatIcon(awsquantumledgerdatabase)
+    isIsometric: false
   },
 
   {
@@ -2281,7 +2280,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-quantum-technologies',
     category,
     url: awsquantumtechnologies.toString(),
-    component: createFlatIcon(awsquantumtechnologies)
+    isIsometric: false
   },
 
   {
@@ -2289,7 +2288,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-quicksight',
     category,
     url: awsquicksight.toString(),
-    component: createFlatIcon(awsquicksight)
+    isIsometric: false
   },
 
   {
@@ -2297,7 +2296,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-rds-on-vmware',
     category,
     url: awsrdsonvmware.toString(),
-    component: createFlatIcon(awsrdsonvmware)
+    isIsometric: false
   },
 
   {
@@ -2305,7 +2304,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-rds',
     category,
     url: awsrds.toString(),
-    component: createFlatIcon(awsrds)
+    isIsometric: false
   },
 
   {
@@ -2313,7 +2312,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-red-hat-openshift',
     category,
     url: awsredhatopenshift.toString(),
-    component: createFlatIcon(awsredhatopenshift)
+    isIsometric: false
   },
 
   {
@@ -2321,7 +2320,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-redshift',
     category,
     url: awsredshift.toString(),
-    component: createFlatIcon(awsredshift)
+    isIsometric: false
   },
 
   {
@@ -2329,7 +2328,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-rekognition',
     category,
     url: awsrekognition.toString(),
-    component: createFlatIcon(awsrekognition)
+    isIsometric: false
   },
 
   {
@@ -2337,7 +2336,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-repost',
     category,
     url: awsrepost.toString(),
-    component: createFlatIcon(awsrepost)
+    isIsometric: false
   },
 
   {
@@ -2345,7 +2344,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-reserved-instance-reporting',
     category,
     url: awsreservedinstancereporting.toString(),
-    component: createFlatIcon(awsreservedinstancereporting)
+    isIsometric: false
   },
 
   {
@@ -2353,7 +2352,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-resilience-hub',
     category,
     url: awsresiliencehub.toString(),
-    component: createFlatIcon(awsresiliencehub)
+    isIsometric: false
   },
 
   {
@@ -2361,7 +2360,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-resource-access-manager',
     category,
     url: awsresourceaccessmanager.toString(),
-    component: createFlatIcon(awsresourceaccessmanager)
+    isIsometric: false
   },
 
   {
@@ -2369,7 +2368,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-robomaker',
     category,
     url: awsrobomaker.toString(),
-    component: createFlatIcon(awsrobomaker)
+    isIsometric: false
   },
 
   {
@@ -2377,7 +2376,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-robotics',
     category,
     url: awsrobotics.toString(),
-    component: createFlatIcon(awsrobotics)
+    isIsometric: false
   },
 
   {
@@ -2385,7 +2384,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-route-53',
     category,
     url: awsroute53.toString(),
-    component: createFlatIcon(awsroute53)
+    isIsometric: false
   },
 
   {
@@ -2393,7 +2392,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-s3-on-outposts',
     category,
     url: awss3onoutposts.toString(),
-    component: createFlatIcon(awss3onoutposts)
+    isIsometric: false
   },
 
   {
@@ -2401,7 +2400,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-sagemaker-ground-truth',
     category,
     url: awssagemakergroundtruth.toString(),
-    component: createFlatIcon(awssagemakergroundtruth)
+    isIsometric: false
   },
 
   {
@@ -2409,7 +2408,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-sagemaker-studio-lab',
     category,
     url: awssagemakerstudiolab.toString(),
-    component: createFlatIcon(awssagemakerstudiolab)
+    isIsometric: false
   },
 
   {
@@ -2417,7 +2416,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-sagemaker',
     category,
     url: awssagemaker.toString(),
-    component: createFlatIcon(awssagemaker)
+    isIsometric: false
   },
 
   {
@@ -2425,7 +2424,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-satellite',
     category,
     url: awssatellite.toString(),
-    component: createFlatIcon(awssatellite)
+    isIsometric: false
   },
 
   {
@@ -2433,7 +2432,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-savings-plans',
     category,
     url: awssavingsplans.toString(),
-    component: createFlatIcon(awssavingsplans)
+    isIsometric: false
   },
 
   {
@@ -2441,7 +2440,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-secrets-manager',
     category,
     url: awssecretsmanager.toString(),
-    component: createFlatIcon(awssecretsmanager)
+    isIsometric: false
   },
 
   {
@@ -2449,7 +2448,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-security-hub',
     category,
     url: awssecurityhub.toString(),
-    component: createFlatIcon(awssecurityhub)
+    isIsometric: false
   },
 
   {
@@ -2457,7 +2456,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-security-identity-compliance',
     category,
     url: awssecurityidentitycompliance.toString(),
-    component: createFlatIcon(awssecurityidentitycompliance)
+    isIsometric: false
   },
 
   {
@@ -2465,7 +2464,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-server-migration-service',
     category,
     url: awsservermigrationservice.toString(),
-    component: createFlatIcon(awsservermigrationservice)
+    isIsometric: false
   },
 
   {
@@ -2473,7 +2472,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-serverless-application-repository',
     category,
     url: awsserverlessapplicationrepository.toString(),
-    component: createFlatIcon(awsserverlessapplicationrepository)
+    isIsometric: false
   },
 
   {
@@ -2481,7 +2480,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-serverless',
     category,
     url: awsserverless.toString(),
-    component: createFlatIcon(awsserverless)
+    isIsometric: false
   },
 
   {
@@ -2489,7 +2488,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-service-catalog',
     category,
     url: awsservicecatalog.toString(),
-    component: createFlatIcon(awsservicecatalog)
+    isIsometric: false
   },
 
   {
@@ -2497,7 +2496,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-shield',
     category,
     url: awsshield.toString(),
-    component: createFlatIcon(awsshield)
+    isIsometric: false
   },
 
   {
@@ -2505,7 +2504,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-signer',
     category,
     url: awssigner.toString(),
-    component: createFlatIcon(awssigner)
+    isIsometric: false
   },
 
   {
@@ -2513,7 +2512,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-simple-email-service',
     category,
     url: awssimpleemailservice.toString(),
-    component: createFlatIcon(awssimpleemailservice)
+    isIsometric: false
   },
 
   {
@@ -2521,7 +2520,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-simple-notification-service',
     category,
     url: awssimplenotificationservice.toString(),
-    component: createFlatIcon(awssimplenotificationservice)
+    isIsometric: false
   },
 
   {
@@ -2529,7 +2528,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-simple-queue-service',
     category,
     url: awssimplequeueservice.toString(),
-    component: createFlatIcon(awssimplequeueservice)
+    isIsometric: false
   },
 
   {
@@ -2537,7 +2536,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-simple-storage-service-glacier',
     category,
     url: awssimplestorageserviceglacier.toString(),
-    component: createFlatIcon(awssimplestorageserviceglacier)
+    isIsometric: false
   },
 
   {
@@ -2545,7 +2544,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-simple-storage-service',
     category,
     url: awssimplestorageservice.toString(),
-    component: createFlatIcon(awssimplestorageservice)
+    isIsometric: false
   },
 
   {
@@ -2553,7 +2552,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-site-to-site-vpn',
     category,
     url: awssitetositevpn.toString(),
-    component: createFlatIcon(awssitetositevpn)
+    isIsometric: false
   },
 
   {
@@ -2561,7 +2560,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-snowball-edge',
     category,
     url: awssnowballedge.toString(),
-    component: createFlatIcon(awssnowballedge)
+    isIsometric: false
   },
 
   {
@@ -2569,7 +2568,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-snowball',
     category,
     url: awssnowball.toString(),
-    component: createFlatIcon(awssnowball)
+    isIsometric: false
   },
 
   {
@@ -2577,7 +2576,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-snowcone',
     category,
     url: awssnowcone.toString(),
-    component: createFlatIcon(awssnowcone)
+    isIsometric: false
   },
 
   {
@@ -2585,7 +2584,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-snowmobile',
     category,
     url: awssnowmobile.toString(),
-    component: createFlatIcon(awssnowmobile)
+    isIsometric: false
   },
 
   {
@@ -2593,7 +2592,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-step-functions',
     category,
     url: awsstepfunctions.toString(),
-    component: createFlatIcon(awsstepfunctions)
+    isIsometric: false
   },
 
   {
@@ -2601,7 +2600,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-storage-gateway',
     category,
     url: awsstoragegateway.toString(),
-    component: createFlatIcon(awsstoragegateway)
+    isIsometric: false
   },
 
   {
@@ -2609,7 +2608,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-storage',
     category,
     url: awsstorage.toString(),
-    component: createFlatIcon(awsstorage)
+    isIsometric: false
   },
 
   {
@@ -2617,7 +2616,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-sumerian',
     category,
     url: awssumerian.toString(),
-    component: createFlatIcon(awssumerian)
+    isIsometric: false
   },
 
   {
@@ -2625,7 +2624,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-support',
     category,
     url: awssupport.toString(),
-    component: createFlatIcon(awssupport)
+    isIsometric: false
   },
 
   {
@@ -2633,7 +2632,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-systems-manager-incident-manager',
     category,
     url: awssystemsmanagerincidentmanager.toString(),
-    component: createFlatIcon(awssystemsmanagerincidentmanager)
+    isIsometric: false
   },
 
   {
@@ -2641,7 +2640,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-systems-manager',
     category,
     url: awssystemsmanager.toString(),
-    component: createFlatIcon(awssystemsmanager)
+    isIsometric: false
   },
 
   {
@@ -2649,7 +2648,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-tensorflow-on-aws',
     category,
     url: awstensorflowonaws.toString(),
-    component: createFlatIcon(awstensorflowonaws)
+    isIsometric: false
   },
 
   {
@@ -2657,7 +2656,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-textract',
     category,
     url: awstextract.toString(),
-    component: createFlatIcon(awstextract)
+    isIsometric: false
   },
 
   {
@@ -2665,7 +2664,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-deadline',
     category,
     url: awsthinkboxdeadline.toString(),
-    component: createFlatIcon(awsthinkboxdeadline)
+    isIsometric: false
   },
 
   {
@@ -2673,7 +2672,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-frost',
     category,
     url: awsthinkboxfrost.toString(),
-    component: createFlatIcon(awsthinkboxfrost)
+    isIsometric: false
   },
 
   {
@@ -2681,7 +2680,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-krakatoa',
     category,
     url: awsthinkboxkrakatoa.toString(),
-    component: createFlatIcon(awsthinkboxkrakatoa)
+    isIsometric: false
   },
 
   {
@@ -2689,7 +2688,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-sequoia',
     category,
     url: awsthinkboxsequoia.toString(),
-    component: createFlatIcon(awsthinkboxsequoia)
+    isIsometric: false
   },
 
   {
@@ -2697,7 +2696,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-stoke',
     category,
     url: awsthinkboxstoke.toString(),
-    component: createFlatIcon(awsthinkboxstoke)
+    isIsometric: false
   },
 
   {
@@ -2705,7 +2704,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-thinkbox-xmesh',
     category,
     url: awsthinkboxxmesh.toString(),
-    component: createFlatIcon(awsthinkboxxmesh)
+    isIsometric: false
   },
 
   {
@@ -2713,7 +2712,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-timestream',
     category,
     url: awstimestream.toString(),
-    component: createFlatIcon(awstimestream)
+    isIsometric: false
   },
 
   {
@@ -2721,7 +2720,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-tools-and-sdks',
     category,
     url: awstoolsandsdks.toString(),
-    component: createFlatIcon(awstoolsandsdks)
+    isIsometric: false
   },
 
   {
@@ -2729,7 +2728,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-torchserve',
     category,
     url: awstorchserve.toString(),
-    component: createFlatIcon(awstorchserve)
+    isIsometric: false
   },
 
   {
@@ -2737,7 +2736,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-training-certification',
     category,
     url: awstrainingcertification.toString(),
-    component: createFlatIcon(awstrainingcertification)
+    isIsometric: false
   },
 
   {
@@ -2745,7 +2744,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-transcribe',
     category,
     url: awstranscribe.toString(),
-    component: createFlatIcon(awstranscribe)
+    isIsometric: false
   },
 
   {
@@ -2753,7 +2752,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-transfer-family',
     category,
     url: awstransferfamily.toString(),
-    component: createFlatIcon(awstransferfamily)
+    isIsometric: false
   },
 
   {
@@ -2761,7 +2760,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-transit-gateway',
     category,
     url: awstransitgateway.toString(),
-    component: createFlatIcon(awstransitgateway)
+    isIsometric: false
   },
 
   {
@@ -2769,7 +2768,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-translate',
     category,
     url: awstranslate.toString(),
-    component: createFlatIcon(awstranslate)
+    isIsometric: false
   },
 
   {
@@ -2777,7 +2776,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-trusted-advisor',
     category,
     url: awstrustedadvisor.toString(),
-    component: createFlatIcon(awstrustedadvisor)
+    isIsometric: false
   },
 
   {
@@ -2785,7 +2784,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-vmware-cloud-on-aws',
     category,
     url: awsvmwarecloudonaws.toString(),
-    component: createFlatIcon(awsvmwarecloudonaws)
+    isIsometric: false
   },
 
   {
@@ -2793,7 +2792,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-vr-ar',
     category,
     url: awsvrar.toString(),
-    component: createFlatIcon(awsvrar)
+    isIsometric: false
   },
 
   {
@@ -2801,7 +2800,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-waf',
     category,
     url: awswaf.toString(),
-    component: createFlatIcon(awswaf)
+    isIsometric: false
   },
 
   {
@@ -2809,7 +2808,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-wavelength',
     category,
     url: awswavelength.toString(),
-    component: createFlatIcon(awswavelength)
+    isIsometric: false
   },
 
   {
@@ -2817,7 +2816,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-well-architected-tool',
     category,
     url: awswellarchitectedtool.toString(),
-    component: createFlatIcon(awswellarchitectedtool)
+    isIsometric: false
   },
 
   {
@@ -2825,7 +2824,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-workdocs-sdk',
     category,
     url: awsworkdocssdk.toString(),
-    component: createFlatIcon(awsworkdocssdk)
+    isIsometric: false
   },
 
   {
@@ -2833,7 +2832,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-workdocs',
     category,
     url: awsworkdocs.toString(),
-    component: createFlatIcon(awsworkdocs)
+    isIsometric: false
   },
 
   {
@@ -2841,7 +2840,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-worklink',
     category,
     url: awsworklink.toString(),
-    component: createFlatIcon(awsworklink)
+    isIsometric: false
   },
 
   {
@@ -2849,7 +2848,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-workmail',
     category,
     url: awsworkmail.toString(),
-    component: createFlatIcon(awsworkmail)
+    isIsometric: false
   },
 
   {
@@ -2857,7 +2856,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-workspaces-web',
     category,
     url: awsworkspacesweb.toString(),
-    component: createFlatIcon(awsworkspacesweb)
+    isIsometric: false
   },
 
   {
@@ -2865,7 +2864,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-workspaces',
     category,
     url: awsworkspaces.toString(),
-    component: createFlatIcon(awsworkspaces)
+    isIsometric: false
   },
 
   {
@@ -2873,7 +2872,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws-x-ray',
     category,
     url: awsxray.toString(),
-    component: createFlatIcon(awsxray)
+    isIsometric: false
   },
 
   {
@@ -2881,7 +2880,7 @@ const AWSIsopack: IconInput[] = [
     name: 'aws',
     category,
     url: aws.toString(),
-    component: createFlatIcon(aws)
+    isIsometric: false
   }
 ];
 

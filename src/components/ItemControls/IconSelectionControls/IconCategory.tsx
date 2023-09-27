@@ -49,7 +49,11 @@ export const IconCategory = ({
           >
             {name}
           </Typography>
-          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          {isExpanded ? (
+            <ChevronUpIcon color="action" />
+          ) : (
+            <ChevronDownIcon color="action" />
+          )}
         </Stack>
       </Button>
       <Divider />

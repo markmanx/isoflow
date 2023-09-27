@@ -1,5 +1,4 @@
 import type { IconInput } from 'src/types';
-import { createFlatIcon } from '../FlatIcon';
 import gcpaccesscontextmanager from './icons/gcp-access-context-manager.svg';
 import gcpadministration from './icons/gcp-administration.svg';
 import gcpadvancedagentmodeling from './icons/gcp-advanced-agent-modeling.svg';
@@ -225,7 +224,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-access-context-manager',
     category,
     url: gcpaccesscontextmanager.toString(),
-    component: createFlatIcon(gcpaccesscontextmanager)
+    isIsometric: false
   },
 
   {
@@ -233,7 +232,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-administration',
     category,
     url: gcpadministration.toString(),
-    component: createFlatIcon(gcpadministration)
+    isIsometric: false
   },
 
   {
@@ -241,7 +240,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-advanced-agent-modeling',
     category,
     url: gcpadvancedagentmodeling.toString(),
-    component: createFlatIcon(gcpadvancedagentmodeling)
+    isIsometric: false
   },
 
   {
@@ -249,7 +248,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-advanced-solutions-lab',
     category,
     url: gcpadvancedsolutionslab.toString(),
-    component: createFlatIcon(gcpadvancedsolutionslab)
+    isIsometric: false
   },
 
   {
@@ -257,7 +256,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-agent-assist',
     category,
     url: gcpagentassist.toString(),
-    component: createFlatIcon(gcpagentassist)
+    isIsometric: false
   },
 
   {
@@ -265,7 +264,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-ai-hub',
     category,
     url: gcpaihub.toString(),
-    component: createFlatIcon(gcpaihub)
+    isIsometric: false
   },
 
   {
@@ -273,7 +272,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-ai-platform-unified',
     category,
     url: gcpaiplatformunified.toString(),
-    component: createFlatIcon(gcpaiplatformunified)
+    isIsometric: false
   },
 
   {
@@ -281,7 +280,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-ai-platform',
     category,
     url: gcpaiplatform.toString(),
-    component: createFlatIcon(gcpaiplatform)
+    isIsometric: false
   },
 
   {
@@ -289,7 +288,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-analytics-hub',
     category,
     url: gcpanalyticshub.toString(),
-    component: createFlatIcon(gcpanalyticshub)
+    isIsometric: false
   },
 
   {
@@ -297,7 +296,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-anthos-config-management',
     category,
     url: gcpanthosconfigmanagement.toString(),
-    component: createFlatIcon(gcpanthosconfigmanagement)
+    isIsometric: false
   },
 
   {
@@ -305,7 +304,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-anthos-service-mesh',
     category,
     url: gcpanthosservicemesh.toString(),
-    component: createFlatIcon(gcpanthosservicemesh)
+    isIsometric: false
   },
 
   {
@@ -313,7 +312,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-anthos',
     category,
     url: gcpanthos.toString(),
-    component: createFlatIcon(gcpanthos)
+    isIsometric: false
   },
 
   {
@@ -321,7 +320,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-api-analytics',
     category,
     url: gcpapianalytics.toString(),
-    component: createFlatIcon(gcpapianalytics)
+    isIsometric: false
   },
 
   {
@@ -329,7 +328,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-api-monetization',
     category,
     url: gcpapimonetization.toString(),
-    component: createFlatIcon(gcpapimonetization)
+    isIsometric: false
   },
 
   {
@@ -337,7 +336,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-api',
     category,
     url: gcpapi.toString(),
-    component: createFlatIcon(gcpapi)
+    isIsometric: false
   },
 
   {
@@ -345,7 +344,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-apigee-api-platform',
     category,
     url: gcpapigeeapiplatform.toString(),
-    component: createFlatIcon(gcpapigeeapiplatform)
+    isIsometric: false
   },
 
   {
@@ -353,7 +352,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-apigee-sense',
     category,
     url: gcpapigeesense.toString(),
-    component: createFlatIcon(gcpapigeesense)
+    isIsometric: false
   },
 
   {
@@ -361,7 +360,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-app-engine',
     category,
     url: gcpappengine.toString(),
-    component: createFlatIcon(gcpappengine)
+    isIsometric: false
   },
 
   {
@@ -369,7 +368,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-artifact-registry',
     category,
     url: gcpartifactregistry.toString(),
-    component: createFlatIcon(gcpartifactregistry)
+    isIsometric: false
   },
 
   {
@@ -377,7 +376,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-asset-inventory',
     category,
     url: gcpassetinventory.toString(),
-    component: createFlatIcon(gcpassetinventory)
+    isIsometric: false
   },
 
   {
@@ -385,7 +384,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-assured-workloads',
     category,
     url: gcpassuredworkloads.toString(),
-    component: createFlatIcon(gcpassuredworkloads)
+    isIsometric: false
   },
 
   {
@@ -393,7 +392,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl-natural-language',
     category,
     url: gcpautomlnaturallanguage.toString(),
-    component: createFlatIcon(gcpautomlnaturallanguage)
+    isIsometric: false
   },
 
   {
@@ -401,7 +400,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl-tables',
     category,
     url: gcpautomltables.toString(),
-    component: createFlatIcon(gcpautomltables)
+    isIsometric: false
   },
 
   {
@@ -409,7 +408,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl-translation',
     category,
     url: gcpautomltranslation.toString(),
-    component: createFlatIcon(gcpautomltranslation)
+    isIsometric: false
   },
 
   {
@@ -417,7 +416,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl-video-intelligence',
     category,
     url: gcpautomlvideointelligence.toString(),
-    component: createFlatIcon(gcpautomlvideointelligence)
+    isIsometric: false
   },
 
   {
@@ -425,7 +424,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl-vision',
     category,
     url: gcpautomlvision.toString(),
-    component: createFlatIcon(gcpautomlvision)
+    isIsometric: false
   },
 
   {
@@ -433,7 +432,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-automl',
     category,
     url: gcpautoml.toString(),
-    component: createFlatIcon(gcpautoml)
+    isIsometric: false
   },
 
   {
@@ -441,7 +440,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-bare-metal-solutions',
     category,
     url: gcpbaremetalsolutions.toString(),
-    component: createFlatIcon(gcpbaremetalsolutions)
+    isIsometric: false
   },
 
   {
@@ -449,7 +448,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-batch',
     category,
     url: gcpbatch.toString(),
-    component: createFlatIcon(gcpbatch)
+    isIsometric: false
   },
 
   {
@@ -457,7 +456,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-beyondcorp',
     category,
     url: gcpbeyondcorp.toString(),
-    component: createFlatIcon(gcpbeyondcorp)
+    isIsometric: false
   },
 
   {
@@ -465,7 +464,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-bigquery',
     category,
     url: gcpbigquery.toString(),
-    component: createFlatIcon(gcpbigquery)
+    isIsometric: false
   },
 
   {
@@ -473,7 +472,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-bigtable',
     category,
     url: gcpbigtable.toString(),
-    component: createFlatIcon(gcpbigtable)
+    isIsometric: false
   },
 
   {
@@ -481,7 +480,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-billing',
     category,
     url: gcpbilling.toString(),
-    component: createFlatIcon(gcpbilling)
+    isIsometric: false
   },
 
   {
@@ -489,7 +488,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-binary-authorization',
     category,
     url: gcpbinaryauthorization.toString(),
-    component: createFlatIcon(gcpbinaryauthorization)
+    isIsometric: false
   },
 
   {
@@ -497,7 +496,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-catalog',
     category,
     url: gcpcatalog.toString(),
-    component: createFlatIcon(gcpcatalog)
+    isIsometric: false
   },
 
   {
@@ -505,7 +504,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-certificate-authority-service',
     category,
     url: gcpcertificateauthorityservice.toString(),
-    component: createFlatIcon(gcpcertificateauthorityservice)
+    isIsometric: false
   },
 
   {
@@ -513,7 +512,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-certificate-manager',
     category,
     url: gcpcertificatemanager.toString(),
-    component: createFlatIcon(gcpcertificatemanager)
+    isIsometric: false
   },
 
   {
@@ -521,7 +520,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-api-gateway',
     category,
     url: gcpcloudapigateway.toString(),
-    component: createFlatIcon(gcpcloudapigateway)
+    isIsometric: false
   },
 
   {
@@ -529,7 +528,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-apis',
     category,
     url: gcpcloudapis.toString(),
-    component: createFlatIcon(gcpcloudapis)
+    isIsometric: false
   },
 
   {
@@ -537,7 +536,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-armor',
     category,
     url: gcpcloudarmor.toString(),
-    component: createFlatIcon(gcpcloudarmor)
+    isIsometric: false
   },
 
   {
@@ -545,7 +544,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-asset-inventory',
     category,
     url: gcpcloudassetinventory.toString(),
-    component: createFlatIcon(gcpcloudassetinventory)
+    isIsometric: false
   },
 
   {
@@ -553,7 +552,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-audit-logs',
     category,
     url: gcpcloudauditlogs.toString(),
-    component: createFlatIcon(gcpcloudauditlogs)
+    isIsometric: false
   },
 
   {
@@ -561,7 +560,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-build',
     category,
     url: gcpcloudbuild.toString(),
-    component: createFlatIcon(gcpcloudbuild)
+    isIsometric: false
   },
 
   {
@@ -569,7 +568,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-cdn',
     category,
     url: gcpcloudcdn.toString(),
-    component: createFlatIcon(gcpcloudcdn)
+    isIsometric: false
   },
 
   {
@@ -577,7 +576,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-code',
     category,
     url: gcpcloudcode.toString(),
-    component: createFlatIcon(gcpcloudcode)
+    isIsometric: false
   },
 
   {
@@ -585,7 +584,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-composer',
     category,
     url: gcpcloudcomposer.toString(),
-    component: createFlatIcon(gcpcloudcomposer)
+    isIsometric: false
   },
 
   {
@@ -593,7 +592,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-data-fusion',
     category,
     url: gcpclouddatafusion.toString(),
-    component: createFlatIcon(gcpclouddatafusion)
+    isIsometric: false
   },
 
   {
@@ -601,7 +600,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-deploy',
     category,
     url: gcpclouddeploy.toString(),
-    component: createFlatIcon(gcpclouddeploy)
+    isIsometric: false
   },
 
   {
@@ -609,7 +608,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-deployment-manager',
     category,
     url: gcpclouddeploymentmanager.toString(),
-    component: createFlatIcon(gcpclouddeploymentmanager)
+    isIsometric: false
   },
 
   {
@@ -617,7 +616,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-dns',
     category,
     url: gcpclouddns.toString(),
-    component: createFlatIcon(gcpclouddns)
+    isIsometric: false
   },
 
   {
@@ -625,7 +624,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-domains',
     category,
     url: gcpclouddomains.toString(),
-    component: createFlatIcon(gcpclouddomains)
+    isIsometric: false
   },
 
   {
@@ -633,7 +632,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-ekm',
     category,
     url: gcpcloudekm.toString(),
-    component: createFlatIcon(gcpcloudekm)
+    isIsometric: false
   },
 
   {
@@ -641,7 +640,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-endpoints',
     category,
     url: gcpcloudendpoints.toString(),
-    component: createFlatIcon(gcpcloudendpoints)
+    isIsometric: false
   },
 
   {
@@ -649,7 +648,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-external-ip-addresses',
     category,
     url: gcpcloudexternalipaddresses.toString(),
-    component: createFlatIcon(gcpcloudexternalipaddresses)
+    isIsometric: false
   },
 
   {
@@ -657,7 +656,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-firewall-rules',
     category,
     url: gcpcloudfirewallrules.toString(),
-    component: createFlatIcon(gcpcloudfirewallrules)
+    isIsometric: false
   },
 
   {
@@ -665,7 +664,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-for-marketing',
     category,
     url: gcpcloudformarketing.toString(),
-    component: createFlatIcon(gcpcloudformarketing)
+    isIsometric: false
   },
 
   {
@@ -673,7 +672,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-functions',
     category,
     url: gcpcloudfunctions.toString(),
-    component: createFlatIcon(gcpcloudfunctions)
+    isIsometric: false
   },
 
   {
@@ -681,7 +680,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-generic',
     category,
     url: gcpcloudgeneric.toString(),
-    component: createFlatIcon(gcpcloudgeneric)
+    isIsometric: false
   },
 
   {
@@ -689,7 +688,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-gpu',
     category,
     url: gcpcloudgpu.toString(),
-    component: createFlatIcon(gcpcloudgpu)
+    isIsometric: false
   },
 
   {
@@ -697,7 +696,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-healthcare-api',
     category,
     url: gcpcloudhealthcareapi.toString(),
-    component: createFlatIcon(gcpcloudhealthcareapi)
+    isIsometric: false
   },
 
   {
@@ -705,7 +704,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-healthcare-marketplace',
     category,
     url: gcpcloudhealthcaremarketplace.toString(),
-    component: createFlatIcon(gcpcloudhealthcaremarketplace)
+    isIsometric: false
   },
 
   {
@@ -713,7 +712,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-hsm',
     category,
     url: gcpcloudhsm.toString(),
-    component: createFlatIcon(gcpcloudhsm)
+    isIsometric: false
   },
 
   {
@@ -721,7 +720,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-ids',
     category,
     url: gcpcloudids.toString(),
-    component: createFlatIcon(gcpcloudids)
+    isIsometric: false
   },
 
   {
@@ -729,7 +728,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-inference-api',
     category,
     url: gcpcloudinferenceapi.toString(),
-    component: createFlatIcon(gcpcloudinferenceapi)
+    isIsometric: false
   },
 
   {
@@ -737,7 +736,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-interconnect',
     category,
     url: gcpcloudinterconnect.toString(),
-    component: createFlatIcon(gcpcloudinterconnect)
+    isIsometric: false
   },
 
   {
@@ -745,7 +744,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-jobs-api',
     category,
     url: gcpcloudjobsapi.toString(),
-    component: createFlatIcon(gcpcloudjobsapi)
+    isIsometric: false
   },
 
   {
@@ -753,7 +752,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-load-balancing',
     category,
     url: gcpcloudloadbalancing.toString(),
-    component: createFlatIcon(gcpcloudloadbalancing)
+    isIsometric: false
   },
 
   {
@@ -761,7 +760,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-logging',
     category,
     url: gcpcloudlogging.toString(),
-    component: createFlatIcon(gcpcloudlogging)
+    isIsometric: false
   },
 
   {
@@ -769,7 +768,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-media-edge',
     category,
     url: gcpcloudmediaedge.toString(),
-    component: createFlatIcon(gcpcloudmediaedge)
+    isIsometric: false
   },
 
   {
@@ -777,7 +776,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-monitoring',
     category,
     url: gcpcloudmonitoring.toString(),
-    component: createFlatIcon(gcpcloudmonitoring)
+    isIsometric: false
   },
 
   {
@@ -785,7 +784,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-nat',
     category,
     url: gcpcloudnat.toString(),
-    component: createFlatIcon(gcpcloudnat)
+    isIsometric: false
   },
 
   {
@@ -793,7 +792,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-natural-language-api',
     category,
     url: gcpcloudnaturallanguageapi.toString(),
-    component: createFlatIcon(gcpcloudnaturallanguageapi)
+    isIsometric: false
   },
 
   {
@@ -801,7 +800,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-network',
     category,
     url: gcpcloudnetwork.toString(),
-    component: createFlatIcon(gcpcloudnetwork)
+    isIsometric: false
   },
 
   {
@@ -809,7 +808,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-ops',
     category,
     url: gcpcloudops.toString(),
-    component: createFlatIcon(gcpcloudops)
+    isIsometric: false
   },
 
   {
@@ -817,7 +816,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-optimization-ai---fleet-routing-api',
     category,
     url: gcpcloudoptimizationaifleetroutingapi.toString(),
-    component: createFlatIcon(gcpcloudoptimizationaifleetroutingapi)
+    isIsometric: false
   },
 
   {
@@ -825,7 +824,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-optimization-ai',
     category,
     url: gcpcloudoptimizationai.toString(),
-    component: createFlatIcon(gcpcloudoptimizationai)
+    isIsometric: false
   },
 
   {
@@ -833,7 +832,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-router',
     category,
     url: gcpcloudrouter.toString(),
-    component: createFlatIcon(gcpcloudrouter)
+    isIsometric: false
   },
 
   {
@@ -841,7 +840,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-routes',
     category,
     url: gcpcloudroutes.toString(),
-    component: createFlatIcon(gcpcloudroutes)
+    isIsometric: false
   },
 
   {
@@ -849,7 +848,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-run-for-anthos',
     category,
     url: gcpcloudrunforanthos.toString(),
-    component: createFlatIcon(gcpcloudrunforanthos)
+    isIsometric: false
   },
 
   {
@@ -857,7 +856,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-run',
     category,
     url: gcpcloudrun.toString(),
-    component: createFlatIcon(gcpcloudrun)
+    isIsometric: false
   },
 
   {
@@ -865,7 +864,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-scheduler',
     category,
     url: gcpcloudscheduler.toString(),
-    component: createFlatIcon(gcpcloudscheduler)
+    isIsometric: false
   },
 
   {
@@ -873,7 +872,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-security-scanner',
     category,
     url: gcpcloudsecurityscanner.toString(),
-    component: createFlatIcon(gcpcloudsecurityscanner)
+    isIsometric: false
   },
 
   {
@@ -881,7 +880,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-shell',
     category,
     url: gcpcloudshell.toString(),
-    component: createFlatIcon(gcpcloudshell)
+    isIsometric: false
   },
 
   {
@@ -889,7 +888,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-spanner',
     category,
     url: gcpcloudspanner.toString(),
-    component: createFlatIcon(gcpcloudspanner)
+    isIsometric: false
   },
 
   {
@@ -897,7 +896,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-sql',
     category,
     url: gcpcloudsql.toString(),
-    component: createFlatIcon(gcpcloudsql)
+    isIsometric: false
   },
 
   {
@@ -905,7 +904,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-storage',
     category,
     url: gcpcloudstorage.toString(),
-    component: createFlatIcon(gcpcloudstorage)
+    isIsometric: false
   },
 
   {
@@ -913,7 +912,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-tasks',
     category,
     url: gcpcloudtasks.toString(),
-    component: createFlatIcon(gcpcloudtasks)
+    isIsometric: false
   },
 
   {
@@ -921,7 +920,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-test-lab',
     category,
     url: gcpcloudtestlab.toString(),
-    component: createFlatIcon(gcpcloudtestlab)
+    isIsometric: false
   },
 
   {
@@ -929,7 +928,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-tpu',
     category,
     url: gcpcloudtpu.toString(),
-    component: createFlatIcon(gcpcloudtpu)
+    isIsometric: false
   },
 
   {
@@ -937,7 +936,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-translation-api',
     category,
     url: gcpcloudtranslationapi.toString(),
-    component: createFlatIcon(gcpcloudtranslationapi)
+    isIsometric: false
   },
 
   {
@@ -945,7 +944,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-vision-api',
     category,
     url: gcpcloudvisionapi.toString(),
-    component: createFlatIcon(gcpcloudvisionapi)
+    isIsometric: false
   },
 
   {
@@ -953,7 +952,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-cloud-vpn',
     category,
     url: gcpcloudvpn.toString(),
-    component: createFlatIcon(gcpcloudvpn)
+    isIsometric: false
   },
 
   {
@@ -961,7 +960,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-compute-engine',
     category,
     url: gcpcomputeengine.toString(),
-    component: createFlatIcon(gcpcomputeengine)
+    isIsometric: false
   },
 
   {
@@ -969,7 +968,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-configuration-management',
     category,
     url: gcpconfigurationmanagement.toString(),
-    component: createFlatIcon(gcpconfigurationmanagement)
+    isIsometric: false
   },
 
   {
@@ -977,7 +976,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-connectivity-test',
     category,
     url: gcpconnectivitytest.toString(),
-    component: createFlatIcon(gcpconnectivitytest)
+    isIsometric: false
   },
 
   {
@@ -985,7 +984,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-connectors',
     category,
     url: gcpconnectors.toString(),
-    component: createFlatIcon(gcpconnectors)
+    isIsometric: false
   },
 
   {
@@ -993,7 +992,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-contact-center-ai',
     category,
     url: gcpcontactcenterai.toString(),
-    component: createFlatIcon(gcpcontactcenterai)
+    isIsometric: false
   },
 
   {
@@ -1001,7 +1000,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-container-optimized-os',
     category,
     url: gcpcontaineroptimizedos.toString(),
-    component: createFlatIcon(gcpcontaineroptimizedos)
+    isIsometric: false
   },
 
   {
@@ -1009,7 +1008,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-container-registry',
     category,
     url: gcpcontainerregistry.toString(),
-    component: createFlatIcon(gcpcontainerregistry)
+    isIsometric: false
   },
 
   {
@@ -1017,7 +1016,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-catalog',
     category,
     url: gcpdatacatalog.toString(),
-    component: createFlatIcon(gcpdatacatalog)
+    isIsometric: false
   },
 
   {
@@ -1025,7 +1024,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-labeling',
     category,
     url: gcpdatalabeling.toString(),
-    component: createFlatIcon(gcpdatalabeling)
+    isIsometric: false
   },
 
   {
@@ -1033,7 +1032,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-layers',
     category,
     url: gcpdatalayers.toString(),
-    component: createFlatIcon(gcpdatalayers)
+    isIsometric: false
   },
 
   {
@@ -1041,7 +1040,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-loss-prevention-api',
     category,
     url: gcpdatalosspreventionapi.toString(),
-    component: createFlatIcon(gcpdatalosspreventionapi)
+    isIsometric: false
   },
 
   {
@@ -1049,7 +1048,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-qna',
     category,
     url: gcpdataqna.toString(),
-    component: createFlatIcon(gcpdataqna)
+    isIsometric: false
   },
 
   {
@@ -1057,7 +1056,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-studio',
     category,
     url: gcpdatastudio.toString(),
-    component: createFlatIcon(gcpdatastudio)
+    isIsometric: false
   },
 
   {
@@ -1065,7 +1064,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-data-transfer',
     category,
     url: gcpdatatransfer.toString(),
-    component: createFlatIcon(gcpdatatransfer)
+    isIsometric: false
   },
 
   {
@@ -1073,7 +1072,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-database-migration-service',
     category,
     url: gcpdatabasemigrationservice.toString(),
-    component: createFlatIcon(gcpdatabasemigrationservice)
+    isIsometric: false
   },
 
   {
@@ -1081,7 +1080,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dataflow',
     category,
     url: gcpdataflow.toString(),
-    component: createFlatIcon(gcpdataflow)
+    isIsometric: false
   },
 
   {
@@ -1089,7 +1088,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-datalab',
     category,
     url: gcpdatalab.toString(),
-    component: createFlatIcon(gcpdatalab)
+    isIsometric: false
   },
 
   {
@@ -1097,7 +1096,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dataplex',
     category,
     url: gcpdataplex.toString(),
-    component: createFlatIcon(gcpdataplex)
+    isIsometric: false
   },
 
   {
@@ -1105,7 +1104,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-datapol',
     category,
     url: gcpdatapol.toString(),
-    component: createFlatIcon(gcpdatapol)
+    isIsometric: false
   },
 
   {
@@ -1113,7 +1112,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dataprep',
     category,
     url: gcpdataprep.toString(),
-    component: createFlatIcon(gcpdataprep)
+    isIsometric: false
   },
 
   {
@@ -1121,7 +1120,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dataproc-metastore',
     category,
     url: gcpdataprocmetastore.toString(),
-    component: createFlatIcon(gcpdataprocmetastore)
+    isIsometric: false
   },
 
   {
@@ -1129,7 +1128,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dataproc',
     category,
     url: gcpdataproc.toString(),
-    component: createFlatIcon(gcpdataproc)
+    isIsometric: false
   },
 
   {
@@ -1137,7 +1136,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-datashare',
     category,
     url: gcpdatashare.toString(),
-    component: createFlatIcon(gcpdatashare)
+    isIsometric: false
   },
 
   {
@@ -1145,7 +1144,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-datastore',
     category,
     url: gcpdatastore.toString(),
-    component: createFlatIcon(gcpdatastore)
+    isIsometric: false
   },
 
   {
@@ -1153,7 +1152,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-datastream',
     category,
     url: gcpdatastream.toString(),
-    component: createFlatIcon(gcpdatastream)
+    isIsometric: false
   },
 
   {
@@ -1161,7 +1160,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-debugger',
     category,
     url: gcpdebugger.toString(),
-    component: createFlatIcon(gcpdebugger)
+    isIsometric: false
   },
 
   {
@@ -1169,7 +1168,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-developer-portal',
     category,
     url: gcpdeveloperportal.toString(),
-    component: createFlatIcon(gcpdeveloperportal)
+    isIsometric: false
   },
 
   {
@@ -1177,7 +1176,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dialogflow-cx',
     category,
     url: gcpdialogflowcx.toString(),
-    component: createFlatIcon(gcpdialogflowcx)
+    isIsometric: false
   },
 
   {
@@ -1185,7 +1184,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dialogflow-insights',
     category,
     url: gcpdialogflowinsights.toString(),
-    component: createFlatIcon(gcpdialogflowinsights)
+    isIsometric: false
   },
 
   {
@@ -1193,7 +1192,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-dialogflow',
     category,
     url: gcpdialogflow.toString(),
-    component: createFlatIcon(gcpdialogflow)
+    isIsometric: false
   },
 
   {
@@ -1201,7 +1200,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-document-ai',
     category,
     url: gcpdocumentai.toString(),
-    component: createFlatIcon(gcpdocumentai)
+    isIsometric: false
   },
 
   {
@@ -1209,7 +1208,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-early-access-center',
     category,
     url: gcpearlyaccesscenter.toString(),
-    component: createFlatIcon(gcpearlyaccesscenter)
+    isIsometric: false
   },
 
   {
@@ -1217,7 +1216,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-error-reporting',
     category,
     url: gcperrorreporting.toString(),
-    component: createFlatIcon(gcperrorreporting)
+    isIsometric: false
   },
 
   {
@@ -1225,7 +1224,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-eventarc',
     category,
     url: gcpeventarc.toString(),
-    component: createFlatIcon(gcpeventarc)
+    isIsometric: false
   },
 
   {
@@ -1233,7 +1232,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-filestore',
     category,
     url: gcpfilestore.toString(),
-    component: createFlatIcon(gcpfilestore)
+    isIsometric: false
   },
 
   {
@@ -1241,7 +1240,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-financial-services-marketplace',
     category,
     url: gcpfinancialservicesmarketplace.toString(),
-    component: createFlatIcon(gcpfinancialservicesmarketplace)
+    isIsometric: false
   },
 
   {
@@ -1249,7 +1248,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-firestore',
     category,
     url: gcpfirestore.toString(),
-    component: createFlatIcon(gcpfirestore)
+    isIsometric: false
   },
 
   {
@@ -1257,7 +1256,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-fleet-engine',
     category,
     url: gcpfleetengine.toString(),
-    component: createFlatIcon(gcpfleetengine)
+    isIsometric: false
   },
 
   {
@@ -1265,7 +1264,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-free-trial',
     category,
     url: gcpfreetrial.toString(),
-    component: createFlatIcon(gcpfreetrial)
+    isIsometric: false
   },
 
   {
@@ -1273,7 +1272,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-game-servers',
     category,
     url: gcpgameservers.toString(),
-    component: createFlatIcon(gcpgameservers)
+    isIsometric: false
   },
 
   {
@@ -1281,7 +1280,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-gce-systems-management',
     category,
     url: gcpgcesystemsmanagement.toString(),
-    component: createFlatIcon(gcpgcesystemsmanagement)
+    isIsometric: false
   },
 
   {
@@ -1289,7 +1288,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-genomics',
     category,
     url: gcpgenomics.toString(),
-    component: createFlatIcon(gcpgenomics)
+    isIsometric: false
   },
 
   {
@@ -1297,7 +1296,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-gke-on-prem',
     category,
     url: gcpgkeonprem.toString(),
-    component: createFlatIcon(gcpgkeonprem)
+    isIsometric: false
   },
 
   {
@@ -1305,7 +1304,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-google-cloud-marketplace',
     category,
     url: gcpgooglecloudmarketplace.toString(),
-    component: createFlatIcon(gcpgooglecloudmarketplace)
+    isIsometric: false
   },
 
   {
@@ -1313,7 +1312,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-google-kubernetes-engine',
     category,
     url: gcpgooglekubernetesengine.toString(),
-    component: createFlatIcon(gcpgooglekubernetesengine)
+    isIsometric: false
   },
 
   {
@@ -1321,7 +1320,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-google-maps-platform',
     category,
     url: gcpgooglemapsplatform.toString(),
-    component: createFlatIcon(gcpgooglemapsplatform)
+    isIsometric: false
   },
 
   {
@@ -1329,7 +1328,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-healthcare-nlp-api',
     category,
     url: gcphealthcarenlpapi.toString(),
-    component: createFlatIcon(gcphealthcarenlpapi)
+    isIsometric: false
   },
 
   {
@@ -1337,7 +1336,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-home',
     category,
     url: gcphome.toString(),
-    component: createFlatIcon(gcphome)
+    isIsometric: false
   },
 
   {
@@ -1345,7 +1344,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-identity-and-access-management',
     category,
     url: gcpidentityandaccessmanagement.toString(),
-    component: createFlatIcon(gcpidentityandaccessmanagement)
+    isIsometric: false
   },
 
   {
@@ -1353,7 +1352,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-identity-aware-proxy',
     category,
     url: gcpidentityawareproxy.toString(),
-    component: createFlatIcon(gcpidentityawareproxy)
+    isIsometric: false
   },
 
   {
@@ -1361,7 +1360,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-identity-platform',
     category,
     url: gcpidentityplatform.toString(),
-    component: createFlatIcon(gcpidentityplatform)
+    isIsometric: false
   },
 
   {
@@ -1369,7 +1368,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-iot-core',
     category,
     url: gcpiotcore.toString(),
-    component: createFlatIcon(gcpiotcore)
+    isIsometric: false
   },
 
   {
@@ -1377,7 +1376,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-iot-edge',
     category,
     url: gcpiotedge.toString(),
-    component: createFlatIcon(gcpiotedge)
+    isIsometric: false
   },
 
   {
@@ -1385,7 +1384,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-key-access-justifications',
     category,
     url: gcpkeyaccessjustifications.toString(),
-    component: createFlatIcon(gcpkeyaccessjustifications)
+    isIsometric: false
   },
 
   {
@@ -1393,7 +1392,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-key-management-service',
     category,
     url: gcpkeymanagementservice.toString(),
-    component: createFlatIcon(gcpkeymanagementservice)
+    isIsometric: false
   },
 
   {
@@ -1401,7 +1400,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-kuberun',
     category,
     url: gcpkuberun.toString(),
-    component: createFlatIcon(gcpkuberun)
+    isIsometric: false
   },
 
   {
@@ -1409,7 +1408,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-launcher',
     category,
     url: gcplauncher.toString(),
-    component: createFlatIcon(gcplauncher)
+    isIsometric: false
   },
 
   {
@@ -1417,7 +1416,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-local-ssd',
     category,
     url: gcplocalssd.toString(),
-    component: createFlatIcon(gcplocalssd)
+    isIsometric: false
   },
 
   {
@@ -1425,7 +1424,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-looker',
     category,
     url: gcplooker.toString(),
-    component: createFlatIcon(gcplooker)
+    isIsometric: false
   },
 
   {
@@ -1433,7 +1432,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-managed-service-for-microsoft-active-directory',
     category,
     url: gcpmanagedserviceformicrosoftactivedirectory.toString(),
-    component: createFlatIcon(gcpmanagedserviceformicrosoftactivedirectory)
+    isIsometric: false
   },
 
   {
@@ -1441,7 +1440,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-media-translation-api',
     category,
     url: gcpmediatranslationapi.toString(),
-    component: createFlatIcon(gcpmediatranslationapi)
+    isIsometric: false
   },
 
   {
@@ -1449,7 +1448,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-memorystore',
     category,
     url: gcpmemorystore.toString(),
-    component: createFlatIcon(gcpmemorystore)
+    isIsometric: false
   },
 
   {
@@ -1457,7 +1456,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-migrate-for-anthos',
     category,
     url: gcpmigrateforanthos.toString(),
-    component: createFlatIcon(gcpmigrateforanthos)
+    isIsometric: false
   },
 
   {
@@ -1465,7 +1464,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-migrate-for-compute-engine',
     category,
     url: gcpmigrateforcomputeengine.toString(),
-    component: createFlatIcon(gcpmigrateforcomputeengine)
+    isIsometric: false
   },
 
   {
@@ -1473,7 +1472,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-my-cloud',
     category,
     url: gcpmycloud.toString(),
-    component: createFlatIcon(gcpmycloud)
+    isIsometric: false
   },
 
   {
@@ -1481,7 +1480,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-network-connectivity-center',
     category,
     url: gcpnetworkconnectivitycenter.toString(),
-    component: createFlatIcon(gcpnetworkconnectivitycenter)
+    isIsometric: false
   },
 
   {
@@ -1489,7 +1488,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-network-intelligence-center',
     category,
     url: gcpnetworkintelligencecenter.toString(),
-    component: createFlatIcon(gcpnetworkintelligencecenter)
+    isIsometric: false
   },
 
   {
@@ -1497,7 +1496,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-network-security',
     category,
     url: gcpnetworksecurity.toString(),
-    component: createFlatIcon(gcpnetworksecurity)
+    isIsometric: false
   },
 
   {
@@ -1505,7 +1504,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-network-tiers',
     category,
     url: gcpnetworktiers.toString(),
-    component: createFlatIcon(gcpnetworktiers)
+    isIsometric: false
   },
 
   {
@@ -1513,7 +1512,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-network-topology',
     category,
     url: gcpnetworktopology.toString(),
-    component: createFlatIcon(gcpnetworktopology)
+    isIsometric: false
   },
 
   {
@@ -1521,7 +1520,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-onboarding',
     category,
     url: gcponboarding.toString(),
-    component: createFlatIcon(gcponboarding)
+    isIsometric: false
   },
 
   {
@@ -1529,7 +1528,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-os-configuration-management',
     category,
     url: gcposconfigurationmanagement.toString(),
-    component: createFlatIcon(gcposconfigurationmanagement)
+    isIsometric: false
   },
 
   {
@@ -1537,7 +1536,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-os-inventory-management',
     category,
     url: gcposinventorymanagement.toString(),
-    component: createFlatIcon(gcposinventorymanagement)
+    isIsometric: false
   },
 
   {
@@ -1545,7 +1544,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-os-patch-management',
     category,
     url: gcpospatchmanagement.toString(),
-    component: createFlatIcon(gcpospatchmanagement)
+    isIsometric: false
   },
 
   {
@@ -1553,7 +1552,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-partner-interconnect',
     category,
     url: gcppartnerinterconnect.toString(),
-    component: createFlatIcon(gcppartnerinterconnect)
+    isIsometric: false
   },
 
   {
@@ -1561,7 +1560,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-partner-portal',
     category,
     url: gcppartnerportal.toString(),
-    component: createFlatIcon(gcppartnerportal)
+    isIsometric: false
   },
 
   {
@@ -1569,7 +1568,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-performance-dashboard',
     category,
     url: gcpperformancedashboard.toString(),
-    component: createFlatIcon(gcpperformancedashboard)
+    isIsometric: false
   },
 
   {
@@ -1577,7 +1576,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-permissions',
     category,
     url: gcppermissions.toString(),
-    component: createFlatIcon(gcppermissions)
+    isIsometric: false
   },
 
   {
@@ -1585,7 +1584,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-persistent-disk',
     category,
     url: gcppersistentdisk.toString(),
-    component: createFlatIcon(gcppersistentdisk)
+    isIsometric: false
   },
 
   {
@@ -1593,7 +1592,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-phishing-protection',
     category,
     url: gcpphishingprotection.toString(),
-    component: createFlatIcon(gcpphishingprotection)
+    isIsometric: false
   },
 
   {
@@ -1601,7 +1600,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-policy-analyzer',
     category,
     url: gcppolicyanalyzer.toString(),
-    component: createFlatIcon(gcppolicyanalyzer)
+    isIsometric: false
   },
 
   {
@@ -1609,7 +1608,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-premium-network-tier',
     category,
     url: gcppremiumnetworktier.toString(),
-    component: createFlatIcon(gcppremiumnetworktier)
+    isIsometric: false
   },
 
   {
@@ -1617,7 +1616,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-private-connectivity',
     category,
     url: gcpprivateconnectivity.toString(),
-    component: createFlatIcon(gcpprivateconnectivity)
+    isIsometric: false
   },
 
   {
@@ -1625,7 +1624,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-private-service-connect',
     category,
     url: gcpprivateserviceconnect.toString(),
-    component: createFlatIcon(gcpprivateserviceconnect)
+    isIsometric: false
   },
 
   {
@@ -1633,7 +1632,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-producer-portal',
     category,
     url: gcpproducerportal.toString(),
-    component: createFlatIcon(gcpproducerportal)
+    isIsometric: false
   },
 
   {
@@ -1641,7 +1640,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-profiler',
     category,
     url: gcpprofiler.toString(),
-    component: createFlatIcon(gcpprofiler)
+    isIsometric: false
   },
 
   {
@@ -1649,7 +1648,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-project',
     category,
     url: gcpproject.toString(),
-    component: createFlatIcon(gcpproject)
+    isIsometric: false
   },
 
   {
@@ -1657,7 +1656,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-pubsub',
     category,
     url: gcppubsub.toString(),
-    component: createFlatIcon(gcppubsub)
+    isIsometric: false
   },
 
   {
@@ -1665,7 +1664,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-quantum-engine',
     category,
     url: gcpquantumengine.toString(),
-    component: createFlatIcon(gcpquantumengine)
+    isIsometric: false
   },
 
   {
@@ -1673,7 +1672,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-quotas',
     category,
     url: gcpquotas.toString(),
-    component: createFlatIcon(gcpquotas)
+    isIsometric: false
   },
 
   {
@@ -1681,7 +1680,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-real-world-insights',
     category,
     url: gcprealworldinsights.toString(),
-    component: createFlatIcon(gcprealworldinsights)
+    isIsometric: false
   },
 
   {
@@ -1689,7 +1688,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-recommendations-ai',
     category,
     url: gcprecommendationsai.toString(),
-    component: createFlatIcon(gcprecommendationsai)
+    isIsometric: false
   },
 
   {
@@ -1697,7 +1696,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-release-notes',
     category,
     url: gcpreleasenotes.toString(),
-    component: createFlatIcon(gcpreleasenotes)
+    isIsometric: false
   },
 
   {
@@ -1705,7 +1704,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-retail-api',
     category,
     url: gcpretailapi.toString(),
-    component: createFlatIcon(gcpretailapi)
+    isIsometric: false
   },
 
   {
@@ -1713,7 +1712,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-risk-manager',
     category,
     url: gcpriskmanager.toString(),
-    component: createFlatIcon(gcpriskmanager)
+    isIsometric: false
   },
 
   {
@@ -1721,7 +1720,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-runtime-config',
     category,
     url: gcpruntimeconfig.toString(),
-    component: createFlatIcon(gcpruntimeconfig)
+    isIsometric: false
   },
 
   {
@@ -1729,7 +1728,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-secret-manager',
     category,
     url: gcpsecretmanager.toString(),
-    component: createFlatIcon(gcpsecretmanager)
+    isIsometric: false
   },
 
   {
@@ -1737,7 +1736,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-security-command-center',
     category,
     url: gcpsecuritycommandcenter.toString(),
-    component: createFlatIcon(gcpsecuritycommandcenter)
+    isIsometric: false
   },
 
   {
@@ -1745,7 +1744,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-security-health-advisor',
     category,
     url: gcpsecurityhealthadvisor.toString(),
-    component: createFlatIcon(gcpsecurityhealthadvisor)
+    isIsometric: false
   },
 
   {
@@ -1753,7 +1752,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-security-key-enforcement',
     category,
     url: gcpsecuritykeyenforcement.toString(),
-    component: createFlatIcon(gcpsecuritykeyenforcement)
+    isIsometric: false
   },
 
   {
@@ -1761,7 +1760,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-security',
     category,
     url: gcpsecurity.toString(),
-    component: createFlatIcon(gcpsecurity)
+    isIsometric: false
   },
 
   {
@@ -1769,7 +1768,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-service-discovery',
     category,
     url: gcpservicediscovery.toString(),
-    component: createFlatIcon(gcpservicediscovery)
+    isIsometric: false
   },
 
   {
@@ -1777,7 +1776,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-speech-to-text',
     category,
     url: gcpspeechtotext.toString(),
-    component: createFlatIcon(gcpspeechtotext)
+    isIsometric: false
   },
 
   {
@@ -1785,7 +1784,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-stackdriver',
     category,
     url: gcpstackdriver.toString(),
-    component: createFlatIcon(gcpstackdriver)
+    isIsometric: false
   },
 
   {
@@ -1793,7 +1792,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-standard-network-tier',
     category,
     url: gcpstandardnetworktier.toString(),
-    component: createFlatIcon(gcpstandardnetworktier)
+    isIsometric: false
   },
 
   {
@@ -1801,7 +1800,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-stream-suite',
     category,
     url: gcpstreamsuite.toString(),
-    component: createFlatIcon(gcpstreamsuite)
+    isIsometric: false
   },
 
   {
@@ -1809,7 +1808,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-support',
     category,
     url: gcpsupport.toString(),
-    component: createFlatIcon(gcpsupport)
+    isIsometric: false
   },
 
   {
@@ -1817,7 +1816,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-tensorflow-enterprise',
     category,
     url: gcptensorflowenterprise.toString(),
-    component: createFlatIcon(gcptensorflowenterprise)
+    isIsometric: false
   },
 
   {
@@ -1825,7 +1824,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-text-to-speech',
     category,
     url: gcptexttospeech.toString(),
-    component: createFlatIcon(gcptexttospeech)
+    isIsometric: false
   },
 
   {
@@ -1833,7 +1832,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-tools-for-powershell',
     category,
     url: gcptoolsforpowershell.toString(),
-    component: createFlatIcon(gcptoolsforpowershell)
+    isIsometric: false
   },
 
   {
@@ -1841,7 +1840,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-trace',
     category,
     url: gcptrace.toString(),
-    component: createFlatIcon(gcptrace)
+    isIsometric: false
   },
 
   {
@@ -1849,7 +1848,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-traffic-director',
     category,
     url: gcptrafficdirector.toString(),
-    component: createFlatIcon(gcptrafficdirector)
+    isIsometric: false
   },
 
   {
@@ -1857,7 +1856,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-transfer-appliance',
     category,
     url: gcptransferappliance.toString(),
-    component: createFlatIcon(gcptransferappliance)
+    isIsometric: false
   },
 
   {
@@ -1865,7 +1864,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-transfer',
     category,
     url: gcptransfer.toString(),
-    component: createFlatIcon(gcptransfer)
+    isIsometric: false
   },
 
   {
@@ -1873,7 +1872,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-user-preferences',
     category,
     url: gcpuserpreferences.toString(),
-    component: createFlatIcon(gcpuserpreferences)
+    isIsometric: false
   },
 
   {
@@ -1881,7 +1880,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-vertexai',
     category,
     url: gcpvertexai.toString(),
-    component: createFlatIcon(gcpvertexai)
+    isIsometric: false
   },
 
   {
@@ -1889,7 +1888,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-video-intelligence-api',
     category,
     url: gcpvideointelligenceapi.toString(),
-    component: createFlatIcon(gcpvideointelligenceapi)
+    isIsometric: false
   },
 
   {
@@ -1897,7 +1896,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-virtual-private-cloud',
     category,
     url: gcpvirtualprivatecloud.toString(),
-    component: createFlatIcon(gcpvirtualprivatecloud)
+    isIsometric: false
   },
 
   {
@@ -1905,7 +1904,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-visual-inspection',
     category,
     url: gcpvisualinspection.toString(),
-    component: createFlatIcon(gcpvisualinspection)
+    isIsometric: false
   },
 
   {
@@ -1913,7 +1912,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-vmware-engine',
     category,
     url: gcpvmwareengine.toString(),
-    component: createFlatIcon(gcpvmwareengine)
+    isIsometric: false
   },
 
   {
@@ -1921,7 +1920,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-web-risk',
     category,
     url: gcpwebrisk.toString(),
-    component: createFlatIcon(gcpwebrisk)
+    isIsometric: false
   },
 
   {
@@ -1929,7 +1928,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-web-security-scanner',
     category,
     url: gcpwebsecurityscanner.toString(),
-    component: createFlatIcon(gcpwebsecurityscanner)
+    isIsometric: false
   },
 
   {
@@ -1937,7 +1936,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-workflows',
     category,
     url: gcpworkflows.toString(),
-    component: createFlatIcon(gcpworkflows)
+    isIsometric: false
   },
 
   {
@@ -1945,7 +1944,7 @@ const GCPIsopack: IconInput[] = [
     name: 'gcp-workload-identity-pool',
     category,
     url: gcpworkloadidentitypool.toString(),
-    component: createFlatIcon(gcpworkloadidentitypool)
+    isIsometric: false
   }
 ];
 
