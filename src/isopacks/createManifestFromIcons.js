@@ -50,4 +50,4 @@ export default ${categoryName}Isopack;
   await fs.writeFile(path.join(dir, 'index-check.tsx'), manifestFileContent);
 };
 
-createManifestFromFolder('azure', 'Azure');
+createManifestFromFolder('gcp', 'GCP');

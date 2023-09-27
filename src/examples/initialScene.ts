@@ -4,12 +4,14 @@ import basicIsopack from 'src/isopacks/basic';
 import networkingIsopack from 'src/isopacks/networking';
 import awsIsopack from 'src/isopacks/aws';
 import azureIsopack from 'src/isopacks/azure';
+import gcpIsopack from 'src/isopacks/gcp';
 
 const mergedIsopacks = mergeIsopacks([
   basicIsopack,
   networkingIsopack,
   awsIsopack,
-  azureIsopack
+  azureIsopack,
+  gcpIsopack
 ]);
 
 export const initialScene: InitialScene = {
