@@ -21,7 +21,7 @@ export const useIcon = (id: string) => {
   const iconComponent = useMemo(() => {
     if (icon.component) {
       setHasLoaded(true);
-      return <NodeComponentIcon icon={icon} />;
+      return <NodeComponentIcon IconComponent={icon.component} />;
     }
 
     return (

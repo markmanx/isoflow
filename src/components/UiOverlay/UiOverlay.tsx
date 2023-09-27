@@ -28,26 +28,31 @@ export const UiOverlay = () => {
   const mouse = useUiStateStore((state) => {
     return state.mouse;
   });
+  const itemControls = useUiStateStore((state) => {
+    return state.itemControls;
+  });
 
   if (disableInteractions) return null;
 
   return (
     <>
-      <UiElement
-        sx={{
-          position: 'absolute',
-          top: toPx(appPadding.y * 2 + spacing(2)),
-          left: appPadding.x,
-          width: '345px',
-          maxHeight: `calc(100% - ${toPx(appPadding.y * 6)})`,
-          overflowY: 'scroll',
-          '&::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }}
-      >
-        <ItemControlsManager />
-      </UiElement>
+      {itemControls && (
+        <UiElement
+          sx={{
+            position: 'absolute',
+            top: toPx(appPadding.y * 2 + spacing(2)),
+            left: appPadding.x,
+            width: '345px',
+            maxHeight: `calc(100% - ${toPx(appPadding.y * 6)})`,
+            overflowY: 'scroll',
+            '&::-webkit-scrollbar': {
+              display: 'none'
+            }
+          }}
+        >
+          <ItemControlsManager />
+        </UiElement>
+      )}
 
       <Box
         sx={{

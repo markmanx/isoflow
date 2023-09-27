@@ -85,12 +85,12 @@ export const TransformRectangle: ModeActions = {
     const activeAnchorIndex = anchorPositions.findIndex((anchorPosition) => {
       return isWithinBounds(uiState.mouse.position.screen, [
         {
-          x: anchorPosition.x - TRANSFORM_ANCHOR_SIZE / 2,
-          y: anchorPosition.y - TRANSFORM_ANCHOR_SIZE / 2
+          x: anchorPosition.x - TRANSFORM_ANCHOR_SIZE,
+          y: anchorPosition.y - TRANSFORM_ANCHOR_SIZE
         },
         {
-          x: anchorPosition.x + TRANSFORM_ANCHOR_SIZE / 2,
-          y: anchorPosition.y + TRANSFORM_ANCHOR_SIZE / 2
+          x: anchorPosition.x + TRANSFORM_ANCHOR_SIZE,
+          y: anchorPosition.y + TRANSFORM_ANCHOR_SIZE
         }
       ]);
     });

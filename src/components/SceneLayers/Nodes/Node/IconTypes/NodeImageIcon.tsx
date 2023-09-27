@@ -30,9 +30,9 @@ export const NodeImageIcon = ({ url, onImageLoaded }: Props) => {
       sx={{
         position: 'absolute',
         width: projectedTileSize.width * 0.8,
-        pointerEvents: 'none',
         top: -size.height,
-        left: -size.width / 2
+        left: -size.width / 2,
+        pointerEvents: 'none'
       }}
     />
   );
