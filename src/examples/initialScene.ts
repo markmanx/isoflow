@@ -3,11 +3,13 @@ import { mergeIsopacks } from 'src/isopacks';
 import basicIsopack from 'src/isopacks/basic';
 import networkingIsopack from 'src/isopacks/networking';
 import awsIsopack from 'src/isopacks/aws';
+import azureIsopack from 'src/isopacks/azure';
 
 const mergedIsopacks = mergeIsopacks([
   basicIsopack,
   networkingIsopack,
-  awsIsopack
+  awsIsopack,
+  azureIsopack
 ]);
 
 export const initialScene: InitialScene = {

@@ -10,8 +10,9 @@ module.exports = {
     '/nodeExports': './src/nodeExports.ts',
     '/isopacks': './src/isopacks/index.ts',
     '/isopacks/aws': './src/isopacks/aws/index.tsx',
+    '/isopacks/azure': './src/isopacks/azure/index.ts',
     '/isopacks/basic': './src/isopacks/basic/index.ts',
-    '/isopacks/networking': './src/isopacks/networking/index.ts',
+    '/isopacks/networking': './src/isopacks/networking/index.ts'
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
