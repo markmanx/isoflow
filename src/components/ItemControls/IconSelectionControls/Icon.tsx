@@ -4,6 +4,8 @@ import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
 import { Icon as IconI } from 'src/types';
 
+const SIZE = 50;
+
 interface Props {
   icon: IconI;
   onClick?: () => void;
@@ -16,26 +18,28 @@ export const Icon = ({ icon, onClick, onMouseDown }: Props) => {
       variant="text"
       onClick={onClick}
       onMouseDown={onMouseDown}
-      sx={{ userSelect: 'none', height: 100 }}
+      sx={{
+        userSelect: 'none'
+      }}
     >
-      <Stack sx={{ height: '100%' }} spacing={1}>
-        <Box
-          sx={{
-            height: 50,
-            width: '100%',
-            display: 'flex',
-            alignItems: 'flex-end'
-          }}
-        >
+      <Stack
+        sx={{ overflow: 'hidden', justifyContent: 'flex-start', width: SIZE }}
+        spacing={1}
+      >
+        <Box sx={{ width: SIZE, height: SIZE }}>
           <Box
             component="img"
             draggable={false}
             src={icon.url}
             alt={`Icon ${icon.name}`}
-            sx={{ width: '100%', maxHeight: '100%' }}
+            sx={{ width: SIZE, maxheight: SIZE }}
           />
         </Box>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          textOverflow="ellipsis"
+        >
           {icon.name}
         </Typography>
       </Stack>
