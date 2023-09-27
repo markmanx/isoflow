@@ -38,9 +38,7 @@ export const IconSelectionControls = () => {
         </Section>
       }
     >
-      <Box sx={{ py: 6 }}>
-        <Icons icons={icons} onMouseDown={onMouseDown} />
-      </Box>
+      <Icons icons={icons} onMouseDown={onMouseDown} />
     </ControlsContainer>
   );
 };

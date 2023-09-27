@@ -39,7 +39,7 @@ export const Icons = ({ icons, onClick, onMouseDown }: Props) => {
   }, [icons]);
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={4} sx={{ py: 4 }}>
       {categorisedIcons.map((cat) => {
         return (
           <Grid item xs={12} key={`icon-category-${cat.name}`}>
