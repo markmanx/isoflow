@@ -9,6 +9,9 @@ module.exports = {
     'index': './src/Isoflow.tsx',
     '/nodeExports': './src/nodeExports.ts',
     '/isopacks': './src/isopacks/index.ts',
+    '/isopacks/aws': './src/isopacks/aws/index.tsx',
+    '/isopacks/basic': './src/isopacks/basic/index.ts',
+    '/isopacks/networking': './src/isopacks/networking/index.ts',
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

@@ -1,10 +1,8 @@
 import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
-import {
-  basicIsopack,
-  networkingIsopack,
-  awsIsopack,
-  mergeIsopacks
-} from 'src/isopacks';
+import { mergeIsopacks } from 'src/isopacks';
+import basicIsopack from 'src/isopacks/basic';
+import networkingIsopack from 'src/isopacks/networking';
+import awsIsopack from 'src/isopacks/aws';
 
 const mergedIsopacks = mergeIsopacks([
   basicIsopack,
