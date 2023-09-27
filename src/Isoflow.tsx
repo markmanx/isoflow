@@ -112,11 +112,18 @@ export const Isoflow = (props: Props) => {
 };
 
 const useIsoflow = () => {
-  const actions = useSceneStore((state) => {
+  const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
 
-  return actions;
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
+  });
+
+  return {
+    scene: sceneActions,
+    uiState: uiStateActions
+  };
 };
 
 export {
