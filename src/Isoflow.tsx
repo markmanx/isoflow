@@ -21,6 +21,7 @@ import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
 import { INITIAL_SCENE } from 'src/config';
+import { useIconCategories } from './hooks/useIconCategories';
 
 interface Props {
   initialScene?: InitialScene;
@@ -54,6 +55,7 @@ const App = ({
   const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { setIconCategoriesState } = useIconCategories();
 
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
@@ -67,8 +69,13 @@ const App = ({
 
     prevInitialScene.current = fullInitialScene;
     sceneActions.setScene(fullInitialScene);
+
     setIsReady(true);
-  }, [initialScene, sceneActions]);
+  }, [initialScene, sceneActions, uiActions]);
+
+  useEffect(() => {
+    setIconCategoriesState();
+  }, [scene.icons, setIconCategoriesState]);
 
   useEffect(() => {
     if (!isReady || !onSceneUpdated) return;

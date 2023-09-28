@@ -85,7 +85,7 @@ export type SceneItemReference = {
 export type Icon = IconInput;
 
 export interface SceneActions {
-  setScene: (scene: SceneInput) => void;
+  setScene: (scene: SceneInput) => Scene;
   updateScene: (scene: Scene) => void;
   createNode: (node: NodeInput) => void;
   updateNode: (id: string, updates: Partial<Node>) => void;

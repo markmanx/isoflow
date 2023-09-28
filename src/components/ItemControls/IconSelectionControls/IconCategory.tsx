@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import { Grid, Divider, Stack, Typography, Button } from '@mui/material';
+import { Divider, Stack, Typography, Button } from '@mui/material';
 import {
   ExpandMore as ChevronDownIcon,
   ExpandLess as ChevronUpIcon
 } from '@mui/icons-material';
 import { Icon as IconI } from 'src/types';
 import { Section } from 'src/components/ItemControls/components/Section';
-import { Icon } from './Icon';
+import { IconGrid } from './IconGrid';
 
 interface Props {
-  name?: string;
+  id?: string;
   icons: IconI[];
   onClick?: (icon: IconI) => void;
   onMouseDown?: (icon: IconI) => void;
-  expanded?: boolean;
+  isExpanded: boolean;
 }
 
 export const IconCategory = ({
-  name,
+  id,
   icons,
   onClick,
   onMouseDown,
-  expanded = true
+  isExpanded: _isExpanded
 }: Props) => {
-  const [isExpanded, setIsExpanded] = useState(expanded);
+  const [isExpanded, setIsExpanded] = useState(_isExpanded);
 
   return (
     <Section sx={{ pt: 0 }}>
@@ -47,7 +47,7 @@ export const IconCategory = ({
             textTransform="uppercase"
             fontWeight={600}
           >
-            {name}
+            {id}
           </Typography>
           {isExpanded ? (
             <ChevronUpIcon color="action" />
@@ -59,27 +59,7 @@ export const IconCategory = ({
       <Divider />
 
       {isExpanded && (
-        <Grid container spacing={2} sx={{ pt: 1 }}>
-          {icons.map((icon) => {
-            return (
-              <Grid item xs={3} key={icon.id}>
-                <Icon
-                  icon={icon}
-                  onClick={() => {
-                    if (!onClick) return;
-
-                    return onClick(icon);
-                  }}
-                  onMouseDown={() => {
-                    if (!onMouseDown) return;
-
-                    return onMouseDown(icon);
-                  }}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
+        <IconGrid icons={icons} onMouseDown={onMouseDown} onClick={onClick} />
       )}
     </Section>
   );

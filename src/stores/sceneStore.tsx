@@ -34,6 +34,8 @@ const initialState = () => {
           const newScene = sceneInputToScene(scene);
 
           set(newScene);
+
+          return newScene;
         },
 
         updateScene: (scene) => {

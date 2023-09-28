@@ -5,7 +5,9 @@ import { Icon } from 'src/types';
 import { Section } from 'src/components/ItemControls/components/Section';
 import { Searchbox } from 'src/components/ItemControls/IconSelectionControls/Searchbox';
 import { useIconFiltering } from 'src/hooks/useIconFiltering';
+import { useIconCategories } from 'src/hooks/useIconCategories';
 import { Icons } from './Icons';
+import { IconGrid } from './IconGrid';
 
 export const IconSelectionControls = () => {
   const uiStateActions = useUiStateStore((state) => {
@@ -14,7 +16,8 @@ export const IconSelectionControls = () => {
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
-  const { setFilter, filter, icons } = useIconFiltering();
+  const { setFilter, filteredIcons, filter } = useIconFiltering();
+  const { iconCategories } = useIconCategories();
 
   const onMouseDown = useCallback(
     (icon: Icon) => {
@@ -37,7 +40,14 @@ export const IconSelectionControls = () => {
         </Section>
       }
     >
-      <Icons icons={icons} onMouseDown={onMouseDown} />
+      {filteredIcons && (
+        <Section>
+          <IconGrid icons={filteredIcons} onMouseDown={onMouseDown} />
+        </Section>
+      )}
+      {!filteredIcons && (
+        <Icons iconCategories={iconCategories} onMouseDown={onMouseDown} />
+      )}
     </ControlsContainer>
   );
 };

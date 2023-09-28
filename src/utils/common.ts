@@ -1,4 +1,5 @@
 import chroma from 'chroma-js';
+import { Icon } from 'src/types';
 import { v4 as uuid } from 'uuid';
 
 export const generateId = () => {
@@ -43,4 +44,22 @@ export const setWindowCursor = (cursor: string) => {
 
 export const toPx = (value: number | string) => {
   return `${value}px`;
+};
+
+export const categoriseIcons = (icons: Icon[]) => {
+  const categories: { name?: string; icons: Icon[] }[] = [];
+
+  icons.forEach((icon) => {
+    const category = categories.find((cat) => {
+      return cat.name === icon.category;
+    });
+
+    if (!category) {
+      categories.push({ name: icon.category, icons: [icon] });
+    } else {
+      category.icons.push(icon);
+    }
+  });
+
+  return categories;
 };

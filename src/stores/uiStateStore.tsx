@@ -6,6 +6,7 @@ import { UiStateStore } from 'src/types';
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
+      iconCategoriesState: [],
       disableInteractions: false,
       mode: {
         type: 'CURSOR',
@@ -28,6 +29,9 @@ const initialState = () => {
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
       actions: {
+        setIconCategoriesState: (iconCategoriesState) => {
+          set({ iconCategoriesState });
+        },
         resetUiState: () => {
           set({
             mode: {

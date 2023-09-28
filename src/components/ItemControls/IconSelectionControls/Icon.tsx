@@ -26,13 +26,13 @@ export const Icon = ({ icon, onClick, onMouseDown }: Props) => {
         sx={{ overflow: 'hidden', justifyContent: 'flex-start', width: SIZE }}
         spacing={1}
       >
-        <Box sx={{ width: SIZE, height: SIZE }}>
+        <Box sx={{ width: SIZE, height: SIZE, overflow: 'hidden' }}>
           <Box
             component="img"
             draggable={false}
             src={icon.url}
             alt={`Icon ${icon.name}`}
-            sx={{ width: SIZE, maxheight: SIZE }}
+            sx={{ width: SIZE, height: SIZE }}
           />
         </Box>
         <Typography

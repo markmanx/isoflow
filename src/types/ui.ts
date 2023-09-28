@@ -138,7 +138,17 @@ export interface Scroll {
   offset: Coords;
 }
 
+export interface IconCategoryState {
+  id?: string;
+  isExpanded: boolean;
+}
+
+export type IconCategoryStateWithIcons = IconCategoryState & {
+  icons: IconInput[];
+};
+
 export interface UiState {
+  iconCategoriesState: IconCategoryState[];
   disableInteractions: boolean;
   mode: Mode;
   isMainMenuOpen: boolean;
@@ -152,6 +162,7 @@ export interface UiState {
 }
 
 export interface UiStateActions {
+  setIconCategoriesState: (iconCategoriesState: IconCategoryState[]) => void;
   resetUiState: () => void;
   setMode: (mode: Mode) => void;
   incrementZoom: () => void;
