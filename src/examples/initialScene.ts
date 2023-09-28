@@ -5,13 +5,15 @@ import networkingIsopack from 'src/isopacks/networking';
 import awsIsopack from 'src/isopacks/aws';
 import azureIsopack from 'src/isopacks/azure';
 import gcpIsopack from 'src/isopacks/gcp';
+import kubernetesIsopack from 'src/isopacks/kubernetes';
 
 const mergedIsopacks = mergeIsopacks([
   basicIsopack,
   networkingIsopack,
   awsIsopack,
   azureIsopack,
-  gcpIsopack
+  gcpIsopack,
+  kubernetesIsopack
 ]);
 
 export const initialScene: InitialScene = {

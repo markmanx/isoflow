@@ -50,6 +50,18 @@ export default ${categoryName}Isopack;
 };
 
 // createManifestFromFolder({
+//   dirName: 'basic', 
+//   categoryName: 'Basic',
+//   isIsometric: true
+// });
+
+// createManifestFromFolder({
+//   dirName: 'networking', 
+//   categoryName: 'Networking',
+//   isIsometric: true
+// });
+
+// createManifestFromFolder({
 //   dirName: 'aws', 
 //   categoryName: 'AWS',
 //   isIsometric: false
@@ -67,14 +79,8 @@ export default ${categoryName}Isopack;
 //   isIsometric: false
 // });
 
-// createManifestFromFolder({
-//   dirName: 'basic', 
-//   categoryName: 'Basic',
-//   isIsometric: true
-// });
-
 createManifestFromFolder({
-  dirName: 'networking', 
-  categoryName: 'Networking',
-  isIsometric: true
+  dirName: 'kubernetes', 
+  categoryName: 'Kubernetes',
+  isIsometric: false
 });
