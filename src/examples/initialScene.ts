@@ -1,15 +1,13 @@
 import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
-import { mergeIsopacks } from 'src/isopacks';
-import basicIsopack from 'src/isopacks/basic';
-import networkingIsopack from 'src/isopacks/networking';
-import awsIsopack from 'src/isopacks/aws';
-import azureIsopack from 'src/isopacks/azure';
-import gcpIsopack from 'src/isopacks/gcp';
-import kubernetesIsopack from 'src/isopacks/kubernetes';
+import { mergeIsopacks } from '@isoflow/isopacks';
+import isoflowIsopack from '@isoflow/isopacks/isoflow';
+import awsIsopack from '@isoflow/isopacks/aws';
+import gcpIsopack from '@isoflow/isopacks/gcp';
+import azureIsopack from '@isoflow/isopacks/azure';
+import kubernetesIsopack from '@isoflow/isopacks/kubernetes;
 
 const mergedIsopacks = mergeIsopacks([
-  basicIsopack,
-  networkingIsopack,
+  isoflowIsopack,
   awsIsopack,
   azureIsopack,
   gcpIsopack,
