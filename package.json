@@ -22,7 +22,7 @@
     "docs:start": "cd ./docs && npm run start"
   },
   "devDependencies": {
-    "@isoflow/isopacks": "^0.0.3",
+    "@isoflow/isopacks": "^0.0.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

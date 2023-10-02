@@ -1,10 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
 import { mergeIsopacks } from '@isoflow/isopacks';
-import isoflowIsopack from '@isoflow/isopacks/isoflow';
-import awsIsopack from '@isoflow/isopacks/aws';
-import gcpIsopack from '@isoflow/isopacks/gcp';
-import azureIsopack from '@isoflow/isopacks/azure';
-import kubernetesIsopack from '@isoflow/isopacks/kubernetes;
+import isoflowIsopack from '@isoflow/isopacks/dist/collections/isoflow';
+import awsIsopack from '@isoflow/isopacks/dist/collections/aws';
+import gcpIsopack from '@isoflow/isopacks/dist/collections/gcp';
+import azureIsopack from '@isoflow/isopacks/dist/collections/azure';
+import kubernetesIsopack from '@isoflow/isopacks/dist/collections/kubernetes';
 
 const mergedIsopacks = mergeIsopacks([
   isoflowIsopack,
