@@ -26,7 +26,7 @@ export const IconCategory = ({
   const [isExpanded, setIsExpanded] = useState(_isExpanded);
 
   return (
-    <Section sx={{ pt: 0 }}>
+    <Section sx={{ py: 0 }}>
       <Button
         variant="text"
         fullWidth

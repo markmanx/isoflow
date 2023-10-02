@@ -11,7 +11,7 @@ interface Props {
 
 export const IconGrid = ({ icons, onMouseDown, onClick }: Props) => {
   return (
-    <Grid container spacing={2} sx={{ pt: 1 }}>
+    <Grid container>
       {icons.map((icon) => {
         return (
           <Grid item xs={3} key={icon.id}>
