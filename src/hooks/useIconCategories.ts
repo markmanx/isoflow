@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from 'react';
-import { IconCategoryStateWithIcons, IconCategoryState } from 'src/types';
+import { IconCollectionStateWithIcons, IconCollectionState } from 'src/types';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { categoriseIcons } from 'src/utils';
@@ -16,10 +16,10 @@ export const useIconCategories = () => {
   });
 
   const setIconCategoriesState = useCallback(() => {
-    const categoriesState: IconCategoryState[] = categoriseIcons(icons).map(
-      (category) => {
+    const categoriesState: IconCollectionState[] = categoriseIcons(icons).map(
+      (collection) => {
         return {
-          id: category.name,
+          id: collection.name,
           isExpanded: false
         };
       }
@@ -28,12 +28,12 @@ export const useIconCategories = () => {
     uiActions.setIconCategoriesState(categoriesState);
   }, [icons, uiActions]);
 
-  const iconCategories = useMemo<IconCategoryStateWithIcons[]>(() => {
-    return iconCategoriesState.map((category) => {
+  const iconCategories = useMemo<IconCollectionStateWithIcons[]>(() => {
+    return iconCategoriesState.map((collection) => {
       return {
-        ...category,
+        ...collection,
         icons: icons.filter((icon) => {
-          return icon.category === category.id;
+          return icon.collection === collection.id;
         })
       };
     });

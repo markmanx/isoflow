@@ -1,13 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
-import { mergeIsopacks } from '@isoflow/isopacks';
-import isoflowIsopack from '@isoflow/isopacks/dist/collections/isoflow';
-import awsIsopack from '@isoflow/isopacks/dist/collections/aws';
-import gcpIsopack from '@isoflow/isopacks/dist/collections/gcp';
-import azureIsopack from '@isoflow/isopacks/dist/collections/azure';
-import kubernetesIsopack from '@isoflow/isopacks/dist/collections/kubernetes';
+import { flattenCollections } from '@isoflow/isopacks/dist/utils';
+import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
+import awsIsopack from '@isoflow/isopacks/dist/aws';
+import gcpIsopack from '@isoflow/isopacks/dist/gcp';
+import azureIsopack from '@isoflow/isopacks/dist/azure';
+import kubernetesIsopack from '@isoflow/isopacks/dist/kubernetes';
 
-const mergedIsopacks = mergeIsopacks([
+const isopacks = flattenCollections([
   isoflowIsopack,
   awsIsopack,
   azureIsopack,
@@ -16,7 +16,7 @@ const mergedIsopacks = mergeIsopacks([
 ]);
 
 export const initialScene: InitialScene = {
-  icons: mergedIsopacks,
+  icons: isopacks,
   nodes: [
     {
       id: 'database',

@@ -138,17 +138,17 @@ export interface Scroll {
   offset: Coords;
 }
 
-export interface IconCategoryState {
+export interface IconCollectionState {
   id?: string;
   isExpanded: boolean;
 }
 
-export type IconCategoryStateWithIcons = IconCategoryState & {
+export type IconCollectionStateWithIcons = IconCollectionState & {
   icons: IconInput[];
 };
 
 export interface UiState {
-  iconCategoriesState: IconCategoryState[];
+  iconCategoriesState: IconCollectionState[];
   disableInteractions: boolean;
   mode: Mode;
   isMainMenuOpen: boolean;
@@ -162,7 +162,7 @@ export interface UiState {
 }
 
 export interface UiStateActions {
-  setIconCategoriesState: (iconCategoriesState: IconCategoryState[]) => void;
+  setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
   resetUiState: () => void;
   setMode: (mode: Mode) => void;
   incrementZoom: () => void;

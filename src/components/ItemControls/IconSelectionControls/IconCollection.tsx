@@ -16,7 +16,7 @@ interface Props {
   isExpanded: boolean;
 }
 
-export const IconCategory = ({
+export const IconCollection = ({
   id,
   icons,
   onClick,

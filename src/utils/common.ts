@@ -50,14 +50,14 @@ export const categoriseIcons = (icons: Icon[]) => {
   const categories: { name?: string; icons: Icon[] }[] = [];
 
   icons.forEach((icon) => {
-    const category = categories.find((cat) => {
-      return cat.name === icon.category;
+    const collection = categories.find((cat) => {
+      return cat.name === icon.collection;
     });
 
-    if (!category) {
-      categories.push({ name: icon.category, icons: [icon] });
+    if (!collection) {
+      categories.push({ name: icon.collection, icons: [icon] });
     } else {
-      category.icons.push(icon);
+      collection.icons.push(icon);
     }
   });
 

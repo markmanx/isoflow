@@ -10,7 +10,7 @@ export const iconInput = z.object({
   id: z.string(),
   name: z.string(),
   url: z.string(),
-  category: z.string().optional(),
+  collection: z.string().optional(),
   isIsometric: z.boolean().optional()
 });
 

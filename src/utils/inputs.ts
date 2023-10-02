@@ -31,7 +31,7 @@ export const iconInputToIcon = (iconInput: IconInput): Icon => {
     id: iconInput.id,
     name: iconInput.name,
     url: iconInput.url,
-    category: iconInput.category,
+    collection: iconInput.collection,
     isIsometric: iconInput.isIsometric ?? true
   };
 };
@@ -161,7 +161,7 @@ export const iconToIconInput = (icon: Icon): IconInput => {
     id: icon.id,
     name: icon.name,
     url: icon.url,
-    category: icon.category,
+    collection: icon.collection,
     isIsometric: icon.isIsometric
   };
 };
