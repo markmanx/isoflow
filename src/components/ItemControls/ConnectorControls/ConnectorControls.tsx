@@ -7,7 +7,6 @@ import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
-import { Header } from '../components/Header';
 import { DeleteButton } from '../components/DeleteButton';
 
 interface Props {
