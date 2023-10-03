@@ -37,7 +37,7 @@ export const ConnectorControls = ({ id }: Props) => {
   }, [sceneActions, id, uiStateActions]);
 
   return (
-    <ControlsContainer header={<Header title="Connector settings" />}>
+    <ControlsContainer>
       <Section>
         <ColorSelector
           colors={Object.values(theme.customVars.diagramPalette)}
