@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Card, Divider } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 
 interface Props {
   header?: React.ReactNode;
@@ -19,17 +19,18 @@ export const ControlsContainer = ({ header, children }: Props) => {
       }}
     >
       {header && (
-        <Card
+        <Box
           sx={{
             width: '100%',
             zIndex: 1,
             position: 'sticky',
+            bgcolor: 'background.paper',
             top: 0
           }}
         >
           {header}
           <Divider />
-        </Card>
+        </Box>
       )}
       <Box
         sx={{

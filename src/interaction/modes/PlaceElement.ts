@@ -31,12 +31,12 @@ export const PlaceElement: ModeActions = {
         iconId: uiState.mode.icon.id,
         position: uiState.mouse.position.tile
       });
-
-      const newMode = produce(uiState.mode, (draftState) => {
-        draftState.icon = null;
-      });
-
-      uiState.actions.setMode(newMode);
     }
+
+    uiState.actions.setMode(
+      produce(uiState.mode, (draftState) => {
+        draftState.icon = null;
+      })
+    );
   }
 };

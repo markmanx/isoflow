@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Menu, Typography, Divider } from '@mui/material';
+import { Menu, Typography, Divider, Card } from '@mui/material';
 import {
   Menu as MenuIcon,
   GitHub as GitHubIcon,
@@ -100,43 +100,46 @@ export const MainMenu = () => {
         }}
         elevation={0}
         sx={{
-          mt: 1
+          mt: 2
         }}
         MenuListProps={{
           sx: {
-            minWidth: '250px'
+            minWidth: '250px',
+            py: 0
           }
         }}
       >
-        <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
-          Open
-        </MenuItem>
-        <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
-          Download diagram
-        </MenuItem>
-        <Divider />
-        <MenuItem
-          onClick={() => {
-            return gotoUrl(`${REPOSITORY_URL}`);
-          }}
-          Icon={<GitHubIcon />}
-        >
-          GitHub
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            return gotoUrl('https://discord.gg/QYPkvZth7D');
-          }}
-          Icon={<QuestionAnswerIcon />}
-        >
-          Discord
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <Typography variant="body2" color="text.secondary">
-            Isoflow v{PACKAGE_VERSION}
-          </Typography>
-        </MenuItem>
+        <Card sx={{ py: 1 }}>
+          <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
+            Open
+          </MenuItem>
+          <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
+            Download diagram
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={() => {
+              return gotoUrl(`${REPOSITORY_URL}`);
+            }}
+            Icon={<GitHubIcon />}
+          >
+            GitHub
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              return gotoUrl('https://discord.gg/QYPkvZth7D');
+            }}
+            Icon={<QuestionAnswerIcon />}
+          >
+            Discord
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <Typography variant="body2" color="text.secondary">
+              Isoflow v{PACKAGE_VERSION}
+            </Typography>
+          </MenuItem>
+        </Card>
       </Menu>
     </UiElement>
   );

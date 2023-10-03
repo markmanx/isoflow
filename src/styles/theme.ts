@@ -53,10 +53,17 @@ export const themeConfig: ThemeOptions = {
     h5: {
       fontSize: '1.3em',
       lineHeight: 1.2
+    },
+    body1: {
+      fontSize: '0.85em',
+      lineHeight: 1.2
+    },
+    body2: {
+      fontSize: '0.75em',
+      lineHeight: 1.2
     }
   },
   palette: {
-    mode: 'dark',
     secondary: {
       main: '#df004c'
     }
@@ -64,7 +71,8 @@ export const themeConfig: ThemeOptions = {
   components: {
     MuiCard: {
       defaultProps: {
-        elevation: 0
+        elevation: 0,
+        variant: 'outlined'
       }
     },
     MuiToolbar: {
@@ -72,6 +80,12 @@ export const themeConfig: ThemeOptions = {
         root: {
           backgroundColor: 'white'
         }
+      }
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true
       }
     },
     MuiButton: {
@@ -87,9 +101,20 @@ export const themeConfig: ThemeOptions = {
         }
       }
     },
+    MuiSvgIcon: {
+      defaultProps: {
+        color: 'action'
+      },
+      styleOverrides: {
+        root: {
+          width: 17,
+          height: 17
+        }
+      }
+    },
     MuiTextField: {
       defaultProps: {
-        variant: 'standard'
+        variant: 'outlined'
       },
       styleOverrides: {
         root: {

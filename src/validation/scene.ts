@@ -18,7 +18,11 @@ export const sceneInput = z
     rectangles: z.array(rectangleInput)
   })
   .superRefine((scene, ctx) => {
-    const invalidNode = findInvalidNode(scene.nodes, scene.icons);
+    const icons = scene.icons ?? [];
+    const nodes = scene.nodes ?? [];
+    const connectors = scene.connectors ?? [];
+
+    const invalidNode = findInvalidNode(nodes, icons);
 
     if (invalidNode) {
       ctx.addIssue({
@@ -30,10 +34,7 @@ export const sceneInput = z
       return;
     }
 
-    const invalidConnector = findInvalidConnector(
-      scene.connectors,
-      scene.nodes
-    );
+    const invalidConnector = findInvalidConnector(connectors, nodes);
 
     if (invalidConnector) {
       ctx.addIssue({

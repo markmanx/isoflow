@@ -43,7 +43,7 @@ export const TextBoxControls = ({ id }: Props) => {
   }, [sceneActions, id, uiStateActions]);
 
   return (
-    <ControlsContainer header={<Header title="Text settings" />}>
+    <ControlsContainer>
       <Section>
         <TextField
           value={textBox.text}

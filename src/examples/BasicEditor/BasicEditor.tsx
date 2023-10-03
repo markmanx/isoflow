@@ -1,7 +1,7 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { initialData } from '../initialData';
+import { initialScene } from '../initialScene';
 
 export const BasicEditor = () => {
-  return <Isoflow initialData={initialData} />;
+  return <Isoflow initialScene={initialScene} />;
 };

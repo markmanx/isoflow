@@ -1,6 +1,6 @@
 {
   "name": "isoflow",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": false,
   "description": "An open-source React component for drawing network diagrams.",
   "license": "MIT",
@@ -17,10 +17,12 @@
     "test": "jest",
     "lint": "eslint ./src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
-    "dev:docs": "cd ./docs && npm run dev",
-    "start:docs": "cd ./docs && npm run start"
+    "docs:dev": "cd ./docs && npm run dev",
+    "docs:build": "cd ./docs && npm run build",
+    "docs:start": "cd ./docs && npm run start"
   },
   "devDependencies": {
+    "@isoflow/isopacks": "^0.0.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -55,7 +57,6 @@
     "react-dom": "^18.2.0",
     "recharts": "^2.7.2",
     "style-loader": "^3.3.3",
-    "svg-url-loader": "^8.0.0",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "tsc-alias": "^1.8.7",
@@ -81,7 +82,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.1",
     "uuid": "^9.0.0",
-    "zod": "^3.21.4",
+    "zod": "3.22.2",
     "zustand": "^4.3.3"
   },
   "peerDependencies": {

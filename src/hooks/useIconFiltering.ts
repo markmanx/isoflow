@@ -10,6 +10,8 @@ export const useIconFiltering = () => {
   });
 
   const filteredIcons = useMemo(() => {
+    if (filter === '') return null;
+
     const regex = new RegExp(filter, 'gi');
 
     return icons.filter((icon: Icon) => {
@@ -24,6 +26,6 @@ export const useIconFiltering = () => {
   return {
     setFilter,
     filter,
-    icons: filteredIcons
+    filteredIcons
   };
 };

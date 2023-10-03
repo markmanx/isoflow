@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Coords, TileOriginEnum, IconInput } from 'src/types';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
-import { NodeIcon } from 'src/components/SceneLayers/Nodes/Node/NodeIcon';
+import { useIcon } from 'src/hooks/useIcon';
 
 interface Props {
   icon: IconInput;
@@ -11,6 +11,7 @@ interface Props {
 
 export const DragAndDrop = ({ icon, tile }: Props) => {
   const { getTilePosition } = useGetTilePosition();
+  const { iconComponent } = useIcon(icon.id);
 
   const tilePosition = useMemo(() => {
     return getTilePosition({ tile, origin: TileOriginEnum.BOTTOM });
@@ -24,7 +25,7 @@ export const DragAndDrop = ({ icon, tile }: Props) => {
         top: tilePosition.y
       }}
     >
-      <NodeIcon icon={icon} />
+      {iconComponent}
     </Box>
   );
 };

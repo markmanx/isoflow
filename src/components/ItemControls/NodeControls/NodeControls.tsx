@@ -4,9 +4,9 @@ import { Node } from 'src/types';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useNode } from 'src/hooks/useNode';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useIconCategories } from 'src/hooks/useIconCategories';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from '../IconSelectionControls/Icons';
-import { Header } from '../components/Header';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 
 interface Props {
@@ -15,9 +15,7 @@ interface Props {
 
 export const NodeControls = ({ id }: Props) => {
   const [tab, setTab] = useState(0);
-  const icons = useSceneStore((state) => {
-    return state.icons;
-  });
+  const { iconCategories } = useIconCategories();
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -46,10 +44,9 @@ export const NodeControls = ({ id }: Props) => {
     <ControlsContainer
       header={
         <Box>
-          <Header title="Node settings" />
           <Tabs sx={{ px: 2 }} value={tab} onChange={onTabChanged}>
             <Tab label="Settings" />
-            <Tab label="Icon" />
+            <Tab label="Change icon" />
           </Tabs>
         </Box>
       }
@@ -66,7 +63,7 @@ export const NodeControls = ({ id }: Props) => {
       {tab === 1 && (
         <Icons
           key={node.id}
-          icons={icons}
+          iconCategories={iconCategories}
           onClick={(icon) => {
             onNodeUpdated({ iconId: icon.id });
           }}

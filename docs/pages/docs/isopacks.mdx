@@ -1,89 +1,62 @@
 # Isopacks
 
-**Isopacks** are add-on modules for Isoflow that contain icons and other assets that can be loaded with the Isoflow editor.  You can easily extend Isopacks or build your own from scratch.
+**Isopacks** are add-on modules for Isoflow that contain icons and other assets.  You can easily extend Isopacks or build your own from scratch.
 
-### Standard Isopacks
+### Cloud & Network Isopacks
 
-Two Isopacks are included as part of the npm package.  Both sets of icons are available under the MIT license:
-1. **[The Basic Isopack](https://github.com/markmanx/isoflow/tree/main/src/isopacks/basic/icons)** includes a set of generic isometric icons (for example, cube, pyramid and block).
-<div style={{ display: 'flex' }}>
-<img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/basic/icons/cube.svg" alt="drawing" width="100"/>
-<img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/basic/icons/pyramid.svg" alt="drawing" width="100"/>
-<img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/basic/icons/block.svg" alt="drawing" width="100"/>
-</div>
-2. **[The Networking Isopack](https://github.com/markmanx/isoflow/tree/main/src/isopacks/networking/icons)** includes a set of isometric networking icons (for example, server, storage and switch).
-<div style={{ display: 'flex' }}>
+These are available as a separately maintained project on [Github](https://github.com/markmanx/isopacks).
+Below is a sample of icons available in the **Isoflow** Isopack:
+
+<div style={{ display: 'flex', paddingTop: 15 }}>
 <img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/networking/icons/server.svg" alt="drawing" width="100"/>
 <img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/networking/icons/storage.svg" alt="drawing" width="100"/>
 <img src="https://raw.githubusercontent.com/markmanx/isoflow/main/src/isopacks/networking/icons/switch.svg" alt="drawing" width="100"/>
 </div>
 
-## Loading the Networking Isopack
-This will enable the standard set of networking icons within the Isoflow editor.
+In addition, Isopacks for **AWS**, **Azure**, **GCP**, and **Kubernetes** are included.
+You can choose which Isopacks to import into your app and which to leave out.
+
+### Loading Isopacks into Isoflow
+
+1. Install the `npm` package:
+
+```bash
+npm i @isoflow/isopacks
+```
+
+2. Import your selected Isopacks:
 
 ```jsx showLineNumbers
 import Isoflow from 'isoflow';
-import { networkingIsopack } from 'isoflow/dist/isopacks';
+import { flattenCollections } from 'isoflow/dist/utils';
+import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
+import awsIsopack from '@isoflow/isopacks/dist/aws';
+import gcpIsopack from '@isoflow/isopacks/dist/gcp';
+import azureIsopack from '@isoflow/isopacks/dist/azure';
+import kubernetesIsopack from '@isoflow/isopacks/dist/kubernetes';
 
-const initialData = {
-  icons: networkingIsopack,
-  nodes: [],
-  connectors: [],
-  rectangles: [],
-}
+const icons = flattenCollections([
+  isoflowIsopack,
+  awsIsopack,
+  azureIsopack,
+  gcpIsopack,
+  kubernetesIsopack
+]);
 
 const App = () => {
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <Isoflow initialData={initialData} />
-    </div>
+    <Isoflow initialScene={{ icons }} width="100%" height="100%" />
   );
 }
 
 export default App;
 ```
 
-### Combining Isopacks
+## Usage without Isoflow
 
-You can combine multiple Isopacks together using the `mergeIsopacks` method.
+Isopacks can also be used without Isoflow or React (for example, you can simply drag and drop the images into slides or documents, or import into your vanilla Javascript / Typescript project).
+See the [Isopacks Github project](https://github.com/markmanx/isopacks) for more information.
 
-```js
-import { networkingIsopack, basicIsopack, mergeIsopacks } from 'isoflow/dist/isopacks';
+## Self-hosting vs importing icons
 
-const mergedIsopacks = mergeIsopacks(basicIsopack, networkingIsopack);
-
-const initialData = {
-  icons: mergedIsopacks,
-  nodes: [],
-  connectors: [],
-  rectangles: [],
-}
-```
-
-### Icon IDs
-
-As a convention, the `id` of an Isopack icon should be the same as the icon's SVG filename (without the `.svg` extension).
-This makes it easy to derive `id`s from the file structure (see the links to the Isopacks [above](#standard-isopacks)).
-
-## Static assets
-
-While you can import all icon images directly from the npm package (as shown above), it is recommended that you host the icon images yourself so that they can be lazy-loaded (referencing them via URL from a service like S3 or a CDN).
-
-```js {6}
-{
-  icons: [
-    {
-      id: 'server',
-      name: 'Server',
-      url: 'https://isoflow.io/static/assets/icons/networking/server.svg',
-      category: 'Networking'
-    }
-  ]
-}
-```
-
-### Benefits of lazy-loading vs importing icons
-
-- **Importing icons** directly from the npm package adds to the final bundle size. Users will have to download *all* assets in the Isopack before your app loads (which can be a problem if there are a lot of icons).
-
-- **Referencing icons via URL** enables the icons to be downloaded later on, after the app loads. This also activates the browser's cache for individual icons so that they can be loaded instantly later on.
+While you can import the icon images directly into your JS or TS application, it is recommended that you host the icon images yourself so that they can be lazy-loaded (referencing them via URL from a service like S3 or a CDN).

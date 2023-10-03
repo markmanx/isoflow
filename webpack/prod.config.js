@@ -7,8 +7,7 @@ module.exports = {
   target: 'web',
   entry: {
     'index': './src/Isoflow.tsx',
-    '/validation/scene': './src/validation/scene.ts',
-    '/isopacks': './src/isopacks/index.ts',
+    '/nodeExports': './src/nodeExports.ts',
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
@@ -42,11 +41,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: [
-          {
-            loader: 'svg-url-loader'
-          }
-        ]
+        type: 'asset/inline'
       }
     ]
   },

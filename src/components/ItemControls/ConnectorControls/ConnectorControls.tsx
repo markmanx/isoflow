@@ -7,7 +7,6 @@ import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
-import { Header } from '../components/Header';
 import { DeleteButton } from '../components/DeleteButton';
 
 interface Props {
@@ -37,7 +36,7 @@ export const ConnectorControls = ({ id }: Props) => {
   }, [sceneActions, id, uiStateActions]);
 
   return (
-    <ControlsContainer header={<Header title="Connector settings" />}>
+    <ControlsContainer>
       <Section>
         <ColorSelector
           colors={Object.values(theme.customVars.diagramPalette)}

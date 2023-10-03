@@ -9,23 +9,22 @@ import {
   NodeInput,
   ConnectorInput,
   RectangleInput,
-  Scene,
   ConnectorStyleEnum,
-  InitialData
+  InitialScene
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { LabelContainer } from 'src/components/SceneLayers/Nodes/Node/LabelContainer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
-import { EMPTY_SCENE } from 'src/config';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
+import { INITIAL_SCENE } from 'src/config';
+import { useIconCategories } from './hooks/useIconCategories';
 
 interface Props {
-  initialData?: InitialData;
+  initialScene?: InitialScene;
   disableInteractions?: boolean;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
@@ -34,14 +33,14 @@ interface Props {
 }
 
 const App = ({
-  initialData,
+  initialScene,
   width,
   height = '100%',
   disableInteractions: disableInteractionsProp,
   onSceneUpdated,
   debugMode = false
 }: Props) => {
-  const previnitialData = useRef<SceneInput>(EMPTY_SCENE);
+  const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(
@@ -56,19 +55,27 @@ const App = ({
   const uiActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { setIconCategoriesState } = useIconCategories();
 
   useEffect(() => {
-    uiActions.setZoom(initialData?.zoom ?? 1);
+    uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
-  }, [initialData?.zoom, disableInteractionsProp, sceneActions, uiActions]);
+  }, [initialScene?.zoom, disableInteractionsProp, sceneActions, uiActions]);
 
   useEffect(() => {
-    if (!initialData || previnitialData.current === initialData) return;
+    if (!initialScene || prevInitialScene.current === initialScene) return;
 
-    previnitialData.current = initialData;
-    sceneActions.setScene(initialData);
+    const fullInitialScene = { ...INITIAL_SCENE, ...initialScene };
+
+    prevInitialScene.current = fullInitialScene;
+    sceneActions.setScene(fullInitialScene);
+
     setIsReady(true);
-  }, [initialData, sceneActions]);
+  }, [initialScene, sceneActions, uiActions]);
+
+  useEffect(() => {
+    setIconCategoriesState();
+  }, [scene.icons, setIconCategoriesState]);
 
   useEffect(() => {
     if (!isReady || !onSceneUpdated) return;
@@ -112,27 +119,33 @@ export const Isoflow = (props: Props) => {
 };
 
 const useIsoflow = () => {
-  const updateNode = useSceneStore((state) => {
-    return state.actions.updateNode;
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
+  });
+
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
   });
 
   return {
-    updateNode
+    scene: sceneActions,
+    uiState: uiStateActions
   };
 };
 
-export default Isoflow;
-
 export {
-  InitialData,
-  Scene,
+  useIsoflow,
+  InitialScene,
   SceneInput,
   IconInput,
   NodeInput,
   RectangleInput,
   ConnectorInput,
-  useIsoflow,
-  LabelContainer,
   sceneValidationSchema,
   ConnectorStyleEnum
 };
+
+export const version = PACKAGE_VERSION;
+export const initialScene = INITIAL_SCENE;
+
+export default Isoflow;

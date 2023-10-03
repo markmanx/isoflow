@@ -1,7 +1,7 @@
 import React, { createContext, useRef, useContext } from 'react';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
-import { SceneStore } from 'src/types';
+import { SceneStore, Scene } from 'src/types';
 import { DEFAULT_FONT_FAMILY, TEXTBOX_DEFAULTS } from 'src/config';
 import { sceneInput } from 'src/validation/scene';
 import {
@@ -15,14 +15,18 @@ import {
   getTextWidth
 } from 'src/utils';
 
+export const initialScene: Scene = {
+  icons: [],
+  nodes: [],
+  connectors: [],
+  textBoxes: [],
+  rectangles: []
+};
+
 const initialState = () => {
   return createStore<SceneStore>((set, get) => {
     return {
-      nodes: [],
-      connectors: [],
-      textBoxes: [],
-      rectangles: [],
-      icons: [],
+      ...initialScene,
       actions: {
         setScene: (scene) => {
           sceneInput.parse(scene);
@@ -30,6 +34,8 @@ const initialState = () => {
           const newScene = sceneInputToScene(scene);
 
           set(newScene);
+
+          return newScene;
         },
 
         updateScene: (scene) => {

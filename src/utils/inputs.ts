@@ -1,4 +1,6 @@
 import {
+  IconInput,
+  Icon,
   SceneInput,
   NodeInput,
   ConnectorInput,
@@ -23,6 +25,16 @@ import {
   DEFAULT_FONT_FAMILY
 } from 'src/config';
 import { getConnectorPath, getTextWidth } from 'src/utils';
+
+export const iconInputToIcon = (iconInput: IconInput): Icon => {
+  return {
+    id: iconInput.id,
+    name: iconInput.name,
+    url: iconInput.url,
+    collection: iconInput.collection,
+    isIsometric: iconInput.isIsometric ?? true
+  };
+};
 
 export const nodeInputToNode = (nodeInput: NodeInput): Node => {
   return {
@@ -120,6 +132,10 @@ export const textBoxToTextBoxInput = (textBox: TextBox): TextBoxInput => {
 };
 
 export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
+  const icons = sceneInput.icons.map((icon) => {
+    return iconInputToIcon(icon);
+  });
+
   const nodes = sceneInput.nodes.map((nodeInput) => {
     return nodeInputToNode(nodeInput);
   });
@@ -133,12 +149,21 @@ export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
   });
 
   return {
-    ...sceneInput,
+    icons,
     nodes,
     rectangles,
-    connectors,
-    icons: sceneInput.icons
+    connectors
   } as Scene;
+};
+
+export const iconToIconInput = (icon: Icon): IconInput => {
+  return {
+    id: icon.id,
+    name: icon.name,
+    url: icon.url,
+    collection: icon.collection,
+    isIsometric: icon.isIsometric
+  };
 };
 
 export const nodeToNodeInput = (node: Node): NodeInput => {
@@ -199,6 +224,7 @@ export const rectangleToRectangleInput = (
 };
 
 export const sceneToSceneInput = (scene: Scene): SceneInput => {
+  const icons: IconInput[] = scene.icons.map(iconToIconInput);
   const nodes: NodeInput[] = scene.nodes.map(nodeInputToNode);
   const connectors: ConnectorInput[] = scene.connectors.map(
     connectorToConnectorInput,
@@ -212,10 +238,10 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
   );
 
   return {
+    icons,
     nodes,
     connectors,
     textBoxes,
-    rectangles,
-    icons: scene.icons
+    rectangles
   } as SceneInput;
 };

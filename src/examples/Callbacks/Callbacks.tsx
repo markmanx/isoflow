@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { Alert, useTheme } from '@mui/material';
-import Isoflow, { InitialData } from 'src/Isoflow';
-import { initialData as _initialData } from '../initialData';
+import Isoflow, { InitialScene } from 'src/Isoflow';
+import { initialScene as _initialScene } from '../initialScene';
 
-const initialData: InitialData = {
-  icons: _initialData.icons,
+const initialScene: InitialScene = {
+  icons: _initialScene.icons,
   nodes: [
     {
       id: 'server',
@@ -33,7 +33,7 @@ export const Callbacks = () => {
   return (
     <>
       <Isoflow
-        initialData={initialData}
+        initialScene={initialScene}
         onSceneUpdated={onSceneUpdated}
         height="100%"
       />

@@ -1,49 +1,25 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Grid } from '@mui/material';
-import { Icon } from 'src/types';
-import { IconCategory } from './IconCategory';
+import { IconCollectionStateWithIcons, Icon } from 'src/types';
+import { IconCollection } from './IconCollection';
 
 interface Props {
-  icons: Icon[];
+  iconCategories: IconCollectionStateWithIcons[];
   onClick?: (icon: Icon) => void;
   onMouseDown?: (icon: Icon) => void;
 }
 
-export const Icons = ({ icons, onClick, onMouseDown }: Props) => {
-  const categorisedIcons = useMemo(() => {
-    const cats: { name?: string; icons: Icon[] }[] = [];
-
-    icons.forEach((icon) => {
-      const category = cats.find((cat) => {
-        return cat.name === icon.category;
-      });
-
-      if (!category) {
-        cats.push({ name: icon.category, icons: [icon] });
-      } else {
-        category.icons.push(icon);
-      }
-    });
-
-    return cats.sort((a, b) => {
-      if (a.name === undefined) {
-        return -1;
-      }
-
-      if (b.name === undefined) {
-        return 1;
-      }
-
-      return a.name.localeCompare(b.name);
-    });
-  }, [icons]);
-
+export const Icons = ({ iconCategories, onClick, onMouseDown }: Props) => {
   return (
-    <Grid container spacing={4}>
-      {categorisedIcons.map((cat) => {
+    <Grid container spacing={1} sx={{ py: 2 }}>
+      {iconCategories.map((cat) => {
         return (
-          <Grid item xs={12} key={`icon-category-${cat.name}`}>
-            <IconCategory
+          <Grid
+            item
+            xs={12}
+            key={`icon-collection-${cat.id ?? 'uncategorised'}`}
+          >
+            <IconCollection
               {...cat}
               onClick={onClick}
               onMouseDown={onMouseDown}
