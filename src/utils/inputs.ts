@@ -42,7 +42,6 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
     id: nodeInput.id,
     label: nodeInput.label ?? NODE_DEFAULTS.label,
     labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
-    color: nodeInput.color ?? NODE_DEFAULTS.color,
     iconId: nodeInput.iconId,
     position: nodeInput.position,
     isSelected: false
@@ -172,7 +171,6 @@ export const nodeToNodeInput = (node: Node): NodeInput => {
     position: node.position,
     label: node.label,
     labelHeight: node.labelHeight,
-    color: node.color,
     iconId: node.iconId
   };
 };

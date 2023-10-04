@@ -28,7 +28,6 @@ export interface Node {
   id: string;
   type: SceneItemTypeEnum.NODE;
   iconId: string;
-  color: string;
   label: string;
   labelHeight: number;
   position: Coords;
