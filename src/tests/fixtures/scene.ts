@@ -49,7 +49,10 @@ export const scene: SceneInput = {
     },
     {
       id: 'connector2',
-      anchors: [{ ref: { node: 'node2' } }, { ref: { node: 'node3' } }]
+      anchors: [
+        { id: 'anchor1', ref: { node: 'node2' } },
+        { ref: { node: 'node3' } }
+      ]
     }
   ],
   textBoxes: [],

@@ -48,10 +48,32 @@ describe('scene validation works correctly', () => {
     }
   });
 
-  test('connector with anchor that references an invalid anchor fails validation', () => {
+  test('connector with less than two anchors fails validation', () => {
     const invalidConnector = {
       id: 'invalidConnector',
       anchors: [{ ref: { anchor: 'invalidAnchor' } }]
+    };
+    const scene = produce(sceneFixture, (draft) => {
+      draft.connectors.push(invalidConnector);
+    });
+
+    const result = sceneInput.safeParse(scene);
+
+    expect(result.success).toBe(false);
+    if (result.success === false) {
+      expect(result.error.errors[0].message).toContain(
+        'must have at least 2 anchors'
+      );
+    }
+  });
+
+  test('connector with anchor that references an invalid anchor fails validation', () => {
+    const invalidConnector = {
+      id: 'invalidConnector',
+      anchors: [
+        { ref: { anchor: 'invalidAnchor' } },
+        { ref: { anchor: 'anchor1' } }
+      ]
     };
     const scene = produce(sceneFixture, (draft) => {
       draft.connectors.push(invalidConnector);

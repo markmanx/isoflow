@@ -174,6 +174,10 @@ export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
     return rectangleInputToRectangle(rectangleInput);
   });
 
+  const textBoxes = sceneInput.textBoxes.map((textBoxInput) => {
+    return textBoxInputToTextBox(textBoxInput);
+  });
+
   const allAnchors = getAllAnchorsFromInput(sceneInput.connectors);
 
   const connectors = sceneInput.connectors.map((connectorInput) => {
@@ -184,7 +188,8 @@ export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
     icons,
     nodes,
     rectangles,
-    connectors
+    connectors,
+    textBoxes
   } as Scene;
 };
 

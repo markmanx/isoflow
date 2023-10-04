@@ -64,7 +64,6 @@ export const initialScene: InitialScene = {
       ]
     }
   ],
-  textBoxes: [],
   rectangles: [
     {
       id: 'rect1',
@@ -76,6 +75,16 @@ export const initialScene: InitialScene = {
         x: 1,
         y: -3
       }
+    }
+  ],
+  textBoxes: [
+    {
+      id: 'text1',
+      tile: {
+        x: 1,
+        y: -4
+      },
+      text: 'Backend'
     }
   ]
 };
