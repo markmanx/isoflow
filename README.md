@@ -20,80 +20,40 @@
 
 ## Key Features
 
-- **Annotation tools:** Annotate your architecture with isometric icons, labels, regions and connectors.
-- **Customizable:** Use the standard free set of networking icons (also included under the MIT licence), or create your own.
-- **Export options:** Export diagrams as images, JSON or YAML.
+- **Highly visual drag and drop interface:** Express your architecture with icons, regions and connectors.
+- **Customizable:** Easily extend Isoflow with your own icons.
+- **Export options:** Export diagrams as code or images.
 
 ## Roadmap
 
-v1 progress: █████████░
+🛠 V2: In progress
+- [ ] Export diagrams as images
+- [ ] Move connector anchors
+- [ ] Layer re-ordering (bring forward / send to back)
+- [ ] Shortcuts (undo / redo, copy / paste)
+- [ ] Custom colours
+- [ ] Main menu customisation
+- [ ] Center diagram in middle of canvas
 
-- [x] Basic view controls (pan & zoom)
-- [x] Create / delete nodes
-- [x] Create / delete connectors
-- [x] Create / delete rectangle areas
-- [x] Generic networking icons (e.g. server, router etc)
-- [x] onSceneUpdate callback
-- [x] Drag items
-- [x] Documentation
-- [x] Load / save diagrams locally as JSON
-- [ ] Support for AWS and GCP icons
+✅ V1: Complete
+- [x] Basic view controls (pan / zoom)
+- [x] Basic create / delete / update actions on nodes, connectors & groups
+- [x] Import / export diagrams to local storage (in JSON format)
+- [x] Icon support for AWS, GCP, Azure, K8S & generic network hardware (e.g. server, database)
+- [x] onSceneUpdated callback
+- [x] Usage documentation
+- [x] Pipeline for publishing to NPM
 
 ## Quick start
 
-To integrate with your existing React app, install the Isoflow [npm package](https://www.npmjs.com/package/isoflow):
+Install the Isoflow editor [npm package](https://www.npmjs.com/package/isoflow) and isopacks (icon packages):
 
 - `npm install isoflow`
+- `npm install @isoflow/isopacks`
 
-## Basic integration:
+For more information, see our [documentation](https://v2.isoflow.io/docs).
 
-```jsx
-import Isoflow from 'isoflow';
-import { networkingIsopack } from 'isoflow/dist/iconpacks';
-
-const initialScene = {
-  icons: networkingIsopack,
-  nodes: [
-    {
-      id: "node1",
-      iconId: "server",
-      position: {
-        x: 0,
-        y: 0,
-      },
-    },
-  ],
-  connectors: [],
-  rectangles: []
-};
-
-const App = () => (
-  <Isoflow initialScene={initialScene} />
-);
-```
-
-**Note:** Isoflow cannot be server-side rendered.  If using Next.js, make sure you only import Isoflow in the browser:
-
-```jsx
-const Isoflow = dynamic(() => import("isoflow"), {
-  ssr: false,
-});
-```
-
-## Running Isoflow in development mode
-To run Isoflow on a local development server with hot-reloading enabled:
-
-1. `npm i`
-2. `npm run start`.
-
-## Developer documentation
-For detailed API documentation, examples and more, see the online [developer documentation](https://v2.isoflow.io/docs).  You can also build and run the docs locally:
-
-- `npm run docs:build`
-- `npm run docs:start`
-- Visit `http://localhost:3002` in your browser.
-
-## CodeSandbox
+## CodeSandbox demo
 Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
 ## Using Isoflow commercially?
