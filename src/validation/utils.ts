@@ -58,6 +58,12 @@ export const ensureValidConnector = (
   allAnchors: ConnectorAnchor[],
   nodes: NodeInput[]
 ) => {
+  if (connector.anchors.length < 2) {
+    throw new Error(
+      `Found invalid connector [id: "${connector.id}"]: A connector must have at least 2 anchors.`
+    );
+  }
+
   connector.anchors.forEach((anchor) => {
     try {
       ensureValidConnectorAnchor(anchor, allAnchors, nodes);
