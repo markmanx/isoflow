@@ -45,23 +45,14 @@ export const connectorAnchorInput = z
     }
   });
 
-export enum ConnectorStyleEnum {
-  SOLID = 'SOLID',
-  DOTTED = 'DOTTED',
-  DASHED = 'DASHED'
-}
+export const connectorStyleOptions = ['SOLID', 'DOTTED', 'DASHED'] as const;
+export const connectorStyleEnum = z.enum(connectorStyleOptions);
 
 export const connectorInput = z.object({
   id: z.string(),
   color: z.string().optional(),
   width: z.number().optional(),
-  style: z
-    .union([
-      z.literal(ConnectorStyleEnum.SOLID),
-      z.literal(ConnectorStyleEnum.DOTTED),
-      z.literal(ConnectorStyleEnum.DASHED)
-    ])
-    .optional(),
+  style: connectorStyleEnum.optional(),
   anchors: z.array(connectorAnchorInput)
 });
 

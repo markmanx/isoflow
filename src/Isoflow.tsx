@@ -9,7 +9,6 @@ import {
   NodeInput,
   ConnectorInput,
   RectangleInput,
-  ConnectorStyleEnum,
   InitialScene
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
@@ -141,8 +140,7 @@ export {
   NodeInput,
   RectangleInput,
   ConnectorInput,
-  sceneValidationSchema,
-  ConnectorStyleEnum
+  sceneValidationSchema
 };
 
 export const version = PACKAGE_VERSION;

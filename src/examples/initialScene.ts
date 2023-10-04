@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { InitialScene, ConnectorStyleEnum } from 'src/Isoflow';
+import { InitialScene } from 'src/Isoflow';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
 import awsIsopack from '@isoflow/isopacks/dist/aws';
@@ -55,7 +55,7 @@ export const initialScene: InitialScene = {
     },
     {
       id: 'connector2',
-      style: ConnectorStyleEnum.DOTTED,
+      style: 'DOTTED',
       width: 10,
       anchors: [
         { ref: { node: 'server' } },

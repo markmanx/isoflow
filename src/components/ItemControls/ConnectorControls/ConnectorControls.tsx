@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Connector, ConnectorStyleEnum } from 'src/types';
+import { connectorStyleOptions } from 'src/validation/sceneItems';
 import { useTheme, Box, Slider, Select, MenuItem } from '@mui/material';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useConnector } from 'src/hooks/useConnector';
@@ -67,7 +68,7 @@ export const ConnectorControls = ({ id }: Props) => {
             });
           }}
         >
-          {Object.values(ConnectorStyleEnum).map((style) => {
+          {Object.values(connectorStyleOptions).map((style) => {
             return <MenuItem value={style}>{style}</MenuItem>;
           })}
         </Select>

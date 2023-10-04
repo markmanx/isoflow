@@ -1,10 +1,4 @@
-import {
-  Size,
-  Coords,
-  SceneInput,
-  Connector,
-  ConnectorStyleEnum
-} from 'src/types';
+import { Size, Coords, SceneInput, Connector } from 'src/types';
 import { customVars } from './styles/theme';
 
 // TODO: This file could do with better organisation and convention for easier reading.
@@ -32,7 +26,7 @@ export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
   // The boundaries of the search area for the pathfinder algorithm
   // is the grid that encompasses the two nodes + the offset below.
   searchOffset: { x: 1, y: 1 },
-  style: ConnectorStyleEnum.SOLID
+  style: 'SOLID'
 };
 
 export const TEXTBOX_DEFAULTS = {
