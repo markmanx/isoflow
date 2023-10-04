@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useTheme } from '@mui/material';
 import { Coords } from 'src/types';
 import { Svg } from 'src/components/Svg/Svg';
 import { TRANSFORM_CONTROLS_COLOR } from 'src/config';
