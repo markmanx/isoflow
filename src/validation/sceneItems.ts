@@ -23,18 +23,24 @@ export const nodeInput = z.object({
 });
 
 export const connectorAnchorInput = z
-  // TODO: See if we can use `z.discriminatedUnion` here. See https://github.com/colinhacks/zod#unions
   .object({
-    nodeId: z.string(),
-    tile: coords
+    id: z.string().optional(),
+    ref: z
+      .object({
+        node: z.string(),
+        anchor: z.string(),
+        tile: coords
+      })
+      .partial()
   })
-  .partial()
   .superRefine((data, ctx) => {
-    if (!data.nodeId && !data.tile) {
+    const definedRefs = Object.keys(data.ref);
+
+    if (definedRefs.length !== 1) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ['connectorAnchor'],
-        message: 'Connector anchor needs either a nodeId or tile coords.'
+        message:
+          'Connector anchor should be associated with only either a node, another anchor or a tile.'
       });
     }
   });

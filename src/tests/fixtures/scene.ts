@@ -45,11 +45,11 @@ export const scene: SceneInput = {
   connectors: [
     {
       id: 'connector1',
-      anchors: [{ nodeId: 'node1' }, { nodeId: 'node2' }]
+      anchors: [{ ref: { node: 'node1' } }, { ref: { node: 'node2' } }]
     },
     {
       id: 'connector2',
-      anchors: [{ nodeId: 'node2' }, { nodeId: 'node3' }]
+      anchors: [{ ref: { node: 'node2' } }, { ref: { node: 'node3' } }]
     }
   ],
   textBoxes: [],

@@ -15,6 +15,7 @@
     "module": "es6",
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "useUnknownInCatchVariables": false
   },
   "exclude": ["node_modules", "./dist", "./docs"],
   "include": [

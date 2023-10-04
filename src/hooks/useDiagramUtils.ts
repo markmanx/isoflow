@@ -7,7 +7,8 @@ import {
   getBoundingBoxSize,
   sortByPosition,
   clamp,
-  getAnchorPosition
+  getAnchorPosition,
+  getAllAnchors
 } from 'src/utils';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useScroll } from 'src/hooks/useScroll';
@@ -43,7 +44,11 @@ export const useDiagramUtils = () => {
             return [
               ...acc,
               ...item.anchors.map((anchor) => {
-                return getAnchorPosition({ anchor, nodes: scene.nodes });
+                return getAnchorPosition({
+                  anchor,
+                  nodes: scene.nodes,
+                  allAnchors: getAllAnchors(scene.connectors)
+                });
               })
             ];
           case 'RECTANGLE':
@@ -60,7 +65,7 @@ export const useDiagramUtils = () => {
 
       return corners;
     },
-    [scene.nodes]
+    [scene.nodes, scene.connectors]
   );
 
   const getUnprojectedBounds = useCallback((): Size & Coords => {

@@ -12,7 +12,8 @@ import {
   textBoxInputToTextBox,
   sceneInputToScene,
   nodeInputToNode,
-  getTextWidth
+  getTextWidth,
+  getAllAnchors
 } from 'src/utils';
 
 export const initialScene: Scene = {
@@ -65,13 +66,14 @@ const initialState = () => {
 
             draftState.connectors.forEach((connector, i) => {
               const needsUpdate = connector.anchors.find((anchor) => {
-                return anchor.type === 'NODE' && anchor.id === id;
+                return anchor.ref.type === 'NODE' && anchor.ref.id === id;
               });
 
               if (needsUpdate) {
                 draftState.connectors[i].path = getConnectorPath({
                   anchors: connector.anchors,
-                  nodes: draftState.nodes
+                  nodes: draftState.nodes,
+                  allAnchors: getAllAnchors(draftState.connectors)
                 });
               }
             });
@@ -89,7 +91,7 @@ const initialState = () => {
             draftState.connectors = draftState.connectors.filter(
               (connector) => {
                 return !connector.anchors.find((anchor) => {
-                  return anchor.type === 'NODE' && anchor.id === id;
+                  return anchor.ref.type === 'NODE' && anchor.ref.id === id;
                 });
               }
             );
@@ -101,7 +103,11 @@ const initialState = () => {
         createConnector: (connector) => {
           const newScene = produce(get(), (draftState) => {
             draftState.connectors.push(
-              connectorInputToConnector(connector, draftState.nodes)
+              connectorInputToConnector(
+                connector,
+                draftState.nodes,
+                getAllAnchors(draftState.connectors)
+              )
             );
           });
 

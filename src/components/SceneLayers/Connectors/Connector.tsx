@@ -2,7 +2,12 @@ import React, { useMemo } from 'react';
 import { useTheme, Box } from '@mui/material';
 import { Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { getAnchorPosition, CoordsUtils, getColorVariant } from 'src/utils';
+import {
+  getAnchorPosition,
+  CoordsUtils,
+  getColorVariant,
+  getAllAnchors
+} from 'src/utils';
 import { Circle } from 'src/components/Circle/Circle';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
@@ -27,6 +32,9 @@ export const Connector = ({ connector }: Props) => {
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
+  const connectors = useSceneStore((state) => {
+    return state.connectors;
+  });
 
   const drawOffset = useMemo(() => {
     return {
@@ -45,14 +53,24 @@ export const Connector = ({ connector }: Props) => {
 
   const anchorPositions = useMemo(() => {
     return connector.anchors.map((anchor) => {
-      const position = getAnchorPosition({ anchor, nodes });
+      const position = getAnchorPosition({
+        anchor,
+        nodes,
+        allAnchors: getAllAnchors(connectors)
+      });
 
       return {
         x: (connector.path.rectangle.from.x - position.x) * unprojectedTileSize,
         y: (connector.path.rectangle.from.y - position.y) * unprojectedTileSize
       };
     });
-  }, [connector.path.rectangle, connector.anchors, nodes, unprojectedTileSize]);
+  }, [
+    connector.path.rectangle,
+    connector.anchors,
+    nodes,
+    connectors,
+    unprojectedTileSize
+  ]);
 
   const connectorWidthPx = useMemo(() => {
     return (unprojectedTileSize / 100) * connector.width;

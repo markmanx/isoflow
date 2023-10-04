@@ -34,7 +34,7 @@ export interface Node {
   isSelected: boolean;
 }
 
-export type ConnectorAnchor =
+export type ConnectorAnchorRef =
   | {
       type: 'NODE';
       id: string;
@@ -42,7 +42,16 @@ export type ConnectorAnchor =
   | {
       type: 'TILE';
       coords: Coords;
+    }
+  | {
+      type: 'ANCHOR';
+      id: string;
     };
+
+export type ConnectorAnchor = {
+  id?: string;
+  ref: ConnectorAnchorRef;
+};
 
 export interface Connector {
   type: SceneItemTypeEnum.CONNECTOR;

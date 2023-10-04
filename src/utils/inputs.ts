@@ -14,8 +14,7 @@ import {
   TextBox,
   Rectangle,
   ConnectorAnchorInput,
-  ConnectorAnchor,
-  Coords
+  ConnectorAnchor
 } from 'src/types';
 import {
   NODE_DEFAULTS,
@@ -63,22 +62,43 @@ export const rectangleInputToRectangle = (
 const connectorAnchorInputToConnectorAnchor = (
   anchor: ConnectorAnchorInput
 ): ConnectorAnchor => {
-  if (anchor.nodeId) {
+  if (anchor.ref.node) {
     return {
-      type: 'NODE',
-      id: anchor.nodeId
+      id: anchor.id,
+      ref: {
+        type: 'NODE',
+        id: anchor.ref.node
+      }
     };
   }
 
-  return {
-    type: 'TILE',
-    coords: anchor.tile as Coords
-  };
+  if (anchor.ref.tile) {
+    return {
+      id: anchor.id,
+      ref: {
+        type: 'TILE',
+        coords: anchor.ref.tile
+      }
+    };
+  }
+
+  if (anchor.ref.anchor) {
+    return {
+      id: anchor.id,
+      ref: {
+        type: 'ANCHOR',
+        id: anchor.ref.anchor
+      }
+    };
+  }
+
+  throw new Error('Could not render connector anchor');
 };
 
 export const connectorInputToConnector = (
   connectorInput: ConnectorInput,
-  nodes: Node[]
+  nodes: Node[],
+  allAnchors: ConnectorAnchor[]
 ): Connector => {
   const anchors = connectorInput.anchors
     .map((anchor) => {
@@ -95,7 +115,7 @@ export const connectorInputToConnector = (
     width: connectorInput.width ?? CONNECTOR_DEFAULTS.width,
     style: connectorInput.style ?? CONNECTOR_DEFAULTS.style,
     anchors,
-    path: getConnectorPath({ anchors, nodes })
+    path: getConnectorPath({ anchors, nodes, allAnchors })
   };
 };
 
@@ -130,6 +150,17 @@ export const textBoxToTextBoxInput = (textBox: TextBox): TextBoxInput => {
   };
 };
 
+export const getAllAnchorsFromInput = (connectors: ConnectorInput[]) => {
+  const allAnchors = connectors.reduce((acc, connectorInput) => {
+    const convertedAnchors = connectorInput.anchors.map((anchor) => {
+      return connectorAnchorInputToConnectorAnchor(anchor);
+    });
+    return [...acc, ...convertedAnchors];
+  }, [] as ConnectorAnchor[]);
+
+  return allAnchors;
+};
+
 export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
   const icons = sceneInput.icons.map((icon) => {
     return iconInputToIcon(icon);
@@ -143,8 +174,10 @@ export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
     return rectangleInputToRectangle(rectangleInput);
   });
 
+  const allAnchors = getAllAnchorsFromInput(sceneInput.connectors);
+
   const connectors = sceneInput.connectors.map((connectorInput) => {
-    return connectorInputToConnector(connectorInput, nodes);
+    return connectorInputToConnector(connectorInput, nodes, allAnchors);
   });
 
   return {
@@ -178,14 +211,21 @@ export const nodeToNodeInput = (node: Node): NodeInput => {
 export const connectorAnchorToConnectorAnchorInput = (
   anchor: ConnectorAnchor
 ): ConnectorAnchorInput | null => {
-  switch (anchor.type) {
+  switch (anchor.ref.type) {
     case 'NODE':
       return {
-        nodeId: anchor.id
+        id: anchor.id,
+        ref: { node: anchor.ref.id }
       };
     case 'TILE':
       return {
-        tile: anchor.coords
+        id: anchor.id,
+        ref: { tile: anchor.ref.coords }
+      };
+    case 'ANCHOR':
+      return {
+        id: anchor.id,
+        ref: { anchor: anchor.ref.id }
       };
     default:
       return null;

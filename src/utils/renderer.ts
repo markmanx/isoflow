@@ -12,6 +12,7 @@ import {
   Coords,
   TileOriginEnum,
   Node,
+  Connector,
   Size,
   Scroll,
   Mouse,
@@ -327,21 +328,39 @@ export function getItemById<T extends { id: string }>(
   return { item: items[index], index };
 }
 
+export const getAllAnchors = (connectors: Connector[]) => {
+  return connectors.reduce((acc, connector) => {
+    return [...acc, ...connector.anchors];
+  }, [] as ConnectorAnchor[]);
+};
+
 interface GetAnchorPositions {
   anchor: ConnectorAnchor;
   nodes: Node[];
+  allAnchors: ConnectorAnchor[];
 }
 
 export const getAnchorPosition = ({
   anchor,
-  nodes
+  nodes,
+  allAnchors
 }: GetAnchorPositions): Coords => {
-  if (anchor.type === 'NODE') {
-    const { item: node } = getItemById(nodes, anchor.id);
+  if (anchor.ref.type === 'NODE') {
+    const { item: node } = getItemById(nodes, anchor.ref.id);
     return node.position;
   }
 
-  return anchor.coords;
+  if (anchor.ref.type === 'ANCHOR') {
+    const anchorsWithIds = allAnchors.filter((_anchor) => {
+      return _anchor.id !== undefined;
+    }) as Required<ConnectorAnchor>[];
+
+    const nextAnchor = getItemById(anchorsWithIds, anchor.ref.id);
+
+    return getAnchorPosition({ anchor: nextAnchor.item, nodes, allAnchors });
+  }
+
+  return anchor.ref.coords;
 };
 
 interface NormalisePositionFromOrigin {
@@ -359,11 +378,13 @@ export const normalisePositionFromOrigin = ({
 interface GetConnectorPath {
   anchors: ConnectorAnchor[];
   nodes: Node[];
+  allAnchors: ConnectorAnchor[];
 }
 
 export const getConnectorPath = ({
   anchors,
-  nodes
+  nodes,
+  allAnchors
 }: GetConnectorPath): {
   tiles: Coords[];
   rectangle: Rect;
@@ -374,7 +395,7 @@ export const getConnectorPath = ({
     );
 
   const anchorPositions = anchors.map((anchor) => {
-    return getAnchorPosition({ anchor, nodes });
+    return getAnchorPosition({ anchor, nodes, allAnchors });
   });
 
   const searchArea = getBoundingBox(

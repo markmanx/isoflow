@@ -6,7 +6,8 @@ import {
   connectorToConnectorInput,
   getConnectorPath,
   hasMovedTile,
-  setWindowCursor
+  setWindowCursor,
+  getAllAnchors
 } from 'src/utils';
 import { ModeActions } from 'src/types';
 
@@ -37,13 +38,16 @@ export const Connector: ModeActions = {
         if (!draftState.connector) return;
 
         draftState.connector.anchors[1] = {
-          type: 'NODE',
-          id: itemAtTile.id
+          ref: {
+            type: 'NODE',
+            id: itemAtTile.id
+          }
         };
 
         draftState.connector.path = getConnectorPath({
           anchors: draftState.connector.anchors,
-          nodes: scene.nodes
+          nodes: scene.nodes,
+          allAnchors: getAllAnchors(scene.connectors)
         });
       });
 
@@ -53,13 +57,16 @@ export const Connector: ModeActions = {
         if (!draftState.connector) return;
 
         draftState.connector.anchors[1] = {
-          type: 'TILE',
-          coords: uiState.mouse.position.tile
+          ref: {
+            type: 'TILE',
+            coords: uiState.mouse.position.tile
+          }
         };
 
         draftState.connector.path = getConnectorPath({
           anchors: draftState.connector.anchors,
-          nodes: scene.nodes
+          nodes: scene.nodes,
+          allAnchors: getAllAnchors(scene.connectors)
         });
       });
 
@@ -79,9 +86,13 @@ export const Connector: ModeActions = {
         draftState.connector = connectorInputToConnector(
           {
             id: generateId(),
-            anchors: [{ nodeId: itemAtTile.id }, { nodeId: itemAtTile.id }]
+            anchors: [
+              { ref: { node: itemAtTile.id } },
+              { ref: { node: itemAtTile.id } }
+            ]
           },
-          scene.nodes
+          scene.nodes,
+          getAllAnchors(scene.connectors)
         );
       });
 
@@ -92,11 +103,12 @@ export const Connector: ModeActions = {
           {
             id: generateId(),
             anchors: [
-              { tile: uiState.mouse.position.tile },
-              { tile: uiState.mouse.position.tile }
+              { ref: { tile: uiState.mouse.position.tile } },
+              { ref: { tile: uiState.mouse.position.tile } }
             ]
           },
-          scene.nodes
+          scene.nodes,
+          getAllAnchors(scene.connectors)
         );
       });
 
