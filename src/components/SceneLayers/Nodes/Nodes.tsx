@@ -13,7 +13,7 @@ export const Nodes = () => {
         return (
           <Node
             key={node.id}
-            order={-node.position.x - node.position.y}
+            order={-node.tile.x - node.tile.y}
             node={node}
           />
         );

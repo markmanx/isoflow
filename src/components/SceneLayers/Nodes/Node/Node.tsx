@@ -15,14 +15,14 @@ interface Props {
 export const Node = ({ node, order }: Props) => {
   const { projectedTileSize } = useTileSize();
   const { getTilePosition } = useGetTilePosition();
-  const { iconComponent } = useIcon(node.iconId);
+  const { iconComponent } = useIcon(node.icon);
 
   const position = useMemo(() => {
     return getTilePosition({
-      tile: node.position,
+      tile: node.tile,
       origin: TileOriginEnum.BOTTOM
     });
-  }, [node.position, getTilePosition]);
+  }, [node.tile, getTilePosition]);
 
   const label = useMemo(() => {
     if (node.label === undefined || node.label === '<p><br></p>') return null;

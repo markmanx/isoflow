@@ -2,14 +2,14 @@ import React from 'react';
 import { Coords } from 'src/types';
 
 interface Props {
-  position: Coords;
+  tile: Coords;
   radius?: number;
 }
 
 export const Circle = ({
-  position,
+  tile,
   radius,
   ...rest
 }: Props & React.SVGProps<SVGCircleElement>) => {
-  return <circle cx={position.x} cy={position.y} r={radius} {...rest} />;
+  return <circle cx={tile.x} cy={tile.y} r={radius} {...rest} />;
 };

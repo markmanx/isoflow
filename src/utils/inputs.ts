@@ -41,8 +41,8 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
     id: nodeInput.id,
     label: nodeInput.label ?? NODE_DEFAULTS.label,
     labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
-    iconId: nodeInput.iconId,
-    position: nodeInput.position,
+    icon: nodeInput.icon,
+    tile: nodeInput.tile,
     isSelected: false
   };
 };
@@ -201,10 +201,10 @@ export const iconToIconInput = (icon: Icon): IconInput => {
 export const nodeToNodeInput = (node: Node): NodeInput => {
   return {
     id: node.id,
-    position: node.position,
+    tile: node.tile,
     label: node.label,
     labelHeight: node.labelHeight,
-    iconId: node.iconId
+    icon: node.icon
   };
 };
 

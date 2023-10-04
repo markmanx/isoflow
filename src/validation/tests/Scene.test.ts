@@ -13,11 +13,11 @@ describe('scene validation works correctly', () => {
     );
   });
 
-  test('node with invalid iconId fails validation', () => {
+  test('node with invalid icon fails validation', () => {
     const invalidNode = {
       id: 'invalidNode',
-      iconId: 'doesntExist',
-      position: { x: -1, y: -1 }
+      icon: 'doesntExist',
+      tile: { x: -1, y: -1 }
     };
     const scene = produce(sceneFixture, (draft) => {
       draft.nodes.push(invalidNode);

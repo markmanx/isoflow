@@ -27,10 +27,10 @@ export enum SceneItemTypeEnum {
 export interface Node {
   id: string;
   type: SceneItemTypeEnum.NODE;
-  iconId: string;
+  icon: string;
   label: string;
   labelHeight: number;
-  position: Coords;
+  tile: Coords;
   isSelected: boolean;
 }
 

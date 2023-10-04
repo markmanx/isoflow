@@ -9,10 +9,10 @@ import { getAllAnchorsFromInput, getItemById } from 'src/utils';
 
 export const ensureValidNode = (node: NodeInput, scene: SceneInput) => {
   try {
-    getItemById(scene.icons, node.iconId);
+    getItemById(scene.icons, node.icon);
   } catch (e) {
     throw new Error(
-      `Found invalid node [id: "${node.id}"] referencing an invalid icon [id: "${node.iconId}"]`
+      `Found invalid node [id: "${node.id}"] referencing an invalid icon [id: "${node.icon}"]`
     );
   }
 };

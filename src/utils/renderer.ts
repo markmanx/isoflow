@@ -347,7 +347,7 @@ export const getAnchorPosition = ({
 }: GetAnchorPositions): Coords => {
   if (anchor.ref.type === 'NODE') {
     const { item: node } = getItemById(nodes, anchor.ref.id);
-    return node.position;
+    return node.tile;
   }
 
   if (anchor.ref.type === 'ANCHOR') {
@@ -481,8 +481,8 @@ export const getItemAtTile = ({
   tile,
   scene
 }: GetItemAtTile): SceneItem | null => {
-  const node = scene.nodes.find(({ position }) => {
-    return CoordsUtils.isEqual(position, tile);
+  const node = scene.nodes.find((n) => {
+    return CoordsUtils.isEqual(n.tile, tile);
   });
 
   if (node) return node;

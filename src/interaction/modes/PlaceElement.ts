@@ -28,8 +28,8 @@ export const PlaceElement: ModeActions = {
     if (uiState.mode.icon !== null) {
       scene.actions.createNode({
         id: generateId(),
-        iconId: uiState.mode.icon.id,
-        position: uiState.mouse.position.tile
+        icon: uiState.mode.icon.id,
+        tile: uiState.mouse.position.tile
       });
     }
 

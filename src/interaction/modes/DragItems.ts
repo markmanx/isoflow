@@ -12,7 +12,7 @@ const dragItems = (
       const node = getItemById(scene.nodes, item.id).item;
 
       scene.actions.updateNode(item.id, {
-        position: CoordsUtils.add(node.position, delta)
+        tile: CoordsUtils.add(node.tile, delta)
       });
     } else if (item.type === 'RECTANGLE') {
       const rectangle = getItemById(scene.rectangles, item.id).item;

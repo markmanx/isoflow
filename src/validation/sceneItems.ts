@@ -18,8 +18,8 @@ export const nodeInput = z.object({
   id: z.string(),
   label: z.string().optional(),
   labelHeight: z.number().optional(),
-  iconId: z.string(),
-  position: coords
+  icon: z.string(),
+  tile: coords
 });
 
 export const connectorAnchorInput = z

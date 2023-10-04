@@ -9,5 +9,5 @@ interface Props {
 export const NodeTransformControls = ({ id }: Props) => {
   const node = useNode(id);
 
-  return <TransformControls from={node.position} to={node.position} />;
+  return <TransformControls from={node.tile} to={node.tile} />;
 };

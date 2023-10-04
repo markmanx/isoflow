@@ -65,7 +65,7 @@ export const NodeControls = ({ id }: Props) => {
           key={node.id}
           iconCategories={iconCategories}
           onClick={(icon) => {
-            onNodeUpdated({ iconId: icon.id });
+            onNodeUpdated({ icon: icon.id });
           }}
         />
       )}

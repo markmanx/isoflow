@@ -19,7 +19,7 @@
 //     if (!uiState.mode.isDragging) {
 //       const { mousedown } = uiState.mouse;
 //       const items = scene.nodes.filter((node) => {
-//         return CoordsUtils.isEqual(node.position, mousedown.tile);
+//         return CoordsUtils.isEqual(node.tile, mousedown.tile);
 //       });
 
 //       // User is creating a selection

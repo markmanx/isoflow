@@ -123,13 +123,13 @@ export const Connector = ({ connector }: Props) => {
           return (
             <>
               <Circle
-                position={CoordsUtils.add(anchor, drawOffset)}
+                tile={CoordsUtils.add(anchor, drawOffset)}
                 radius={18 * zoom}
                 fill={theme.palette.common.white}
                 fillOpacity={0.7}
               />
               <Circle
-                position={CoordsUtils.add(anchor, drawOffset)}
+                tile={CoordsUtils.add(anchor, drawOffset)}
                 radius={12 * zoom}
                 stroke={theme.palette.common.black}
                 fill={theme.palette.common.white}

@@ -8,9 +8,9 @@ const initialScene: InitialScene = {
   nodes: [
     {
       id: 'server',
-      label: '<p>This is an example of tracking changes to the scene.</p>',
-      iconId: 'server',
-      position: {
+      label: '<p>Changes to the scene are tracked bottom left.</p>',
+      icon: 'server',
+      tile: {
         x: 0,
         y: 0
       }

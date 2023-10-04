@@ -20,29 +20,29 @@ export const initialScene: InitialScene = {
   nodes: [
     {
       id: 'database',
-      iconId: 'storage',
+      icon: 'storage',
       label: 'Database',
-      position: {
+      tile: {
         x: 2,
         y: -2
       }
     },
     {
       id: 'server',
-      iconId: 'server',
+      icon: 'server',
       label: 'Server',
       labelHeight: 100,
-      position: {
+      tile: {
         x: 2,
         y: 2
       }
     },
     {
       id: 'client',
-      iconId: 'laptop',
+      icon: 'laptop',
       label: 'Client',
       labelHeight: 100,
-      position: {
+      tile: {
         x: -1,
         y: 0
       }

@@ -17,8 +17,8 @@ export const scene: SceneInput = {
     {
       id: 'node1',
       label: 'Node1',
-      iconId: 'icon1',
-      position: {
+      icon: 'icon1',
+      tile: {
         x: 0,
         y: 0
       }
@@ -26,8 +26,8 @@ export const scene: SceneInput = {
     {
       id: 'node2',
       label: 'Node2',
-      iconId: 'icon2',
-      position: {
+      icon: 'icon2',
+      tile: {
         x: 1,
         y: 1
       }
@@ -35,8 +35,8 @@ export const scene: SceneInput = {
     {
       id: 'node3',
       label: 'Node3',
-      iconId: 'icon1',
-      position: {
+      icon: 'icon1',
+      tile: {
         x: 2,
         y: 2
       }

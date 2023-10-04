@@ -18,22 +18,22 @@ The `initialScene` object contains the following properties:
   name: string;
   url: string;
   collection?: string;
+  isIsometric?: boolean;
 }
 ```
 
 **Notes on icons:**
-- `collection` is an optional property that can be used to group icons together in the icon picker.  All icons with the same `collection` will be grouped together.
-- For a list of standard icon `id`s, see [Isopacks](/docs/isopacks#icon-ids).
+- `collection` is an optional property that can be used to group icons together in the icon picker.  All icons with the same `collection` will be grouped together under a heading.
 
 ## `Node`
 
 ```js
 {
   id: string;
-  iconId: string;
+  icon: string;
   label?: string;
   labelHeight?: number;
-  position: {
+  tile: {
     x: number;
     y: number;
   };
@@ -100,29 +100,29 @@ Open this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/markm
   nodes: [
     {
       id: 'database',
-      iconId: 'storage',
+      icon: 'storage',
       label: 'Database',
-      position: {
+      tile: {
         x: 2,
         y: -2
       }
     },
     {
       id: 'server',
-      iconId: 'server',
+      icon: 'server',
       label: 'Server',
       labelHeight: 100,
-      position: {
+      tile: {
         x: 2,
         y: 2
       }
     },
     {
       id: 'client',
-      iconId: 'laptop',
+      icon: 'laptop',
       label: 'Client',
       labelHeight: 100,
-      position: {
+      tile: {
         x: -1,
         y: 0
       }
@@ -165,6 +165,6 @@ Open this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/markm
 
 Examples of common errors are as follows:
 - A `connector` references a `nodeId` that does not exist in the `nodes` array.
-- A `node` references an `iconId` that does not exist in the `icons` array.
+- A `node` references an `icon` that does not exist in the `icons` array.
 - A `rectangle` has a `from` but not a `to` property.
 - A `connector` has less than 2 anchors.

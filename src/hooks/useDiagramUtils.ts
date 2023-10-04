@@ -39,7 +39,7 @@ export const useDiagramUtils = () => {
       const positions = items.reduce<Coords[]>((acc, item) => {
         switch (item.type) {
           case 'NODE':
-            return [...acc, item.position];
+            return [...acc, item.tile];
           case 'CONNECTOR':
             return [
               ...acc,
