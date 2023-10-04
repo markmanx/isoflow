@@ -15,7 +15,7 @@
     "dev": "nodemon --watch ./src/ -e ts,tsx --exec npm run build",
     "build": "webpack --config ./webpack/prod.config.js && tsc --declaration --emitDeclarationOnly && tsc-alias",
     "test": "jest",
-    "lint": "eslint ./src/**/*.{ts,tsx}",
+    "lint": "tsc --noEmit && eslint ./src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix ./src/**/*.{ts,tsx}",
     "docs:dev": "cd ./docs && npm run dev",
     "docs:build": "cd ./docs && npm run build",
