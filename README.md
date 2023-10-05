@@ -26,7 +26,7 @@
 
 ## Roadmap
 
-🛠 V2: In progress
+🛠 v0.5: In progress
 - [ ] Export diagrams as images
 - [ ] Move connector anchors
 - [ ] Layer re-ordering (bring forward / send to back)
@@ -35,7 +35,7 @@
 - [ ] Main menu customisation
 - [ ] Center diagram in middle of canvas
 
-✅ V1: Complete
+✅ v0.4: Complete
 - [x] Basic view controls (pan / zoom)
 - [x] Basic create / delete / update actions on nodes, connectors & groups
 - [x] Import / export diagrams to local storage (in JSON format)
