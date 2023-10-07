@@ -334,17 +334,11 @@ export const getAllAnchors = (connectors: Connector[]) => {
   }, [] as ConnectorAnchor[]);
 };
 
-interface GetAnchorPositions {
-  anchor: ConnectorAnchor;
-  nodes: Node[];
-  allAnchors: ConnectorAnchor[];
-}
-
-export const getAnchorPosition = ({
-  anchor,
-  nodes,
-  allAnchors
-}: GetAnchorPositions): Coords => {
+export const getAnchorTile = (
+  anchor: ConnectorAnchor,
+  nodes: Node[],
+  allAnchors: ConnectorAnchor[]
+): Coords => {
   if (anchor.ref.type === 'NODE') {
     const { item: node } = getItemById(nodes, anchor.ref.id);
     return node.tile;
@@ -357,7 +351,7 @@ export const getAnchorPosition = ({
 
     const nextAnchor = getItemById(anchorsWithIds, anchor.ref.id);
 
-    return getAnchorPosition({ anchor: nextAnchor.item, nodes, allAnchors });
+    return getAnchorTile(nextAnchor.item, nodes, allAnchors);
   }
 
   return anchor.ref.coords;
@@ -395,7 +389,7 @@ export const getConnectorPath = ({
     );
 
   const anchorPositions = anchors.map((anchor) => {
-    return getAnchorPosition({ anchor, nodes, allAnchors });
+    return getAnchorTile(anchor, nodes, allAnchors);
   });
 
   const searchArea = getBoundingBox(
@@ -411,7 +405,10 @@ export const getConnectorPath = ({
   };
 
   const positionsNormalisedFromSearchArea = anchorPositions.map((position) => {
-    return normalisePositionFromOrigin({ position, origin: rectangle.from });
+    return normalisePositionFromOrigin({
+      position,
+      origin: rectangle.from
+    });
   });
 
   const tiles = positionsNormalisedFromSearchArea.reduce<Coords[]>(

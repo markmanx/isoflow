@@ -1,11 +1,13 @@
 import { produce } from 'immer';
 import {
   ConnectorAnchor,
+  Connector,
   ModeActions,
   ModeActionsAction,
   SceneItemTypeEnum,
   SceneStore,
-  Coords
+  Coords,
+  Node
 } from 'src/types';
 import {
   getItemAtTile,
@@ -13,8 +15,35 @@ import {
   getAnchorAtTile,
   getItemById,
   generateId,
-  CoordsUtils
+  CoordsUtils,
+  getAnchorTile,
+  getAllAnchors,
+  connectorPathTileToGlobal
 } from 'src/utils';
+
+const getAnchorOrdering = (
+  anchor: ConnectorAnchor,
+  connector: Connector,
+  nodes: Node[],
+  allAnchors: ConnectorAnchor[]
+) => {
+  const anchorTile = getAnchorTile(anchor, nodes, allAnchors);
+  const index = connector.path.tiles.findIndex((pathTile) => {
+    const globalTile = connectorPathTileToGlobal(
+      pathTile,
+      connector.path.rectangle.from
+    );
+    return CoordsUtils.isEqual(globalTile, anchorTile);
+  });
+
+  if (index === -1) {
+    throw new Error(
+      `Could not calculate ordering index of anchor [anchorId: ${anchor.id}]`
+    );
+  }
+
+  return index;
+};
 
 const getAnchor = (connectorId: string, tile: Coords, scene: SceneStore) => {
   const connector = getItemById(scene.connectors, connectorId).item;
@@ -27,11 +56,19 @@ const getAnchor = (connectorId: string, tile: Coords, scene: SceneStore) => {
       ref: { type: 'TILE', coords: tile }
     };
 
-    const newConnector = produce(connector, (draft) => {
-      draft.anchors.push(newAnchor);
-    });
+    const allAnchors = getAllAnchors(scene.connectors);
+    const orderedAnchors = [...connector.anchors, newAnchor]
+      .map((anch) => {
+        return {
+          ...anch,
+          ordering: getAnchorOrdering(anch, connector, scene.nodes, allAnchors)
+        };
+      })
+      .sort((a, b) => {
+        return a.ordering - b.ordering;
+      });
 
-    scene.actions.updateConnector(connector.id, newConnector);
+    scene.actions.updateConnector(connector.id, { anchors: orderedAnchors });
     return newAnchor;
   }
 
@@ -84,14 +121,8 @@ export const Cursor: ModeActions = {
 
     let item = uiState.mode.mousedownItem;
 
-    if (item?.type === 'CONNECTOR') {
-      const prevTile = uiState.mouse.delta
-        ? CoordsUtils.subtract(
-            uiState.mouse.position.tile,
-            uiState.mouse.delta.tile
-          )
-        : CoordsUtils.zero();
-      const anchor = getAnchor(item.id, prevTile, scene);
+    if (item?.type === 'CONNECTOR' && uiState.mouse.mousedown) {
+      const anchor = getAnchor(item.id, uiState.mouse.mousedown.tile, scene);
       item = anchor;
     }
 

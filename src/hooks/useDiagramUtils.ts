@@ -7,7 +7,7 @@ import {
   getBoundingBoxSize,
   sortByPosition,
   clamp,
-  getAnchorPosition,
+  getAnchorTile,
   getAllAnchors
 } from 'src/utils';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
@@ -44,11 +44,11 @@ export const useDiagramUtils = () => {
             return [
               ...acc,
               ...item.anchors.map((anchor) => {
-                return getAnchorPosition({
+                return getAnchorTile(
                   anchor,
-                  nodes: scene.nodes,
-                  allAnchors: getAllAnchors(scene.connectors)
-                });
+                  scene.nodes,
+                  getAllAnchors(scene.connectors)
+                );
               })
             ];
           case 'RECTANGLE':

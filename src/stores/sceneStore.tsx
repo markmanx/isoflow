@@ -88,13 +88,11 @@ const initialState = () => {
 
             draft.nodes.splice(index, 1);
 
-            draft.connectors = draft.connectors.filter(
-              (connector) => {
-                return !connector.anchors.find((anchor) => {
-                  return anchor.ref.type === 'NODE' && anchor.ref.id === id;
-                });
-              }
-            );
+            draft.connectors = draft.connectors.filter((connector) => {
+              return !connector.anchors.find((anchor) => {
+                return anchor.ref.type === 'NODE' && anchor.ref.id === id;
+              });
+            });
           });
 
           set({ nodes: newScene.nodes, connectors: newScene.connectors });
@@ -134,7 +132,6 @@ const initialState = () => {
           });
 
           set({ connectors: newScene.connectors });
-          console.log(newScene.connectors)
         },
 
         deleteConnector: (id: string) => {
@@ -165,10 +162,7 @@ const initialState = () => {
 
         updateTextBox: (id, updates) => {
           const newScene = produce(get(), (draft) => {
-            const { item: textBox, index } = getItemById(
-              draft.textBoxes,
-              id
-            );
+            const { item: textBox, index } = getItemById(draft.textBoxes, id);
 
             if (updates.text !== undefined || updates.fontSize !== undefined) {
               draft.textBoxes[index].size = {

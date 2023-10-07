@@ -86,7 +86,12 @@ export interface Rectangle {
   to: Coords;
 }
 
-export type SceneItem = Node | Connector | TextBox | Rectangle | ConnectorAnchor;
+export type SceneItem =
+  | Node
+  | Connector
+  | TextBox
+  | Rectangle
+  | ConnectorAnchor;
 export type SceneItemReference = {
   type: SceneItemTypeEnum;
   id: string;

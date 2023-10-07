@@ -3,7 +3,7 @@ import { useTheme, Box } from '@mui/material';
 import { Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
 import {
-  getAnchorPosition,
+  getAnchorTile,
   CoordsUtils,
   getColorVariant,
   getAllAnchors
@@ -53,11 +53,7 @@ export const Connector = ({ connector }: Props) => {
 
   const anchorPositions = useMemo(() => {
     return connector.anchors.map((anchor) => {
-      const position = getAnchorPosition({
-        anchor,
-        nodes,
-        allAnchors: getAllAnchors(connectors)
-      });
+      const position = getAnchorTile(anchor, nodes, getAllAnchors(connectors));
 
       return {
         x: (connector.path.rectangle.from.x - position.x) * unprojectedTileSize,
