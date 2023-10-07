@@ -40,7 +40,7 @@ export const RectangleControls = ({ id }: Props) => {
     <ControlsContainer>
       <Section>
         <ColorSelector
-          colors={Object.values(theme.customVars.diagramPalette)}
+          colors={Object.values(theme.customVars.customPalette)}
           onChange={(color) => {
             return onRectangleUpdated({ color });
           }}

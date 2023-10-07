@@ -8,7 +8,7 @@ interface CustomThemeVars {
   toolMenu: {
     height: number;
   };
-  diagramPalette: {
+  customPalette: {
     [key in string]: string;
   };
 }
@@ -31,7 +31,8 @@ export const customVars: CustomThemeVars = {
   toolMenu: {
     height: 40
   },
-  diagramPalette: {
+  customPalette: {
+    diagramBg: '#f6faff',
     blue: '#a0b9f8',
     purple: '#bbadfb',
     yellow: '#f4eb8e',

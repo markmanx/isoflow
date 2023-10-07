@@ -38,10 +38,11 @@ export const MarkdownEditor = ({
         },
         '.ql-toolbar.ql-snow + .ql-container.ql-snow': {
           border: '1px solid',
-          borderColor: 'grey.800',
+          borderColor: 'grey.300',
           borderTop: 'auto',
           borderRadius: 1.5,
-          height
+          height,
+          color: 'text.secondary'
         },
         '.ql-container.ql-snow': {
           ...(readOnly ? { border: 'none' } : {}),

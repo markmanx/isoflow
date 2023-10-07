@@ -51,7 +51,9 @@ export const Renderer = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        bgcolor: '#f6faff'
+        bgcolor: (theme) => {
+          return theme.customVars.customPalette.diagramBg;
+        }
       }}
     >
       <SceneLayer>

@@ -7,7 +7,7 @@ export const TILE_PROJECTION_MULTIPLIERS: Size = {
   width: 1.415,
   height: 0.819
 };
-export const DEFAULT_COLOR = customVars.diagramPalette.blue;
+export const DEFAULT_COLOR = customVars.customPalette.blue;
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
 export const NODE_DEFAULTS = {
   label: '',

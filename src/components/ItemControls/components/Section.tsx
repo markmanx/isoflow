@@ -22,7 +22,6 @@ export const Section = ({ children, sx, title }: Props) => {
             variant="body2"
             color="text.secondary"
             textTransform="uppercase"
-            fontWeight={600}
             pb={1}
           >
             {title}
