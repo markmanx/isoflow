@@ -1,6 +1,42 @@
 import { produce } from 'immer';
-import { ModeActions, ModeActionsAction } from 'src/types';
-import { getItemAtTile, hasMovedTile } from 'src/utils';
+import {
+  ConnectorAnchor,
+  ModeActions,
+  ModeActionsAction,
+  SceneItemTypeEnum,
+  SceneStore,
+  Coords
+} from 'src/types';
+import {
+  getItemAtTile,
+  hasMovedTile,
+  getAnchorAtTile,
+  getItemById,
+  generateId,
+  CoordsUtils
+} from 'src/utils';
+
+const getAnchor = (connectorId: string, tile: Coords, scene: SceneStore) => {
+  const connector = getItemById(scene.connectors, connectorId).item;
+  const anchor = getAnchorAtTile(tile, connector.anchors);
+
+  if (!anchor) {
+    const newAnchor: ConnectorAnchor = {
+      id: generateId(),
+      type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
+      ref: { type: 'TILE', coords: tile }
+    };
+
+    const newConnector = produce(connector, (draft) => {
+      draft.anchors.push(newAnchor);
+    });
+
+    scene.actions.updateConnector(connector.id, newConnector);
+    return newAnchor;
+  }
+
+  return anchor;
+};
 
 const mousedown: ModeActionsAction = ({
   uiState,
@@ -9,26 +45,23 @@ const mousedown: ModeActionsAction = ({
 }) => {
   if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
-  const itemAtTile = getItemAtTile({
+  const item = getItemAtTile({
     tile: uiState.mouse.position.tile,
     scene
   });
 
-  if (itemAtTile) {
+  if (item) {
     uiState.actions.setMode(
-      produce(uiState.mode, (draftState) => {
-        draftState.mousedownItem = {
-          type: itemAtTile.type,
-          id: itemAtTile.id
-        };
+      produce(uiState.mode, (draft) => {
+        draft.mousedownItem = item;
       })
     );
 
-    uiState.actions.setItemControls(itemAtTile);
+    uiState.actions.setItemControls(item);
   } else {
     uiState.actions.setMode(
-      produce(uiState.mode, (draftState) => {
-        draftState.mousedownItem = null;
+      produce(uiState.mode, (draft) => {
+        draft.mousedownItem = null;
       })
     );
 
@@ -46,23 +79,32 @@ export const Cursor: ModeActions = {
       mousedown(state);
     }
   },
-  mousemove: ({ uiState }) => {
+  mousemove: ({ scene, uiState }) => {
     if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
-    const { mousedownItem } = uiState.mode;
+    let item = uiState.mode.mousedownItem;
 
-    if (mousedownItem) {
+    if (item?.type === 'CONNECTOR') {
+      const prevTile = uiState.mouse.delta
+        ? CoordsUtils.subtract(
+            uiState.mouse.position.tile,
+            uiState.mouse.delta.tile
+          )
+        : CoordsUtils.zero();
+      const anchor = getAnchor(item.id, prevTile, scene);
+      item = anchor;
+    }
+
+    if (item) {
       uiState.actions.setMode({
         type: 'DRAG_ITEMS',
         showCursor: true,
-        items: [mousedownItem],
+        items: [item],
         isInitialMovement: true
       });
     }
   },
-  mousedown: (state) => {
-    mousedown(state);
-  },
+  mousedown,
   mouseup: ({ uiState, isRendererInteraction }) => {
     if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
@@ -102,8 +144,8 @@ export const Cursor: ModeActions = {
     }
 
     uiState.actions.setMode(
-      produce(uiState.mode, (draftState) => {
-        draftState.mousedownItem = null;
+      produce(uiState.mode, (draft) => {
+        draft.mousedownItem = null;
       })
     );
   }

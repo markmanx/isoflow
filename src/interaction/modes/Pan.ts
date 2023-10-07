@@ -13,10 +13,10 @@ export const Pan: ModeActions = {
     if (uiState.mode.type !== 'PAN') return;
 
     if (uiState.mouse.mousedown !== null) {
-      const newScroll = produce(uiState.scroll, (draftState) => {
-        draftState.position = uiState.mouse.delta?.screen
-          ? CoordsUtils.add(draftState.position, uiState.mouse.delta.screen)
-          : draftState.position;
+      const newScroll = produce(uiState.scroll, (draft) => {
+        draft.position = uiState.mouse.delta?.screen
+          ? CoordsUtils.add(draft.position, uiState.mouse.delta.screen)
+          : draft.position;
       });
 
       uiState.actions.setScroll(newScroll);

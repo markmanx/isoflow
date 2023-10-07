@@ -17,6 +17,11 @@ interface TextBoxControls {
   id: string;
 }
 
+interface ConnectorAnchorControls {
+  type: 'CONNECTOR_ANCHOR';
+  id: string;
+}
+
 interface RectangleControls {
   type: 'RECTANGLE';
   id: string;
@@ -32,6 +37,7 @@ export type ItemControls =
   | RectangleControls
   | AddItemControls
   | TextBoxControls
+  | ConnectorAnchorControls
   | null;
 
 export interface Mouse {

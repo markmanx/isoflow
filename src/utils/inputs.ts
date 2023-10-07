@@ -23,7 +23,7 @@ import {
   TEXTBOX_DEFAULTS,
   DEFAULT_FONT_FAMILY
 } from 'src/config';
-import { getConnectorPath, getTextWidth } from 'src/utils';
+import { getConnectorPath, getTextWidth, generateId } from 'src/utils';
 
 export const iconInputToIcon = (iconInput: IconInput): Icon => {
   return {
@@ -62,9 +62,14 @@ export const rectangleInputToRectangle = (
 const connectorAnchorInputToConnectorAnchor = (
   anchor: ConnectorAnchorInput
 ): ConnectorAnchor => {
+  const anchorBase: Required<Pick<ConnectorAnchor, 'id' | 'type'>> = {
+    id: anchor.id ?? generateId(),
+    type: SceneItemTypeEnum.CONNECTOR_ANCHOR
+  };
+
   if (anchor.ref.node) {
     return {
-      id: anchor.id,
+      ...anchorBase,
       ref: {
         type: 'NODE',
         id: anchor.ref.node
@@ -74,7 +79,7 @@ const connectorAnchorInputToConnectorAnchor = (
 
   if (anchor.ref.tile) {
     return {
-      id: anchor.id,
+      ...anchorBase,
       ref: {
         type: 'TILE',
         coords: anchor.ref.tile
@@ -84,7 +89,7 @@ const connectorAnchorInputToConnectorAnchor = (
 
   if (anchor.ref.anchor) {
     return {
-      id: anchor.id,
+      ...anchorBase,
       ref: {
         type: 'ANCHOR',
         id: anchor.ref.anchor

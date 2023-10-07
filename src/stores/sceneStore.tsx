@@ -48,32 +48,32 @@ const initialState = () => {
         },
 
         createNode: (node) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.nodes.push(nodeInputToNode(node));
+          const newScene = produce(get(), (draft) => {
+            draft.nodes.push(nodeInputToNode(node));
           });
 
           set({ nodes: newScene.nodes });
         },
 
         updateNode: (id, updates) => {
-          const newScene = produce(get(), (draftState) => {
-            const { item: node, index } = getItemById(draftState.nodes, id);
+          const newScene = produce(get(), (draft) => {
+            const { item: node, index } = getItemById(draft.nodes, id);
 
-            draftState.nodes[index] = {
+            draft.nodes[index] = {
               ...node,
               ...updates
             };
 
-            draftState.connectors.forEach((connector, i) => {
+            draft.connectors.forEach((connector, i) => {
               const needsUpdate = connector.anchors.find((anchor) => {
                 return anchor.ref.type === 'NODE' && anchor.ref.id === id;
               });
 
               if (needsUpdate) {
-                draftState.connectors[i].path = getConnectorPath({
+                draft.connectors[i].path = getConnectorPath({
                   anchors: connector.anchors,
-                  nodes: draftState.nodes,
-                  allAnchors: getAllAnchors(draftState.connectors)
+                  nodes: draft.nodes,
+                  allAnchors: getAllAnchors(draft.connectors)
                 });
               }
             });
@@ -83,12 +83,12 @@ const initialState = () => {
         },
 
         deleteNode: (id: string) => {
-          const newScene = produce(get(), (draftState) => {
-            const { index } = getItemById(draftState.nodes, id);
+          const newScene = produce(get(), (draft) => {
+            const { index } = getItemById(draft.nodes, id);
 
-            draftState.nodes.splice(index, 1);
+            draft.nodes.splice(index, 1);
 
-            draftState.connectors = draftState.connectors.filter(
+            draft.connectors = draft.connectors.filter(
               (connector) => {
                 return !connector.anchors.find((anchor) => {
                   return anchor.ref.type === 'NODE' && anchor.ref.id === id;
@@ -101,12 +101,12 @@ const initialState = () => {
         },
 
         createConnector: (connector) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.connectors.push(
+          const newScene = produce(get(), (draft) => {
+            draft.connectors.push(
               connectorInputToConnector(
                 connector,
-                draftState.nodes,
-                getAllAnchors(draftState.connectors)
+                draft.nodes,
+                getAllAnchors(draft.connectors)
               )
             );
           });
@@ -115,56 +115,63 @@ const initialState = () => {
         },
 
         updateConnector: (id, updates) => {
-          const newScene = produce(get(), (draftState) => {
-            const { item: connector, index } = getItemById(
-              draftState.connectors,
-              id
-            );
+          const scene = get();
+          const { item: connector, index } = getItemById(scene.connectors, id);
 
-            draftState.connectors[index] = {
+          const newScene = produce(scene, (draft) => {
+            draft.connectors[index] = {
               ...connector,
               ...updates
             };
+
+            if (updates.anchors) {
+              draft.connectors[index].path = getConnectorPath({
+                anchors: updates.anchors,
+                nodes: scene.nodes,
+                allAnchors: getAllAnchors(scene.connectors)
+              });
+            }
           });
 
           set({ connectors: newScene.connectors });
+          console.log(newScene.connectors)
         },
 
         deleteConnector: (id: string) => {
-          const newScene = produce(get(), (draftState) => {
-            const { index } = getItemById(draftState.connectors, id);
+          const newScene = produce(get(), (draft) => {
+            const { index } = getItemById(draft.connectors, id);
 
-            draftState.connectors.splice(index, 1);
+            draft.connectors.splice(index, 1);
           });
 
           set({ connectors: newScene.connectors });
         },
 
         createRectangle: (rectangle) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.rectangles.push(rectangleInputToRectangle(rectangle));
+          const newScene = produce(get(), (draft) => {
+            draft.rectangles.push(rectangleInputToRectangle(rectangle));
           });
 
           set({ rectangles: newScene.rectangles });
         },
 
         createTextBox: (textBox) => {
-          const newScene = produce(get(), (draftState) => {
-            draftState.textBoxes.push(textBoxInputToTextBox(textBox));
+          const newScene = produce(get(), (draft) => {
+            draft.textBoxes.push(textBoxInputToTextBox(textBox));
           });
 
           set({ textBoxes: newScene.textBoxes });
         },
 
         updateTextBox: (id, updates) => {
-          const newScene = produce(get(), (draftState) => {
+          const newScene = produce(get(), (draft) => {
             const { item: textBox, index } = getItemById(
-              draftState.textBoxes,
+              draft.textBoxes,
               id
             );
 
             if (updates.text !== undefined || updates.fontSize !== undefined) {
-              draftState.textBoxes[index].size = {
+              draft.textBoxes[index].size = {
                 width: getTextWidth(updates.text ?? textBox.text, {
                   fontSize: updates.fontSize ?? textBox.fontSize,
                   fontFamily: DEFAULT_FONT_FAMILY,
@@ -174,7 +181,7 @@ const initialState = () => {
               };
             }
 
-            draftState.textBoxes[index] = {
+            draft.textBoxes[index] = {
               ...textBox,
               ...updates
             };
@@ -184,23 +191,23 @@ const initialState = () => {
         },
 
         deleteTextBox: (id: string) => {
-          const newScene = produce(get(), (draftState) => {
-            const { index } = getItemById(draftState.textBoxes, id);
+          const newScene = produce(get(), (draft) => {
+            const { index } = getItemById(draft.textBoxes, id);
 
-            draftState.textBoxes.splice(index, 1);
+            draft.textBoxes.splice(index, 1);
           });
 
           set({ textBoxes: newScene.textBoxes });
         },
 
         updateRectangle: (id, updates) => {
-          const newScene = produce(get(), (draftState) => {
+          const newScene = produce(get(), (draft) => {
             const { item: rectangle, index } = getItemById(
-              draftState.rectangles,
+              draft.rectangles,
               id
             );
 
-            draftState.rectangles[index] = {
+            draft.rectangles[index] = {
               ...rectangle,
               ...updates
             };
@@ -210,10 +217,10 @@ const initialState = () => {
         },
 
         deleteRectangle: (id: string) => {
-          const newScene = produce(get(), (draftState) => {
-            const { index } = getItemById(draftState.rectangles, id);
+          const newScene = produce(get(), (draft) => {
+            const { index } = getItemById(draft.rectangles, id);
 
-            draftState.rectangles.splice(index, 1);
+            draft.rectangles.splice(index, 1);
           });
 
           set({ rectangles: newScene.rectangles });

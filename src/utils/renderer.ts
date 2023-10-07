@@ -211,9 +211,9 @@ const isoProjectionBaseValues = [0.707, -0.409, 0.707, 0.409, 0, -0.816];
 export const getIsoMatrix = (orientation?: ProjectionOrientationEnum) => {
   switch (orientation) {
     case ProjectionOrientationEnum.Y:
-      return produce(isoProjectionBaseValues, (draftState) => {
-        draftState[1] = -draftState[1];
-        draftState[2] = -draftState[2];
+      return produce(isoProjectionBaseValues, (draft) => {
+        draft[1] = -draft[1];
+        draft[2] = -draft[2];
       });
     case ProjectionOrientationEnum.X:
     default:
@@ -567,4 +567,26 @@ export const convertBoundsToNamedAnchors = (boundingBox: BoundingBox) => {
     [AnchorPositionsEnum.TOP_RIGHT]: boundingBox[2],
     [AnchorPositionsEnum.TOP_LEFT]: boundingBox[3]
   };
+};
+
+export const getAnchorAtTile = (tile: Coords, anchors: ConnectorAnchor[]) => {
+  return anchors.find((anchor) => {
+    return (
+      anchor.ref.type === 'TILE' && CoordsUtils.isEqual(anchor.ref.coords, tile)
+    );
+  });
+};
+
+export const getAnchorParent = (anchorId: string, connectors: Connector[]) => {
+  const connector = connectors.find((con) => {
+    return con.anchors.find((anchor) => {
+      return anchor.id === anchorId;
+    });
+  });
+
+  if (!connector) {
+    throw new Error(`Could not find connector with anchor id ${anchorId}`);
+  }
+
+  return connector;
 };

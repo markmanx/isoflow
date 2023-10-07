@@ -20,6 +20,7 @@ export enum TileOriginEnum {
 export enum SceneItemTypeEnum {
   NODE = 'NODE',
   CONNECTOR = 'CONNECTOR',
+  CONNECTOR_ANCHOR = 'CONNECTOR_ANCHOR',
   TEXTBOX = 'TEXTBOX',
   RECTANGLE = 'RECTANGLE'
 }
@@ -49,7 +50,8 @@ export type ConnectorAnchorRef =
     };
 
 export type ConnectorAnchor = {
-  id?: string;
+  id: string;
+  type: SceneItemTypeEnum.CONNECTOR_ANCHOR;
   ref: ConnectorAnchorRef;
 };
 
@@ -84,7 +86,7 @@ export interface Rectangle {
   to: Coords;
 }
 
-export type SceneItem = Node | Connector | TextBox | Rectangle;
+export type SceneItem = Node | Connector | TextBox | Rectangle | ConnectorAnchor;
 export type SceneItemReference = {
   type: SceneItemTypeEnum;
   id: string;

@@ -9,7 +9,7 @@ import {
   setWindowCursor,
   getAllAnchors
 } from 'src/utils';
-import { ModeActions } from 'src/types';
+import { ModeActions, SceneItemTypeEnum } from 'src/types';
 
 export const Connector: ModeActions = {
   entry: () => {
@@ -34,37 +34,35 @@ export const Connector: ModeActions = {
     });
 
     if (itemAtTile && itemAtTile.type === 'NODE') {
-      const newMode = produce(uiState.mode, (draftState) => {
-        if (!draftState.connector) return;
+      const newMode = produce(uiState.mode, (draft) => {
+        if (!draft.connector) return;
 
-        draftState.connector.anchors[1] = {
+        draft.connector.anchors[1] = {
+          id: generateId(),
+          type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
           ref: {
             type: 'NODE',
             id: itemAtTile.id
           }
         };
-
-        draftState.connector.path = getConnectorPath({
-          anchors: draftState.connector.anchors,
-          nodes: scene.nodes,
-          allAnchors: getAllAnchors(scene.connectors)
-        });
       });
 
       uiState.actions.setMode(newMode);
     } else {
-      const newMode = produce(uiState.mode, (draftState) => {
-        if (!draftState.connector) return;
+      const newMode = produce(uiState.mode, (draft) => {
+        if (!draft.connector) return;
 
-        draftState.connector.anchors[1] = {
+        draft.connector.anchors[1] = {
+          id: generateId(),
+          type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
           ref: {
             type: 'TILE',
             coords: uiState.mouse.position.tile
           }
         };
 
-        draftState.connector.path = getConnectorPath({
-          anchors: draftState.connector.anchors,
+        draft.connector.path = getConnectorPath({
+          anchors: draft.connector.anchors,
           nodes: scene.nodes,
           allAnchors: getAllAnchors(scene.connectors)
         });
@@ -82,8 +80,8 @@ export const Connector: ModeActions = {
     });
 
     if (itemAtTile && itemAtTile.type === 'NODE') {
-      const newMode = produce(uiState.mode, (draftState) => {
-        draftState.connector = connectorInputToConnector(
+      const newMode = produce(uiState.mode, (draft) => {
+        draft.connector = connectorInputToConnector(
           {
             id: generateId(),
             anchors: [
@@ -98,8 +96,8 @@ export const Connector: ModeActions = {
 
       uiState.actions.setMode(newMode);
     } else {
-      const newMode = produce(uiState.mode, (draftState) => {
-        draftState.connector = connectorInputToConnector(
+      const newMode = produce(uiState.mode, (draft) => {
+        draft.connector = connectorInputToConnector(
           {
             id: generateId(),
             anchors: [

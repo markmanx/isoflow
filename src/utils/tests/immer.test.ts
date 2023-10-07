@@ -19,8 +19,8 @@ describe('Tests immer', () => {
 
   test('Array equivalence with immer', () => {
     const arr = [createItem(0, 0), createItem(1, 1)];
-    const newArr = produce(arr, (draftState) => {
-      draftState[1] = createItem(2, 2);
+    const newArr = produce(arr, (draft) => {
+      draft[1] = createItem(2, 2);
     });
 
     expect(arr[0]).toBe(newArr[0]);

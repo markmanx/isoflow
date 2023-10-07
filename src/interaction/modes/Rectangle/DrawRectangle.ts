@@ -19,10 +19,10 @@ export const DrawRectangle: ModeActions = {
     )
       return;
 
-    const newMode = produce(uiState.mode, (draftState) => {
-      if (!draftState.area) return;
+    const newMode = produce(uiState.mode, (draft) => {
+      if (!draft.area) return;
 
-      draftState.area.to = uiState.mouse.position.tile;
+      draft.area.to = uiState.mouse.position.tile;
     });
 
     uiState.actions.setMode(newMode);
@@ -30,8 +30,8 @@ export const DrawRectangle: ModeActions = {
   mousedown: ({ uiState }) => {
     if (uiState.mode.type !== 'RECTANGLE.DRAW') return;
 
-    const newMode = produce(uiState.mode, (draftState) => {
-      draftState.area = {
+    const newMode = produce(uiState.mode, (draft) => {
+      draft.area = {
         from: uiState.mouse.position.tile,
         to: uiState.mouse.position.tile
       };

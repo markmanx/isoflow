@@ -1,9 +1,15 @@
 import { produce } from 'immer';
 import { ModeActions, Coords, SceneItemReference, SceneStore } from 'src/types';
-import { getItemById, CoordsUtils, hasMovedTile } from 'src/utils';
+import {
+  getItemById,
+  CoordsUtils,
+  hasMovedTile,
+  getAnchorParent
+} from 'src/utils';
 
 const dragItems = (
   items: SceneItemReference[],
+  tile: Coords,
   delta: Coords,
   scene: SceneStore
 ) => {
@@ -26,6 +32,27 @@ const dragItems = (
       scene.actions.updateTextBox(item.id, {
         tile: CoordsUtils.add(textBox.tile, delta)
       });
+    } else if (item.type === 'CONNECTOR_ANCHOR') {
+      const connector = getAnchorParent(item.id, scene.connectors);
+
+      const newConnector = produce(connector, (draft) => {
+        const { item: anchor, index: anchorIndex } = getItemById(
+          connector.anchors,
+          item.id
+        );
+
+        if (anchor.ref.type !== 'TILE') return;
+
+        draft.anchors[anchorIndex] = {
+          ...anchor,
+          ref: {
+            type: 'TILE',
+            coords: tile
+          }
+        };
+      });
+
+      scene.actions.updateConnector(connector.id, newConnector);
     }
   });
 };
@@ -50,11 +77,11 @@ export const DragItems: ModeActions = {
         uiState.mouse.mousedown.tile
       );
 
-      dragItems(uiState.mode.items, delta, scene);
+      dragItems(uiState.mode.items, uiState.mouse.position.tile, delta, scene);
 
       uiState.actions.setMode(
-        produce(uiState.mode, (draftState) => {
-          draftState.isInitialMovement = false;
+        produce(uiState.mode, (draft) => {
+          draft.isInitialMovement = false;
         })
       );
 
@@ -65,7 +92,7 @@ export const DragItems: ModeActions = {
 
     const delta = uiState.mouse.delta.tile;
 
-    dragItems(uiState.mode.items, delta, scene);
+    dragItems(uiState.mode.items, uiState.mouse.position.tile, delta, scene);
   },
   mouseup: ({ uiState }) => {
     uiState.actions.setMode({

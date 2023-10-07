@@ -34,8 +34,8 @@ export const PlaceElement: ModeActions = {
     }
 
     uiState.actions.setMode(
-      produce(uiState.mode, (draftState) => {
-        draftState.icon = null;
+      produce(uiState.mode, (draft) => {
+        draft.icon = null;
       })
     );
   }

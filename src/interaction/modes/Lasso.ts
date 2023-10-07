@@ -44,17 +44,17 @@
 //       );
 //     }
 //   },
-//   mousedown: (draftState) => {
-//     if (draftState.mode.type !== 'LASSO') return;
+//   mousedown: (draft) => {
+//     if (draft.mode.type !== 'LASSO') return;
 
-//     if (draftState.mode.selection) {
-//       const isWithinSelection = isWithinBounds(draftState.mouse.position.tile, [
-//         draftState.mode.selection.startTile,
-//         draftState.mode.selection.endTile
+//     if (draft.mode.selection) {
+//       const isWithinSelection = isWithinBounds(draft.mouse.position.tile, [
+//         draft.mode.selection.startTile,
+//         draft.mode.selection.endTile
 //       ]);
 
 //       if (!isWithinSelection) {
-//         draftState.mode = {
+//         draft.mode = {
 //           type: 'CURSOR',
 //           showCursor: true,
 //           mousedown: null
@@ -64,13 +64,13 @@
 //       }
 
 //       if (isWithinSelection) {
-//         draftState.mode.isDragging = true;
+//         draft.mode.isDragging = true;
 
 //         return;
 //       }
 //     }
 
-//     draftState.mode = {
+//     draft.mode = {
 //       type: 'CURSOR',
 //       showCursor: true,
 //       mousedown: null

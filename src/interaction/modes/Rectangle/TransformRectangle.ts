@@ -100,8 +100,8 @@ export const TransformRectangle: ModeActions = {
         Object.values(AnchorPositionsEnum)[activeAnchorIndex];
 
       uiState.actions.setMode(
-        produce(uiState.mode, (draftState) => {
-          draftState.selectedAnchor = activeAnchor;
+        produce(uiState.mode, (draft) => {
+          draft.selectedAnchor = activeAnchor;
         })
       );
       return;
@@ -139,8 +139,8 @@ export const TransformRectangle: ModeActions = {
 
     if (uiState.mode.selectedAnchor) {
       uiState.actions.setMode(
-        produce(uiState.mode, (draftState) => {
-          draftState.selectedAnchor = null;
+        produce(uiState.mode, (draft) => {
+          draft.selectedAnchor = null;
         })
       );
     }
