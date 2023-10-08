@@ -2,14 +2,14 @@
 
 The `initialScene` object contains the following properties:
 
-| Name | Type |
-| --- | --- |
-| `icons` | [`Icon[]`](#icon) |
-| `nodes` | [`Node[]`](#node) |
-| `connectors` | [`Connector[]`](#connector) |
-| `rectangles` | [`Rectangle[]`](#rectangle) |
-| `textBoxes` | [`TextBox[]`](#textbox) |
-| `zoom` | `number` |
+| Name | Type | Default |
+| --- | --- | --- |
+| `icons` | [`Icon[]`](#icon) | `[]` |
+| `nodes` | [`Node[]`](#node) | `[]` |
+| `connectors` | [`Connector[]`](#connector) | `[]` |
+| `rectangles` | [`Rectangle[]`](#rectangle) | `[]` |
+| `textBoxes` | [`TextBox[]`](#textbox) | `[]` |
+| `zoom` | `number` | `1` |
 
 ## `Icon`
 
@@ -38,7 +38,7 @@ The `initialScene` object contains the following properties:
   tile: {
     x: number;
     y: number;
-  };
+  }
 }
 ```
 
@@ -50,7 +50,8 @@ The `initialScene` object contains the following properties:
   color?: string;
   width?: number;
   style?: 'SOLID' | 'DOTTED' | 'DASHED';
-  anchors: ConnectorAnchor[]
+  label?: string; 
+  anchors: ConnectorAnchor[];
 }
 ```
 
@@ -61,22 +62,24 @@ The `initialScene` object contains the following properties:
 
 ```js
 id?: string;
-{
-  node: string 
-} |
-{
-  tile: {
-    x: number;
-    y: number;
-  }
-} |
-{
-  anchor: string;
-}
+ref: 
+  | {
+      tile: {
+        x: number;
+        y: number;
+      }
+    }
+  | {
+      node: string;
+    }
+  |
+    {
+      anchor: string;
+    }
 ```
 
 **Notes on anchors**
-- Connector anchors can reference either one of a `tile`, a `node` or another `connectorAnchor`.  If the reference is to a `node` or another `anchor`, the anchor is dynamic and will be tied to the reference's position.
+- Connector anchors can reference either a `tile`, a `node` or another `anchor`.  If the reference is to a `node` or another `anchor`, the anchor is dynamic and will be tied to the referenced element's position.
 - When using either a `node` or an `anchor` as a reference, you must specify the `id` of the of the item being referred to.
 
 ## `Rectangle`
