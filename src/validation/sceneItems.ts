@@ -50,6 +50,7 @@ export const connectorStyleEnum = z.enum(connectorStyleOptions);
 
 export const connectorInput = z.object({
   id: z.string(),
+  label: z.string().optional(),
   color: z.string().optional(),
   width: z.number().optional(),
   style: connectorStyleEnum.optional(),

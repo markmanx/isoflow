@@ -7,6 +7,7 @@ import { Cursor } from 'src/components/Cursor/Cursor';
 import { Nodes } from 'src/components/SceneLayers/Nodes/Nodes';
 import { Rectangles } from 'src/components/SceneLayers/Rectangles/Rectangles';
 import { Connectors } from 'src/components/SceneLayers/Connectors/Connectors';
+import { ConnectorLabels } from 'src/components/SceneLayers/ConnectorLabels/ConnectorLabels';
 import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
@@ -72,6 +73,9 @@ export const Renderer = () => {
       </SceneLayer>
       <SceneLayer>
         <TextBoxes />
+      </SceneLayer>
+      <SceneLayer>
+        <ConnectorLabels />
       </SceneLayer>
       <SceneLayer>
         <Nodes />

@@ -448,7 +448,10 @@ export const hasMovedTile = (mouse: Mouse) => {
   return !CoordsUtils.isEqual(mouse.delta.tile, CoordsUtils.zero());
 };
 
-export const connectorPathTileToGlobal = (tile: Coords, origin: Coords) => {
+export const connectorPathTileToGlobal = (
+  tile: Coords,
+  origin: Coords
+): Coords => {
   return CoordsUtils.subtract(
     CoordsUtils.subtract(origin, CONNECTOR_DEFAULTS.searchOffset),
     CoordsUtils.subtract(tile, CONNECTOR_DEFAULTS.searchOffset)

@@ -1,7 +1,14 @@
 import React, { useCallback } from 'react';
 import { Connector, ConnectorStyleEnum } from 'src/types';
 import { connectorStyleOptions } from 'src/validation/sceneItems';
-import { useTheme, Box, Slider, Select, MenuItem } from '@mui/material';
+import {
+  useTheme,
+  Box,
+  Slider,
+  Select,
+  MenuItem,
+  TextField
+} from '@mui/material';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
@@ -38,6 +45,15 @@ export const ConnectorControls = ({ id }: Props) => {
 
   return (
     <ControlsContainer>
+      <Section>
+        <TextField
+          label="Label"
+          value={connector.label}
+          onChange={(e) => {
+            return onConnectorUpdated({ label: e.target.value as string });
+          }}
+        />
+      </Section>
       <Section>
         <ColorSelector
           colors={Object.values(theme.customVars.customPalette)}

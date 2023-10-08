@@ -116,6 +116,7 @@ export const connectorInputToConnector = (
   return {
     type: SceneItemTypeEnum.CONNECTOR,
     id: connectorInput.id,
+    label: connectorInput.label,
     color: connectorInput.color ?? DEFAULT_COLOR,
     width: connectorInput.width ?? CONNECTOR_DEFAULTS.width,
     style: connectorInput.style ?? CONNECTOR_DEFAULTS.style,

@@ -58,6 +58,7 @@ export type ConnectorAnchor = {
 export interface Connector {
   type: SceneItemTypeEnum.CONNECTOR;
   id: string;
+  label?: string;
   color: string;
   width: number;
   style: ConnectorStyleEnum;
