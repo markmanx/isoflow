@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 import { sceneInput } from '../scene';
-import { scene as sceneFixture } from '../../tests/fixtures/scene';
+import { scene as sceneFixture } from '../../fixtures/scene';
 
 describe('scene validation works correctly', () => {
   test('scene fixture is valid', () => {
