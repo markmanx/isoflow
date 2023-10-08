@@ -27,21 +27,22 @@
 ## Roadmap
 
 🛠 v0.5: In progress
-- [ ] Export diagrams as images
-- [ ] Move connector anchors
+- [x] More control over connector segments
+- [x] Connector labels
 - [ ] Layer re-ordering (bring forward / send to back)
 - [ ] Shortcuts (undo / redo, copy / paste)
 - [ ] Custom colours
+- [ ] Export diagrams as images
 - [ ] Main menu customisation
 - [ ] Center diagram in middle of canvas
 
 ✅ v0.4: Complete
 - [x] Basic view controls (pan / zoom)
-- [x] Basic create / delete / update actions on nodes, connectors & groups
+- [x] Nodes, connectors & groups
 - [x] Import / export diagrams to local storage (in JSON format)
 - [x] Icon support for AWS, GCP, Azure, K8S & generic network hardware (e.g. server, database)
 - [x] onSceneUpdated callback
-- [x] Usage documentation
+- [x] Documentation
 - [x] Pipeline for publishing to NPM
 
 ## Quick start
