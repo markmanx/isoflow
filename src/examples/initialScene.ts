@@ -16,6 +16,7 @@ const isopacks = flattenCollections([
 ]);
 
 export const initialScene: InitialScene = {
+  title: 'Airport Technology Management',
   icons: isopacks,
   nodes: [
     {

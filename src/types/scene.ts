@@ -118,6 +118,7 @@ export interface SceneActions {
 }
 
 export type Scene = {
+  title: string;
   nodes: Node[];
   connectors: Connector[];
   textBoxes: TextBox[];

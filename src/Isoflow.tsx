@@ -43,8 +43,8 @@ const App = ({
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
   const scene = useSceneStore(
-    ({ nodes, connectors, textBoxes, rectangles, icons }) => {
-      return { nodes, connectors, textBoxes, rectangles, icons };
+    ({ title, nodes, connectors, textBoxes, rectangles, icons }) => {
+      return { title, nodes, connectors, textBoxes, rectangles, icons };
     },
     shallow
   );

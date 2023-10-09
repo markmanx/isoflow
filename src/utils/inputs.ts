@@ -191,6 +191,7 @@ export const sceneInputToScene = (sceneInput: SceneInput): Scene => {
   });
 
   return {
+    title: sceneInput.title,
     icons,
     nodes,
     rectangles,
@@ -287,6 +288,7 @@ export const sceneToSceneInput = (scene: Scene): SceneInput => {
   );
 
   return {
+    title: scene.title,
     icons,
     nodes,
     connectors,

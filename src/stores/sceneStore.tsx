@@ -2,7 +2,11 @@ import React, { createContext, useRef, useContext } from 'react';
 import { createStore, useStore } from 'zustand';
 import { produce } from 'immer';
 import { SceneStore, Scene } from 'src/types';
-import { DEFAULT_FONT_FAMILY, TEXTBOX_DEFAULTS } from 'src/config';
+import {
+  DEFAULT_FONT_FAMILY,
+  TEXTBOX_DEFAULTS,
+  INITIAL_SCENE
+} from 'src/config';
 import { sceneInput } from 'src/validation/scene';
 import {
   getItemById,
@@ -17,6 +21,7 @@ import {
 } from 'src/utils';
 
 export const initialScene: Scene = {
+  title: INITIAL_SCENE.title,
   icons: [],
   nodes: [],
   connectors: [],

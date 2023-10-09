@@ -1,6 +1,7 @@
 import { SceneInput } from 'src/types';
 
 export const scene: SceneInput = {
+  title: 'TestScene',
   icons: [
     {
       id: 'icon1',

@@ -25,6 +25,7 @@ export const MainMenu = () => {
   });
   const scene = useSceneStore((state) => {
     return {
+      title: state.title,
       icons: state.icons,
       nodes: state.nodes,
       connectors: state.connectors,

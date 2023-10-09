@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Box, useTheme, Typography } from '@mui/material';
 import { UiElement } from 'components/UiElement/UiElement';
 import { toPx } from 'src/utils';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
@@ -9,6 +9,7 @@ import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MainMenu } from 'src/components/MainMenu/MainMenu';
 import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
+import { useSceneStore } from 'src/stores/sceneStore';
 
 export const UiOverlay = () => {
   const theme = useTheme();
@@ -30,6 +31,9 @@ export const UiOverlay = () => {
   });
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
+  });
+  const sceneTitle = useSceneStore((state) => {
+    return state.title;
   });
 
   if (disableInteractions) return null;
@@ -89,6 +93,21 @@ export const UiOverlay = () => {
       >
         <MainMenu />
       </Box>
+
+      <UiElement
+        sx={{
+          position: 'absolute',
+          bottom: toPx(appPadding.y),
+          left: '50%',
+          transform: 'translateX(-50%)',
+          px: 2,
+          py: 1
+        }}
+      >
+        <Typography fontWeight={600} color="text.secondary">
+          {sceneTitle}
+        </Typography>
+      </UiElement>
     </>
   );
 };

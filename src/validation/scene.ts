@@ -12,6 +12,7 @@ import { ensureValidConnectors, ensureValidNodes } from './utils';
 
 export const sceneInput = z
   .object({
+    title: z.string(),
     icons: z.array(iconInput),
     nodes: z.array(nodeInput),
     connectors: z.array(connectorInput),
