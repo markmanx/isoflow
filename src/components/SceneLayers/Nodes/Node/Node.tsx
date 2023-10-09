@@ -61,13 +61,12 @@ export const Node = ({ node, order }: Props) => {
             <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>
               <Typography fontWeight={600}>{node.label}</Typography>
               {description && (
-                <Box sx={{ pt: 0.2, width: 180 }}>
+                <Box sx={{ pt: 0.2, width: 200 }}>
                   <MarkdownEditor
                     readOnly
                     value={node.description}
                     styles={{
-                      color: theme.palette.text.secondary,
-                      fontSize: '0.8em'
+                      color: theme.palette.text.secondary
                     }}
                   />
                 </Box>
