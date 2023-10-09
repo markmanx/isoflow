@@ -31,7 +31,9 @@ export const Grid = () => {
         sx={{
           position: 'absolute',
           width: '100%',
-          height: '100%',
+          height: '100%'
+        }}
+        style={{
           background: `repeat url("${gridTileSvg}")`,
           backgroundSize: `${projectedTileSize.width}px`,
           backgroundPosition: `calc(50% + ${

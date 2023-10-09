@@ -26,7 +26,7 @@ export const TextBox = ({ textBox }: Props) => {
   });
 
   return (
-    <Box sx={css}>
+    <Box style={css}>
       <Box
         sx={{
           position: 'absolute',

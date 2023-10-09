@@ -85,7 +85,7 @@ export const Connector = ({ connector }: Props) => {
   }, [connector.style, connectorWidthPx]);
 
   return (
-    <Box sx={css}>
+    <Box style={css}>
       <Svg
         style={{
           // TODO: The original x coordinates of each tile seems to be calculated wrongly.

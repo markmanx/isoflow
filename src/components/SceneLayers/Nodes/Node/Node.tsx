@@ -34,13 +34,13 @@ export const Node = ({ node, order }: Props) => {
 
   return (
     <Box
-      sx={{
+      style={{
         position: 'absolute',
         zIndex: order
       }}
     >
       <Box
-        sx={{
+        style={{
           position: 'absolute',
           left: position.x,
           top: position.y
@@ -53,7 +53,7 @@ export const Node = ({ node, order }: Props) => {
             }}
           >
             <Box
-              sx={{
+              style={{
                 position: 'absolute',
                 top: -projectedTileSize.height
               }}

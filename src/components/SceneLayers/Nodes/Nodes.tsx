@@ -11,11 +11,7 @@ export const Nodes = () => {
     <>
       {nodes.map((node) => {
         return (
-          <Node
-            key={node.id}
-            order={-node.tile.x - node.tile.y}
-            node={node}
-          />
+          <Node key={node.id} order={-node.tile.x - node.tile.y} node={node} />
         );
       })}
     </>

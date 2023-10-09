@@ -30,17 +30,19 @@ export const ConnectorLabel = ({ connector }: Props) => {
     <Box
       sx={{
         position: 'absolute',
-        left: labelPosition.x,
-        top: labelPosition.y,
-        transform: `translate(-50%, -50%) scale(${zoom})`,
         pointerEvents: 'none',
         bgcolor: 'common.white',
         border: 1,
         py: 0.5,
         px: 1,
         borderRadius: 1,
-        maxWidth: projectedTileSize.width * (1 / zoom),
         borderColor: 'grey.200'
+      }}
+      style={{
+        transform: `translate(-50%, -50%) scale(${zoom})`,
+        maxWidth: projectedTileSize.width * (1 / zoom),
+        left: labelPosition.x,
+        top: labelPosition.y
       }}
     >
       <Typography color="text.secondary" variant="body2">
