@@ -5,7 +5,8 @@ import {
   GitHub as GitHubIcon,
   QuestionAnswer as QuestionAnswerIcon,
   Download as DownloadIcon,
-  FolderOpen as FolderOpenIcon
+  FolderOpen as FolderOpenIcon,
+  DeleteOutline as DeleteOutlineIcon
 } from '@mui/icons-material';
 import FileSaver from 'file-saver';
 import { UiElement } from 'src/components/UiElement/UiElement';
@@ -13,15 +14,13 @@ import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { sceneToSceneInput } from 'src/utils';
+import { INITIAL_SCENE } from 'src/config';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMainMenuOpen = useUiStateStore((state) => {
     return state.isMainMenuOpen;
-  });
-  const setIsMainMenuOpen = useUiStateStore((state) => {
-    return state.actions.setIsMainMenuOpen;
   });
   const scene = useSceneStore((state) => {
     return {
@@ -36,16 +35,16 @@ export const MainMenu = () => {
   const setScene = useSceneStore((state) => {
     return state.actions.setScene;
   });
-  const resetUiState = useUiStateStore((state) => {
-    return state.actions.resetUiState;
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
   });
 
   const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
-      setIsMainMenuOpen(true);
+      uiStateActions.setIsMainMenuOpen(true);
     },
-    [setIsMainMenuOpen]
+    [uiStateActions]
   );
 
   const gotoUrl = useCallback((url: string) => {
@@ -72,12 +71,12 @@ export const MainMenu = () => {
       };
       fileReader.readAsText(file);
 
-      resetUiState();
+      uiStateActions.resetUiState();
     };
 
     await fileInput.click();
-    setIsMainMenuOpen(false);
-  }, [setScene, setIsMainMenuOpen, resetUiState]);
+    uiStateActions.setIsMainMenuOpen(false);
+  }, [setScene, uiStateActions]);
 
   const onSaveAs = useCallback(async () => {
     const parsedScene = sceneToSceneInput(scene);
@@ -87,7 +86,14 @@ export const MainMenu = () => {
     });
 
     FileSaver.saveAs(blob, `isoflow-${new Date().toISOString()}.json`);
-  }, [scene]);
+    uiStateActions.setIsMainMenuOpen(false);
+  }, [scene, uiStateActions]);
+
+  const onClearCanvas = useCallback(() => {
+    setScene(INITIAL_SCENE);
+    uiStateActions.resetUiState();
+    uiStateActions.setIsMainMenuOpen(false);
+  }, [uiStateActions, setScene]);
 
   return (
     <UiElement>
@@ -97,7 +103,7 @@ export const MainMenu = () => {
         anchorEl={anchorEl}
         open={isMainMenuOpen}
         onClose={() => {
-          return setIsMainMenuOpen(false);
+          uiStateActions.setIsMainMenuOpen(false);
         }}
         elevation={0}
         sx={{
@@ -116,6 +122,9 @@ export const MainMenu = () => {
           </MenuItem>
           <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
             Download diagram
+          </MenuItem>
+          <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
+            Clear the canvas
           </MenuItem>
           <Divider />
           <MenuItem
