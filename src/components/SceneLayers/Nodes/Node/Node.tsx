@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { Node as NodeI, TileOriginEnum } from 'src/types';
 import { useTileSize } from 'src/hooks/useTileSize';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useIcon } from 'src/hooks/useIcon';
+import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { LabelContainer } from './LabelContainer';
-import { MarkdownLabel } from './LabelTypes/MarkdownLabel';
 
 interface Props {
   node: NodeI;
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const Node = ({ node, order }: Props) => {
+  const theme = useTheme();
   const { projectedTileSize } = useTileSize();
   const { getTilePosition } = useGetTilePosition();
   const { iconComponent } = useIcon(node.icon);
@@ -24,11 +25,12 @@ export const Node = ({ node, order }: Props) => {
     });
   }, [node.tile, getTilePosition]);
 
-  const label = useMemo(() => {
-    if (node.label === undefined || node.label === '<p><br></p>') return null;
+  const description = useMemo(() => {
+    if (node.description === undefined || node.description === '<p><br></p>')
+      return null;
 
-    return node.label;
-  }, [node.label]);
+    return node.description;
+  }, [node.description]);
 
   return (
     <Box
@@ -44,7 +46,7 @@ export const Node = ({ node, order }: Props) => {
           top: position.y
         }}
       >
-        {label && (
+        {(node.label || description) && (
           <Box
             sx={{
               position: 'absolute'
@@ -57,7 +59,19 @@ export const Node = ({ node, order }: Props) => {
               }}
             />
             <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>
-              <MarkdownLabel label={label} />
+              <Typography fontWeight={600}>{node.label}</Typography>
+              {description && (
+                <Box sx={{ pt: 0.2, width: 180 }}>
+                  <MarkdownEditor
+                    readOnly
+                    value={node.description}
+                    styles={{
+                      color: theme.palette.text.secondary,
+                      fontSize: '0.8em'
+                    }}
+                  />
+                </Box>
+              )}
             </LabelContainer>
           </Box>
         )}

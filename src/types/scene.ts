@@ -29,7 +29,8 @@ export interface Node {
   id: string;
   type: SceneItemTypeEnum.NODE;
   icon: string;
-  label: string;
+  label?: string;
+  description?: string;
   labelHeight: number;
   tile: Coords;
   isSelected: boolean;

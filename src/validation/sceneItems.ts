@@ -17,6 +17,7 @@ export const iconInput = z.object({
 export const nodeInput = z.object({
   id: z.string(),
   label: z.string().optional(),
+  description: z.string().optional(),
   labelHeight: z.number().optional(),
   icon: z.string(),
   tile: coords

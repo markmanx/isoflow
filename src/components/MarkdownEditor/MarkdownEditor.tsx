@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import { Box } from '@mui/material';
 
 interface Props {
-  value: string;
+  value?: string;
   onChange?: (value: string) => void;
   readOnly?: boolean;
   height?: number;
@@ -55,7 +55,7 @@ export const MarkdownEditor = ({
     >
       <ReactQuill
         theme="snow"
-        value={value}
+        value={value ?? ''}
         readOnly={readOnly}
         onChange={onChange}
         formats={tools}

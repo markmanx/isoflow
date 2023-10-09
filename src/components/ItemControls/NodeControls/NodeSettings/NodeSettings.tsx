@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, Box } from '@mui/material';
+import { Slider, Box, TextField } from '@mui/material';
 import { Node } from 'src/types';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { DeleteButton } from '../../components/DeleteButton';
@@ -15,10 +15,19 @@ export const NodeSettings = ({ node, onUpdate, onDelete }: Props) => {
   return (
     <>
       <Section title="Label">
-        <MarkdownEditor
+        <TextField
           value={node.label}
-          onChange={(text) => {
+          onChange={(e) => {
+            const text = e.target.value as string;
             if (node.label !== text) onUpdate({ label: text });
+          }}
+        />
+      </Section>
+      <Section title="Description">
+        <MarkdownEditor
+          value={node.description}
+          onChange={(text) => {
+            if (node.description !== text) onUpdate({ description: text });
           }}
         />
       </Section>

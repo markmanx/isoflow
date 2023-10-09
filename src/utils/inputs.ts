@@ -40,6 +40,7 @@ export const nodeInputToNode = (nodeInput: NodeInput): Node => {
     type: SceneItemTypeEnum.NODE,
     id: nodeInput.id,
     label: nodeInput.label ?? NODE_DEFAULTS.label,
+    description: nodeInput.description,
     labelHeight: nodeInput.labelHeight ?? NODE_DEFAULTS.labelHeight,
     icon: nodeInput.icon,
     tile: nodeInput.tile,
@@ -215,6 +216,7 @@ export const nodeToNodeInput = (node: Node): NodeInput => {
     id: node.id,
     tile: node.tile,
     label: node.label,
+    description: node.description,
     labelHeight: node.labelHeight,
     icon: node.icon
   };
