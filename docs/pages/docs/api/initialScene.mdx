@@ -35,6 +35,7 @@ The `initialScene` object contains the following properties:
   id: string;
   icon: string;
   label?: string;
+  description?: string;
   labelHeight?: number;
   tile: {
     x: number;
@@ -42,6 +43,9 @@ The `initialScene` object contains the following properties:
   }
 }
 ```
+
+**Notes on nodes:**
+- `description` is rendered as markdown.
 
 ## `Connector`
 
