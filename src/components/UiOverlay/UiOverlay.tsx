@@ -101,7 +101,8 @@ export const UiOverlay = () => {
           left: '50%',
           transform: 'translateX(-50%)',
           px: 2,
-          py: 1
+          py: 1,
+          pointerEvents: 'none'
         }}
       >
         <Typography fontWeight={600} color="text.secondary">
