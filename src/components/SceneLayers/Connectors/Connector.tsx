@@ -56,6 +56,7 @@ export const Connector = ({ connector }: Props) => {
       const position = getAnchorTile(anchor, nodes, getAllAnchors(connectors));
 
       return {
+        id: anchor.id,
         x: (connector.path.rectangle.from.x - position.x) * unprojectedTileSize,
         y: (connector.path.rectangle.from.y - position.y) * unprojectedTileSize
       };
@@ -117,7 +118,7 @@ export const Connector = ({ connector }: Props) => {
 
         {anchorPositions.map((anchor) => {
           return (
-            <>
+            <g key={anchor.id}>
               <Circle
                 tile={CoordsUtils.add(anchor, drawOffset)}
                 radius={18 * zoom}
@@ -131,7 +132,7 @@ export const Connector = ({ connector }: Props) => {
                 fill={theme.palette.common.white}
                 strokeWidth={6 * zoom}
               />
-            </>
+            </g>
           );
         })}
       </Svg>

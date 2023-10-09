@@ -19,7 +19,7 @@ export const TextBoxes = () => {
   return (
     <>
       {textBoxes.map((textBox) => {
-        return <TextBox textBox={textBox} />;
+        return <TextBox key={textBox.id} textBox={textBox} />;
       })}
       {mode.type === 'TEXTBOX' && (
         <TextBox
