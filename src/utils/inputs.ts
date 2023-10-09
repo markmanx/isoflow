@@ -260,6 +260,9 @@ export const connectorToConnectorInput = (
   return {
     id: connector.id,
     color: connector.color,
+    style: connector.style,
+    width: connector.width,
+    label: connector.label,
     anchors
   };
 };
