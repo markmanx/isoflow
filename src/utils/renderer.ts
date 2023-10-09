@@ -208,7 +208,9 @@ export const getBoundingBoxSize = (boundingBox: Coords[]): Size => {
 
 const isoProjectionBaseValues = [0.707, -0.409, 0.707, 0.409, 0, -0.816];
 
-export const getIsoMatrix = (orientation?: ProjectionOrientationEnum) => {
+export const getIsoMatrix = (
+  orientation?: keyof typeof ProjectionOrientationEnum
+) => {
   switch (orientation) {
     case ProjectionOrientationEnum.Y:
       return produce(isoProjectionBaseValues, (draft) => {
@@ -222,7 +224,7 @@ export const getIsoMatrix = (orientation?: ProjectionOrientationEnum) => {
 };
 
 export const getIsoProjectionCss = (
-  orientation?: ProjectionOrientationEnum
+  orientation?: keyof typeof ProjectionOrientationEnum
 ) => {
   const matrixTransformValues = getIsoMatrix(orientation);
 

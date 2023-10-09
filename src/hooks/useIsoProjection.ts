@@ -14,7 +14,7 @@ interface Props {
   from: Coords;
   to: Coords;
   originOverride?: Coords;
-  orientation?: ProjectionOrientationEnum;
+  orientation?: keyof typeof ProjectionOrientationEnum;
 }
 
 export const useIsoProjection = ({

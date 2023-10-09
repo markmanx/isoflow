@@ -76,7 +76,7 @@ export interface TextBox {
   fontSize: number;
   tile: Coords;
   text: string;
-  orientation: ProjectionOrientationEnum;
+  orientation: keyof typeof ProjectionOrientationEnum;
   size: Size;
 }
 

@@ -277,7 +277,7 @@ export const rectangleToRectangleInput = (
 
 export const sceneToSceneInput = (scene: Scene): SceneInput => {
   const icons: IconInput[] = scene.icons.map(iconToIconInput);
-  const nodes: NodeInput[] = scene.nodes.map(nodeInputToNode);
+  const nodes: NodeInput[] = scene.nodes.map(nodeToNodeInput);
   const connectors: ConnectorInput[] = scene.connectors.map(
     connectorToConnectorInput,
     nodes
