@@ -12,11 +12,13 @@ export const SizeIndicator = () => {
     <Box
       sx={{
         position: 'absolute',
+        border: '5px solid red'
+      }}
+      style={{
         width: diagramBoundingBox.width,
         height: diagramBoundingBox.height,
         left: diagramBoundingBox.x,
-        top: diagramBoundingBox.y,
-        border: '5px solid red'
+        top: diagramBoundingBox.y
       }}
     />
   );
