@@ -26,7 +26,7 @@
 
 ## Roadmap
 
-🛠 v0.5: In progress
+🛠 v0.6: In progress
 - [x] More control over connector segments
 - [x] Connector labels
 - [ ] Layer re-ordering (bring forward / send to back)
@@ -36,7 +36,7 @@
 - [ ] Main menu customisation
 - [ ] Center diagram in middle of canvas
 
-✅ v0.4: Complete
+✅ v0.5: Complete
 - [x] Basic view controls (pan / zoom)
 - [x] Nodes, connectors & groups
 - [x] Import / export diagrams to local storage (in JSON format)
