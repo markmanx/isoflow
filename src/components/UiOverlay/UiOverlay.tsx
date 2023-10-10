@@ -44,7 +44,7 @@ export const UiOverlay = () => {
         <UiElement
           sx={{
             position: 'absolute',
-            top: toPx(appPadding.y * 2 + spacing(2)),
+            top: appPadding.y * 2 + spacing(2),
             left: appPadding.x,
             width: '345px',
             maxHeight: `calc(100% - ${toPx(appPadding.y * 6)})`,
@@ -61,8 +61,8 @@ export const UiOverlay = () => {
       <Box
         sx={{
           position: 'absolute',
-          right: toPx(appPadding.x),
-          top: toPx(appPadding.y)
+          right: appPadding.x,
+          top: appPadding.y
         }}
       >
         <ToolMenu />
@@ -87,8 +87,8 @@ export const UiOverlay = () => {
       <Box
         sx={{
           position: 'absolute',
-          top: toPx(appPadding.y),
-          left: toPx(appPadding.x)
+          top: appPadding.y,
+          left: appPadding.x
         }}
       >
         <MainMenu />
@@ -97,7 +97,7 @@ export const UiOverlay = () => {
       <UiElement
         sx={{
           position: 'absolute',
-          bottom: toPx(appPadding.y),
+          bottom: appPadding.y,
           left: '50%',
           transform: 'translateX(-50%)',
           px: 2,

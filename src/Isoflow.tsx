@@ -33,7 +33,7 @@ interface Props {
 
 const App = ({
   initialScene,
-  width,
+  width = '100%',
   height = '100%',
   disableInteractions: disableInteractionsProp,
   onSceneUpdated,
@@ -92,7 +92,7 @@ const App = ({
       <GlobalStyles />
       <Box
         sx={{
-          width: width ?? '100%',
+          width,
           height,
           position: 'relative',
           overflow: 'hidden'
