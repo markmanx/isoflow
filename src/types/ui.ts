@@ -156,6 +156,7 @@ export type IconCollectionStateWithIcons = IconCollectionState & {
 export interface UiState {
   iconCategoriesState: IconCollectionState[];
   disableInteractions: boolean;
+  hideMainMenu: boolean;
   mode: Mode;
   isMainMenuOpen: boolean;
   itemControls: ItemControls;
@@ -171,6 +172,7 @@ export interface UiStateActions {
   setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
   resetUiState: () => void;
   setMode: (mode: Mode) => void;
+  setHideMainMenu: (state: boolean) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
   setIsMainMenuOpen: (isOpen: boolean) => void;

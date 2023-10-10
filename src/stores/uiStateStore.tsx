@@ -8,6 +8,7 @@ const initialState = () => {
     return {
       iconCategoriesState: [],
       disableInteractions: false,
+      hideMainMenu: false,
       mode: {
         type: 'CURSOR',
         showCursor: true,
@@ -50,6 +51,9 @@ const initialState = () => {
         },
         setMode: (mode) => {
           set({ mode });
+        },
+        setHideMainMenu: (state) => {
+          set({ hideMainMenu: state });
         },
         setIsMainMenuOpen: (isMainMenuOpen) => {
           set({ isMainMenuOpen, itemControls: null });

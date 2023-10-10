@@ -29,6 +29,7 @@ interface Props {
   width?: number | string;
   height?: number | string;
   debugMode?: boolean;
+  hideMainMenu?: boolean;
 }
 
 const App = ({
@@ -37,7 +38,8 @@ const App = ({
   height = '100%',
   disableInteractions: disableInteractionsProp,
   onSceneUpdated,
-  debugMode = false
+  debugMode = false,
+  hideMainMenu = false
 }: Props) => {
   const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
   const [isReady, setIsReady] = useState(false);
@@ -57,9 +59,16 @@ const App = ({
   const { setIconCategoriesState } = useIconCategories();
 
   useEffect(() => {
+    uiActions.setHideMainMenu(hideMainMenu);
     uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
-  }, [initialScene?.zoom, disableInteractionsProp, sceneActions, uiActions]);
+  }, [
+    initialScene?.zoom,
+    disableInteractionsProp,
+    sceneActions,
+    uiActions,
+    hideMainMenu
+  ]);
 
   useEffect(() => {
     if (!initialScene || prevInitialScene.current === initialScene) return;

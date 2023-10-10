@@ -35,6 +35,9 @@ export const UiOverlay = () => {
   const sceneTitle = useSceneStore((state) => {
     return state.title;
   });
+  const hideMainMenu = useUiStateStore((state) => {
+    return state.hideMainMenu;
+  });
 
   if (disableInteractions) return null;
 
@@ -46,7 +49,7 @@ export const UiOverlay = () => {
             position: 'absolute',
             top: appPadding.y * 2 + spacing(2),
             left: appPadding.x,
-            width: '345px',
+            width: '360px',
             maxHeight: `calc(100% - ${toPx(appPadding.y * 6)})`,
             overflowY: 'scroll',
             '&::-webkit-scrollbar': {
@@ -84,15 +87,17 @@ export const UiOverlay = () => {
         <ZoomControls />
       </Box>
 
-      <Box
-        sx={{
-          position: 'absolute',
-          top: appPadding.y,
-          left: appPadding.x
-        }}
-      >
-        <MainMenu />
-      </Box>
+      {!hideMainMenu && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: appPadding.y,
+            left: appPadding.x
+          }}
+        >
+          <MainMenu />
+        </Box>
+      )}
 
       <UiElement
         sx={{
