@@ -433,7 +433,7 @@ export const initialScene: InitialScene = {
     {
       id: '4a7ccc74-f296-4d0b-be11-8117c990795d',
       color: '#fad6ac',
-      style: 'SOLID',
+      style: 'DOTTED',
       width: 20,
       anchors: [
         {
@@ -489,7 +489,7 @@ export const initialScene: InitialScene = {
     {
       id: 'a6c63183-ce9a-4d54-9487-569f2a8a8add',
       color: '#fad6ac',
-      style: 'SOLID',
+      style: 'DOTTED',
       width: 20,
       anchors: [
         {
@@ -553,7 +553,7 @@ export const initialScene: InitialScene = {
     {
       id: '17547863-f8f3-4653-92ec-f76d3ec0835f',
       color: '#fad6ac',
-      style: 'SOLID',
+      style: 'DOTTED',
       width: 20,
       anchors: [
         {
@@ -617,7 +617,7 @@ export const initialScene: InitialScene = {
     {
       id: '725419a0-6ca4-4d1b-b6a4-a7ae7feabcb0',
       color: '#fad6ac',
-      style: 'SOLID',
+      style: 'DOTTED',
       width: 20,
       anchors: [
         {
