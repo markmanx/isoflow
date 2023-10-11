@@ -1,13 +1,10 @@
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { LineItem } from './LineItem';
 
 export const DebugUtils = () => {
-  const {
-    customVars: { appPadding }
-  } = useTheme();
   const uiState = useUiStateStore(
     ({ scroll, mouse, zoom, rendererSize, mode }) => {
       return { scroll, mouse, zoom, rendererSize, mode };
