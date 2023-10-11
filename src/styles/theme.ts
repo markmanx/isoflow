@@ -43,8 +43,19 @@ export const customVars: CustomThemeVars = {
   }
 };
 
+const createShadows = () => {
+  const shadows = Array(25)
+    .fill('none')
+    .map((shadow, i) => {
+      return `0px 10px 20px ${i - 10}px rgba(0,0,0,0.25)`;
+    }) as Required<ThemeOptions>['shadows'];
+
+  return shadows;
+};
+
 export const themeConfig: ThemeOptions = {
   customVars,
+  shadows: createShadows(),
   typography: {
     h2: {
       fontSize: '4em',
