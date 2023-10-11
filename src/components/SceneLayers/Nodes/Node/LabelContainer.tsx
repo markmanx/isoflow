@@ -6,7 +6,7 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useTileSize } from 'src/hooks/useTileSize';
 import { Gradient } from 'src/components/Gradient/Gradient';
 
-const MAX_LABEL_HEIGHT = 125;
+const MAX_LABEL_HEIGHT = 80;
 
 interface Props {
   labelHeight: number;
