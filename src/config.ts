@@ -1,4 +1,4 @@
-import { Size, Coords, SceneInput, Connector } from 'src/types';
+import { Size, Coords, SceneInput, Connector, Mode } from 'src/types';
 import { customVars } from './styles/theme';
 
 // TODO: This file could do with better organisation and convention for easier reading.
@@ -48,4 +48,8 @@ export const INITIAL_SCENE: SceneInput = {
   connectors: [],
   textBoxes: [],
   rectangles: []
+};
+export const STARTING_MODE: Mode = {
+  type: 'PAN',
+  showCursor: false
 };

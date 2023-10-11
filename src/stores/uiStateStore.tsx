@@ -2,6 +2,7 @@ import React, { createContext, useContext, useRef } from 'react';
 import { createStore, useStore } from 'zustand';
 import { CoordsUtils, incrementZoom, decrementZoom } from 'src/utils';
 import { UiStateStore } from 'src/types';
+import { STARTING_MODE } from 'src/config';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
@@ -9,11 +10,7 @@ const initialState = () => {
       iconCategoriesState: [],
       disableInteractions: false,
       hideMainMenu: false,
-      mode: {
-        type: 'CURSOR',
-        showCursor: true,
-        mousedownItem: null
-      },
+      mode: STARTING_MODE,
       isMainMenuOpen: false,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
@@ -35,11 +32,7 @@ const initialState = () => {
         },
         resetUiState: () => {
           set({
-            mode: {
-              type: 'CURSOR',
-              showCursor: true,
-              mousedownItem: null
-            },
+            mode: STARTING_MODE,
             scroll: {
               position: CoordsUtils.zero(),
               offset: CoordsUtils.zero()
@@ -91,7 +84,7 @@ const initialState = () => {
             set({ mode: { type: 'INTERACTIONS_DISABLED', showCursor: false } });
           } else {
             set({
-              mode: { type: 'CURSOR', showCursor: true, mousedownItem: null }
+              mode: STARTING_MODE
             });
           }
         },
