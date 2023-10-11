@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { ModeActions, State } from 'src/types';
+import { ModeActions, State, SlimMouseEvent } from 'src/types';
 import { getMouse } from 'src/utils';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
@@ -35,20 +35,17 @@ export const useInteractionManager = () => {
   });
 
   const onMouseEvent = useCallback(
-    (e: MouseEvent | TouchEvent) => {
+    (e: SlimMouseEvent) => {
       if (!rendererRef.current || uiState.disableInteractions) return;
 
       const mode = modes[uiState.mode.type];
 
       const getModeFunction = () => {
         switch (e.type) {
-          case 'touchmove':
           case 'mousemove':
             return mode.mousemove;
-          case 'touchstart':
           case 'mousedown':
             return mode.mousedown;
-          case 'touchend':
           case 'mouseup':
             return mode.mouseup;
           default:
@@ -101,16 +98,49 @@ export const useInteractionManager = () => {
   useEffect(() => {
     const el = window;
 
+    const onTouchStart = (e: TouchEvent) => {
+      onMouseEvent({
+        ...e,
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY,
+        type: 'mousedown'
+      });
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      onMouseEvent({
+        ...e,
+        clientX: e.touches[0].clientX,
+        clientY: e.touches[0].clientY,
+        type: 'mousemove'
+      });
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      onMouseEvent({
+        ...e,
+        clientX: uiState.mouse.position.screen.x,
+        clientY: uiState.mouse.position.screen.y,
+        type: 'mouseup'
+      });
+    };
+
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
+    el.addEventListener('touchstart', onTouchStart);
+    el.addEventListener('touchmove', onTouchMove);
+    el.addEventListener('touchend', onTouchEnd);
 
     return () => {
       el.removeEventListener('mousemove', onMouseEvent);
       el.removeEventListener('mousedown', onMouseEvent);
       el.removeEventListener('mouseup', onMouseEvent);
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
     };
-  }, [onMouseEvent]);
+  }, [onMouseEvent, uiState.mouse.position.screen]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;

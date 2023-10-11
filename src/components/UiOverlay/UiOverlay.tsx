@@ -10,6 +10,7 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MainMenu } from 'src/components/MainMenu/MainMenu';
 import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
 import { useSceneStore } from 'src/stores/sceneStore';
+import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 
 export const UiOverlay = () => {
   const theme = useTheme();
@@ -22,6 +23,9 @@ export const UiOverlay = () => {
   );
   const disableInteractions = useUiStateStore((state) => {
     return state.disableInteractions;
+  });
+  const debugMode = useUiStateStore((state) => {
+    return state.debugMode;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -114,6 +118,21 @@ export const UiOverlay = () => {
           {sceneTitle}
         </Typography>
       </UiElement>
+
+      {debugMode && (
+        <UiElement
+          sx={{
+            position: 'absolute',
+            width: 350,
+            height: 400,
+            maxWidth: '100%',
+            left: appPadding.x,
+            bottom: appPadding.y * 2 + spacing(2)
+          }}
+        >
+          <DebugUtils />
+        </UiElement>
+      )}
     </>
   );
 };

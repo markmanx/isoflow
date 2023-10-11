@@ -9,7 +9,7 @@ import { Rectangles } from 'src/components/SceneLayers/Rectangles/Rectangles';
 import { Connectors } from 'src/components/SceneLayers/Connectors/Connectors';
 import { ConnectorLabels } from 'src/components/SceneLayers/ConnectorLabels/ConnectorLabels';
 import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
-import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
+import { SizeIndicator } from 'src/components/DebugUtils/SizeIndicator';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { TransformControlsManager } from 'src/components/TransformControlsManager/TransformControlsManager';
@@ -82,7 +82,7 @@ export const Renderer = () => {
       </SceneLayer>
       {debugMode && (
         <SceneLayer>
-          <DebugUtils />
+          <SizeIndicator />
         </SceneLayer>
       )}
       <SceneLayer>

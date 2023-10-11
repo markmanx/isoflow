@@ -25,3 +25,8 @@ export const ProjectionOrientationEnum = {
 } as const;
 
 export type BoundingBox = [Coords, Coords, Coords, Coords];
+
+export type SlimMouseEvent = Pick<
+  MouseEvent,
+  'clientX' | 'clientY' | 'target' | 'type'
+>;

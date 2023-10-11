@@ -23,7 +23,8 @@ import {
   ProjectionOrientationEnum,
   AnchorPositionsEnum,
   BoundingBox,
-  TextBox
+  TextBox,
+  SlimMouseEvent
 } from 'src/types';
 import {
   CoordsUtils,
@@ -250,7 +251,7 @@ interface GetMouse {
   zoom: number;
   scroll: Scroll;
   lastMouse: Mouse;
-  mouseEvent: MouseEvent | TouchEvent;
+  mouseEvent: SlimMouseEvent;
   rendererSize: Size;
 }
 
@@ -268,12 +269,7 @@ export const getMouse = ({
     y: componentOffset?.top ?? 0
   };
 
-  const clientX =
-    (mouseEvent as MouseEvent).clientX ??
-    (mouseEvent as TouchEvent).touches[0].clientX;
-  const clientY =
-    (mouseEvent as MouseEvent).clientY ??
-    (mouseEvent as TouchEvent).touches[0].clientY;
+  const { clientX, clientY } = mouseEvent;
 
   const mousePosition = {
     x: clientX - offset.x,
