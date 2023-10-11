@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useRef } from 'react';
 import { createStore, useStore } from 'zustand';
-import { CoordsUtils, incrementZoom, decrementZoom } from 'src/utils';
+import {
+  CoordsUtils,
+  incrementZoom,
+  decrementZoom,
+  getStartingMode
+} from 'src/utils';
 import { UiStateStore } from 'src/types';
-import { STARTING_MODE } from 'src/config';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
+      editorMode: 'EXPLORABLE_READONLY',
+      mode: getStartingMode('EXPLORABLE_READONLY'),
       iconCategoriesState: [],
       disableInteractions: false,
       hideMainMenu: false,
-      mode: STARTING_MODE,
       isMainMenuOpen: false,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
@@ -27,12 +32,15 @@ const initialState = () => {
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
       actions: {
+        setEditorMode: (mode) => {
+          set({ editorMode: mode, mode: getStartingMode(mode) });
+        },
         setIconCategoriesState: (iconCategoriesState) => {
           set({ iconCategoriesState });
         },
         resetUiState: () => {
           set({
-            mode: STARTING_MODE,
+            mode: getStartingMode(get().editorMode),
             scroll: {
               position: CoordsUtils.zero(),
               offset: CoordsUtils.zero()
@@ -44,9 +52,6 @@ const initialState = () => {
         },
         setMode: (mode) => {
           set({ mode });
-        },
-        setHideMainMenu: (state) => {
-          set({ hideMainMenu: state });
         },
         setIsMainMenuOpen: (isMainMenuOpen) => {
           set({ isMainMenuOpen, itemControls: null });
@@ -76,17 +81,6 @@ const initialState = () => {
         },
         setRendererSize: (rendererSize) => {
           set({ rendererSize });
-        },
-        setDisableInteractions: (isDisabled) => {
-          set({ disableInteractions: isDisabled });
-
-          if (isDisabled) {
-            set({ mode: { type: 'INTERACTIONS_DISABLED', showCursor: false } });
-          } else {
-            set({
-              mode: STARTING_MODE
-            });
-          }
         },
         setDebugMode: (debugMode) => {
           set({ debugMode });

@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import { Icon } from 'src/types';
+import { Icon, EditorModeEnum, Mode } from 'src/types';
 import { v4 as uuid } from 'uuid';
 
 export const generateId = () => {
@@ -62,4 +62,19 @@ export const categoriseIcons = (icons: Icon[]) => {
   });
 
   return categories;
+};
+
+export const getStartingMode = (
+  editorMode: keyof typeof EditorModeEnum
+): Mode => {
+  switch (editorMode) {
+    case 'EDITABLE':
+      return { type: 'CURSOR', showCursor: true, mousedownItem: null };
+    case 'EXPLORABLE_READONLY':
+      return { type: 'PAN', showCursor: false };
+    case 'NON_INTERACTIVE':
+      return { type: 'INTERACTIONS_DISABLED', showCursor: false };
+    default:
+      throw new Error('Invalid editor mode.');
+  }
 };

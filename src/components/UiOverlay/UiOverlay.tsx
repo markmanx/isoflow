@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Box, useTheme, Typography } from '@mui/material';
+import { EditorModeEnum } from 'src/types';
 import { UiElement } from 'components/UiElement/UiElement';
 import { toPx } from 'src/utils';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
@@ -12,6 +13,34 @@ import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 
+const ToolsEnum = {
+  MAIN_MENU: 'MAIN_MENU',
+  ZOOM_CONTROLS: 'ZOOM_CONTROLS',
+  TOOL_MENU: 'TOOL_MENU',
+  ITEM_CONTROLS: 'ITEM_CONTROLS'
+} as const;
+
+interface EditorModeMapping {
+  [k: string]: (keyof typeof ToolsEnum)[];
+}
+
+const EDITOR_MODE_MAPPING: EditorModeMapping = {
+  [EditorModeEnum.EDITABLE]: [
+    'ITEM_CONTROLS',
+    'ZOOM_CONTROLS',
+    'TOOL_MENU',
+    'MAIN_MENU'
+  ],
+  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS'],
+  [EditorModeEnum.NON_INTERACTIVE]: []
+};
+
+const getEditorModeMapping = (editorMode: keyof typeof EditorModeEnum) => {
+  const availableUiFeatures = EDITOR_MODE_MAPPING[editorMode];
+
+  return availableUiFeatures;
+};
+
 export const UiOverlay = () => {
   const theme = useTheme();
   const { appPadding } = theme.customVars;
@@ -21,9 +50,6 @@ export const UiOverlay = () => {
     },
     [theme]
   );
-  const disableInteractions = useUiStateStore((state) => {
-    return state.disableInteractions;
-  });
   const debugMode = useUiStateStore((state) => {
     return state.debugMode;
   });
@@ -39,15 +65,16 @@ export const UiOverlay = () => {
   const sceneTitle = useSceneStore((state) => {
     return state.title;
   });
-  const hideMainMenu = useUiStateStore((state) => {
-    return state.hideMainMenu;
+  const editorMode = useUiStateStore((state) => {
+    return state.editorMode;
   });
-
-  if (disableInteractions) return null;
+  const availableTools = useMemo(() => {
+    return getEditorModeMapping(editorMode);
+  }, [editorMode]);
 
   return (
     <>
-      {itemControls && (
+      {availableTools.includes('ITEM_CONTROLS') && itemControls && (
         <UiElement
           sx={{
             position: 'absolute',
@@ -65,33 +92,38 @@ export const UiOverlay = () => {
         </UiElement>
       )}
 
-      <Box
-        sx={{
-          position: 'absolute',
-          right: appPadding.x,
-          top: appPadding.y
-        }}
-      >
-        <ToolMenu />
-      </Box>
-
-      {mode.type === 'PLACE_ELEMENT' && mode.icon && (
-        <SceneLayer>
-          <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
-        </SceneLayer>
+      {availableTools.includes('TOOL_MENU') && (
+        <>
+          <Box
+            sx={{
+              position: 'absolute',
+              right: appPadding.x,
+              top: appPadding.y
+            }}
+          >
+            <ToolMenu />
+          </Box>
+          {mode.type === 'PLACE_ELEMENT' && mode.icon && (
+            <SceneLayer>
+              <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
+            </SceneLayer>
+          )}
+        </>
       )}
 
-      <Box
-        sx={{
-          position: 'absolute',
-          left: appPadding.x,
-          bottom: appPadding.y
-        }}
-      >
-        <ZoomControls />
-      </Box>
+      {availableTools.includes('ZOOM_CONTROLS') && (
+        <Box
+          sx={{
+            position: 'absolute',
+            left: appPadding.x,
+            bottom: appPadding.y
+          }}
+        >
+          <ZoomControls />
+        </Box>
+      )}
 
-      {!hideMainMenu && (
+      {availableTools.includes('MAIN_MENU') && (
         <Box
           sx={{
             position: 'absolute',

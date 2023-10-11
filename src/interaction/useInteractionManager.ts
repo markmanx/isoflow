@@ -49,7 +49,8 @@ export const useInteractionManager = () => {
 
   const onMouseEvent = useCallback(
     (e: SlimMouseEvent) => {
-      if (!rendererRef.current || uiState.disableInteractions) return;
+      if (!rendererRef.current || uiState.editorMode === 'NON_INTERACTIVE')
+        return;
 
       const mode = modes[uiState.mode.type];
       const modeFunction = getModeFunction(mode, e);

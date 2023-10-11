@@ -9,6 +9,7 @@ import {
   NodeInput,
   ConnectorInput,
   RectangleInput,
+  IsoflowProps,
   InitialScene
 } from 'src/types';
 import { sceneToSceneInput } from 'src/utils';
@@ -22,25 +23,15 @@ import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
 import { INITIAL_SCENE } from 'src/config';
 import { useIconCategories } from './hooks/useIconCategories';
 
-interface Props {
-  initialScene?: InitialScene;
-  disableInteractions?: boolean;
-  onSceneUpdated?: (scene: SceneInput) => void;
-  width?: number | string;
-  height?: number | string;
-  debugMode?: boolean;
-  hideMainMenu?: boolean;
-}
-
 const App = ({
   initialScene,
   width = '100%',
   height = '100%',
-  disableInteractions: disableInteractionsProp,
   onSceneUpdated,
   debugMode = false,
-  hideMainMenu = false
-}: Props) => {
+  hideMainMenu = false,
+  editorMode = 'EDITABLE'
+}: IsoflowProps) => {
   const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
   const [isReady, setIsReady] = useState(false);
   useWindowUtils();
@@ -59,16 +50,9 @@ const App = ({
   const { setIconCategoriesState } = useIconCategories();
 
   useEffect(() => {
-    uiActions.setHideMainMenu(hideMainMenu);
     uiActions.setZoom(initialScene?.zoom ?? 1);
-    uiActions.setDisableInteractions(Boolean(disableInteractionsProp));
-  }, [
-    initialScene?.zoom,
-    disableInteractionsProp,
-    sceneActions,
-    uiActions,
-    hideMainMenu
-  ]);
+    uiActions.setEditorMode(editorMode);
+  }, [initialScene?.zoom, editorMode, sceneActions, uiActions, hideMainMenu]);
 
   useEffect(() => {
     if (!initialScene || prevInitialScene.current === initialScene) return;
@@ -114,7 +98,7 @@ const App = ({
   );
 };
 
-export const Isoflow = (props: Props) => {
+export const Isoflow = (props: IsoflowProps) => {
   return (
     <ThemeProvider theme={theme}>
       <SceneProvider>

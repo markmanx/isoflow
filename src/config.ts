@@ -49,7 +49,3 @@ export const INITIAL_SCENE: SceneInput = {
   textBoxes: [],
   rectangles: []
 };
-export const STARTING_MODE: Mode = {
-  type: 'PAN',
-  showCursor: false
-};

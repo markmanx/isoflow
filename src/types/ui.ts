@@ -1,4 +1,4 @@
-import { Coords, Size } from './common';
+import { Coords, Size, EditorModeEnum } from './common';
 import { SceneItem, Connector, SceneItemReference } from './scene';
 import { IconInput } from './inputs';
 
@@ -154,9 +154,8 @@ export type IconCollectionStateWithIcons = IconCollectionState & {
 };
 
 export interface UiState {
+  editorMode: keyof typeof EditorModeEnum;
   iconCategoriesState: IconCollectionState[];
-  disableInteractions: boolean;
-  hideMainMenu: boolean;
   mode: Mode;
   isMainMenuOpen: boolean;
   itemControls: ItemControls;
@@ -169,10 +168,10 @@ export interface UiState {
 }
 
 export interface UiStateActions {
+  setEditorMode: (mode: keyof typeof EditorModeEnum) => void;
   setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
   resetUiState: () => void;
   setMode: (mode: Mode) => void;
-  setHideMainMenu: (state: boolean) => void;
   incrementZoom: () => void;
   decrementZoom: () => void;
   setIsMainMenuOpen: (isOpen: boolean) => void;
@@ -182,7 +181,6 @@ export interface UiStateActions {
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
-  setDisableInteractions: (isDisabled: boolean) => void;
   setDebugMode: (enabled: boolean) => void;
 }
 

@@ -1,9 +1,3 @@
-import type { SceneInput } from './inputs';
-
-export type InitialScene = Partial<SceneInput> & {
-  zoom?: number;
-};
-
 export interface Coords {
   x: number;
   y: number;
@@ -30,3 +24,9 @@ export type SlimMouseEvent = Pick<
   MouseEvent,
   'clientX' | 'clientY' | 'target' | 'type'
 >;
+
+export const EditorModeEnum = {
+  NON_INTERACTIVE: 'NON_INTERACTIVE',
+  EXPLORABLE_READONLY: 'EXPLORABLE_READONLY',
+  EDITABLE: 'EDITABLE'
+} as const;
