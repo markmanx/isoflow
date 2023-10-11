@@ -24,6 +24,19 @@ const modes: { [k in string]: ModeActions } = {
   TEXTBOX: TextBox
 };
 
+const getModeFunction = (mode: ModeActions, e: SlimMouseEvent) => {
+  switch (e.type) {
+    case 'mousemove':
+      return mode.mousemove;
+    case 'mousedown':
+      return mode.mousedown;
+    case 'mouseup':
+      return mode.mouseup;
+    default:
+      return null;
+  }
+};
+
 export const useInteractionManager = () => {
   const rendererRef = useRef<HTMLElement>();
   const reducerTypeRef = useRef<string>();
@@ -39,21 +52,7 @@ export const useInteractionManager = () => {
       if (!rendererRef.current || uiState.disableInteractions) return;
 
       const mode = modes[uiState.mode.type];
-
-      const getModeFunction = () => {
-        switch (e.type) {
-          case 'mousemove':
-            return mode.mousemove;
-          case 'mousedown':
-            return mode.mousedown;
-          case 'mouseup':
-            return mode.mouseup;
-          default:
-            return null;
-        }
-      };
-
-      const modeFunction = getModeFunction();
+      const modeFunction = getModeFunction(mode, e);
 
       if (!modeFunction) return;
 
@@ -140,7 +139,7 @@ export const useInteractionManager = () => {
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
     };
-  }, [onMouseEvent, uiState.mouse.position.screen]);
+  }, [onMouseEvent, uiState.mouse.position.screen, uiState.scroll]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
