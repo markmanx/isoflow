@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { Box, SxProps } from '@mui/material';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   children?: React.ReactNode;
@@ -7,24 +8,31 @@ interface Props {
   sx?: SxProps;
 }
 
-export const SceneLayer = forwardRef(
-  ({ children, order = 0, sx }: Props, ref) => {
-    return (
-      <Box
-        ref={ref}
-        sx={{
-          position: 'absolute',
-          zIndex: order,
-          top: '50%',
-          left: '50%',
-          width: 0,
-          height: 0,
-          userSelect: 'none',
-          ...sx
-        }}
-      >
-        {children}
-      </Box>
-    );
-  }
-);
+export const SceneLayer = ({ children, order = 0, sx }: Props) => {
+  const scroll = useUiStateStore((state) => {
+    return state.scroll;
+  });
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
+
+  return (
+    <Box
+      sx={{
+        position: 'absolute',
+        zIndex: order,
+        top: '50%',
+        left: '50%',
+        width: 0,
+        height: 0,
+        userSelect: 'none',
+        ...sx
+      }}
+      style={{
+        transform: `translate(${scroll.position.x}px, ${scroll.position.y}px) scale(${zoom})`
+      }}
+    >
+      {children}
+    </Box>
+  );
+};

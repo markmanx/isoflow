@@ -1,4 +1,4 @@
-import { Size, Coords, SceneInput, Connector, Mode } from 'src/types';
+import { Size, Coords, SceneInput, Connector } from 'src/types';
 import { customVars } from './styles/theme';
 
 // TODO: This file could do with better organisation and convention for easier reading.
@@ -6,6 +6,10 @@ export const UNPROJECTED_TILE_SIZE = 100;
 export const TILE_PROJECTION_MULTIPLIERS: Size = {
   width: 1.415,
   height: 0.819
+};
+export const PROJECTED_TILE_SIZE = {
+  width: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.width,
+  height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height
 };
 export const DEFAULT_COLOR = customVars.customPalette.blue;
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';

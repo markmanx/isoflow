@@ -9,7 +9,6 @@ import {
   getAllAnchors
 } from 'src/utils';
 import { Circle } from 'src/components/Circle/Circle';
-import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { Svg } from 'src/components/Svg/Svg';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
@@ -23,12 +22,6 @@ export const Connector = ({ connector }: Props) => {
   const { css, pxSize } = useIsoProjection({
     ...connector.path.rectangle
   });
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
-  const unprojectedTileSize = useMemo(() => {
-    return UNPROJECTED_TILE_SIZE * zoom;
-  }, [zoom]);
   const nodes = useSceneStore((state) => {
     return state.nodes;
   });
@@ -38,18 +31,18 @@ export const Connector = ({ connector }: Props) => {
 
   const drawOffset = useMemo(() => {
     return {
-      x: unprojectedTileSize / 2,
-      y: unprojectedTileSize / 2
+      x: UNPROJECTED_TILE_SIZE / 2,
+      y: UNPROJECTED_TILE_SIZE / 2
     };
-  }, [unprojectedTileSize]);
+  }, []);
 
   const pathString = useMemo(() => {
     return connector.path.tiles.reduce((acc, tile) => {
-      return `${acc} ${tile.x * unprojectedTileSize + drawOffset.x},${
-        tile.y * unprojectedTileSize + drawOffset.y
+      return `${acc} ${tile.x * UNPROJECTED_TILE_SIZE + drawOffset.x},${
+        tile.y * UNPROJECTED_TILE_SIZE + drawOffset.y
       }`;
     }, '');
-  }, [unprojectedTileSize, connector.path.tiles, drawOffset]);
+  }, [connector.path.tiles, drawOffset]);
 
   const anchorPositions = useMemo(() => {
     return connector.anchors.map((anchor) => {
@@ -57,21 +50,18 @@ export const Connector = ({ connector }: Props) => {
 
       return {
         id: anchor.id,
-        x: (connector.path.rectangle.from.x - position.x) * unprojectedTileSize,
-        y: (connector.path.rectangle.from.y - position.y) * unprojectedTileSize
+        x:
+          (connector.path.rectangle.from.x - position.x) *
+          UNPROJECTED_TILE_SIZE,
+        y:
+          (connector.path.rectangle.from.y - position.y) * UNPROJECTED_TILE_SIZE
       };
     });
-  }, [
-    connector.path.rectangle,
-    connector.anchors,
-    nodes,
-    connectors,
-    unprojectedTileSize
-  ]);
+  }, [connector.path.rectangle, connector.anchors, nodes, connectors]);
 
   const connectorWidthPx = useMemo(() => {
-    return (unprojectedTileSize / 100) * connector.width;
-  }, [connector.width, unprojectedTileSize]);
+    return (UNPROJECTED_TILE_SIZE / 100) * connector.width;
+  }, [connector.width]);
 
   const strokeDashArray = useMemo(() => {
     switch (connector.style) {
@@ -121,16 +111,16 @@ export const Connector = ({ connector }: Props) => {
             <g key={anchor.id}>
               <Circle
                 tile={CoordsUtils.add(anchor, drawOffset)}
-                radius={18 * zoom}
+                radius={18}
                 fill={theme.palette.common.white}
                 fillOpacity={0.7}
               />
               <Circle
                 tile={CoordsUtils.add(anchor, drawOffset)}
-                radius={12 * zoom}
+                radius={12}
                 stroke={theme.palette.common.black}
                 fill={theme.palette.common.white}
-                strokeWidth={6 * zoom}
+                strokeWidth={6}
               />
             </g>
           );

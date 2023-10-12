@@ -4,9 +4,10 @@ import { Card, SxProps } from '@mui/material';
 interface Props {
   children: React.ReactNode;
   sx?: SxProps;
+  style?: React.CSSProperties;
 }
 
-export const UiElement = ({ children, sx }: Props) => {
+export const UiElement = ({ children, sx, style }: Props) => {
   return (
     <Card
       sx={{
@@ -15,6 +16,7 @@ export const UiElement = ({ children, sx }: Props) => {
         borderColor: 'grey.400',
         ...sx
       }}
+      style={style}
     >
       {children}
     </Card>

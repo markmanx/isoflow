@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { useTileSize } from 'src/hooks/useTileSize';
+import { PROJECTED_TILE_SIZE } from 'src/config';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 
 export const IsometricIcon = ({ url, onImageLoaded }: Props) => {
   const ref = useRef();
-  const { projectedTileSize } = useTileSize();
   const { size, observe, disconnect } = useResizeObserver();
 
   useEffect(() => {
@@ -29,7 +28,7 @@ export const IsometricIcon = ({ url, onImageLoaded }: Props) => {
       src={url}
       sx={{
         position: 'absolute',
-        width: projectedTileSize.width * 0.8,
+        width: PROJECTED_TILE_SIZE.width * 0.8,
         top: -size.height,
         left: -size.width / 2,
         pointerEvents: 'none'

@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from 'react';
 import { Box, useTheme, Typography } from '@mui/material';
 import { EditorModeEnum } from 'src/types';
 import { UiElement } from 'components/UiElement/UiElement';
-import { toPx } from 'src/utils';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { DragAndDrop } from 'src/components/DragAndDrop/DragAndDrop';
 import { ItemControlsManager } from 'src/components/ItemControls/ItemControlsManager';
@@ -71,9 +70,21 @@ export const UiOverlay = () => {
   const availableTools = useMemo(() => {
     return getEditorModeMapping(editorMode);
   }, [editorMode]);
+  const rendererSize = useUiStateStore((state) => {
+    return state.rendererSize;
+  });
 
   return (
-    <>
+    <Box
+      sx={{
+        position: 'absolute',
+        width: 0,
+        height: 0,
+        top: 0,
+        left: 0,
+        zIndex: 1
+      }}
+    >
       {availableTools.includes('ITEM_CONTROLS') && itemControls && (
         <UiElement
           sx={{
@@ -81,11 +92,13 @@ export const UiOverlay = () => {
             top: appPadding.y * 2 + spacing(2),
             left: appPadding.x,
             width: '360px',
-            maxHeight: `calc(100% - ${toPx(appPadding.y * 6)})`,
             overflowY: 'scroll',
             '&::-webkit-scrollbar': {
               display: 'none'
             }
+          }}
+          style={{
+            maxHeight: rendererSize.height - appPadding.y * 6
           }}
         >
           <ItemControlsManager />
@@ -95,9 +108,10 @@ export const UiOverlay = () => {
       {availableTools.includes('TOOL_MENU') && (
         <>
           <Box
-            sx={{
+            style={{
               position: 'absolute',
-              right: appPadding.x,
+              transform: 'translateX(-100%)',
+              left: rendererSize.width - appPadding.x,
               top: appPadding.y
             }}
           >
@@ -113,10 +127,11 @@ export const UiOverlay = () => {
 
       {availableTools.includes('ZOOM_CONTROLS') && (
         <Box
-          sx={{
+          style={{
             position: 'absolute',
-            left: appPadding.x,
-            bottom: appPadding.y
+            transformOrigin: 'bottom left',
+            top: rendererSize.height - appPadding.y * 2,
+            left: appPadding.x
           }}
         >
           <ZoomControls />
@@ -135,21 +150,32 @@ export const UiOverlay = () => {
         </Box>
       )}
 
-      <UiElement
+      <Box
         sx={{
           position: 'absolute',
-          bottom: appPadding.y,
-          left: '50%',
+          display: 'flex',
+          justifyContent: 'center',
+          left: rendererSize.width / 2,
+          top: rendererSize.height - appPadding.y * 2,
+          width: rendererSize.width - 500,
+          height: appPadding.y,
           transform: 'translateX(-50%)',
-          px: 2,
-          py: 1,
           pointerEvents: 'none'
         }}
       >
-        <Typography fontWeight={600} color="text.secondary">
-          {sceneTitle}
-        </Typography>
-      </UiElement>
+        <UiElement
+          sx={{
+            display: 'inline-flex',
+            px: 2,
+            alignItems: 'center',
+            height: '100%'
+          }}
+        >
+          <Typography fontWeight={600} color="text.secondary">
+            {sceneTitle}
+          </Typography>
+        </UiElement>
+      </Box>
 
       {debugMode && (
         <UiElement
@@ -165,6 +191,6 @@ export const UiOverlay = () => {
           <DebugUtils />
         </UiElement>
       )}
-    </>
+    </Box>
   );
 };

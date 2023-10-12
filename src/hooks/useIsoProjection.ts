@@ -7,7 +7,6 @@ import {
 } from 'src/types';
 import { getBoundingBox, getIsoProjectionCss } from 'src/utils';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useGetTilePosition } from './useGetTilePosition';
 
 interface Props {
@@ -28,9 +27,6 @@ export const useIsoProjection = ({
   gridSize: Size;
   pxSize: Size;
 } => {
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
   const { getTilePosition } = useGetTilePosition();
 
   const gridSize = useMemo(() => {
@@ -59,10 +55,10 @@ export const useIsoProjection = ({
 
   const pxSize = useMemo(() => {
     return {
-      width: gridSize.width * UNPROJECTED_TILE_SIZE * zoom,
-      height: gridSize.height * UNPROJECTED_TILE_SIZE * zoom
+      width: gridSize.width * UNPROJECTED_TILE_SIZE,
+      height: gridSize.height * UNPROJECTED_TILE_SIZE
     };
-  }, [zoom, gridSize]);
+  }, [gridSize]);
 
   return {
     css: {

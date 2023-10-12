@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import { Box, Button } from '@mui/material';
 import { MoreHoriz as ReadMoreIcon } from '@mui/icons-material';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
-import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useTileSize } from 'src/hooks/useTileSize';
+import { PROJECTED_TILE_SIZE } from 'src/config';
 import { Gradient } from 'src/components/Gradient/Gradient';
 
 const MAX_LABEL_HEIGHT = 80;
@@ -21,13 +20,9 @@ export const LabelContainer = ({
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>();
   const { observe, size: contentSize } = useResizeObserver();
-  const zoom = useUiStateStore((state) => {
-    return state.zoom;
-  });
-  const { projectedTileSize } = useTileSize();
   const yOffset = useMemo(() => {
-    return projectedTileSize.height / 2;
-  }, [projectedTileSize]);
+    return PROJECTED_TILE_SIZE.height / 2;
+  }, []);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -39,8 +34,7 @@ export const LabelContainer = ({
     <Box
       sx={{
         position: 'absolute',
-        transformOrigin: 'top center',
-        transform: `scale(${zoom})`
+        transformOrigin: 'top center'
       }}
     >
       <Box

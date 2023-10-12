@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { Node as NodeI, TileOriginEnum } from 'src/types';
-import { useTileSize } from 'src/hooks/useTileSize';
+import { PROJECTED_TILE_SIZE } from 'src/config';
 import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useIcon } from 'src/hooks/useIcon';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
@@ -14,7 +14,6 @@ interface Props {
 
 export const Node = ({ node, order }: Props) => {
   const theme = useTheme();
-  const { projectedTileSize } = useTileSize();
   const { getTilePosition } = useGetTilePosition();
   const { iconComponent } = useIcon(node.icon);
 
@@ -51,7 +50,7 @@ export const Node = ({ node, order }: Props) => {
             <Box
               style={{
                 position: 'absolute',
-                top: -projectedTileSize.height
+                top: -PROJECTED_TILE_SIZE.height
               }}
             />
             <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>

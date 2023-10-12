@@ -1,14 +1,10 @@
 import { Coords, Size, Scroll } from 'src/types';
-import { CoordsUtils } from 'src/utils';
-import {
-  getGridSubset,
-  isWithinBounds,
-  screenToIso,
-  getProjectedTileSize
-} from '../renderer';
+import { CoordsUtils, SizeUtils } from 'src/utils';
+import { PROJECTED_TILE_SIZE } from 'src/config';
+import { getGridSubset, isWithinBounds, screenToIso } from '../renderer';
 
 const getRendererSize = (tileSize: Size, zoom: number = 1): Size => {
-  const projectedTileSize = getProjectedTileSize({ zoom });
+  const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
 
   return {
     width: projectedTileSize.width * tileSize.width,

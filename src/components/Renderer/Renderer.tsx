@@ -52,6 +52,7 @@ export const Renderer = () => {
         left: 0,
         width: '100%',
         height: '100%',
+        zIndex: 0,
         bgcolor: (theme) => {
           return theme.customVars.customPalette.diagramBg;
         }
@@ -60,9 +61,17 @@ export const Renderer = () => {
       <SceneLayer>
         <Rectangles />
       </SceneLayer>
-      <SceneLayer sx={{ width: '100%', height: '100%', top: 0, left: 0 }}>
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0
+        }}
+      >
         <Grid />
-      </SceneLayer>
+      </Box>
       {mode.showCursor && (
         <SceneLayer>
           <Cursor />
@@ -86,9 +95,10 @@ export const Renderer = () => {
         <TransformControlsManager />
       </SceneLayer>
       {/* Interaction layer: this is where events are detected */}
-      <SceneLayer
+      <Box
         ref={containerRef}
         sx={{
+          position: 'absolute',
           left: 0,
           top: 0,
           width: '100%',

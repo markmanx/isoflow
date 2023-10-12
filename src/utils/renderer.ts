@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import {
-  TILE_PROJECTION_MULTIPLIERS,
   UNPROJECTED_TILE_SIZE,
+  PROJECTED_TILE_SIZE,
   ZOOM_INCREMENT,
   MAX_ZOOM,
   MIN_ZOOM,
@@ -28,23 +28,12 @@ import {
 } from 'src/types';
 import {
   CoordsUtils,
+  SizeUtils,
   clamp,
   roundToOneDecimalPlace,
   findPath,
   toPx
 } from 'src/utils';
-
-interface GetProjectedTileSize {
-  zoom: number;
-}
-
-// Gets the size of a tile at a given zoom level
-export const getProjectedTileSize = ({ zoom }: GetProjectedTileSize): Size => {
-  return {
-    width: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.width * zoom,
-    height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height * zoom
-  };
-};
 
 interface ScreenToIso {
   mouse: Coords;
@@ -60,7 +49,7 @@ export const screenToIso = ({
   scroll,
   rendererSize
 }: ScreenToIso) => {
-  const projectedTileSize = getProjectedTileSize({ zoom });
+  const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
   const halfW = projectedTileSize.width / 2;
   const halfH = projectedTileSize.height / 2;
 
@@ -85,25 +74,19 @@ export const screenToIso = ({
 
 interface GetTilePosition {
   tile: Coords;
-  scroll: Scroll;
-  zoom: number;
   origin?: TileOriginEnum;
-  rendererSize: Size;
 }
 
 export const getTilePosition = ({
   tile,
-  scroll,
-  zoom,
   origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
-  const projectedTileSize = getProjectedTileSize({ zoom });
-  const halfW = projectedTileSize.width / 2;
-  const halfH = projectedTileSize.height / 2;
+  const halfW = PROJECTED_TILE_SIZE.width / 2;
+  const halfH = PROJECTED_TILE_SIZE.height / 2;
 
   const position: Coords = {
-    x: halfW * tile.x - halfW * tile.y + scroll.position.x,
-    y: -(halfH * tile.x + halfH * tile.y) + scroll.position.y
+    x: halfW * tile.x - halfW * tile.y,
+    y: -(halfH * tile.x + halfH * tile.y)
   };
 
   switch (origin) {

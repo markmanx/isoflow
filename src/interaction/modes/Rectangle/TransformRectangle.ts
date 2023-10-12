@@ -76,9 +76,6 @@ export const TransformRectangle: ModeActions = {
     const anchorPositions = rectangleBounds.map((corner, i) => {
       return getTilePosition({
         tile: corner,
-        scroll: uiState.scroll,
-        zoom: uiState.zoom,
-        rendererSize: uiState.rendererSize,
         origin: outermostCornerPositions[i]
       });
     });

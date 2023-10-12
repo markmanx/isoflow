@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import gridTileSvg from 'src/assets/grid-tile-bg.svg';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { getProjectedTileSize } from 'src/utils';
+import { PROJECTED_TILE_SIZE } from 'src/config';
+import { SizeUtils } from 'src/utils/SizeUtils';
 
 export const Grid = () => {
   const scroll = useUiStateStore((state) => {
@@ -12,7 +13,7 @@ export const Grid = () => {
     return state.zoom;
   });
   const projectedTileSize = useMemo(() => {
-    return getProjectedTileSize({ zoom });
+    return SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
   }, [zoom]);
 
   return (
