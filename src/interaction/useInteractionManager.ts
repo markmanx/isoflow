@@ -49,8 +49,7 @@ export const useInteractionManager = () => {
 
   const onMouseEvent = useCallback(
     (e: SlimMouseEvent) => {
-      if (!rendererRef.current || uiState.editorMode === 'NON_INTERACTIVE')
-        return;
+      if (!rendererRef.current) return;
 
       const mode = modes[uiState.mode.type];
       const modeFunction = getModeFunction(mode, e);
@@ -96,13 +95,15 @@ export const useInteractionManager = () => {
   );
 
   useEffect(() => {
+    if (uiState.editorMode === 'NON_INTERACTIVE') return;
+
     const el = window;
 
     const onTouchStart = (e: TouchEvent) => {
       onMouseEvent({
         ...e,
-        clientX: e.touches[0].clientX,
-        clientY: e.touches[0].clientY,
+        clientX: Math.floor(e.touches[0].clientX),
+        clientY: Math.floor(e.touches[0].clientY),
         type: 'mousedown'
       });
     };
@@ -110,8 +111,8 @@ export const useInteractionManager = () => {
     const onTouchMove = (e: TouchEvent) => {
       onMouseEvent({
         ...e,
-        clientX: e.touches[0].clientX,
-        clientY: e.touches[0].clientY,
+        clientX: Math.floor(e.touches[0].clientX),
+        clientY: Math.floor(e.touches[0].clientY),
         type: 'mousemove'
       });
     };
@@ -119,8 +120,8 @@ export const useInteractionManager = () => {
     const onTouchEnd = (e: TouchEvent) => {
       onMouseEvent({
         ...e,
-        clientX: uiState.mouse.position.screen.x,
-        clientY: uiState.mouse.position.screen.y,
+        clientX: 0,
+        clientY: 0,
         type: 'mouseup'
       });
     };
@@ -140,7 +141,7 @@ export const useInteractionManager = () => {
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
     };
-  }, [onMouseEvent, uiState.mouse.position.screen, uiState.scroll]);
+  }, [uiState.editorMode, onMouseEvent]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
