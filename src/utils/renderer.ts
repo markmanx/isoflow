@@ -95,22 +95,15 @@ export const getTilePosition = ({
   tile,
   scroll,
   zoom,
-  origin = TileOriginEnum.CENTER,
-  rendererSize
+  origin = TileOriginEnum.CENTER
 }: GetTilePosition) => {
   const projectedTileSize = getProjectedTileSize({ zoom });
   const halfW = projectedTileSize.width / 2;
   const halfH = projectedTileSize.height / 2;
 
   const position: Coords = {
-    x:
-      rendererSize.width * 0.5 +
-      (halfW * tile.x - halfW * tile.y) +
-      scroll.position.x,
-    y:
-      rendererSize.height * 0.5 -
-      (halfH * tile.x + halfH * tile.y) +
-      scroll.position.y
+    x: halfW * tile.x - halfW * tile.y + scroll.position.x,
+    y: -(halfH * tile.x + halfH * tile.y) + scroll.position.y
   };
 
   switch (origin) {

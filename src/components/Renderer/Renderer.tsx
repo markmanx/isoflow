@@ -60,7 +60,7 @@ export const Renderer = () => {
       <SceneLayer>
         <Rectangles />
       </SceneLayer>
-      <SceneLayer>
+      <SceneLayer sx={{ width: '100%', height: '100%', top: 0, left: 0 }}>
         <Grid />
       </SceneLayer>
       {mode.showCursor && (
@@ -77,9 +77,6 @@ export const Renderer = () => {
       <SceneLayer>
         <ConnectorLabels />
       </SceneLayer>
-      <SceneLayer>
-        <Nodes />
-      </SceneLayer>
       {debugMode && (
         <SceneLayer>
           <SizeIndicator />
@@ -89,7 +86,18 @@ export const Renderer = () => {
         <TransformControlsManager />
       </SceneLayer>
       {/* Interaction layer: this is where events are detected */}
-      <SceneLayer ref={containerRef} />
+      <SceneLayer
+        ref={containerRef}
+        sx={{
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%'
+        }}
+      />
+      <SceneLayer>
+        <Nodes />
+      </SceneLayer>
     </Box>
   );
 };

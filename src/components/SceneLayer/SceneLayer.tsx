@@ -1,25 +1,30 @@
 import React, { forwardRef } from 'react';
-import { Box } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 
 interface Props {
   children?: React.ReactNode;
   order?: number;
+  sx?: SxProps;
 }
 
-export const SceneLayer = forwardRef(({ children, order = 0 }: Props, ref) => {
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        position: 'absolute',
-        zIndex: order,
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%'
-      }}
-    >
-      {children}
-    </Box>
-  );
-});
+export const SceneLayer = forwardRef(
+  ({ children, order = 0, sx }: Props, ref) => {
+    return (
+      <Box
+        ref={ref}
+        sx={{
+          position: 'absolute',
+          zIndex: order,
+          top: '50%',
+          left: '50%',
+          width: 0,
+          height: 0,
+          userSelect: 'none',
+          ...sx
+        }}
+      >
+        {children}
+      </Box>
+    );
+  }
+);

@@ -105,8 +105,7 @@ export const LabelContainer = ({
                 fontSize: '0.7em',
                 bottom: 5,
                 right: 5,
-                color: 'common.white',
-                bgcolor: 'grey.400'
+                color: 'common.white'
               }}
             >
               <ReadMoreIcon sx={{ color: 'common.white' }} />

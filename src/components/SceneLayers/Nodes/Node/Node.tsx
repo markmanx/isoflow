@@ -47,11 +47,7 @@ export const Node = ({ node, order }: Props) => {
         }}
       >
         {(node.label || description) && (
-          <Box
-            sx={{
-              position: 'absolute'
-            }}
-          >
+          <>
             <Box
               style={{
                 position: 'absolute',
@@ -59,7 +55,9 @@ export const Node = ({ node, order }: Props) => {
               }}
             />
             <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>
-              <Typography fontWeight={600}>{node.label}</Typography>
+              {node.label && (
+                <Typography fontWeight={600}>{node.label}</Typography>
+              )}
               {description && (
                 <Box sx={{ pt: 0.2, width: 200 }}>
                   <MarkdownEditor
@@ -72,12 +70,13 @@ export const Node = ({ node, order }: Props) => {
                 </Box>
               )}
             </LabelContainer>
-          </Box>
+          </>
         )}
         {iconComponent && (
           <Box
             sx={{
-              position: 'absolute'
+              position: 'absolute',
+              pointerEvents: 'none'
             }}
           >
             {iconComponent}
