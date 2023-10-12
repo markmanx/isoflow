@@ -30,6 +30,5 @@ export interface IsoflowProps {
   width?: number | string;
   height?: number | string;
   debugMode?: boolean;
-  hideMainMenu?: boolean;
   editorMode?: keyof typeof EditorModeEnum;
 }
