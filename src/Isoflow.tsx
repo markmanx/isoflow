@@ -28,7 +28,7 @@ const App = ({
   width = '100%',
   height = '100%',
   onSceneUpdated,
-  debugMode = false,
+  enableDebugTools = false,
   hideMainMenu = false,
   editorMode = 'EDITABLE'
 }: IsoflowProps) => {
@@ -77,8 +77,8 @@ const App = ({
   }, [scene, onSceneUpdated, isReady]);
 
   useEffect(() => {
-    uiActions.setDebugMode(debugMode);
-  }, [debugMode, uiActions]);
+    uiActions.setenableDebugTools(enableDebugTools);
+  }, [enableDebugTools, uiActions]);
 
   return (
     <>

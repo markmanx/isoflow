@@ -29,6 +29,6 @@ export interface IsoflowProps {
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
   height?: number | string;
-  debugMode?: boolean;
+  enableDebugTools?: boolean;
   editorMode?: keyof typeof EditorModeEnum;
 }

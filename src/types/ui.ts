@@ -164,7 +164,7 @@ export interface UiState {
   scroll: Scroll;
   mouse: Mouse;
   rendererSize: Size;
-  debugMode: boolean;
+  enableDebugTools: boolean;
 }
 
 export interface UiStateActions {
@@ -181,7 +181,7 @@ export interface UiStateActions {
   setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererSize: (rendererSize: Size) => void;
-  setDebugMode: (enabled: boolean) => void;
+  setenableDebugTools: (enabled: boolean) => void;
 }
 
 export type UiStateStore = UiState & {

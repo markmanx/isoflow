@@ -49,8 +49,8 @@ export const UiOverlay = () => {
     },
     [theme]
   );
-  const debugMode = useUiStateStore((state) => {
-    return state.debugMode;
+  const enableDebugTools = useUiStateStore((state) => {
+    return state.enableDebugTools;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -177,7 +177,7 @@ export const UiOverlay = () => {
         </UiElement>
       </Box>
 
-      {debugMode && (
+      {enableDebugTools && (
         <UiElement
           sx={{
             position: 'absolute',

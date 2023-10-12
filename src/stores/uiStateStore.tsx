@@ -28,7 +28,7 @@ const initialState = () => {
         position: { x: 0, y: 0 },
         offset: { x: 0, y: 0 }
       },
-      debugMode: false,
+      enableDebugTools: false,
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
       actions: {
@@ -82,8 +82,8 @@ const initialState = () => {
         setRendererSize: (rendererSize) => {
           set({ rendererSize });
         },
-        setDebugMode: (debugMode) => {
-          set({ debugMode });
+        setenableDebugTools: (enableDebugTools) => {
+          set({ enableDebugTools });
         }
       }
     };

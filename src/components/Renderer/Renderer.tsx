@@ -16,8 +16,8 @@ import { TransformControlsManager } from 'src/components/TransformControlsManage
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLDivElement>();
-  const debugMode = useUiStateStore((state) => {
-    return state.debugMode;
+  const enableDebugTools = useUiStateStore((state) => {
+    return state.enableDebugTools;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
@@ -86,7 +86,7 @@ export const Renderer = () => {
       <SceneLayer>
         <ConnectorLabels />
       </SceneLayer>
-      {debugMode && (
+      {enableDebugTools && (
         <SceneLayer>
           <SizeIndicator />
         </SceneLayer>
