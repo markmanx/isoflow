@@ -15,7 +15,6 @@ const initialState = () => {
       mode: getStartingMode('EXPLORABLE_READONLY'),
       iconCategoriesState: [],
       disableInteractions: false,
-      hideMainMenu: false,
       isMainMenuOpen: false,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },

@@ -29,7 +29,6 @@ const App = ({
   height = '100%',
   onSceneUpdated,
   enableDebugTools = false,
-  hideMainMenu = false,
   editorMode = 'EDITABLE'
 }: IsoflowProps) => {
   const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
@@ -52,7 +51,7 @@ const App = ({
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setEditorMode(editorMode);
-  }, [initialScene?.zoom, editorMode, sceneActions, uiActions, hideMainMenu]);
+  }, [initialScene?.zoom, editorMode, sceneActions, uiActions]);
 
   useEffect(() => {
     if (!initialScene || prevInitialScene.current === initialScene) return;
