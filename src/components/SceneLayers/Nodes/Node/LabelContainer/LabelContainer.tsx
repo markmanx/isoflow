@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useMemo, useState } from 'react';
-import { Box, Button } from '@mui/material';
-import { MoreHoriz as ReadMoreIcon } from '@mui/icons-material';
+import { Box } from '@mui/material';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { Gradient } from 'src/components/Gradient/Gradient';
+import { ExpandButton } from './ExpandButton';
 
 const STANDARD_LABEL_HEIGHT = 80;
 const EXPANDED_LABEL_HEIGHT = 200;
@@ -40,6 +40,10 @@ export const LabelContainer = ({
     return !isExpanded && contentSize.height >= STANDARD_LABEL_HEIGHT - 10;
   }, [isExpanded, contentSize.height]);
 
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0 });
+  }, [isExpanded]);
+
   return (
     <Box
       sx={{
@@ -68,8 +72,8 @@ export const LabelContainer = ({
           strokeLinecap="round"
         />
       </Box>
+
       <Box
-        ref={contentRef}
         sx={{
           position: 'absolute',
           bgcolor: 'common.white',
@@ -78,49 +82,53 @@ export const LabelContainer = ({
           borderRadius: 2,
           left: -contentSize.width * 0.5,
           top: -(contentSize.height + labelHeight + yOffset),
-          py: 1,
-          px: 1.5,
           overflow: 'hidden'
         }}
-        style={{
-          overflowY: isExpanded ? 'scroll' : 'hidden',
-          maxHeight: containerMaxHeight
-        }}
       >
-        {children}
-        {isContentTruncated && (
-          <Box
-            sx={{
-              position: 'absolute',
-              height: 50,
-              width: '100%',
-              bottom: 0,
-              left: 0
-            }}
-          >
-            <Gradient
-              sx={{ position: 'absolute', width: '100%', height: '100%' }}
-            />
-
-            <Button
+        <Box
+          ref={contentRef}
+          sx={{
+            py: 1,
+            px: 1.5
+          }}
+          style={{
+            overflowY: isExpanded ? 'scroll' : 'hidden',
+            maxHeight: containerMaxHeight
+          }}
+        >
+          {children}
+          {isContentTruncated && (
+            <Box
               sx={{
                 position: 'absolute',
-                px: 0.5,
-                py: 0,
-                height: 'auto',
-                minWidth: 0,
-                fontSize: '0.7em',
-                bottom: 5,
-                right: 5,
-                color: 'common.white'
-              }}
-              onClick={() => {
-                setIsExpanded(!isExpanded);
+                height: 50,
+                width: '100%',
+                bottom: 0,
+                left: 0
               }}
             >
-              <ReadMoreIcon sx={{ color: 'common.white' }} />
-            </Button>
-          </Box>
+              <Gradient
+                sx={{ position: 'absolute', width: '100%', height: '100%' }}
+              />
+            </Box>
+          )}
+        </Box>
+
+        {isContentTruncated && (
+          <ExpandButton
+            isExpanded={isExpanded}
+            onClick={() => {
+              setIsExpanded(true);
+            }}
+          />
+        )}
+        {isExpanded && (
+          <ExpandButton
+            isExpanded={isExpanded}
+            onClick={() => {
+              setIsExpanded(false);
+            }}
+          />
         )}
       </Box>
     </Box>

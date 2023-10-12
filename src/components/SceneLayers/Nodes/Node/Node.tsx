@@ -5,7 +5,7 @@ import { PROJECTED_TILE_SIZE } from 'src/config';
 import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
-import { LabelContainer } from './LabelContainer';
+import { LabelContainer } from './LabelContainer/LabelContainer';
 
 interface Props {
   node: NodeI;
