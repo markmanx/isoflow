@@ -2,10 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { Box, Select, MenuItem, useTheme } from '@mui/material';
 import { BasicEditor } from './BasicEditor/BasicEditor';
 import { DebugTools } from './DebugTools/DebugTools';
+import { ReadonlyMode } from './ReadonlyMode/ReadonlyMode';
 
 const examples = [
   { name: 'Basic editor', component: BasicEditor },
-  { name: 'Debug tools', component: DebugTools }
+  { name: 'Debug tools', component: DebugTools },
+  { name: 'Read-only mode', component: ReadonlyMode }
 ];
 
 export const Examples = () => {
