@@ -88,7 +88,8 @@ const App = ({
           width,
           height,
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          transform: 'translateZ(0)'
         }}
       >
         <Renderer />
