@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Coords, TileOriginEnum, IconInput } from 'src/types';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 
 interface Props {
@@ -10,12 +10,11 @@ interface Props {
 }
 
 export const DragAndDrop = ({ icon, tile }: Props) => {
-  const { getTilePosition } = useGetTilePosition();
   const { iconComponent } = useIcon(icon.id);
 
   const tilePosition = useMemo(() => {
     return getTilePosition({ tile, origin: TileOriginEnum.BOTTOM });
-  }, [tile, getTilePosition]);
+  }, [tile]);
 
   return (
     <Box

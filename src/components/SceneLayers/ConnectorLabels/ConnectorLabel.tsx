@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Connector } from 'src/types';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
-import { connectorPathTileToGlobal } from 'src/utils';
+import { connectorPathTileToGlobal, getTilePosition } from 'src/utils';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
@@ -11,7 +10,6 @@ interface Props {
 }
 
 export const ConnectorLabel = ({ connector }: Props) => {
-  const { getTilePosition } = useGetTilePosition();
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
@@ -23,7 +21,7 @@ export const ConnectorLabel = ({ connector }: Props) => {
     return getTilePosition({
       tile: connectorPathTileToGlobal(tile, connector.path.rectangle.from)
     });
-  }, [connector.path, getTilePosition]);
+  }, [connector.path]);
 
   return (
     <Box

@@ -5,9 +5,12 @@ import {
   Size,
   ProjectionOrientationEnum
 } from 'src/types';
-import { getBoundingBox, getIsoProjectionCss } from 'src/utils';
+import {
+  getBoundingBox,
+  getIsoProjectionCss,
+  getTilePosition
+} from 'src/utils';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import { useGetTilePosition } from './useGetTilePosition';
 
 interface Props {
   from: Coords;
@@ -27,8 +30,6 @@ export const useIsoProjection = ({
   gridSize: Size;
   pxSize: Size;
 } => {
-  const { getTilePosition } = useGetTilePosition();
-
   const gridSize = useMemo(() => {
     return {
       width: Math.abs(from.x - to.x) + 1,
@@ -51,7 +52,7 @@ export const useIsoProjection = ({
     });
 
     return pos;
-  }, [origin, getTilePosition, orientation]);
+  }, [origin, orientation]);
 
   const pxSize = useMemo(() => {
     return {

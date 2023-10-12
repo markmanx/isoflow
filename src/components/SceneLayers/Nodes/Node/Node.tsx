@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { Node as NodeI, TileOriginEnum } from 'src/types';
 import { PROJECTED_TILE_SIZE } from 'src/config';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { LabelContainer } from './LabelContainer';
@@ -14,7 +14,6 @@ interface Props {
 
 export const Node = ({ node, order }: Props) => {
   const theme = useTheme();
-  const { getTilePosition } = useGetTilePosition();
   const { iconComponent } = useIcon(node.icon);
 
   const position = useMemo(() => {
@@ -22,7 +21,7 @@ export const Node = ({ node, order }: Props) => {
       tile: node.tile,
       origin: TileOriginEnum.BOTTOM
     });
-  }, [node.tile, getTilePosition]);
+  }, [node.tile]);
 
   const description = useMemo(() => {
     if (node.description === undefined || node.description === '<p><br></p>')

@@ -3,8 +3,11 @@ import { Coords } from 'src/types';
 import { Svg } from 'src/components/Svg/Svg';
 import { TRANSFORM_CONTROLS_COLOR } from 'src/config';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
-import { getBoundingBox, outermostCornerPositions } from 'src/utils';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
+import {
+  getBoundingBox,
+  outermostCornerPositions,
+  getTilePosition
+} from 'src/utils';
 import { TransformAnchor } from './TransformAnchor';
 
 interface Props {
@@ -26,7 +29,6 @@ export const TransformControls = ({
     from,
     to
   });
-  const { getTilePosition } = useGetTilePosition();
 
   const anchorPositions = useMemo<Coords[]>(() => {
     if (!showCornerAnchors) return [];
@@ -40,7 +42,7 @@ export const TransformControls = ({
     });
 
     return cornerPositions;
-  }, [showCornerAnchors, from, to, getTilePosition]);
+  }, [showCornerAnchors, from, to]);
 
   return (
     <>

@@ -8,9 +8,9 @@ import {
   sortByPosition,
   clamp,
   getAnchorTile,
-  getAllAnchors
+  getAllAnchors,
+  getTilePosition
 } from 'src/utils';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useScroll } from 'src/hooks/useScroll';
 import { MAX_ZOOM } from 'src/config';
 
@@ -32,7 +32,6 @@ export const useDiagramUtils = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const { getTilePosition } = useGetTilePosition();
 
   const getProjectBounds = useCallback(
     (items: (Node | Rectangle | Connector)[]): Coords[] => {
@@ -90,7 +89,7 @@ export const useDiagramUtils = () => {
       x: topLeft.x,
       y: topLeft.y
     };
-  }, [scene, getTilePosition, getProjectBounds]);
+  }, [scene, getProjectBounds]);
 
   const fitProjectToScreen = useCallback(() => {
     const boundingBox = getProjectBounds(scene.nodes);

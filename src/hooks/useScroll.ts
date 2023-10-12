@@ -1,11 +1,9 @@
 import { useCallback } from 'react';
-import { CoordsUtils } from 'src/utils';
+import { CoordsUtils, getTilePosition } from 'src/utils';
 import { Coords, TileOriginEnum } from 'src/types';
-import { useGetTilePosition } from 'src/hooks/useGetTilePosition';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
 export const useScroll = () => {
-  const { getTilePosition } = useGetTilePosition();
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
@@ -29,7 +27,7 @@ export const useScroll = () => {
         position: scrollTo
       });
     },
-    [getTilePosition, scroll.position, uiStateActions, rendererSize]
+    [scroll.position, uiStateActions, rendererSize]
   );
 
   return {
