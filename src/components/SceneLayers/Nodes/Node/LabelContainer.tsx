@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { Box, Button } from '@mui/material';
 import { MoreHoriz as ReadMoreIcon } from '@mui/icons-material';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { Gradient } from 'src/components/Gradient/Gradient';
 
-const MAX_LABEL_HEIGHT = 80;
+const STANDARD_LABEL_HEIGHT = 80;
+const EXPANDED_LABEL_HEIGHT = 200;
 
 interface Props {
   labelHeight: number;
@@ -18,6 +19,7 @@ export const LabelContainer = ({
   labelHeight,
   connectorDotSize
 }: Props) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>();
   const { observe, size: contentSize } = useResizeObserver();
   const yOffset = useMemo(() => {
@@ -29,6 +31,14 @@ export const LabelContainer = ({
 
     observe(contentRef.current);
   }, [observe]);
+
+  const containerMaxHeight = useMemo(() => {
+    return isExpanded ? EXPANDED_LABEL_HEIGHT : STANDARD_LABEL_HEIGHT;
+  }, [isExpanded]);
+
+  const isContentTruncated = useMemo(() => {
+    return !isExpanded && contentSize.height >= STANDARD_LABEL_HEIGHT - 10;
+  }, [isExpanded, contentSize.height]);
 
   return (
     <Box
@@ -70,12 +80,15 @@ export const LabelContainer = ({
           top: -(contentSize.height + labelHeight + yOffset),
           py: 1,
           px: 1.5,
-          overflow: 'hidden',
-          maxHeight: MAX_LABEL_HEIGHT
+          overflow: 'hidden'
+        }}
+        style={{
+          overflowY: isExpanded ? 'scroll' : 'hidden',
+          maxHeight: containerMaxHeight
         }}
       >
         {children}
-        {contentSize.height >= MAX_LABEL_HEIGHT - 10 && (
+        {isContentTruncated && (
           <Box
             sx={{
               position: 'absolute',
@@ -100,6 +113,9 @@ export const LabelContainer = ({
                 bottom: 5,
                 right: 5,
                 color: 'common.white'
+              }}
+              onClick={() => {
+                setIsExpanded(!isExpanded);
               }}
             >
               <ReadMoreIcon sx={{ color: 'common.white' }} />
