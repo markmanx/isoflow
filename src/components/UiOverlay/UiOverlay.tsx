@@ -182,10 +182,10 @@ export const UiOverlay = () => {
           sx={{
             position: 'absolute',
             width: 350,
-            height: 400,
-            maxWidth: '100%',
+            maxWidth: `calc(${rendererSize.width} - ${appPadding.x * 2}px)`,
             left: appPadding.x,
-            bottom: appPadding.y * 2 + spacing(2)
+            top: rendererSize.height - appPadding.y * 2 - spacing(1),
+            transform: 'translateY(-100%)'
           }}
         >
           <DebugUtils />
