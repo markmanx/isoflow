@@ -77,38 +77,38 @@ export const UiOverlay = () => {
   });
 
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        width: 0,
-        height: 0,
-        top: 0,
-        left: 0,
-        zIndex: 1
-      }}
-    >
-      {availableTools.includes('ITEM_CONTROLS') && itemControls && (
-        <UiElement
-          sx={{
-            position: 'absolute',
-            top: appPadding.y * 2 + spacing(2),
-            left: appPadding.x,
-            width: '360px',
-            overflowY: 'scroll',
-            '&::-webkit-scrollbar': {
-              display: 'none'
-            }
-          }}
-          style={{
-            maxHeight: rendererSize.height - appPadding.y * 6
-          }}
-        >
-          <ItemControlsManager />
-        </UiElement>
-      )}
+    <>
+      <Box
+        sx={{
+          position: 'absolute',
+          width: 0,
+          height: 0,
+          top: 0,
+          left: 0,
+          zIndex: 1
+        }}
+      >
+        {availableTools.includes('ITEM_CONTROLS') && itemControls && (
+          <UiElement
+            sx={{
+              position: 'absolute',
+              top: appPadding.y * 2 + spacing(2),
+              left: appPadding.x,
+              width: '360px',
+              overflowY: 'scroll',
+              '&::-webkit-scrollbar': {
+                display: 'none'
+              }
+            }}
+            style={{
+              maxHeight: rendererSize.height - appPadding.y * 6
+            }}
+          >
+            <ItemControlsManager />
+          </UiElement>
+        )}
 
-      {availableTools.includes('TOOL_MENU') && (
-        <>
+        {availableTools.includes('TOOL_MENU') && (
           <Box
             style={{
               position: 'absolute',
@@ -119,82 +119,82 @@ export const UiOverlay = () => {
           >
             <ToolMenu />
           </Box>
-          {mode.type === 'PLACE_ELEMENT' && mode.icon && (
-            <SceneLayer>
-              <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
-            </SceneLayer>
-          )}
-        </>
-      )}
+        )}
 
-      {availableTools.includes('ZOOM_CONTROLS') && (
-        <Box
-          style={{
-            position: 'absolute',
-            transformOrigin: 'bottom left',
-            top: rendererSize.height - appPadding.y * 2,
-            left: appPadding.x
-          }}
-        >
-          <ZoomControls />
-        </Box>
-      )}
-
-      {availableTools.includes('MAIN_MENU') && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: appPadding.y,
-            left: appPadding.x
-          }}
-        >
-          <MainMenu />
-        </Box>
-      )}
-
-      {availableTools.includes('SCENE_TITLE') && (
-        <Box
-          sx={{
-            position: 'absolute',
-            display: 'flex',
-            justifyContent: 'center',
-            left: rendererSize.width / 2,
-            top: rendererSize.height - appPadding.y * 2,
-            width: rendererSize.width - 500,
-            height: appPadding.y,
-            transform: 'translateX(-50%)',
-            pointerEvents: 'none'
-          }}
-        >
-          <UiElement
-            sx={{
-              display: 'inline-flex',
-              px: 2,
-              alignItems: 'center',
-              height: '100%'
+        {availableTools.includes('ZOOM_CONTROLS') && (
+          <Box
+            style={{
+              position: 'absolute',
+              transformOrigin: 'bottom left',
+              top: rendererSize.height - appPadding.y * 2,
+              left: appPadding.x
             }}
           >
-            <Typography fontWeight={600} color="text.secondary">
-              {sceneTitle}
-            </Typography>
-          </UiElement>
-        </Box>
-      )}
+            <ZoomControls />
+          </Box>
+        )}
 
-      {enableDebugTools && (
-        <UiElement
-          sx={{
-            position: 'absolute',
-            width: 350,
-            maxWidth: `calc(${rendererSize.width} - ${appPadding.x * 2}px)`,
-            left: appPadding.x,
-            top: rendererSize.height - appPadding.y * 2 - spacing(1),
-            transform: 'translateY(-100%)'
-          }}
-        >
-          <DebugUtils />
-        </UiElement>
+        {availableTools.includes('MAIN_MENU') && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: appPadding.y,
+              left: appPadding.x
+            }}
+          >
+            <MainMenu />
+          </Box>
+        )}
+
+        {availableTools.includes('SCENE_TITLE') && (
+          <Box
+            sx={{
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              left: rendererSize.width / 2,
+              top: rendererSize.height - appPadding.y * 2,
+              width: rendererSize.width - 500,
+              height: appPadding.y,
+              transform: 'translateX(-50%)',
+              pointerEvents: 'none'
+            }}
+          >
+            <UiElement
+              sx={{
+                display: 'inline-flex',
+                px: 2,
+                alignItems: 'center',
+                height: '100%'
+              }}
+            >
+              <Typography fontWeight={600} color="text.secondary">
+                {sceneTitle}
+              </Typography>
+            </UiElement>
+          </Box>
+        )}
+
+        {enableDebugTools && (
+          <UiElement
+            sx={{
+              position: 'absolute',
+              width: 350,
+              maxWidth: `calc(${rendererSize.width} - ${appPadding.x * 2}px)`,
+              left: appPadding.x,
+              top: rendererSize.height - appPadding.y * 2 - spacing(1),
+              transform: 'translateY(-100%)'
+            }}
+          >
+            <DebugUtils />
+          </UiElement>
+        )}
+      </Box>
+      {mode.type === 'PLACE_ELEMENT' && mode.icon && (
+        <SceneLayer>
+          <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
+        </SceneLayer>
       )}
-    </Box>
+    </>
   );
 };
