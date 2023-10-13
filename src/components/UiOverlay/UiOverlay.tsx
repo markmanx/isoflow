@@ -16,7 +16,8 @@ const ToolsEnum = {
   MAIN_MENU: 'MAIN_MENU',
   ZOOM_CONTROLS: 'ZOOM_CONTROLS',
   TOOL_MENU: 'TOOL_MENU',
-  ITEM_CONTROLS: 'ITEM_CONTROLS'
+  ITEM_CONTROLS: 'ITEM_CONTROLS',
+  SCENE_TITLE: 'SCENE_TITLE'
 } as const;
 
 interface EditorModeMapping {
@@ -28,9 +29,10 @@ const EDITOR_MODE_MAPPING: EditorModeMapping = {
     'ITEM_CONTROLS',
     'ZOOM_CONTROLS',
     'TOOL_MENU',
-    'MAIN_MENU'
+    'MAIN_MENU',
+    'SCENE_TITLE'
   ],
-  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS'],
+  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'SCENE_TITLE'],
   [EditorModeEnum.NON_INTERACTIVE]: []
 };
 
@@ -150,32 +152,34 @@ export const UiOverlay = () => {
         </Box>
       )}
 
-      <Box
-        sx={{
-          position: 'absolute',
-          display: 'flex',
-          justifyContent: 'center',
-          left: rendererSize.width / 2,
-          top: rendererSize.height - appPadding.y * 2,
-          width: rendererSize.width - 500,
-          height: appPadding.y,
-          transform: 'translateX(-50%)',
-          pointerEvents: 'none'
-        }}
-      >
-        <UiElement
+      {availableTools.includes('SCENE_TITLE') && (
+        <Box
           sx={{
-            display: 'inline-flex',
-            px: 2,
-            alignItems: 'center',
-            height: '100%'
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            left: rendererSize.width / 2,
+            top: rendererSize.height - appPadding.y * 2,
+            width: rendererSize.width - 500,
+            height: appPadding.y,
+            transform: 'translateX(-50%)',
+            pointerEvents: 'none'
           }}
         >
-          <Typography fontWeight={600} color="text.secondary">
-            {sceneTitle}
-          </Typography>
-        </UiElement>
-      </Box>
+          <UiElement
+            sx={{
+              display: 'inline-flex',
+              px: 2,
+              alignItems: 'center',
+              height: '100%'
+            }}
+          >
+            <Typography fontWeight={600} color="text.secondary">
+              {sceneTitle}
+            </Typography>
+          </UiElement>
+        </Box>
+      )}
 
       {enableDebugTools && (
         <UiElement
