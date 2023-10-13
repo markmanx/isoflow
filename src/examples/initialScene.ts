@@ -20,7 +20,6 @@ const isopacks = flattenCollections([
 
 export const initialScene: InitialScene = {
   title: 'Airport Management Software',
-  zoom: 0.4,
   icons: isopacks,
   nodes: [
     {
@@ -432,9 +431,9 @@ export const initialScene: InitialScene = {
     },
     {
       id: '4a7ccc74-f296-4d0b-be11-8117c990795d',
-      color: '#fad6ac',
-      style: 'DOTTED',
-      width: 20,
+      color: '#b3e5e3',
+      style: 'SOLID',
+      width: 10,
       anchors: [
         {
           id: '7b721b82-220d-45f6-87d4-479c1b847a60',
@@ -488,9 +487,9 @@ export const initialScene: InitialScene = {
     },
     {
       id: 'a6c63183-ce9a-4d54-9487-569f2a8a8add',
-      color: '#fad6ac',
-      style: 'DOTTED',
-      width: 20,
+      color: '#a0b9f8',
+      style: 'SOLID',
+      width: 10,
       anchors: [
         {
           id: '8a2d4f72-5f62-4531-b2f7-b0eed5e533a5',
@@ -552,9 +551,9 @@ export const initialScene: InitialScene = {
     },
     {
       id: '17547863-f8f3-4653-92ec-f76d3ec0835f',
-      color: '#fad6ac',
-      style: 'DOTTED',
-      width: 20,
+      color: '#bbadfb',
+      style: 'SOLID',
+      width: 10,
       anchors: [
         {
           id: '0445d65f-05b4-47cf-9163-dd0d6eefa4af',
@@ -616,9 +615,9 @@ export const initialScene: InitialScene = {
     },
     {
       id: '725419a0-6ca4-4d1b-b6a4-a7ae7feabcb0',
-      color: '#fad6ac',
-      style: 'DOTTED',
-      width: 20,
+      color: '#a8dc9d',
+      style: 'SOLID',
+      width: 10,
       anchors: [
         {
           id: 'dfdda749-2f06-4a32-903e-35e336d3842d',
