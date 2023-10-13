@@ -147,7 +147,8 @@ export {
   NodeInput,
   RectangleInput,
   ConnectorInput,
-  sceneValidationSchema
+  sceneValidationSchema,
+  IsoflowProps
 };
 
 export const version = PACKAGE_VERSION;
