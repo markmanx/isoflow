@@ -9,7 +9,7 @@ import {
   connectorStyleEnum
 } from 'src/validation/sceneItems';
 import { sceneInput } from 'src/validation/scene';
-import type { EditorModeEnum } from './common';
+import type { EditorModeEnum, MainMenuOptions } from './common';
 
 export type ConnectorStyleEnum = z.infer<typeof connectorStyleEnum>;
 export type IconInput = z.infer<typeof iconInput>;
@@ -26,6 +26,7 @@ export type InitialScene = Partial<SceneInput> & {
 
 export interface IsoflowProps {
   initialScene?: InitialScene;
+  mainMenuOptions?: MainMenuOptions;
   onSceneUpdated?: (scene: SceneInput) => void;
   width?: number | string;
   height?: number | string;

@@ -30,3 +30,14 @@ export const EditorModeEnum = {
   EXPLORABLE_READONLY: 'EXPLORABLE_READONLY',
   EDITABLE: 'EDITABLE'
 } as const;
+
+export const MainMenuOptionsEnum = {
+  OPEN: 'OPEN',
+  SAVE_JSON: 'SAVE_JSON',
+  CLEAR: 'CLEAR',
+  GITHUB: 'GITHUB',
+  DISCORD: 'DISCORD',
+  VERSION: 'VERSION'
+} as const;
+
+export type MainMenuOptions = (keyof typeof MainMenuOptionsEnum)[];

@@ -20,11 +20,12 @@ import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
-import { INITIAL_SCENE } from 'src/config';
+import { INITIAL_SCENE, MAIN_MENU_OPTIONS } from 'src/config';
 import { useIconCategories } from './hooks/useIconCategories';
 
 const App = ({
   initialScene,
+  mainMenuOptions = MAIN_MENU_OPTIONS,
   width = '100%',
   height = '100%',
   onSceneUpdated,
@@ -51,7 +52,14 @@ const App = ({
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setEditorMode(editorMode);
-  }, [initialScene?.zoom, editorMode, sceneActions, uiActions]);
+    uiActions.setMainMenuOptions(mainMenuOptions);
+  }, [
+    initialScene?.zoom,
+    editorMode,
+    sceneActions,
+    uiActions,
+    mainMenuOptions
+  ]);
 
   useEffect(() => {
     return () => {

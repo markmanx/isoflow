@@ -11,6 +11,7 @@ import { UiStateStore } from 'src/types';
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
+      mainMenuOptions: [],
       editorMode: 'EXPLORABLE_READONLY',
       mode: getStartingMode('EXPLORABLE_READONLY'),
       iconCategoriesState: [],
@@ -31,6 +32,9 @@ const initialState = () => {
       zoom: 1,
       rendererSize: { width: 0, height: 0 },
       actions: {
+        setMainMenuOptions: (mainMenuOptions) => {
+          set({ mainMenuOptions });
+        },
         setEditorMode: (mode) => {
           set({ editorMode: mode, mode: getStartingMode(mode) });
         },

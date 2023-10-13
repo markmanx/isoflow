@@ -1,4 +1,4 @@
-import { Coords, Size, EditorModeEnum } from './common';
+import { Coords, Size, EditorModeEnum, MainMenuOptions } from './common';
 import { SceneItem, Connector, SceneItemReference } from './scene';
 import { IconInput } from './inputs';
 
@@ -154,6 +154,7 @@ export type IconCollectionStateWithIcons = IconCollectionState & {
 };
 
 export interface UiState {
+  mainMenuOptions: MainMenuOptions;
   editorMode: keyof typeof EditorModeEnum;
   iconCategoriesState: IconCollectionState[];
   mode: Mode;
@@ -168,6 +169,7 @@ export interface UiState {
 }
 
 export interface UiStateActions {
+  setMainMenuOptions: (options: MainMenuOptions) => void;
   setEditorMode: (mode: keyof typeof EditorModeEnum) => void;
   setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
   resetUiState: () => void;

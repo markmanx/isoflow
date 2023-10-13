@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Menu, Typography, Divider, Card } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -21,6 +21,9 @@ export const MainMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMainMenuOpen = useUiStateStore((state) => {
     return state.isMainMenuOpen;
+  });
+  const mainMenuOptions = useUiStateStore((state) => {
+    return state.mainMenuOptions;
   });
   const scene = useSceneStore((state) => {
     return {
@@ -95,6 +98,25 @@ export const MainMenu = () => {
     uiStateActions.setIsMainMenuOpen(false);
   }, [uiStateActions, setScene]);
 
+  const sectionVisibility = useMemo(() => {
+    return {
+      actions: Boolean(
+        mainMenuOptions.includes('OPEN') ||
+          mainMenuOptions.includes('SAVE_JSON') ||
+          mainMenuOptions.includes('CLEAR')
+      ),
+      links: Boolean(
+        mainMenuOptions.includes('GITHUB') ||
+          mainMenuOptions.includes('DISCORD')
+      ),
+      version: Boolean(mainMenuOptions.includes('VERSION'))
+    };
+  }, [mainMenuOptions]);
+
+  if (mainMenuOptions.length === 0) {
+    return null;
+  }
+
   return (
     <UiElement>
       <IconButton Icon={<MenuIcon />} name="Main menu" onClick={onToggleMenu} />
@@ -117,38 +139,65 @@ export const MainMenu = () => {
         }}
       >
         <Card sx={{ py: 1 }}>
-          <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
-            Open
-          </MenuItem>
-          <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
-            Download diagram
-          </MenuItem>
-          <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
-            Clear the canvas
-          </MenuItem>
-          <Divider />
-          <MenuItem
-            onClick={() => {
-              return gotoUrl(`${REPOSITORY_URL}`);
-            }}
-            Icon={<GitHubIcon />}
-          >
-            GitHub
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              return gotoUrl('https://discord.gg/QYPkvZth7D');
-            }}
-            Icon={<QuestionAnswerIcon />}
-          >
-            Discord
-          </MenuItem>
-          <Divider />
-          <MenuItem>
-            <Typography variant="body2" color="text.secondary">
-              Isoflow v{PACKAGE_VERSION}
-            </Typography>
-          </MenuItem>
+          {mainMenuOptions.includes('OPEN') && (
+            <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
+              Open
+            </MenuItem>
+          )}
+
+          {mainMenuOptions.includes('SAVE_JSON') && (
+            <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
+              Download diagram
+            </MenuItem>
+          )}
+
+          {mainMenuOptions.includes('CLEAR') && (
+            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
+              Clear the canvas
+            </MenuItem>
+          )}
+
+          {sectionVisibility.links && (
+            <>
+              <Divider />
+
+              {mainMenuOptions.includes('GITHUB') && (
+                <MenuItem
+                  onClick={() => {
+                    return gotoUrl(`${REPOSITORY_URL}`);
+                  }}
+                  Icon={<GitHubIcon />}
+                >
+                  GitHub
+                </MenuItem>
+              )}
+
+              {mainMenuOptions.includes('DISCORD') && (
+                <MenuItem
+                  onClick={() => {
+                    return gotoUrl('https://discord.gg/QYPkvZth7D');
+                  }}
+                  Icon={<QuestionAnswerIcon />}
+                >
+                  Discord
+                </MenuItem>
+              )}
+            </>
+          )}
+
+          {sectionVisibility.version && (
+            <>
+              <Divider />
+
+              {mainMenuOptions.includes('VERSION') && (
+                <MenuItem>
+                  <Typography variant="body2" color="text.secondary">
+                    Isoflow v{PACKAGE_VERSION}
+                  </Typography>
+                </MenuItem>
+              )}
+            </>
+          )}
         </Card>
       </Menu>
     </UiElement>

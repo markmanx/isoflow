@@ -1,4 +1,10 @@
-import { Size, Coords, SceneInput, Connector } from 'src/types';
+import {
+  Size,
+  Coords,
+  SceneInput,
+  Connector,
+  MainMenuOptions
+} from 'src/types';
 import { customVars } from './styles/theme';
 
 // TODO: This file could do with better organisation and convention for easier reading.
@@ -53,3 +59,12 @@ export const INITIAL_SCENE: SceneInput = {
   textBoxes: [],
   rectangles: []
 };
+export const MAIN_MENU_OPTIONS: MainMenuOptions = [
+  'CLEAR',
+  'OPEN',
+  'SAVE_JSON',
+  'CLEAR',
+  'DISCORD',
+  'GITHUB',
+  'VERSION'
+];
