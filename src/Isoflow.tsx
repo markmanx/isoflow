@@ -12,7 +12,7 @@ import {
   IsoflowProps,
   InitialScene
 } from 'src/types';
-import { sceneToSceneInput } from 'src/utils';
+import { sceneToSceneInput, setWindowCursor } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
@@ -52,6 +52,12 @@ const App = ({
     uiActions.setZoom(initialScene?.zoom ?? 1);
     uiActions.setEditorMode(editorMode);
   }, [initialScene?.zoom, editorMode, sceneActions, uiActions]);
+
+  useEffect(() => {
+    return () => {
+      setWindowCursor('default');
+    };
+  }, []);
 
   useEffect(() => {
     if (!initialScene || prevInitialScene.current === initialScene) return;
