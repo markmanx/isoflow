@@ -93,10 +93,10 @@ export const MainMenu = () => {
   }, [scene, uiStateActions]);
 
   const onClearCanvas = useCallback(() => {
-    setScene(INITIAL_SCENE);
+    setScene({ ...INITIAL_SCENE, icons: scene.icons });
     uiStateActions.resetUiState();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, setScene]);
+  }, [uiStateActions, setScene, scene.icons]);
 
   const sectionVisibility = useMemo(() => {
     return {
