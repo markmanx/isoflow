@@ -5,9 +5,9 @@ import {
   getItemAtTile,
   getBoundingBox,
   outermostCornerPositions,
-  getTilePosition,
   convertBoundsToNamedAnchors,
-  hasMovedTile
+  hasMovedTile,
+  isoToScreen
 } from 'src/utils';
 import { TRANSFORM_ANCHOR_SIZE } from 'src/config';
 import { ModeActions, AnchorPositionsEnum } from 'src/types';
@@ -74,9 +74,10 @@ export const TransformRectangle: ModeActions = {
     // Check if the user has mousedown'd on an anchor
     const rectangleBounds = getBoundingBox([rectangle.to, rectangle.from]);
     const anchorPositions = rectangleBounds.map((corner, i) => {
-      return getTilePosition({
+      return isoToScreen({
         tile: corner,
-        origin: outermostCornerPositions[i]
+        origin: outermostCornerPositions[i],
+        rendererSize: uiState.rendererSize
       });
     });
     const activeAnchorIndex = anchorPositions.findIndex((anchorPosition) => {

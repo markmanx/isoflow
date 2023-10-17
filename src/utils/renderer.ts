@@ -104,6 +104,19 @@ export const getTilePosition = ({
   }
 };
 
+type IsoToScreen = GetTilePosition & {
+  rendererSize: Size;
+};
+
+export const isoToScreen = ({ tile, origin, rendererSize }: IsoToScreen) => {
+  const position = getTilePosition({ tile, origin });
+
+  return {
+    x: position.x + rendererSize.width / 2,
+    y: position.y + rendererSize.height / 2
+  };
+};
+
 export const sortByPosition = (tiles: Coords[]) => {
   const xSorted = [...tiles];
   const ySorted = [...tiles];
