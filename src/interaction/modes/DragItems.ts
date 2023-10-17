@@ -4,7 +4,8 @@ import {
   getItemById,
   CoordsUtils,
   hasMovedTile,
-  getAnchorParent
+  getAnchorParent,
+  getItemAtTile
 } from 'src/utils';
 
 const dragItems = (
@@ -41,15 +42,37 @@ const dragItems = (
           item.id
         );
 
-        if (anchor.ref.type !== 'TILE') return;
+        const itemAtTile = getItemAtTile({ tile, scene });
 
-        draft.anchors[anchorIndex] = {
-          ...anchor,
-          ref: {
-            type: 'TILE',
-            coords: tile
-          }
-        };
+        switch (itemAtTile?.type) {
+          case 'NODE':
+            draft.anchors[anchorIndex] = {
+              ...anchor,
+              ref: {
+                type: 'NODE',
+                id: itemAtTile.id
+              }
+            };
+            break;
+          case 'CONNECTOR_ANCHOR':
+            draft.anchors[anchorIndex] = {
+              ...anchor,
+              ref: {
+                type: 'ANCHOR',
+                id: itemAtTile.id
+              }
+            };
+            break;
+          default:
+            draft.anchors[anchorIndex] = {
+              ...anchor,
+              ref: {
+                type: 'TILE',
+                coords: tile
+              }
+            };
+            break;
+        }
       });
 
       scene.actions.updateConnector(connector.id, newConnector);

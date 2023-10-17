@@ -45,6 +45,12 @@ export const Connector: ModeActions = {
             id: itemAtTile.id
           }
         };
+
+        draft.connector.path = getConnectorPath({
+          anchors: draft.connector.anchors,
+          nodes: scene.nodes,
+          allAnchors: getAllAnchors(scene.connectors)
+        });
       });
 
       uiState.actions.setMode(newMode);
