@@ -11,6 +11,8 @@ import { MainMenu } from 'src/components/MainMenu/MainMenu';
 import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
 import { useSceneStore } from 'src/stores/sceneStore';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
 
 const ToolsEnum = {
   MAIN_MENU: 'MAIN_MENU',
@@ -51,6 +53,9 @@ export const UiOverlay = () => {
     },
     [theme]
   );
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
+  });
   const enableDebugTools = useUiStateStore((state) => {
     return state.enableDebugTools;
   });
@@ -59,6 +64,9 @@ export const UiOverlay = () => {
   });
   const mouse = useUiStateStore((state) => {
     return state.mouse;
+  });
+  const dialog = useUiStateStore((state) => {
+    return state.dialog;
   });
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
@@ -72,9 +80,10 @@ export const UiOverlay = () => {
   const availableTools = useMemo(() => {
     return getEditorModeMapping(editorMode);
   }, [editorMode]);
-  const rendererSize = useUiStateStore((state) => {
-    return state.rendererSize;
+  const rendererEl = useUiStateStore((state) => {
+    return state.rendererEl;
   });
+  const { size: rendererSize } = useResizeObserver(rendererEl);
 
   return (
     <>
@@ -194,6 +203,14 @@ export const UiOverlay = () => {
         <SceneLayer>
           <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
         </SceneLayer>
+      )}
+
+      {dialog === 'EXPORT_IMAGE' && (
+        <ExportImageDialog
+          onClose={() => {
+            return uiStateActions.setDialog(null);
+          }}
+        />
       )}
     </>
   );

@@ -1,9 +1,10 @@
-import { SceneStore, UiStateStore } from 'src/types';
+import { SceneStore, UiStateStore, Size } from 'src/types';
 
 export interface State {
   scene: SceneStore;
   uiState: UiStateStore;
   rendererRef: HTMLElement;
+  rendererSize: Size;
   isRendererInteraction: boolean;
 }
 

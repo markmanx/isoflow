@@ -12,7 +12,7 @@ import {
   IsoflowProps,
   InitialScene
 } from 'src/types';
-import { sceneToSceneInput, setWindowCursor } from 'src/utils';
+import { sceneToSceneInput, setWindowCursor, CoordsUtils } from 'src/utils';
 import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
@@ -32,9 +32,9 @@ const App = ({
   enableDebugTools = false,
   editorMode = 'EDITABLE'
 }: IsoflowProps) => {
+  useWindowUtils();
   const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
   const [isReady, setIsReady] = useState(false);
-  useWindowUtils();
   const scene = useSceneStore(
     ({ title, nodes, connectors, textBoxes, rectangles, icons }) => {
       return { title, nodes, connectors, textBoxes, rectangles, icons };
@@ -51,10 +51,15 @@ const App = ({
 
   useEffect(() => {
     uiActions.setZoom(initialScene?.zoom ?? 1);
+    uiActions.setScroll({
+      position: initialScene?.scroll ?? CoordsUtils.zero(),
+      offset: CoordsUtils.zero()
+    });
     uiActions.setEditorMode(editorMode);
     uiActions.setMainMenuOptions(mainMenuOptions);
   }, [
     initialScene?.zoom,
+    initialScene?.scroll,
     editorMode,
     sceneActions,
     uiActions,
@@ -125,6 +130,10 @@ export const Isoflow = (props: IsoflowProps) => {
 };
 
 const useIsoflow = () => {
+  const rendererEl = useUiStateStore((state) => {
+    return state.rendererEl;
+  });
+
   const sceneActions = useSceneStore((state) => {
     return state.actions;
   });
@@ -135,7 +144,8 @@ const useIsoflow = () => {
 
   return {
     scene: sceneActions,
-    uiState: uiStateActions
+    uiState: uiStateActions,
+    rendererEl
   };
 };
 

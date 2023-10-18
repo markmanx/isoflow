@@ -33,8 +33,9 @@ export const EditorModeEnum = {
 
 export const MainMenuOptionsEnum = {
   OPEN: 'OPEN',
-  SAVE_JSON: 'SAVE_JSON',
-  CLEAR: 'CLEAR',
+  EXPORT_JSON: 'EXPORT_JSON',
+  EXPORT_PNG: 'EXPORT_PNG',
+  CLEAR_CANVAS: 'CLEAR_CANVAS',
   GITHUB: 'GITHUB',
   DISCORD: 'DISCORD',
   VERSION: 'VERSION'

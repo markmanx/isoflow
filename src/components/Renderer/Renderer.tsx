@@ -10,42 +10,33 @@ import { Connectors } from 'src/components/SceneLayers/Connectors/Connectors';
 import { ConnectorLabels } from 'src/components/SceneLayers/ConnectorLabels/ConnectorLabels';
 import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
 import { SizeIndicator } from 'src/components/DebugUtils/SizeIndicator';
-import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { TransformControlsManager } from 'src/components/TransformControlsManager/TransformControlsManager';
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLDivElement>();
+  const interactionsRef = useRef<HTMLDivElement>();
   const enableDebugTools = useUiStateStore((state) => {
     return state.enableDebugTools;
   });
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
-
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const { setElement: setInteractionsElement } = useInteractionManager();
-  const { observe, disconnect, size: rendererSize } = useResizeObserver();
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !interactionsRef.current) return;
 
-    observe(containerRef.current);
-    setInteractionsElement(containerRef.current);
-
-    return () => {
-      disconnect();
-    };
-  }, [setInteractionsElement, observe, disconnect]);
-
-  useEffect(() => {
-    uiStateActions.setRendererSize(rendererSize);
-  }, [rendererSize, uiStateActions]);
+    setInteractionsElement(interactionsRef.current);
+    uiStateActions.setRendererEl(containerRef.current);
+  }, [setInteractionsElement, uiStateActions]);
 
   return (
     <Box
+      ref={containerRef}
       sx={{
         position: 'absolute',
         top: 0,
@@ -96,7 +87,7 @@ export const Renderer = () => {
       </SceneLayer>
       {/* Interaction layer: this is where events are detected */}
       <Box
-        ref={containerRef}
+        ref={interactionsRef}
         sx={{
           position: 'absolute',
           left: 0,

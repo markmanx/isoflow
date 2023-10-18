@@ -2,17 +2,19 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { LineItem } from './LineItem';
 
 export const DebugUtils = () => {
   const uiState = useUiStateStore(
-    ({ scroll, mouse, zoom, rendererSize, mode }) => {
-      return { scroll, mouse, zoom, rendererSize, mode };
+    ({ scroll, mouse, zoom, mode, rendererEl }) => {
+      return { scroll, mouse, zoom, mode, rendererEl };
     }
   );
   const scene = useSceneStore((state) => {
     return state;
   });
+  const { size: rendererSize } = useResizeObserver(uiState.rendererEl);
 
   return (
     <Box
@@ -51,7 +53,7 @@ export const DebugUtils = () => {
       <LineItem title="Zoom" value={uiState.zoom} />
       <LineItem
         title="Size"
-        value={`${uiState.rendererSize.width}, ${uiState.rendererSize.height}`}
+        value={`${rendererSize.width}, ${rendererSize.height}`}
       />
       <LineItem title="Scene info" value={`${scene.nodes.length} nodes`} />
       <LineItem title="Mode" value={uiState.mode.type} />

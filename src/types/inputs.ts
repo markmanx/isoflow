@@ -8,6 +8,7 @@ import {
   rectangleInput,
   connectorStyleEnum
 } from 'src/validation/sceneItems';
+import { Coords } from 'src/types';
 import { sceneInput } from 'src/validation/scene';
 import type { EditorModeEnum, MainMenuOptions } from './common';
 
@@ -22,6 +23,7 @@ export type SceneInput = z.infer<typeof sceneInput>;
 
 export type InitialScene = Partial<SceneInput> & {
   zoom?: number;
+  scroll?: Coords;
 };
 
 export interface IsoflowProps {

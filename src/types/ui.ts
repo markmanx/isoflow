@@ -1,5 +1,5 @@
-import { Coords, Size, EditorModeEnum, MainMenuOptions } from './common';
-import { SceneItem, Connector, SceneItemReference } from './scene';
+import { Coords, EditorModeEnum, MainMenuOptions } from './common';
+import { Connector, SceneItemReference, TileOriginEnum } from './scene';
 import { IconInput } from './inputs';
 
 interface NodeControls {
@@ -131,14 +131,6 @@ export type Mode =
   | TextBoxMode;
 // End mode types
 
-export type ContextMenu =
-  | SceneItem
-  | {
-      type: 'EMPTY_TILE';
-      position: Coords;
-    }
-  | null;
-
 export interface Scroll {
   position: Coords;
   offset: Coords;
@@ -153,18 +145,22 @@ export type IconCollectionStateWithIcons = IconCollectionState & {
   icons: IconInput[];
 };
 
+export const DialogTypeEnum = {
+  EXPORT_IMAGE: 'EXPORT_IMAGE'
+} as const;
+
 export interface UiState {
   mainMenuOptions: MainMenuOptions;
   editorMode: keyof typeof EditorModeEnum;
   iconCategoriesState: IconCollectionState[];
   mode: Mode;
+  dialog: keyof typeof DialogTypeEnum | null;
   isMainMenuOpen: boolean;
   itemControls: ItemControls;
-  contextMenu: ContextMenu;
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
-  rendererSize: Size;
+  rendererEl: HTMLDivElement | null;
   enableDebugTools: boolean;
 }
 
@@ -177,12 +173,13 @@ export interface UiStateActions {
   incrementZoom: () => void;
   decrementZoom: () => void;
   setIsMainMenuOpen: (isOpen: boolean) => void;
+  setDialog: (dialog: keyof typeof DialogTypeEnum | null) => void;
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
+  scrollToTile: (tile: Coords, origin?: TileOriginEnum) => void;
   setItemControls: (itemControls: ItemControls) => void;
-  setContextMenu: (contextMenu: ContextMenu) => void;
   setMouse: (mouse: Mouse) => void;
-  setRendererSize: (rendererSize: Size) => void;
+  setRendererEl: (el: HTMLDivElement) => void;
   setenableDebugTools: (enabled: boolean) => void;
 }
 

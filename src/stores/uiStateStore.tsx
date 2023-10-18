@@ -4,9 +4,11 @@ import {
   CoordsUtils,
   incrementZoom,
   decrementZoom,
-  getStartingMode
+  getStartingMode,
+  getTilePosition,
+  getTileScrollPosition
 } from 'src/utils';
-import { UiStateStore } from 'src/types';
+import { UiStateStore, Coords } from 'src/types';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
@@ -15,22 +17,21 @@ const initialState = () => {
       editorMode: 'EXPLORABLE_READONLY',
       mode: getStartingMode('EXPLORABLE_READONLY'),
       iconCategoriesState: [],
-      disableInteractions: false,
       isMainMenuOpen: false,
+      dialog: null,
+      rendererEl: null,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
         mousedown: null,
         delta: null
       },
       itemControls: null,
-      contextMenu: null,
       scroll: {
         position: { x: 0, y: 0 },
         offset: { x: 0, y: 0 }
       },
       enableDebugTools: false,
       zoom: 1,
-      rendererSize: { width: 0, height: 0 },
       actions: {
         setMainMenuOptions: (mainMenuOptions) => {
           set({ mainMenuOptions });
@@ -49,12 +50,14 @@ const initialState = () => {
               offset: CoordsUtils.zero()
             },
             itemControls: null,
-            contextMenu: null,
             zoom: 1
           });
         },
         setMode: (mode) => {
           set({ mode });
+        },
+        setDialog: (dialog) => {
+          set({ dialog });
         },
         setIsMainMenuOpen: (isMainMenuOpen) => {
           set({ isMainMenuOpen, itemControls: null });
@@ -73,20 +76,25 @@ const initialState = () => {
         setScroll: ({ position, offset }) => {
           set({ scroll: { position, offset: offset ?? get().scroll.offset } });
         },
+        scrollToTile: (tile, origin) => {
+          const scrollTo = getTileScrollPosition(tile, origin);
+
+          get().actions.setScroll({
+            offset: CoordsUtils.zero(),
+            position: scrollTo
+          });
+        },
         setItemControls: (itemControls) => {
           set({ itemControls });
-        },
-        setContextMenu: (contextMenu) => {
-          set({ contextMenu });
         },
         setMouse: (mouse) => {
           set({ mouse });
         },
-        setRendererSize: (rendererSize) => {
-          set({ rendererSize });
-        },
         setenableDebugTools: (enableDebugTools) => {
           set({ enableDebugTools });
+        },
+        setRendererEl: (el) => {
+          set({ rendererEl: el });
         }
       }
     };

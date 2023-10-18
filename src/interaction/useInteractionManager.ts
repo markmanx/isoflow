@@ -3,6 +3,7 @@ import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ModeActions, State, SlimMouseEvent } from 'src/types';
 import { getMouse } from 'src/utils';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
 import { DrawRectangle } from './modes/Rectangle/DrawRectangle';
@@ -46,6 +47,7 @@ export const useInteractionManager = () => {
   const scene = useSceneStore((state) => {
     return state;
   });
+  const { size: rendererSize } = useResizeObserver(uiState.rendererEl);
 
   const onMouseEvent = useCallback(
     (e: SlimMouseEvent) => {
@@ -62,7 +64,7 @@ export const useInteractionManager = () => {
         scroll: uiState.scroll,
         lastMouse: uiState.mouse,
         mouseEvent: e,
-        rendererSize: uiState.rendererSize
+        rendererSize
       });
 
       uiState.actions.setMouse(nextMouse);
@@ -71,6 +73,7 @@ export const useInteractionManager = () => {
         scene,
         uiState,
         rendererRef: rendererRef.current,
+        rendererSize,
         isRendererInteraction: rendererRef.current === e.target
       };
 
@@ -91,11 +94,11 @@ export const useInteractionManager = () => {
       modeFunction(baseState);
       reducerTypeRef.current = uiState.mode.type;
     },
-    [scene, uiState]
+    [scene, uiState, rendererSize]
   );
 
   useEffect(() => {
-    if (uiState.editorMode === 'NON_INTERACTIVE') return;
+    if (uiState.mode.type === 'INTERACTIONS_DISABLED') return;
 
     const el = window;
 
@@ -141,7 +144,7 @@ export const useInteractionManager = () => {
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
     };
-  }, [uiState.editorMode, onMouseEvent]);
+  }, [uiState.editorMode, onMouseEvent, uiState.mode.type]);
 
   const setElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;

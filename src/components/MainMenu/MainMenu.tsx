@@ -4,16 +4,16 @@ import {
   Menu as MenuIcon,
   GitHub as GitHubIcon,
   QuestionAnswer as QuestionAnswerIcon,
-  Download as DownloadIcon,
+  DataObject as ExportJsonIcon,
+  ImageOutlined as ExportImageIcon,
   FolderOpen as FolderOpenIcon,
   DeleteOutline as DeleteOutlineIcon
 } from '@mui/icons-material';
-import FileSaver from 'file-saver';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useSceneStore } from 'src/stores/sceneStore';
-import { sceneToSceneInput } from 'src/utils';
+import { exportAsJSON } from 'src/utils';
 import { INITIAL_SCENE } from 'src/config';
 import { MenuItem } from './MenuItem';
 
@@ -35,8 +35,8 @@ export const MainMenu = () => {
       rectangles: state.rectangles
     };
   });
-  const setScene = useSceneStore((state) => {
-    return state.actions.setScene;
+  const sceneActions = useSceneStore((state) => {
+    return state.actions;
   });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
@@ -70,7 +70,7 @@ export const MainMenu = () => {
 
       fileReader.onload = async (e) => {
         const sceneInput = JSON.parse(e.target?.result as string);
-        setScene(sceneInput);
+        sceneActions.setScene(sceneInput);
       };
       fileReader.readAsText(file);
 
@@ -79,31 +79,31 @@ export const MainMenu = () => {
 
     await fileInput.click();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [setScene, uiStateActions]);
+  }, [uiStateActions, sceneActions]);
 
-  const onSaveAs = useCallback(async () => {
-    const parsedScene = sceneToSceneInput(scene);
-
-    const blob = new Blob([JSON.stringify(parsedScene)], {
-      type: 'application/json;charset=utf-8'
-    });
-
-    FileSaver.saveAs(blob, `isoflow-${new Date().toISOString()}.json`);
+  const onExportAsJSON = useCallback(async () => {
+    exportAsJSON(scene);
     uiStateActions.setIsMainMenuOpen(false);
   }, [scene, uiStateActions]);
 
+  const onExportAsImage = useCallback(() => {
+    uiStateActions.setIsMainMenuOpen(false);
+    uiStateActions.setDialog('EXPORT_IMAGE');
+  }, [uiStateActions]);
+
   const onClearCanvas = useCallback(() => {
-    setScene({ ...INITIAL_SCENE, icons: scene.icons });
+    sceneActions.setScene({ ...INITIAL_SCENE, icons: scene.icons });
     uiStateActions.resetUiState();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, setScene, scene.icons]);
+  }, [sceneActions, uiStateActions, scene.icons]);
 
   const sectionVisibility = useMemo(() => {
     return {
       actions: Boolean(
         mainMenuOptions.includes('OPEN') ||
-          mainMenuOptions.includes('SAVE_JSON') ||
-          mainMenuOptions.includes('CLEAR')
+          mainMenuOptions.includes('EXPORT_JSON') ||
+          mainMenuOptions.includes('EXPORT_PNG') ||
+          mainMenuOptions.includes('CLEAR_CANVAS')
       ),
       links: Boolean(
         mainMenuOptions.includes('GITHUB') ||
@@ -145,13 +145,19 @@ export const MainMenu = () => {
             </MenuItem>
           )}
 
-          {mainMenuOptions.includes('SAVE_JSON') && (
-            <MenuItem onClick={onSaveAs} Icon={<DownloadIcon />}>
-              Download diagram
+          {mainMenuOptions.includes('EXPORT_JSON') && (
+            <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon />}>
+              Export as JSON
             </MenuItem>
           )}
 
-          {mainMenuOptions.includes('CLEAR') && (
+          {mainMenuOptions.includes('EXPORT_PNG') && (
+            <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon />}>
+              Export as image
+            </MenuItem>
+          )}
+
+          {mainMenuOptions.includes('CLEAR_CANVAS') && (
             <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
               Clear the canvas
             </MenuItem>

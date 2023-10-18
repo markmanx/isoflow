@@ -47,6 +47,8 @@ const createShadows = () => {
   const shadows = Array(25)
     .fill('none')
     .map((shadow, i) => {
+      if (i === 0) return 'none';
+
       return `0px 10px 20px ${i - 10}px rgba(0,0,0,0.25)`;
     }) as Required<ThemeOptions>['shadows'];
 

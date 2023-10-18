@@ -577,3 +577,15 @@ export const getAnchorParent = (anchorId: string, connectors: Connector[]) => {
 
   return connector;
 };
+
+export const getTileScrollPosition = (
+  tile: Coords,
+  origin?: TileOriginEnum
+): Coords => {
+  const tilePosition = getTilePosition({ tile, origin });
+
+  return {
+    x: -tilePosition.x,
+    y: -tilePosition.y
+  };
+};

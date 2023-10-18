@@ -66,7 +66,7 @@ export const TransformRectangle: ModeActions = {
       }
     }
   },
-  mousedown: ({ uiState, scene }) => {
+  mousedown: ({ uiState, scene, rendererSize }) => {
     if (uiState.mode.type !== 'RECTANGLE.TRANSFORM') return;
 
     const { item: rectangle } = getItemById(scene.rectangles, uiState.mode.id);
@@ -77,7 +77,7 @@ export const TransformRectangle: ModeActions = {
       return isoToScreen({
         tile: corner,
         origin: outermostCornerPositions[i],
-        rendererSize: uiState.rendererSize
+        rendererSize
       });
     });
     const activeAnchorIndex = anchorPositions.findIndex((anchorPosition) => {
