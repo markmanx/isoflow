@@ -60,11 +60,11 @@ export const INITIAL_SCENE: SceneInput = {
   rectangles: []
 };
 export const MAIN_MENU_OPTIONS: MainMenuOptions = [
-  'OPEN',
-  'EXPORT_JSON',
-  'EXPORT_PNG',
-  'CLEAR_CANVAS',
-  'DISCORD',
-  'GITHUB',
+  'ACTION.OPEN',
+  'EXPORT.JSON',
+  'EXPORT.PNG',
+  'ACTION.CLEAR_CANVAS',
+  'LINK.DISCORD',
+  'LINK.GITHUB',
   'VERSION'
 ];

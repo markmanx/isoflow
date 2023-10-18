@@ -5,10 +5,9 @@ import {
   incrementZoom,
   decrementZoom,
   getStartingMode,
-  getTilePosition,
   getTileScrollPosition
 } from 'src/utils';
-import { UiStateStore, Coords } from 'src/types';
+import { UiStateStore } from 'src/types';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {

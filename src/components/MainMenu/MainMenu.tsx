@@ -100,14 +100,14 @@ export const MainMenu = () => {
   const sectionVisibility = useMemo(() => {
     return {
       actions: Boolean(
-        mainMenuOptions.includes('OPEN') ||
-          mainMenuOptions.includes('EXPORT_JSON') ||
-          mainMenuOptions.includes('EXPORT_PNG') ||
-          mainMenuOptions.includes('CLEAR_CANVAS')
+        mainMenuOptions.find((opt) => {
+          return opt.includes('ACTION') || opt.includes('EXPORT');
+        })
       ),
       links: Boolean(
-        mainMenuOptions.includes('GITHUB') ||
-          mainMenuOptions.includes('DISCORD')
+        mainMenuOptions.find((opt) => {
+          return opt.includes('LINK');
+        })
       ),
       version: Boolean(mainMenuOptions.includes('VERSION'))
     };
@@ -139,25 +139,25 @@ export const MainMenu = () => {
         }}
       >
         <Card sx={{ py: 1 }}>
-          {mainMenuOptions.includes('OPEN') && (
+          {mainMenuOptions.includes('ACTION.OPEN') && (
             <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
               Open
             </MenuItem>
           )}
 
-          {mainMenuOptions.includes('EXPORT_JSON') && (
+          {mainMenuOptions.includes('EXPORT.JSON') && (
             <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon />}>
               Export as JSON
             </MenuItem>
           )}
 
-          {mainMenuOptions.includes('EXPORT_PNG') && (
+          {mainMenuOptions.includes('EXPORT.PNG') && (
             <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon />}>
               Export as image
             </MenuItem>
           )}
 
-          {mainMenuOptions.includes('CLEAR_CANVAS') && (
+          {mainMenuOptions.includes('ACTION.CLEAR_CANVAS') && (
             <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
               Clear the canvas
             </MenuItem>
@@ -167,7 +167,7 @@ export const MainMenu = () => {
             <>
               <Divider />
 
-              {mainMenuOptions.includes('GITHUB') && (
+              {mainMenuOptions.includes('LINK.GITHUB') && (
                 <MenuItem
                   onClick={() => {
                     return gotoUrl(`${REPOSITORY_URL}`);
@@ -178,7 +178,7 @@ export const MainMenu = () => {
                 </MenuItem>
               )}
 
-              {mainMenuOptions.includes('DISCORD') && (
+              {mainMenuOptions.includes('LINK.DISCORD') && (
                 <MenuItem
                   onClick={() => {
                     return gotoUrl('https://discord.gg/QYPkvZth7D');
