@@ -1,11 +1,11 @@
 import { useMemo, useCallback } from 'react';
 import { IconCollectionStateWithIcons, IconCollectionState } from 'src/types';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import { categoriseIcons } from 'src/utils';
 
 export const useIconCategories = () => {
-  const icons = useSceneStore((state) => {
+  const icons = useModelStore((state) => {
     return state.icons;
   });
   const iconCategoriesState = useUiStateStore((state) => {

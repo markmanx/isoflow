@@ -1,13 +1,11 @@
-import React, { useCallback } from 'react';
-import { Rectangle } from 'src/types';
+import React from 'react';
 import { useTheme, Box } from '@mui/material';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { useRectangle } from 'src/hooks/useRectangle';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useScene } from 'src/hooks/useScene';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
-import { Header } from '../components/Header';
 import { DeleteButton } from '../components/DeleteButton';
 
 interface Props {
@@ -16,25 +14,11 @@ interface Props {
 
 export const RectangleControls = ({ id }: Props) => {
   const theme = useTheme();
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const rectangle = useRectangle(id);
-
-  const onRectangleUpdated = useCallback(
-    (updates: Partial<Rectangle>) => {
-      sceneActions.updateRectangle(id, updates);
-    },
-    [sceneActions, id]
-  );
-
-  const onRectangleDeleted = useCallback(() => {
-    uiStateActions.setItemControls(null);
-    sceneActions.deleteRectangle(id);
-  }, [sceneActions, id, uiStateActions]);
+  const { updateRectangle, deleteRectangle } = useScene();
 
   return (
     <ControlsContainer>
@@ -42,14 +26,19 @@ export const RectangleControls = ({ id }: Props) => {
         <ColorSelector
           colors={Object.values(theme.customVars.customPalette)}
           onChange={(color) => {
-            return onRectangleUpdated({ color });
+            updateRectangle(rectangle.id, { color });
           }}
           activeColor={rectangle.color}
         />
       </Section>
       <Section>
         <Box>
-          <DeleteButton onClick={onRectangleDeleted} />
+          <DeleteButton
+            onClick={() => {
+              uiStateActions.setItemControls(null);
+              deleteRectangle(rectangle.id);
+            }}
+          />
         </Box>
       </Section>
     </ControlsContainer>

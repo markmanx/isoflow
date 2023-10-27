@@ -41,7 +41,7 @@
 - [x] Nodes, connectors & groups
 - [x] Import / export diagrams to local storage (in JSON format)
 - [x] Icon support for AWS, GCP, Azure, K8S & generic network hardware (e.g. server, database)
-- [x] onSceneUpdated callback
+- [x] onModelUpdated callback
 - [x] Documentation
 - [x] Pipeline for publishing to NPM
 

@@ -1,17 +1,17 @@
 import React from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useScene } from 'src/hooks/useScene';
 import { ConnectorLabel } from './ConnectorLabel';
 
-export const ConnectorLabels = () => {
-  const connectors = useSceneStore((state) => {
-    return state.connectors;
-  });
+interface Props {
+  connectors: ReturnType<typeof useScene>['connectors'];
+}
 
+export const ConnectorLabels = ({ connectors }: Props) => {
   return (
     <>
       {connectors
         .filter((con) => {
-          return con.label !== undefined;
+          return con.description !== undefined;
         })
         .map((connector) => {
           return <ConnectorLabel key={connector.id} connector={connector} />;

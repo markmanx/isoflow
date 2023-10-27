@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
-import { Connector } from 'src/types';
+import { useScene } from 'src/hooks/useScene';
 import { connectorPathTileToGlobal, getTilePosition } from 'src/utils';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
-  connector: Connector;
+  connector: ReturnType<typeof useScene>['connectors'][0];
 }
 
 export const ConnectorLabel = ({ connector }: Props) => {
@@ -43,7 +43,7 @@ export const ConnectorLabel = ({ connector }: Props) => {
       }}
     >
       <Typography color="text.secondary" variant="body2">
-        {connector.label}
+        {connector.description}
       </Typography>
     </Box>
   );

@@ -1,11 +1,16 @@
 import {
   Size,
-  Coords,
-  SceneInput,
+  Model,
+  MainMenuOptions,
+  Icon,
   Connector,
-  MainMenuOptions
+  TextBox,
+  ViewItem,
+  View,
+  Rectangle
 } from 'src/types';
 import { customVars } from './styles/theme';
+import { CoordsUtils } from './utils';
 
 // TODO: This file could do with better organisation and convention for easier reading.
 export const UNPROJECTED_TILE_SIZE = 100;
@@ -17,33 +22,47 @@ export const PROJECTED_TILE_SIZE = {
   width: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.width,
   height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height
 };
+
 export const DEFAULT_COLOR = customVars.customPalette.blue;
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
-export const NODE_DEFAULTS = {
-  label: '',
-  labelHeight: 140,
-  color: DEFAULT_COLOR
+
+export const VIEW_DEFAULTS: Required<Omit<View, 'id' | 'description'>> = {
+  name: 'New view',
+  items: [],
+  connectors: [],
+  rectangles: [],
+  textBoxes: []
 };
 
-interface ConnectorDefaults {
-  width: number;
-  searchOffset: Coords;
-  style: Connector['style'];
-}
+export const VIEW_ITEM_DEFAULTS: Required<Omit<ViewItem, 'id' | 'tile'>> = {
+  labelHeight: 80
+};
 
-export const CONNECTOR_DEFAULTS: ConnectorDefaults = {
+export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id'>> = {
   width: 10,
-  // The boundaries of the search area for the pathfinder algorithm
-  // is the grid that encompasses the two nodes + the offset below.
-  searchOffset: { x: 1, y: 1 },
+  description: '',
+  color: DEFAULT_COLOR,
+  anchors: [],
   style: 'SOLID'
 };
 
-export const TEXTBOX_DEFAULTS = {
+// The boundaries of the search area for the pathfinder algorithm
+// is the grid that encompasses the two nodes + the offset below.
+export const CONNECTOR_SEARCH_OFFSET = { x: 1, y: 1 };
+
+export const TEXTBOX_DEFAULTS: Required<Omit<TextBox, 'id' | 'tile'>> = {
+  orientation: 'X',
   fontSize: 0.6,
-  paddingX: 0.2,
-  text: 'Text',
-  fontWeight: 'bold'
+  content: 'Text'
+};
+
+export const TEXTBOX_PADDING = 0.2;
+export const TEXTBOX_FONT_WEIGHT = 'bold';
+
+export const RECTANGLE_DEFAULTS: Required<
+  Omit<Rectangle, 'id' | 'from' | 'to'>
+> = {
+  color: DEFAULT_COLOR
 };
 
 export const ZOOM_INCREMENT = 0.2;
@@ -51,13 +70,19 @@ export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
 export const TRANSFORM_ANCHOR_SIZE = 30;
 export const TRANSFORM_CONTROLS_COLOR = '#0392ff';
-export const INITIAL_SCENE: SceneInput = {
+export const INITIAL_DATA: Model = {
   title: 'Untitled',
+  version: '',
   icons: [],
-  nodes: [],
-  connectors: [],
-  textBoxes: [],
-  rectangles: []
+  items: [],
+  views: []
+};
+export const INITIAL_UI_STATE = {
+  zoom: 1,
+  scroll: {
+    position: CoordsUtils.zero(),
+    offset: CoordsUtils.zero()
+  }
 };
 export const MAIN_MENU_OPTIONS: MainMenuOptions = [
   'ACTION.OPEN',
@@ -68,3 +93,12 @@ export const MAIN_MENU_OPTIONS: MainMenuOptions = [
   'LINK.GITHUB',
   'VERSION'
 ];
+
+export const DEFAULT_ICON: Icon = {
+  id: 'default',
+  name: 'block',
+  isIsometric: true,
+  url: ''
+};
+
+export const DEFAULT_LABEL_HEIGHT = 20;

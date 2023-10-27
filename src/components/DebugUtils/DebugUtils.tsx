@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { useScene } from 'src/hooks/useScene';
 import { LineItem } from './LineItem';
 
 export const DebugUtils = () => {
@@ -11,9 +11,7 @@ export const DebugUtils = () => {
       return { scroll, mouse, zoom, mode, rendererEl };
     }
   );
-  const scene = useSceneStore((state) => {
-    return state;
-  });
+  const scene = useScene();
   const { size: rendererSize } = useResizeObserver(uiState.rendererEl);
 
   return (
@@ -55,7 +53,10 @@ export const DebugUtils = () => {
         title="Size"
         value={`${rendererSize.width}, ${rendererSize.height}`}
       />
-      <LineItem title="Scene info" value={`${scene.nodes.length} nodes`} />
+      <LineItem
+        title="Scene info"
+        value={`${scene.items.length} items in scene`}
+      />
       <LineItem title="Mode" value={uiState.mode.type} />
       <LineItem title="Mode data" value={JSON.stringify(uiState.mode)} />
     </Box>

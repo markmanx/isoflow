@@ -1,15 +1,15 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, Stack, Button } from '@mui/material';
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon
 } from '@mui/icons-material';
-import { Node } from 'src/types';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { useNode } from 'src/hooks/useNode';
-import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useIconCategories } from 'src/hooks/useIconCategories';
-import { getItemById } from 'src/utils';
+import { useIcon } from 'src/hooks/useIcon';
+import { useScene } from 'src/hooks/useScene';
+import { useViewItem } from 'src/hooks/useViewItem';
+import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useModelItem } from 'src/hooks/useModelItem';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from '../IconSelectionControls/Icons';
 import { NodeSettings } from './NodeSettings/NodeSettings';
@@ -19,44 +19,25 @@ interface Props {
   id: string;
 }
 
-const ModeEnum = {
-  Settings: 'Settings',
-  ChangeIcon: 'ChangeIcon'
+const ModeOptions = {
+  SETTINGS: 'SETTINGS',
+  CHANGE_ICON: 'CHANGE_ICON'
 } as const;
 
+type Mode = keyof typeof ModeOptions;
+
 export const NodeControls = ({ id }: Props) => {
-  const [mode, setMode] = useState<keyof typeof ModeEnum>('Settings');
-  const { iconCategories } = useIconCategories();
-  const icons = useSceneStore((state) => {
-    return state.icons;
-  });
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
+  const [mode, setMode] = useState<Mode>('SETTINGS');
+  const { updateModelItem, updateViewItem, deleteViewItem } = useScene();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const node = useNode(id);
+  const viewItem = useViewItem(id);
+  const modelItem = useModelItem(id);
+  const { iconCategories } = useIconCategories();
+  const { icon } = useIcon(modelItem.icon);
 
-  const iconUrl = useMemo(() => {
-    const { item: icon } = getItemById(icons, node.icon);
-
-    return icon.url;
-  }, [node.icon, icons]);
-
-  const onNodeUpdated = useCallback(
-    (updates: Partial<Node>) => {
-      sceneActions.updateNode(id, updates);
-    },
-    [sceneActions, id]
-  );
-
-  const onNodeDeleted = useCallback(() => {
-    uiStateActions.setItemControls(null);
-    sceneActions.deleteNode(id);
-  }, [sceneActions, id, uiStateActions]);
-
-  const onSwitchMode = useCallback((newMode: keyof typeof ModeEnum) => {
+  const onSwitchMode = useCallback((newMode: Mode) => {
     setMode(newMode);
   }, []);
 
@@ -76,23 +57,27 @@ export const NodeControls = ({ id }: Props) => {
             alignItems="flex-end"
             justifyContent="space-between"
           >
-            <Box component="img" src={iconUrl} sx={{ width: 70, height: 70 }} />
-            {mode === 'Settings' && (
+            <Box
+              component="img"
+              src={icon.url}
+              sx={{ width: 70, height: 70 }}
+            />
+            {mode === 'SETTINGS' && (
               <Button
                 endIcon={<ChevronRightIcon />}
                 onClick={() => {
-                  onSwitchMode('ChangeIcon');
+                  onSwitchMode('CHANGE_ICON');
                 }}
                 variant="text"
               >
                 Update icon
               </Button>
             )}
-            {mode === 'ChangeIcon' && (
+            {mode === 'CHANGE_ICON' && (
               <Button
                 startIcon={<ChevronLeftIcon />}
                 onClick={() => {
-                  onSwitchMode('Settings');
+                  onSwitchMode('SETTINGS');
                 }}
                 variant="text"
               >
@@ -102,20 +87,28 @@ export const NodeControls = ({ id }: Props) => {
           </Stack>
         </Section>
       </Box>
-      {mode === ModeEnum.Settings && (
+      {mode === 'SETTINGS' && (
         <NodeSettings
-          key={node.id}
-          node={node}
-          onUpdate={onNodeUpdated}
-          onDelete={onNodeDeleted}
+          key={viewItem.id}
+          node={viewItem}
+          onModelItemUpdated={(updates) => {
+            updateModelItem(viewItem.id, updates);
+          }}
+          onViewItemUpdated={(updates) => {
+            updateViewItem(viewItem.id, updates);
+          }}
+          onDeleted={() => {
+            uiStateActions.setItemControls(null);
+            deleteViewItem(viewItem.id);
+          }}
         />
       )}
-      {mode === ModeEnum.ChangeIcon && (
+      {mode === 'CHANGE_ICON' && (
         <Icons
-          key={node.id}
+          key={viewItem.id}
           iconCategories={iconCategories}
-          onClick={(icon) => {
-            onNodeUpdated({ icon: icon.id });
+          onClick={(_icon) => {
+            updateModelItem(viewItem.id, { icon: _icon.id });
           }}
         />
       )}

@@ -1,15 +1,12 @@
 import React from 'react';
-import { Coords } from 'src/types';
+import { Rectangle as RectangleI } from 'src/types';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { getColorVariant } from 'src/utils';
+import { DEFAULT_COLOR } from 'src/config';
 
-interface Props {
-  from: Coords;
-  to: Coords;
-  color: string;
-}
+type Props = RectangleI;
 
-export const Rectangle = ({ from, to, color }: Props) => {
+export const Rectangle = ({ from, to, color = DEFAULT_COLOR }: Props) => {
   return (
     <IsoTileArea
       from={from}

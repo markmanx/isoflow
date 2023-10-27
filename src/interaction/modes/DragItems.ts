@@ -1,7 +1,8 @@
 import { produce } from 'immer';
-import { ModeActions, Coords, SceneItemReference, SceneStore } from 'src/types';
+import { ModeActions, Coords, ItemReference } from 'src/types';
+import { useScene } from 'src/hooks/useScene';
 import {
-  getItemById,
+  getItemByIdOrThrow,
   CoordsUtils,
   hasMovedTile,
   getAnchorParent,
@@ -9,73 +10,67 @@ import {
 } from 'src/utils';
 
 const dragItems = (
-  items: SceneItemReference[],
+  items: ItemReference[],
   tile: Coords,
   delta: Coords,
-  scene: SceneStore
+  scene: ReturnType<typeof useScene>
 ) => {
   items.forEach((item) => {
-    if (item.type === 'NODE') {
-      const node = getItemById(scene.nodes, item.id).item;
+    if (item.type === 'ITEM') {
+      const node = getItemByIdOrThrow(scene.items, item.id).value;
 
-      scene.actions.updateNode(item.id, {
+      scene.updateViewItem(item.id, {
         tile: CoordsUtils.add(node.tile, delta)
       });
     } else if (item.type === 'RECTANGLE') {
-      const rectangle = getItemById(scene.rectangles, item.id).item;
+      const rectangle = getItemByIdOrThrow(scene.rectangles, item.id).value;
       const newFrom = CoordsUtils.add(rectangle.from, delta);
       const newTo = CoordsUtils.add(rectangle.to, delta);
 
-      scene.actions.updateRectangle(item.id, { from: newFrom, to: newTo });
+      scene.updateRectangle(item.id, { from: newFrom, to: newTo });
     } else if (item.type === 'TEXTBOX') {
-      const textBox = getItemById(scene.textBoxes, item.id).item;
+      const textBox = getItemByIdOrThrow(scene.textBoxes, item.id).value;
 
-      scene.actions.updateTextBox(item.id, {
+      scene.updateTextBox(item.id, {
         tile: CoordsUtils.add(textBox.tile, delta)
       });
     } else if (item.type === 'CONNECTOR_ANCHOR') {
       const connector = getAnchorParent(item.id, scene.connectors);
 
       const newConnector = produce(connector, (draft) => {
-        const { item: anchor, index: anchorIndex } = getItemById(
-          connector.anchors,
-          item.id
-        );
+        const anchor = getItemByIdOrThrow(connector.anchors, item.id);
 
         const itemAtTile = getItemAtTile({ tile, scene });
 
         switch (itemAtTile?.type) {
-          case 'NODE':
-            draft.anchors[anchorIndex] = {
-              ...anchor,
+          case 'ITEM':
+            draft.anchors[anchor.index] = {
+              ...anchor.value,
               ref: {
-                type: 'NODE',
-                id: itemAtTile.id
+                item: itemAtTile.id
               }
             };
             break;
           case 'CONNECTOR_ANCHOR':
-            draft.anchors[anchorIndex] = {
-              ...anchor,
+            draft.anchors[anchor.index] = {
+              ...anchor.value,
               ref: {
-                type: 'ANCHOR',
-                id: itemAtTile.id
+                anchor: itemAtTile.id
               }
             };
             break;
           default:
-            draft.anchors[anchorIndex] = {
-              ...anchor,
+            draft.anchors[anchor.index] = {
+              ...anchor.value,
               ref: {
-                type: 'TILE',
-                coords: tile
+                tile
               }
             };
             break;
         }
       });
 
-      scene.actions.updateConnector(connector.id, newConnector);
+      scene.updateConnector(connector.id, newConnector);
     }
   });
 };

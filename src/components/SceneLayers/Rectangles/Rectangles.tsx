@@ -1,29 +1,17 @@
 import React from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { useUiStateStore } from 'src/stores/uiStateStore';
-import { DEFAULT_COLOR } from 'src/config';
+import { Rectangle as RectangleI } from 'src/types';
 import { Rectangle } from './Rectangle';
 
-export const Rectangles = () => {
-  const rectangles = useSceneStore((state) => {
-    return state.rectangles;
-  });
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
+interface Props {
+  rectangles: RectangleI[];
+}
 
+export const Rectangles = ({ rectangles }: Props) => {
   return (
     <>
       {rectangles.map((rectangle) => {
         return <Rectangle key={rectangle.id} {...rectangle} />;
       })}
-      {mode.type === 'RECTANGLE.DRAW' && mode.area && (
-        <Rectangle
-          from={mode.area.from}
-          to={mode.area.to}
-          color={DEFAULT_COLOR}
-        />
-      )}
     </>
   );
 };

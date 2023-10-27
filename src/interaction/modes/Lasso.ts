@@ -3,7 +3,7 @@
 
 // export const Lasso: ModeActions = {
 //   type: 'LASSO',
-//   mousemove: ({ uiState, scene }) => {
+//   mousemove: ({ uiState, Model }) => {
 //     if (uiState.mode.type !== 'LASSO') return;
 
 //     if (uiState.mouse.mousedown === null) return;
@@ -18,7 +18,7 @@
 
 //     if (!uiState.mode.isDragging) {
 //       const { mousedown } = uiState.mouse;
-//       const items = scene.nodes.filter((node) => {
+//       const items = Model.nodes.filter((node) => {
 //         return CoordsUtils.isEqual(node.tile, mousedown.tile);
 //       });
 

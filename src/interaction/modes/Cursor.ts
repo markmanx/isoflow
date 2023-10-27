@@ -1,33 +1,30 @@
 import { produce } from 'immer';
 import {
   ConnectorAnchor,
-  Connector,
+  SceneConnector,
   ModeActions,
   ModeActionsAction,
-  SceneItemTypeEnum,
-  SceneStore,
   Coords,
-  Node
+  View
 } from 'src/types';
 import {
   getItemAtTile,
   hasMovedTile,
   getAnchorAtTile,
-  getItemById,
+  getItemByIdOrThrow,
   generateId,
   CoordsUtils,
   getAnchorTile,
-  getAllAnchors,
   connectorPathTileToGlobal
 } from 'src/utils';
+import { useScene } from 'src/hooks/useScene';
 
 const getAnchorOrdering = (
   anchor: ConnectorAnchor,
-  connector: Connector,
-  nodes: Node[],
-  allAnchors: ConnectorAnchor[]
+  connector: SceneConnector,
+  view: View
 ) => {
-  const anchorTile = getAnchorTile(anchor, nodes, allAnchors);
+  const anchorTile = getAnchorTile(anchor, view);
   const index = connector.path.tiles.findIndex((pathTile) => {
     const globalTile = connectorPathTileToGlobal(
       pathTile,
@@ -45,30 +42,32 @@ const getAnchorOrdering = (
   return index;
 };
 
-const getAnchor = (connectorId: string, tile: Coords, scene: SceneStore) => {
-  const connector = getItemById(scene.connectors, connectorId).item;
+const getAnchor = (
+  connectorId: string,
+  tile: Coords,
+  scene: ReturnType<typeof useScene>
+) => {
+  const connector = getItemByIdOrThrow(scene.connectors, connectorId).value;
   const anchor = getAnchorAtTile(tile, connector.anchors);
 
   if (!anchor) {
     const newAnchor: ConnectorAnchor = {
       id: generateId(),
-      type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
-      ref: { type: 'TILE', coords: tile }
+      ref: { tile }
     };
 
-    const allAnchors = getAllAnchors(scene.connectors);
     const orderedAnchors = [...connector.anchors, newAnchor]
       .map((anch) => {
         return {
           ...anch,
-          ordering: getAnchorOrdering(anch, connector, scene.nodes, allAnchors)
+          ordering: getAnchorOrdering(anch, connector, scene.currentView)
         };
       })
       .sort((a, b) => {
         return a.ordering - b.ordering;
       });
 
-    scene.actions.updateConnector(connector.id, { anchors: orderedAnchors });
+    scene.updateConnector(connector.id, { anchors: orderedAnchors });
     return newAnchor;
   }
 
@@ -82,19 +81,19 @@ const mousedown: ModeActionsAction = ({
 }) => {
   if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
-  const item = getItemAtTile({
+  const itemAtTile = getItemAtTile({
     tile: uiState.mouse.position.tile,
     scene
   });
 
-  if (item) {
+  if (itemAtTile) {
     uiState.actions.setMode(
       produce(uiState.mode, (draft) => {
-        draft.mousedownItem = item;
+        draft.mousedownItem = itemAtTile;
       })
     );
 
-    uiState.actions.setItemControls(item);
+    uiState.actions.setItemControls(itemAtTile);
   } else {
     uiState.actions.setMode(
       produce(uiState.mode, (draft) => {
@@ -123,7 +122,11 @@ export const Cursor: ModeActions = {
 
     if (item?.type === 'CONNECTOR' && uiState.mouse.mousedown) {
       const anchor = getAnchor(item.id, uiState.mouse.mousedown.tile, scene);
-      item = anchor;
+
+      item = {
+        type: 'CONNECTOR_ANCHOR',
+        id: anchor.id
+      };
     }
 
     if (item) {
@@ -140,9 +143,9 @@ export const Cursor: ModeActions = {
     if (uiState.mode.type !== 'CURSOR' || !isRendererInteraction) return;
 
     if (uiState.mode.mousedownItem) {
-      if (uiState.mode.mousedownItem.type === 'NODE') {
+      if (uiState.mode.mousedownItem.type === 'ITEM') {
         uiState.actions.setItemControls({
-          type: 'NODE',
+          type: 'ITEM',
           id: uiState.mode.mousedownItem.id
         });
       } else if (uiState.mode.mousedownItem.type === 'RECTANGLE') {
@@ -150,15 +153,6 @@ export const Cursor: ModeActions = {
           type: 'RECTANGLE',
           id: uiState.mode.mousedownItem.id
         });
-
-        uiState.actions.setMode({
-          type: 'RECTANGLE.TRANSFORM',
-          id: uiState.mode.mousedownItem.id,
-          showCursor: true,
-          selectedAnchor: null
-        });
-
-        return;
       } else if (uiState.mode.mousedownItem.type === 'CONNECTOR') {
         uiState.actions.setItemControls({
           type: 'CONNECTOR',

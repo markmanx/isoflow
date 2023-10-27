@@ -9,12 +9,13 @@ import {
   FolderOpen as FolderOpenIcon,
   DeleteOutline as DeleteOutlineIcon
 } from '@mui/icons-material';
+import { Model } from 'src/types/model';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import { exportAsJSON } from 'src/utils';
-import { INITIAL_SCENE } from 'src/config';
+import { INITIAL_DATA } from 'src/config';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
@@ -25,17 +26,10 @@ export const MainMenu = () => {
   const mainMenuOptions = useUiStateStore((state) => {
     return state.mainMenuOptions;
   });
-  const scene = useSceneStore((state) => {
-    return {
-      title: state.title,
-      icons: state.icons,
-      nodes: state.nodes,
-      connectors: state.connectors,
-      textBoxes: state.textBoxes,
-      rectangles: state.rectangles
-    };
+  const model = useModelStore((state) => {
+    return state;
   });
-  const sceneActions = useSceneStore((state) => {
+  const modelActions = useModelStore((state) => {
     return state.actions;
   });
   const uiStateActions = useUiStateStore((state) => {
@@ -54,7 +48,7 @@ export const MainMenu = () => {
     window.open(url, '_blank');
   }, []);
 
-  const onOpenScene = useCallback(async () => {
+  const onOpenModel = useCallback(async () => {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'application/json';
@@ -69,8 +63,8 @@ export const MainMenu = () => {
       const fileReader = new FileReader();
 
       fileReader.onload = async (e) => {
-        const sceneInput = JSON.parse(e.target?.result as string);
-        sceneActions.setScene(sceneInput);
+        const loadedModel = JSON.parse(e.target?.result as string);
+        modelActions.set(loadedModel);
       };
       fileReader.readAsText(file);
 
@@ -79,12 +73,21 @@ export const MainMenu = () => {
 
     await fileInput.click();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, sceneActions]);
+  }, [uiStateActions, modelActions]);
 
   const onExportAsJSON = useCallback(async () => {
-    exportAsJSON(scene);
+    const payload: Model = {
+      icons: model.icons,
+      items: model.items,
+      title: model.title,
+      version: model.version,
+      views: model.views,
+      description: model.description
+    };
+
+    exportAsJSON(payload);
     uiStateActions.setIsMainMenuOpen(false);
-  }, [scene, uiStateActions]);
+  }, [model, uiStateActions]);
 
   const onExportAsImage = useCallback(() => {
     uiStateActions.setIsMainMenuOpen(false);
@@ -92,10 +95,10 @@ export const MainMenu = () => {
   }, [uiStateActions]);
 
   const onClearCanvas = useCallback(() => {
-    sceneActions.setScene({ ...INITIAL_SCENE, icons: scene.icons });
+    modelActions.set({ ...INITIAL_DATA, icons: model.icons });
     uiStateActions.resetUiState();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [sceneActions, uiStateActions, scene.icons]);
+  }, [modelActions, uiStateActions, model.icons]);
 
   const sectionVisibility = useMemo(() => {
     return {
@@ -140,7 +143,7 @@ export const MainMenu = () => {
       >
         <Card sx={{ py: 1 }}>
           {mainMenuOptions.includes('ACTION.OPEN') && (
-            <MenuItem onClick={onOpenScene} Icon={<FolderOpenIcon />}>
+            <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon />}>
               Open
             </MenuItem>
           )}

@@ -1,7 +1,9 @@
-import { SceneStore, UiStateStore, Size } from 'src/types';
+import { ModelStore, UiStateStore, Size } from 'src/types';
+import { useScene } from 'src/hooks/useScene';
 
 export interface State {
-  scene: SceneStore;
+  model: ModelStore;
+  scene: ReturnType<typeof useScene>;
   uiState: UiStateStore;
   rendererRef: HTMLElement;
   rendererSize: Size;

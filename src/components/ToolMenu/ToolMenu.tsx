@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Stack } from '@mui/material';
 import {
   PanToolOutlined as PanToolIcon,
@@ -11,14 +11,37 @@ import {
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';
+import { useScene } from 'src/hooks/useScene';
+import { TEXTBOX_DEFAULTS } from 'src/config';
+import { generateId } from 'src/utils';
 
 export const ToolMenu = () => {
+  const { createTextBox } = useScene();
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
   const uiStateStoreActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const mousePosition = useUiStateStore((state) => {
+    return state.mouse.position.tile;
+  });
+
+  const createTextBoxProxy = useCallback(() => {
+    const textBoxId = generateId();
+
+    createTextBox({
+      ...TEXTBOX_DEFAULTS,
+      id: textBoxId,
+      tile: mousePosition
+    });
+
+    uiStateStoreActions.setMode({
+      type: 'TEXTBOX',
+      showCursor: false,
+      id: textBoxId
+    });
+  }, [uiStateStoreActions, createTextBox, mousePosition]);
 
   return (
     <UiElement>
@@ -54,12 +77,12 @@ export const ToolMenu = () => {
               type: 'ADD_ITEM'
             });
             uiStateStoreActions.setMode({
-              type: 'PLACE_ELEMENT',
+              type: 'PLACE_ICON',
               showCursor: true,
-              icon: null
+              id: null
             });
           }}
-          isActive={mode.type === 'PLACE_ELEMENT'}
+          isActive={mode.type === 'PLACE_ICON'}
         />
         <IconButton
           name="Rectangle"
@@ -68,7 +91,7 @@ export const ToolMenu = () => {
             uiStateStoreActions.setMode({
               type: 'RECTANGLE.DRAW',
               showCursor: true,
-              area: null
+              id: null
             });
           }}
           isActive={mode.type === 'RECTANGLE.DRAW'}
@@ -79,7 +102,7 @@ export const ToolMenu = () => {
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'CONNECTOR',
-              connector: null,
+              id: null,
               showCursor: true
             });
           }}
@@ -88,12 +111,7 @@ export const ToolMenu = () => {
         <IconButton
           name="Text"
           Icon={<TitleIcon />}
-          onClick={() => {
-            uiStateStoreActions.setMode({
-              type: 'TEXTBOX',
-              showCursor: false
-            });
-          }}
+          onClick={createTextBoxProxy}
           isActive={mode.type === 'TEXTBOX'}
         />
       </Stack>

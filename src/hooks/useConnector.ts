@@ -1,15 +1,22 @@
 import { useMemo } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { getItemById } from 'src/utils';
+import { Connector, SceneConnector } from 'src/types';
+import { CONNECTOR_DEFAULTS } from 'src/config';
+import { getItemByIdOrThrow } from 'src/utils';
+import { useScene } from 'src/hooks/useScene';
 
-export const useConnector = (id: string) => {
-  const connectors = useSceneStore((state) => {
-    return state.connectors;
-  });
+export const useConnector = (
+  id: string
+): Required<Connector> & SceneConnector => {
+  const { connectors } = useScene();
 
-  const node = useMemo(() => {
-    return getItemById(connectors, id).item;
+  const connector = useMemo(() => {
+    const con = getItemByIdOrThrow(connectors ?? [], id).value;
+
+    return {
+      ...CONNECTOR_DEFAULTS,
+      ...con
+    };
   }, [connectors, id]);
 
-  return node;
+  return connector;
 };

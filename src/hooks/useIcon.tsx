@@ -1,17 +1,20 @@
 import React, { useMemo, useEffect } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { getItemById } from 'src/utils';
+import { useModelStore } from 'src/stores/modelStore';
+import { getItemByIdOrThrow } from 'src/utils';
 import { IsometricIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/IsometricIcon';
 import { NonIsometricIcon } from 'src/components/SceneLayers/Nodes/Node/IconTypes/NonIsometricIcon';
+import { DEFAULT_ICON } from 'src/config';
 
-export const useIcon = (id: string) => {
+export const useIcon = (id: string | undefined) => {
   const [hasLoaded, setHasLoaded] = React.useState(false);
-  const icons = useSceneStore((state) => {
+  const icons = useModelStore((state) => {
     return state.icons;
   });
 
   const icon = useMemo(() => {
-    return getItemById(icons, id).item;
+    if (!id) return DEFAULT_ICON;
+
+    return getItemByIdOrThrow(icons, id).value;
   }, [icons, id]);
 
   useEffect(() => {

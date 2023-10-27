@@ -4,44 +4,47 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
 import {
-  SceneInput,
-  IconInput,
-  NodeInput,
-  ConnectorInput,
-  RectangleInput,
+  Model,
+  ModelItem,
+  Icon,
+  Connector,
+  Rectangle,
   IsoflowProps,
-  InitialScene
+  InitialData
 } from 'src/types';
-import { sceneToSceneInput, setWindowCursor, CoordsUtils } from 'src/utils';
-import { useSceneStore, SceneProvider } from 'src/stores/sceneStore';
+import { setWindowCursor, generateId } from 'src/utils';
+import { modelSchema } from 'src/validation/model';
+import { useModelStore, ModelProvider } from 'src/stores/modelStore';
+import { SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
 import { useWindowUtils } from 'src/hooks/useWindowUtils';
-import { sceneInput as sceneValidationSchema } from 'src/validation/scene';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
-import { INITIAL_SCENE, MAIN_MENU_OPTIONS } from 'src/config';
+import {
+  INITIAL_DATA,
+  MAIN_MENU_OPTIONS,
+  INITIAL_UI_STATE,
+  VIEW_DEFAULTS
+} from 'src/config';
+import { createView } from 'src/stores/reducers';
 import { useIconCategories } from './hooks/useIconCategories';
 
 const App = ({
-  initialScene,
+  initialData,
   mainMenuOptions = MAIN_MENU_OPTIONS,
   width = '100%',
   height = '100%',
-  onSceneUpdated,
+  onModelUpdated,
   enableDebugTools = false,
   editorMode = 'EDITABLE'
 }: IsoflowProps) => {
-  useWindowUtils();
-  const prevInitialScene = useRef<SceneInput>(INITIAL_SCENE);
+  const prevInitialData = useRef<Model>(INITIAL_DATA);
   const [isReady, setIsReady] = useState(false);
-  const scene = useSceneStore(
-    ({ title, nodes, connectors, textBoxes, rectangles, icons }) => {
-      return { title, nodes, connectors, textBoxes, rectangles, icons };
-    },
-    shallow
-  );
-  const sceneActions = useSceneStore((state) => {
+  const model = useModelStore((state) => {
+    return state;
+  }, shallow);
+  const modelActions = useModelStore((state) => {
     return state.actions;
   });
   const uiActions = useUiStateStore((state) => {
@@ -50,18 +53,24 @@ const App = ({
   const { setIconCategoriesState } = useIconCategories();
 
   useEffect(() => {
-    uiActions.setZoom(initialScene?.zoom ?? 1);
-    uiActions.setScroll({
-      position: initialScene?.scroll ?? CoordsUtils.zero(),
-      offset: CoordsUtils.zero()
-    });
+    if (initialData?.zoom) {
+      uiActions.setZoom(initialData.zoom);
+    }
+
+    if (initialData?.scroll) {
+      uiActions.setScroll({
+        position: initialData.scroll,
+        offset: INITIAL_UI_STATE.scroll.offset
+      });
+    }
+
     uiActions.setEditorMode(editorMode);
     uiActions.setMainMenuOptions(mainMenuOptions);
   }, [
-    initialScene?.zoom,
-    initialScene?.scroll,
+    initialData?.zoom,
+    initialData?.scroll,
     editorMode,
-    sceneActions,
+    modelActions,
     uiActions,
     mainMenuOptions
   ]);
@@ -73,30 +82,41 @@ const App = ({
   }, []);
 
   useEffect(() => {
-    if (!initialScene || prevInitialScene.current === initialScene) return;
+    if (!initialData || prevInitialData.current === initialData) return;
+    setIsReady(false);
 
-    const fullInitialScene = { ...INITIAL_SCENE, ...initialScene };
+    let fullInitialData = { ...INITIAL_DATA, ...initialData };
 
-    prevInitialScene.current = fullInitialScene;
-    sceneActions.setScene(fullInitialScene);
+    if (fullInitialData.views.length === 0) {
+      const newView = {
+        ...VIEW_DEFAULTS,
+        id: generateId()
+      };
 
+      fullInitialData = createView(newView, fullInitialData);
+    }
+
+    prevInitialData.current = fullInitialData;
+    modelActions.set(fullInitialData);
+    uiActions.setView(fullInitialData.views[0].id);
     setIsReady(true);
-  }, [initialScene, sceneActions, uiActions]);
+  }, [initialData, modelActions, uiActions]);
 
   useEffect(() => {
     setIconCategoriesState();
-  }, [scene.icons, setIconCategoriesState]);
+  }, [model.icons, setIconCategoriesState]);
 
   useEffect(() => {
-    if (!isReady || !onSceneUpdated) return;
+    if (!isReady || !onModelUpdated) return;
 
-    const sceneInput = sceneToSceneInput(scene);
-    onSceneUpdated(sceneInput);
-  }, [scene, onSceneUpdated, isReady]);
+    onModelUpdated(model);
+  }, [model, onModelUpdated, isReady]);
 
   useEffect(() => {
     uiActions.setenableDebugTools(enableDebugTools);
   }, [enableDebugTools, uiActions]);
+
+  if (!isReady) return null;
 
   return (
     <>
@@ -120,11 +140,13 @@ const App = ({
 export const Isoflow = (props: IsoflowProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <SceneProvider>
-        <UiStateProvider>
-          <App {...props} />
-        </UiStateProvider>
-      </SceneProvider>
+      <ModelProvider>
+        <SceneProvider>
+          <UiStateProvider>
+            <App {...props} />
+          </UiStateProvider>
+        </SceneProvider>
+      </ModelProvider>
     </ThemeProvider>
   );
 };
@@ -134,7 +156,7 @@ const useIsoflow = () => {
     return state.rendererEl;
   });
 
-  const sceneActions = useSceneStore((state) => {
+  const ModelActions = useModelStore((state) => {
     return state.actions;
   });
 
@@ -143,7 +165,7 @@ const useIsoflow = () => {
   });
 
   return {
-    scene: sceneActions,
+    Model: ModelActions,
     uiState: uiStateActions,
     rendererEl
   };
@@ -151,17 +173,17 @@ const useIsoflow = () => {
 
 export {
   useIsoflow,
-  InitialScene,
-  SceneInput,
-  IconInput,
-  NodeInput,
-  RectangleInput,
-  ConnectorInput,
-  sceneValidationSchema,
+  InitialData,
+  Model,
+  Icon,
+  ModelItem,
+  Rectangle,
+  Connector,
+  modelSchema,
   IsoflowProps
 };
 
 export const version = PACKAGE_VERSION;
-export const initialScene = INITIAL_SCENE;
+export const initialData = INITIAL_DATA;
 
 export default Isoflow;

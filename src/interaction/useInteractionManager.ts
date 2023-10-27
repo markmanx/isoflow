@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ModeActions, State, SlimMouseEvent } from 'src/types';
 import { getMouse } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { useScene } from 'src/hooks/useScene';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
 import { DrawRectangle } from './modes/Rectangle/DrawRectangle';
 import { TransformRectangle } from './modes/Rectangle/TransformRectangle';
 import { Connector } from './modes/Connector';
 import { Pan } from './modes/Pan';
-import { PlaceElement } from './modes/PlaceElement';
+import { PlaceIcon } from './modes/PlaceIcon';
 import { TextBox } from './modes/TextBox';
 
 const modes: { [k in string]: ModeActions } = {
@@ -21,7 +22,7 @@ const modes: { [k in string]: ModeActions } = {
   'RECTANGLE.TRANSFORM': TransformRectangle,
   CONNECTOR: Connector,
   PAN: Pan,
-  PLACE_ELEMENT: PlaceElement,
+  PLACE_ICON: PlaceIcon,
   TEXTBOX: TextBox
 };
 
@@ -44,9 +45,10 @@ export const useInteractionManager = () => {
   const uiState = useUiStateStore((state) => {
     return state;
   });
-  const scene = useSceneStore((state) => {
+  const model = useModelStore((state) => {
     return state;
   });
+  const scene = useScene();
   const { size: rendererSize } = useResizeObserver(uiState.rendererEl);
 
   const onMouseEvent = useCallback(
@@ -70,6 +72,7 @@ export const useInteractionManager = () => {
       uiState.actions.setMouse(nextMouse);
 
       const baseState: State = {
+        model,
         scene,
         uiState,
         rendererRef: rendererRef.current,
@@ -94,7 +97,7 @@ export const useInteractionManager = () => {
       modeFunction(baseState);
       reducerTypeRef.current = uiState.mode.type;
     },
-    [scene, uiState, rendererSize]
+    [model, scene, uiState, rendererSize]
   );
 
   useEffect(() => {
@@ -146,11 +149,11 @@ export const useInteractionManager = () => {
     };
   }, [uiState.editorMode, onMouseEvent, uiState.mode.type]);
 
-  const setElement = useCallback((element: HTMLElement) => {
+  const setInteractionsElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;
   }, []);
 
   return {
-    setElement
+    setInteractionsElement
   };
 };

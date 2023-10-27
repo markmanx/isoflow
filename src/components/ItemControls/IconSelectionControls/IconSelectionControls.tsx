@@ -21,12 +21,12 @@ export const IconSelectionControls = () => {
 
   const onMouseDown = useCallback(
     (icon: Icon) => {
-      if (mode.type !== 'PLACE_ELEMENT') return;
+      if (mode.type !== 'PLACE_ICON') return;
 
       uiStateActions.setMode({
-        type: 'PLACE_ELEMENT',
+        type: 'PLACE_ICON',
         showCursor: true,
-        icon
+        id: icon.id
       });
     },
     [mode, uiStateActions]

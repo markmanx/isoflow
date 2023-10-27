@@ -1,12 +1,12 @@
 import React from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { ViewItem } from 'src/types';
 import { Node } from './Node/Node';
 
-export const Nodes = () => {
-  const nodes = useSceneStore((state) => {
-    return state.nodes;
-  });
+interface Props {
+  nodes: ViewItem[];
+}
 
+export const Nodes = ({ nodes }: Props) => {
   return (
     <>
       {nodes.map((node) => {

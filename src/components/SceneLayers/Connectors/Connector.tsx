@@ -1,32 +1,23 @@
 import React, { useMemo } from 'react';
 import { useTheme, Box } from '@mui/material';
-import { Connector as ConnectorI } from 'src/types';
 import { UNPROJECTED_TILE_SIZE } from 'src/config';
-import {
-  getAnchorTile,
-  CoordsUtils,
-  getColorVariant,
-  getAllAnchors
-} from 'src/utils';
+import { getAnchorTile, CoordsUtils, getColorVariant } from 'src/utils';
 import { Circle } from 'src/components/Circle/Circle';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { Svg } from 'src/components/Svg/Svg';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
+import { useConnector } from 'src/hooks/useConnector';
+import { useScene } from 'src/hooks/useScene';
 
 interface Props {
-  connector: ConnectorI;
+  connector: ReturnType<typeof useScene>['connectors'][0];
 }
 
-export const Connector = ({ connector }: Props) => {
+export const Connector = ({ connector: _connector }: Props) => {
   const theme = useTheme();
+  const { currentView } = useScene();
+  const connector = useConnector(_connector.id);
   const { css, pxSize } = useIsoProjection({
     ...connector.path.rectangle
-  });
-  const nodes = useSceneStore((state) => {
-    return state.nodes;
-  });
-  const connectors = useSceneStore((state) => {
-    return state.connectors;
   });
 
   const drawOffset = useMemo(() => {
@@ -46,7 +37,7 @@ export const Connector = ({ connector }: Props) => {
 
   const anchorPositions = useMemo(() => {
     return connector.anchors.map((anchor) => {
-      const position = getAnchorTile(anchor, nodes, getAllAnchors(connectors));
+      const position = getAnchorTile(anchor, currentView);
 
       return {
         id: anchor.id,
@@ -57,7 +48,7 @@ export const Connector = ({ connector }: Props) => {
           (connector.path.rectangle.from.y - position.y) * UNPROJECTED_TILE_SIZE
       };
     });
-  }, [connector.path.rectangle, connector.anchors, nodes, connectors]);
+  }, [currentView, connector.path.rectangle, connector.anchors]);
 
   const connectorWidthPx = useMemo(() => {
     return (UNPROJECTED_TILE_SIZE / 100) * connector.width;

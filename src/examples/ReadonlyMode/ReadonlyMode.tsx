@@ -1,9 +1,7 @@
 import React from 'react';
 import Isoflow from 'src/Isoflow';
-import { initialScene } from '../initialScene';
+import { initialData } from '../initialData';
 
 export const ReadonlyMode = () => {
-  return (
-    <Isoflow initialScene={initialScene} editorMode="EXPLORABLE_READONLY" />
-  );
+  return <Isoflow initialData={initialData} editorMode="EXPLORABLE_READONLY" />;
 };

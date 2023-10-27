@@ -2,10 +2,10 @@
 
 | Name | Type | Description | Default |
 | --- | --- | --- | --- |
-| `initialScene` | [`object`](/docs/api/initialScene) | The initial scene that Isoflow should render. If `undefined`, isoflow loads a blank scene. | `undefined` |
+| `InitialData` | [`object`](/docs/api/InitialData) | The initial Model that Isoflow should render. If `undefined`, isoflow loads a blank Model. | `undefined` |
 | `width` | `number` \| `string` | Width of the Isoflow renderer as a CSS value. | `100%` |
 | `height` | `number` \| `string` | Height of the Isoflow renderer as a CSS value. | `100%` |
-| `onSceneUpdate` | `function` | A callback that is triggered whenever an item is added, updated or removed from the scene. The callback is called with the updated scene as the first argument. | `undefined` |
+| `onModelUpdate` | `function` | A callback that is triggered whenever an item is added, updated or removed from the Model. The callback is called with the updated Model as the first argument. | `undefined` |
 | `enableDebugTools` | `boolean` | Enables extra tools for debugging purposes. | `false` |
 | `editorMode` | `"EXPLORABLE_READONLY"` \| `"NON_INTERACTIVE"` \| `"EDITABLE"` | Enables / disables editor features. | `"EDITABLE"` |
 | `mainMenuOptions` | `("ACTION.OPEN" \| "EXPORT.JSON" \| "EXPORT.PNG" \| "ACTION.CLEAR_CANVAS" \| "LINK.GITHUB" \| "LINK.DISCORD" \| "VERSION")[]` | Shows / hides options in the main menu.  If `[]` is passed, the menu is hidden. | All enabled |

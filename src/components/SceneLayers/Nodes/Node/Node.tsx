@@ -1,34 +1,39 @@
 import React, { useMemo } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
-import { Node as NodeI, TileOriginEnum } from 'src/types';
-import { PROJECTED_TILE_SIZE } from 'src/config';
+import { PROJECTED_TILE_SIZE, DEFAULT_LABEL_HEIGHT } from 'src/config';
 import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
+import { ViewItem } from 'src/types';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
+import { useModelItem } from 'src/hooks/useModelItem';
 import { LabelContainer } from './LabelContainer/LabelContainer';
 
 interface Props {
-  node: NodeI;
+  node: ViewItem;
   order: number;
 }
 
 export const Node = ({ node, order }: Props) => {
   const theme = useTheme();
-  const { iconComponent } = useIcon(node.icon);
+  const modelItem = useModelItem(node.id);
+  const { iconComponent } = useIcon(modelItem.icon);
 
   const position = useMemo(() => {
     return getTilePosition({
       tile: node.tile,
-      origin: TileOriginEnum.BOTTOM
+      origin: 'BOTTOM'
     });
   }, [node.tile]);
 
   const description = useMemo(() => {
-    if (node.description === undefined || node.description === '<p><br></p>')
+    if (
+      modelItem.description === undefined ||
+      modelItem.description === '<p><br></p>'
+    )
       return null;
 
-    return node.description;
-  }, [node.description]);
+    return modelItem.description;
+  }, [modelItem.description]);
 
   return (
     <Box
@@ -44,7 +49,7 @@ export const Node = ({ node, order }: Props) => {
           top: position.y
         }}
       >
-        {(node.label || description) && (
+        {(modelItem.name || description) && (
           <>
             <Box
               style={{
@@ -52,15 +57,18 @@ export const Node = ({ node, order }: Props) => {
                 top: -PROJECTED_TILE_SIZE.height
               }}
             />
-            <LabelContainer labelHeight={node.labelHeight} connectorDotSize={3}>
-              {node.label && (
-                <Typography fontWeight={600}>{node.label}</Typography>
+            <LabelContainer
+              labelHeight={node.labelHeight ?? DEFAULT_LABEL_HEIGHT}
+              connectorDotSize={3}
+            >
+              {modelItem.name && (
+                <Typography fontWeight={600}>{modelItem.name}</Typography>
               )}
               {description && (
                 <Box sx={{ pt: 0.2, width: 200 }}>
                   <MarkdownEditor
                     readOnly
-                    value={node.description}
+                    value={modelItem.description}
                     styles={{
                       color: theme.palette.text.secondary
                     }}

@@ -1,37 +1,52 @@
 import React from 'react';
 import { Slider, Box, TextField } from '@mui/material';
-import { Node } from 'src/types';
+import { ModelItem, ViewItem } from 'src/types';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
+import { useModelItem } from 'src/hooks/useModelItem';
 import { DeleteButton } from '../../components/DeleteButton';
 import { Section } from '../../components/Section';
 
+export type NodeUpdates = {
+  model: Partial<ModelItem>;
+  view: Partial<ViewItem>;
+};
+
 interface Props {
-  node: Node;
-  onUpdate: (updates: Partial<Node>) => void;
-  onDelete: () => void;
+  node: ViewItem;
+  onModelItemUpdated: (updates: Partial<ModelItem>) => void;
+  onViewItemUpdated: (updates: Partial<ViewItem>) => void;
+  onDeleted: () => void;
 }
 
-export const NodeSettings = ({ node, onUpdate, onDelete }: Props) => {
+export const NodeSettings = ({
+  node,
+  onModelItemUpdated,
+  onViewItemUpdated,
+  onDeleted
+}: Props) => {
+  const modelItem = useModelItem(node.id);
+
   return (
     <>
-      <Section title="Label">
+      <Section title="Name">
         <TextField
-          value={node.label}
+          value={modelItem.name}
           onChange={(e) => {
             const text = e.target.value as string;
-            if (node.label !== text) onUpdate({ label: text });
+            if (modelItem.name !== text) onModelItemUpdated({ name: text });
           }}
         />
       </Section>
       <Section title="Description">
         <MarkdownEditor
-          value={node.description}
+          value={modelItem.description}
           onChange={(text) => {
-            if (node.description !== text) onUpdate({ description: text });
+            if (modelItem.description !== text)
+              onModelItemUpdated({ description: text });
           }}
         />
       </Section>
-      {node.label && (
+      {modelItem.name && (
         <Section title="Label height">
           <Slider
             marks
@@ -40,14 +55,15 @@ export const NodeSettings = ({ node, onUpdate, onDelete }: Props) => {
             max={280}
             value={node.labelHeight}
             onChange={(e, newHeight) => {
-              onUpdate({ labelHeight: newHeight as number });
+              const labelHeight = newHeight as number;
+              onViewItemUpdated({ labelHeight });
             }}
           />
         </Section>
       )}
       <Section>
         <Box>
-          <DeleteButton onClick={onDelete} />
+          <DeleteButton onClick={onDeleted} />
         </Box>
       </Section>
     </>

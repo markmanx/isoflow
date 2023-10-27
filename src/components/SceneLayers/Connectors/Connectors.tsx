@@ -1,24 +1,17 @@
 import React from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useScene } from 'src/hooks/useScene';
 import { Connector } from './Connector';
 
-export const Connectors = () => {
-  const connectors = useSceneStore((state) => {
-    return state.connectors;
-  });
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
+interface Props {
+  connectors: ReturnType<typeof useScene>['connectors'];
+}
 
+export const Connectors = ({ connectors }: Props) => {
   return (
     <>
       {connectors.map((connector) => {
         return <Connector key={connector.id} connector={connector} />;
       })}
-      {mode.type === 'CONNECTOR' && mode.connector && (
-        <Connector connector={mode.connector} />
-      )}
     </>
   );
 };

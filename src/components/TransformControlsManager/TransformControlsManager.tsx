@@ -10,7 +10,7 @@ export const TransformControlsManager = () => {
   });
 
   switch (itemControls?.type) {
-    case 'NODE':
+    case 'ITEM':
       return <NodeTransformControls id={itemControls.id} />;
     case 'RECTANGLE':
       return <RectangleTransformControls id={itemControls.id} />;

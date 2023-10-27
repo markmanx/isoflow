@@ -1,55 +1,60 @@
 import React, { useMemo } from 'react';
-import { Coords } from 'src/types';
+import { Coords, AnchorPosition } from 'src/types';
 import { Svg } from 'src/components/Svg/Svg';
 import { TRANSFORM_CONTROLS_COLOR } from 'src/config';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
 import {
   getBoundingBox,
   outermostCornerPositions,
-  getTilePosition
+  getTilePosition,
+  convertBoundsToNamedAnchors
 } from 'src/utils';
 import { TransformAnchor } from './TransformAnchor';
 
 interface Props {
   from: Coords;
   to: Coords;
-  onMouseOver?: () => void;
-  showCornerAnchors?: boolean;
+  onAnchorMouseDown?: (anchorPosition: AnchorPosition) => void;
 }
 
 const strokeWidth = 2;
 
-export const TransformControls = ({
-  from,
-  to,
-  onMouseOver,
-  showCornerAnchors
-}: Props) => {
+export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
   const { css, pxSize } = useIsoProjection({
     from,
     to
   });
 
-  const anchorPositions = useMemo<Coords[]>(() => {
-    if (!showCornerAnchors) return [];
+  const anchors = useMemo(() => {
+    if (!onAnchorMouseDown) return [];
 
     const corners = getBoundingBox([from, to]);
-    const cornerPositions = corners.map((corner, i) => {
-      return getTilePosition({
-        tile: corner,
-        origin: outermostCornerPositions[i]
-      });
-    });
+    const namedCorners = convertBoundsToNamedAnchors(corners);
+    const cornerPositions = Object.entries(namedCorners).map(
+      ([key, value], i) => {
+        const position = getTilePosition({
+          tile: value,
+          origin: outermostCornerPositions[i]
+        });
+
+        return {
+          position,
+          onMouseDown: () => {
+            onAnchorMouseDown(key as AnchorPosition);
+          }
+        };
+      }
+    );
 
     return cornerPositions;
-  }, [showCornerAnchors, from, to]);
+  }, [onAnchorMouseDown, from, to]);
 
   return (
     <>
       <Svg
-        style={css}
-        onMouseOver={() => {
-          onMouseOver?.();
+        style={{
+          ...css,
+          pointerEvents: 'none'
         }}
       >
         <g transform={`translate(${strokeWidth}, ${strokeWidth})`}>
@@ -60,12 +65,15 @@ export const TransformControls = ({
             stroke={TRANSFORM_CONTROLS_COLOR}
             strokeDasharray={`${strokeWidth * 2} ${strokeWidth * 2}`}
             strokeWidth={strokeWidth}
+            strokeLinecap="round"
           />
         </g>
       </Svg>
 
-      {anchorPositions.map((position) => {
-        return <TransformAnchor position={position} />;
+      {anchors.map(({ position, onMouseDown }) => {
+        return (
+          <TransformAnchor position={position} onMouseDown={onMouseDown} />
+        );
       })}
     </>
   );

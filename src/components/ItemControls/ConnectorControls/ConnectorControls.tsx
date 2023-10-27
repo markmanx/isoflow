@@ -1,6 +1,5 @@
-import React, { useCallback } from 'react';
-import { Connector, ConnectorStyleEnum } from 'src/types';
-import { connectorStyleOptions } from 'src/validation/sceneItems';
+import React from 'react';
+import { Connector, connectorStyleOptions } from 'src/types';
 import {
   useTheme,
   Box,
@@ -9,10 +8,10 @@ import {
   MenuItem,
   TextField
 } from '@mui/material';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { useScene } from 'src/hooks/useScene';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
 import { DeleteButton } from '../components/DeleteButton';
@@ -23,34 +22,22 @@ interface Props {
 
 export const ConnectorControls = ({ id }: Props) => {
   const theme = useTheme();
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const connector = useConnector(id);
-
-  const onConnectorUpdated = useCallback(
-    (updates: Partial<Connector>) => {
-      sceneActions.updateConnector(id, updates);
-    },
-    [sceneActions, id]
-  );
-
-  const onConnectorDeleted = useCallback(() => {
-    uiStateActions.setItemControls(null);
-    sceneActions.deleteConnector(id);
-  }, [sceneActions, id, uiStateActions]);
+  const { updateConnector, deleteConnector } = useScene();
 
   return (
     <ControlsContainer>
       <Section>
         <TextField
           label="Label"
-          value={connector.label}
+          value={connector.description}
           onChange={(e) => {
-            return onConnectorUpdated({ label: e.target.value as string });
+            updateConnector(connector.id, {
+              description: e.target.value as string
+            });
           }}
         />
       </Section>
@@ -58,7 +45,7 @@ export const ConnectorControls = ({ id }: Props) => {
         <ColorSelector
           colors={Object.values(theme.customVars.customPalette)}
           onChange={(color) => {
-            return onConnectorUpdated({ color });
+            return updateConnector(connector.id, { color });
           }}
           activeColor={connector.color}
         />
@@ -71,7 +58,7 @@ export const ConnectorControls = ({ id }: Props) => {
           max={30}
           value={connector.width}
           onChange={(e, newWidth) => {
-            onConnectorUpdated({ width: newWidth as number });
+            updateConnector(connector.id, { width: newWidth as number });
           }}
         />
       </Section>
@@ -79,8 +66,8 @@ export const ConnectorControls = ({ id }: Props) => {
         <Select
           value={connector.style}
           onChange={(e) => {
-            return onConnectorUpdated({
-              style: e.target.value as ConnectorStyleEnum
+            updateConnector(connector.id, {
+              style: e.target.value as Connector['style']
             });
           }}
         >
@@ -91,7 +78,12 @@ export const ConnectorControls = ({ id }: Props) => {
       </Section>
       <Section>
         <Box>
-          <DeleteButton onClick={onConnectorDeleted} />
+          <DeleteButton
+            onClick={() => {
+              uiStateActions.setItemControls(null);
+              deleteConnector(connector.id);
+            }}
+          />
         </Box>
       </Section>
     </ControlsContainer>

@@ -2,14 +2,11 @@ import { produce } from 'immer';
 import {
   generateId,
   getItemAtTile,
-  connectorInputToConnector,
-  connectorToConnectorInput,
-  getConnectorPath,
+  getItemByIdOrThrow,
   hasMovedTile,
-  setWindowCursor,
-  getAllAnchors
+  setWindowCursor
 } from 'src/utils';
-import { ModeActions, SceneItemTypeEnum } from 'src/types';
+import { ModeActions, Connector as ConnectorI } from 'src/types';
 
 export const Connector: ModeActions = {
   entry: () => {
@@ -21,111 +18,75 @@ export const Connector: ModeActions = {
   mousemove: ({ uiState, scene }) => {
     if (
       uiState.mode.type !== 'CONNECTOR' ||
-      !uiState.mode.connector?.anchors[0] ||
+      !uiState.mode.id ||
       !hasMovedTile(uiState.mouse)
     )
       return;
 
-    // TODO: Items at tile should take the entire scene in and return just the first item of interest
-    // for efficiency
-    const itemAtTile = getItemAtTile({
-      tile: uiState.mouse.position.tile,
-      scene
-    });
-
-    if (itemAtTile && itemAtTile.type === 'NODE') {
-      const newMode = produce(uiState.mode, (draft) => {
-        if (!draft.connector) return;
-
-        draft.connector.anchors[1] = {
-          id: generateId(),
-          type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
-          ref: {
-            type: 'NODE',
-            id: itemAtTile.id
-          }
-        };
-
-        draft.connector.path = getConnectorPath({
-          anchors: draft.connector.anchors,
-          nodes: scene.nodes,
-          allAnchors: getAllAnchors(scene.connectors)
-        });
-      });
-
-      uiState.actions.setMode(newMode);
-    } else {
-      const newMode = produce(uiState.mode, (draft) => {
-        if (!draft.connector) return;
-
-        draft.connector.anchors[1] = {
-          id: generateId(),
-          type: SceneItemTypeEnum.CONNECTOR_ANCHOR,
-          ref: {
-            type: 'TILE',
-            coords: uiState.mouse.position.tile
-          }
-        };
-
-        draft.connector.path = getConnectorPath({
-          anchors: draft.connector.anchors,
-          nodes: scene.nodes,
-          allAnchors: getAllAnchors(scene.connectors)
-        });
-      });
-
-      uiState.actions.setMode(newMode);
-    }
-  },
-  mousedown: ({ uiState, scene }) => {
-    if (uiState.mode.type !== 'CONNECTOR') return;
+    const connector = getItemByIdOrThrow(scene.connectors, uiState.mode.id);
 
     const itemAtTile = getItemAtTile({
       tile: uiState.mouse.position.tile,
       scene
     });
 
-    if (itemAtTile && itemAtTile.type === 'NODE') {
-      const newMode = produce(uiState.mode, (draft) => {
-        draft.connector = connectorInputToConnector(
-          {
-            id: generateId(),
-            anchors: [
-              { ref: { node: itemAtTile.id } },
-              { ref: { node: itemAtTile.id } }
-            ]
-          },
-          scene.nodes,
-          getAllAnchors(scene.connectors)
-        );
+    if (itemAtTile?.type === 'ITEM') {
+      const newConnector = produce(connector.value, (draft) => {
+        draft.anchors[1] = { id: generateId(), ref: { item: itemAtTile.id } };
       });
 
-      uiState.actions.setMode(newMode);
+      scene.updateConnector(uiState.mode.id, newConnector);
     } else {
-      const newMode = produce(uiState.mode, (draft) => {
-        draft.connector = connectorInputToConnector(
-          {
-            id: generateId(),
-            anchors: [
-              { ref: { tile: uiState.mouse.position.tile } },
-              { ref: { tile: uiState.mouse.position.tile } }
-            ]
-          },
-          scene.nodes,
-          getAllAnchors(scene.connectors)
-        );
+      const newConnector = produce(connector.value, (draft) => {
+        draft.anchors[1] = {
+          id: generateId(),
+          ref: { tile: uiState.mouse.position.tile }
+        };
       });
 
-      uiState.actions.setMode(newMode);
+      scene.updateConnector(uiState.mode.id, newConnector);
     }
   },
-  mouseup: ({ uiState, scene, isRendererInteraction }) => {
+  mousedown: ({ uiState, scene, isRendererInteraction }) => {
     if (uiState.mode.type !== 'CONNECTOR' || !isRendererInteraction) return;
 
-    if (uiState.mode.connector && uiState.mode.connector.anchors.length >= 2) {
-      scene.actions.createConnector(
-        connectorToConnectorInput(uiState.mode.connector)
-      );
+    const newConnector: ConnectorI = {
+      id: generateId(),
+      anchors: []
+    };
+
+    const itemAtTile = getItemAtTile({
+      tile: uiState.mouse.position.tile,
+      scene
+    });
+
+    if (itemAtTile && itemAtTile.type === 'ITEM') {
+      newConnector.anchors = [
+        { id: generateId(), ref: { item: itemAtTile.id } },
+        { id: generateId(), ref: { item: itemAtTile.id } }
+      ];
+    } else {
+      newConnector.anchors = [
+        { id: generateId(), ref: { tile: uiState.mouse.position.tile } },
+        { id: generateId(), ref: { tile: uiState.mouse.position.tile } }
+      ];
+    }
+
+    scene.createConnector(newConnector);
+
+    uiState.actions.setMode({
+      type: 'CONNECTOR',
+      showCursor: true,
+      id: newConnector.id
+    });
+  },
+  mouseup: ({ uiState, scene }) => {
+    if (uiState.mode.type !== 'CONNECTOR' || !uiState.mode.id) return;
+
+    const connector = getItemByIdOrThrow(scene.connectors, uiState.mode.id);
+
+    if (connector.value.path.tiles.length < 2) {
+      scene.deleteConnector(uiState.mode.id);
     }
 
     uiState.actions.setMode({

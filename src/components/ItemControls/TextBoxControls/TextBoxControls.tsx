@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { TextBox, ProjectionOrientationEnum } from 'src/types';
+import React from 'react';
+import { ProjectionOrientationEnum } from 'src/types';
 import {
   Box,
   TextField,
@@ -8,13 +8,12 @@ import {
   Slider
 } from '@mui/material';
 import { TextRotationNone as TextRotationNoneIcon } from '@mui/icons-material';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { useTextBox } from 'src/hooks/useTextBox';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { getIsoProjectionCss } from 'src/utils';
+import { useScene } from 'src/hooks/useScene';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
-import { Header } from '../components/Header';
 import { DeleteButton } from '../components/DeleteButton';
 
 interface Props {
@@ -22,33 +21,19 @@ interface Props {
 }
 
 export const TextBoxControls = ({ id }: Props) => {
-  const sceneActions = useSceneStore((state) => {
-    return state.actions;
-  });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
   const textBox = useTextBox(id);
-
-  const onTextBoxUpdated = useCallback(
-    (updates: Partial<TextBox>) => {
-      sceneActions.updateTextBox(id, updates);
-    },
-    [sceneActions, id]
-  );
-
-  const onTextBoxDeleted = useCallback(() => {
-    uiStateActions.setItemControls(null);
-    sceneActions.deleteTextBox(id);
-  }, [sceneActions, id, uiStateActions]);
+  const { updateTextBox, deleteTextBox } = useScene();
 
   return (
     <ControlsContainer>
       <Section>
         <TextField
-          value={textBox.text}
+          value={textBox.content}
           onChange={(e) => {
-            onTextBoxUpdated({ text: e.target.value as string });
+            updateTextBox(textBox.id, { content: e.target.value as string });
           }}
         />
       </Section>
@@ -60,7 +45,7 @@ export const TextBoxControls = ({ id }: Props) => {
           max={0.9}
           value={textBox.fontSize}
           onChange={(e, newSize) => {
-            onTextBoxUpdated({ fontSize: newSize as number });
+            updateTextBox(textBox.id, { fontSize: newSize as number });
           }}
         />
       </Section>
@@ -72,7 +57,7 @@ export const TextBoxControls = ({ id }: Props) => {
             if (textBox.orientation === orientation || orientation === null)
               return;
 
-            onTextBoxUpdated({ orientation });
+            updateTextBox(textBox.id, { orientation });
           }}
         >
           <ToggleButton value={ProjectionOrientationEnum.X}>
@@ -89,7 +74,12 @@ export const TextBoxControls = ({ id }: Props) => {
       </Section>
       <Section>
         <Box>
-          <DeleteButton onClick={onTextBoxDeleted} />
+          <DeleteButton
+            onClick={() => {
+              uiStateActions.setItemControls(null);
+              deleteTextBox(textBox.id);
+            }}
+          />
         </Box>
       </Section>
     </ControlsContainer>

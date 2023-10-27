@@ -1,44 +1,12 @@
 import { Coords, EditorModeEnum, MainMenuOptions } from './common';
-import { Connector, SceneItemReference, TileOriginEnum } from './scene';
-import { IconInput } from './inputs';
-
-interface NodeControls {
-  type: 'NODE';
-  id: string;
-}
-
-interface ConnectorControls {
-  type: 'CONNECTOR';
-  id: string;
-}
-
-interface TextBoxControls {
-  type: 'TEXTBOX';
-  id: string;
-}
-
-interface ConnectorAnchorControls {
-  type: 'CONNECTOR_ANCHOR';
-  id: string;
-}
-
-interface RectangleControls {
-  type: 'RECTANGLE';
-  id: string;
-}
+import { Icon } from './model';
+import { TileOrigin, ItemReference } from './scene';
 
 interface AddItemControls {
   type: 'ADD_ITEM';
 }
 
-export type ItemControls =
-  | NodeControls
-  | ConnectorControls
-  | RectangleControls
-  | AddItemControls
-  | TextBoxControls
-  | ConnectorAnchorControls
-  | null;
+export type ItemControls = ItemReference | AddItemControls | null;
 
 export interface Mouse {
   position: {
@@ -64,13 +32,13 @@ export interface InteractionsDisabled {
 export interface CursorMode {
   type: 'CURSOR';
   showCursor: boolean;
-  mousedownItem: SceneItemReference | null;
+  mousedownItem: ItemReference | null;
 }
 
 export interface DragItemsMode {
   type: 'DRAG_ITEMS';
   showCursor: boolean;
-  items: SceneItemReference[];
+  items: ItemReference[];
   isInitialMovement: Boolean;
 }
 
@@ -79,51 +47,51 @@ export interface PanMode {
   showCursor: boolean;
 }
 
-export interface PlaceElementMode {
-  type: 'PLACE_ELEMENT';
+export interface PlaceIconMode {
+  type: 'PLACE_ICON';
   showCursor: boolean;
-  icon: IconInput | null;
+  id: string | null;
 }
 
 export interface ConnectorMode {
   type: 'CONNECTOR';
   showCursor: boolean;
-  connector: Connector | null;
+  id: string | null;
 }
 
 export interface DrawRectangleMode {
   type: 'RECTANGLE.DRAW';
   showCursor: boolean;
-  area: {
-    from: Coords;
-    to: Coords;
-  } | null;
+  id: string | null;
 }
 
-export enum AnchorPositionsEnum {
-  BOTTOM_LEFT = 'BOTTOM_LEFT',
-  BOTTOM_RIGHT = 'BOTTOM_RIGHT',
-  TOP_RIGHT = 'TOP_RIGHT',
-  TOP_LEFT = 'TOP_LEFT'
-}
+export const AnchorPositionOptions = {
+  BOTTOM_LEFT: 'BOTTOM_LEFT',
+  BOTTOM_RIGHT: 'BOTTOM_RIGHT',
+  TOP_RIGHT: 'TOP_RIGHT',
+  TOP_LEFT: 'TOP_LEFT'
+} as const;
+
+export type AnchorPosition = keyof typeof AnchorPositionOptions;
 
 export interface TransformRectangleMode {
   type: 'RECTANGLE.TRANSFORM';
   showCursor: boolean;
   id: string;
-  selectedAnchor: AnchorPositionsEnum | null;
+  selectedAnchor: AnchorPosition | null;
 }
 
 export interface TextBoxMode {
   type: 'TEXTBOX';
   showCursor: boolean;
+  id: string | null;
 }
 
 export type Mode =
   | InteractionsDisabled
   | CursorMode
   | PanMode
-  | PlaceElementMode
+  | PlaceIconMode
   | ConnectorMode
   | DrawRectangleMode
   | TransformRectangleMode
@@ -142,7 +110,7 @@ export interface IconCollectionState {
 }
 
 export type IconCollectionStateWithIcons = IconCollectionState & {
-  icons: IconInput[];
+  icons: Icon[];
 };
 
 export const DialogTypeEnum = {
@@ -150,6 +118,7 @@ export const DialogTypeEnum = {
 } as const;
 
 export interface UiState {
+  view: string;
   mainMenuOptions: MainMenuOptions;
   editorMode: keyof typeof EditorModeEnum;
   iconCategoriesState: IconCollectionState[];
@@ -165,6 +134,7 @@ export interface UiState {
 }
 
 export interface UiStateActions {
+  setView: (view: string) => void;
   setMainMenuOptions: (options: MainMenuOptions) => void;
   setEditorMode: (mode: keyof typeof EditorModeEnum) => void;
   setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
@@ -176,7 +146,7 @@ export interface UiStateActions {
   setDialog: (dialog: keyof typeof DialogTypeEnum | null) => void;
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
-  scrollToTile: (tile: Coords, origin?: TileOriginEnum) => void;
+  scrollToTile: (tile: Coords, origin?: TileOrigin) => void;
   setItemControls: (itemControls: ItemControls) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererEl: (el: HTMLDivElement) => void;

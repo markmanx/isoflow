@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
-import { getItemById } from 'src/utils';
+import { getItemByIdOrThrow } from 'src/utils';
+import { useScene } from 'src/hooks/useScene';
+import { RECTANGLE_DEFAULTS } from 'src/config';
 
 export const useRectangle = (id: string) => {
-  const rectangles = useSceneStore((state) => {
-    return state.rectangles;
-  });
+  const { rectangles } = useScene();
 
   const rectangle = useMemo(() => {
-    return getItemById(rectangles, id).item;
+    return getItemByIdOrThrow(rectangles, id).value;
   }, [rectangles, id]);
 
-  return rectangle;
+  return {
+    ...RECTANGLE_DEFAULTS,
+    ...rectangle
+  };
 };

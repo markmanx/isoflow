@@ -12,6 +12,7 @@ import { TextBoxes } from 'src/components/SceneLayers/TextBoxes/TextBoxes';
 import { SizeIndicator } from 'src/components/DebugUtils/SizeIndicator';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { TransformControlsManager } from 'src/components/TransformControlsManager/TransformControlsManager';
+import { useScene } from 'src/hooks/useScene';
 
 export const Renderer = () => {
   const containerRef = useRef<HTMLDivElement>();
@@ -25,7 +26,8 @@ export const Renderer = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const { setElement: setInteractionsElement } = useInteractionManager();
+  const { setInteractionsElement } = useInteractionManager();
+  const { items, rectangles, connectors, textBoxes } = useScene();
 
   useEffect(() => {
     if (!containerRef.current || !interactionsRef.current) return;
@@ -50,7 +52,7 @@ export const Renderer = () => {
       }}
     >
       <SceneLayer>
-        <Rectangles />
+        <Rectangles rectangles={rectangles} />
       </SceneLayer>
       <Box
         sx={{
@@ -69,22 +71,19 @@ export const Renderer = () => {
         </SceneLayer>
       )}
       <SceneLayer>
-        <Connectors />
+        <Connectors connectors={connectors} />
       </SceneLayer>
       <SceneLayer>
-        <TextBoxes />
+        <TextBoxes textBoxes={textBoxes} />
       </SceneLayer>
       <SceneLayer>
-        <ConnectorLabels />
+        <ConnectorLabels connectors={connectors} />
       </SceneLayer>
       {enableDebugTools && (
         <SceneLayer>
           <SizeIndicator />
         </SceneLayer>
       )}
-      <SceneLayer>
-        <TransformControlsManager />
-      </SceneLayer>
       {/* Interaction layer: this is where events are detected */}
       <Box
         ref={interactionsRef}
@@ -97,7 +96,10 @@ export const Renderer = () => {
         }}
       />
       <SceneLayer>
-        <Nodes />
+        <Nodes nodes={items} />
+      </SceneLayer>
+      <SceneLayer>
+        <TransformControlsManager />
       </SceneLayer>
     </Box>
   );

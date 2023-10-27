@@ -9,7 +9,7 @@ import { ToolMenu } from 'src/components/ToolMenu/ToolMenu';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { MainMenu } from 'src/components/MainMenu/MainMenu';
 import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
@@ -19,7 +19,7 @@ const ToolsEnum = {
   ZOOM_CONTROLS: 'ZOOM_CONTROLS',
   TOOL_MENU: 'TOOL_MENU',
   ITEM_CONTROLS: 'ITEM_CONTROLS',
-  SCENE_TITLE: 'SCENE_TITLE'
+  Model_TITLE: 'Model_TITLE'
 } as const;
 
 interface EditorModeMapping {
@@ -32,9 +32,9 @@ const EDITOR_MODE_MAPPING: EditorModeMapping = {
     'ZOOM_CONTROLS',
     'TOOL_MENU',
     'MAIN_MENU',
-    'SCENE_TITLE'
+    'Model_TITLE'
   ],
-  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'SCENE_TITLE'],
+  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'Model_TITLE'],
   [EditorModeEnum.NON_INTERACTIVE]: []
 };
 
@@ -71,7 +71,7 @@ export const UiOverlay = () => {
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
   });
-  const sceneTitle = useSceneStore((state) => {
+  const ModelTitle = useModelStore((state) => {
     return state.title;
   });
   const editorMode = useUiStateStore((state) => {
@@ -155,7 +155,7 @@ export const UiOverlay = () => {
           </Box>
         )}
 
-        {availableTools.includes('SCENE_TITLE') && (
+        {availableTools.includes('Model_TITLE') && (
           <Box
             sx={{
               position: 'absolute',
@@ -178,7 +178,7 @@ export const UiOverlay = () => {
               }}
             >
               <Typography fontWeight={600} color="text.secondary">
-                {sceneTitle}
+                {ModelTitle}
               </Typography>
             </UiElement>
           </Box>
@@ -199,9 +199,9 @@ export const UiOverlay = () => {
           </UiElement>
         )}
       </Box>
-      {mode.type === 'PLACE_ELEMENT' && mode.icon && (
+      {mode.type === 'PLACE_ICON' && mode.id && (
         <SceneLayer>
-          <DragAndDrop icon={mode.icon} tile={mouse.position.tile} />
+          <DragAndDrop iconId={mode.id} tile={mouse.position.tile} />
         </SceneLayer>
       )}
 

@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import { Icon } from 'src/types';
 
 export const useIconFiltering = () => {
   const [filter, setFilter] = useState<string>('');
 
-  const icons = useSceneStore((state) => {
+  const icons = useModelStore((state) => {
     return state.icons;
   });
 

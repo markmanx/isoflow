@@ -10,49 +10,40 @@ export const DrawRectangle: ModeActions = {
   exit: () => {
     setWindowCursor('default');
   },
-  mousemove: ({ uiState }) => {
+  mousemove: ({ uiState, scene }) => {
     if (
       uiState.mode.type !== 'RECTANGLE.DRAW' ||
       !hasMovedTile(uiState.mouse) ||
-      !uiState.mode.area ||
+      !uiState.mode.id ||
       !uiState.mouse.mousedown
     )
       return;
 
-    const newMode = produce(uiState.mode, (draft) => {
-      if (!draft.area) return;
-
-      draft.area.to = uiState.mouse.position.tile;
+    scene.updateRectangle(uiState.mode.id, {
+      to: uiState.mouse.position.tile
     });
-
-    uiState.actions.setMode(newMode);
   },
-  mousedown: ({ uiState }) => {
-    if (uiState.mode.type !== 'RECTANGLE.DRAW') return;
-
-    const newMode = produce(uiState.mode, (draft) => {
-      draft.area = {
-        from: uiState.mouse.position.tile,
-        to: uiState.mouse.position.tile
-      };
-    });
-
-    uiState.actions.setMode(newMode);
-  },
-  mouseup: ({ uiState, scene, isRendererInteraction }) => {
-    if (
-      uiState.mode.type !== 'RECTANGLE.DRAW' ||
-      !uiState.mode.area ||
-      !isRendererInteraction
-    )
+  mousedown: ({ uiState, scene, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'RECTANGLE.DRAW' || !isRendererInteraction)
       return;
 
-    scene.actions.createRectangle({
-      id: generateId(),
+    const newRectangleId = generateId();
+
+    scene.createRectangle({
+      id: newRectangleId,
       color: DEFAULT_COLOR,
-      from: uiState.mode.area.from,
-      to: uiState.mode.area.to
+      from: uiState.mouse.position.tile,
+      to: uiState.mouse.position.tile
     });
+
+    const newMode = produce(uiState.mode, (draft) => {
+      draft.id = newRectangleId;
+    });
+
+    uiState.actions.setMode(newMode);
+  },
+  mouseup: ({ uiState }) => {
+    if (uiState.mode.type !== 'RECTANGLE.DRAW' || !uiState.mode.id) return;
 
     uiState.actions.setMode({
       type: 'CURSOR',

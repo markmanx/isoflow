@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNode } from 'src/hooks/useNode';
+import { useViewItem } from 'src/hooks/useViewItem';
 import { TransformControls } from './TransformControls';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const NodeTransformControls = ({ id }: Props) => {
-  const node = useNode(id);
+  const node = useViewItem(id);
 
   return <TransformControls from={node.tile} to={node.tile} />;
 };

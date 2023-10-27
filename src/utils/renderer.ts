@@ -5,26 +5,26 @@ import {
   ZOOM_INCREMENT,
   MAX_ZOOM,
   MIN_ZOOM,
-  CONNECTOR_DEFAULTS,
-  TEXTBOX_DEFAULTS
+  TEXTBOX_PADDING,
+  CONNECTOR_SEARCH_OFFSET
 } from 'src/config';
 import {
   Coords,
-  TileOriginEnum,
-  Node,
+  TileOrigin,
   Connector,
   Size,
   Scroll,
   Mouse,
   ConnectorAnchor,
-  SceneItem,
-  Scene,
+  ItemReference,
   Rect,
   ProjectionOrientationEnum,
-  AnchorPositionsEnum,
+  AnchorPositionOptions,
   BoundingBox,
   TextBox,
-  SlimMouseEvent
+  SlimMouseEvent,
+  View,
+  AnchorPosition
 } from 'src/types';
 import {
   CoordsUtils,
@@ -32,8 +32,10 @@ import {
   clamp,
   roundToOneDecimalPlace,
   findPath,
-  toPx
+  toPx,
+  getItemByIdOrThrow
 } from 'src/utils';
+import { useScene } from 'src/hooks/useScene';
 
 interface ScreenToIso {
   mouse: Coords;
@@ -74,12 +76,12 @@ export const screenToIso = ({
 
 interface GetTilePosition {
   tile: Coords;
-  origin?: TileOriginEnum;
+  origin?: TileOrigin;
 }
 
 export const getTilePosition = ({
   tile,
-  origin = TileOriginEnum.CENTER
+  origin = 'CENTER'
 }: GetTilePosition) => {
   const halfW = PROJECTED_TILE_SIZE.width / 2;
   const halfH = PROJECTED_TILE_SIZE.height / 2;
@@ -90,15 +92,15 @@ export const getTilePosition = ({
   };
 
   switch (origin) {
-    case TileOriginEnum.TOP:
+    case 'TOP':
       return CoordsUtils.add(position, { x: 0, y: -halfH });
-    case TileOriginEnum.BOTTOM:
+    case 'BOTTOM':
       return CoordsUtils.add(position, { x: 0, y: halfH });
-    case TileOriginEnum.LEFT:
+    case 'LEFT':
       return CoordsUtils.add(position, { x: -halfW, y: 0 });
-    case TileOriginEnum.RIGHT:
+    case 'RIGHT':
       return CoordsUtils.add(position, { x: halfW, y: 0 });
-    case TileOriginEnum.CENTER:
+    case 'CENTER':
     default:
       return position;
   }
@@ -300,48 +302,30 @@ export const getMouse = ({
   return nextMouse;
 };
 
-export function getItemById<T extends { id: string }>(
-  items: T[],
-  id: string
-): { item: T; index: number } {
-  const index = items.findIndex((item) => {
-    return item.id === id;
-  });
-
-  if (index === -1) {
-    throw new Error(`Item with id "${id}" not found.`);
-  }
-
-  return { item: items[index], index };
-}
-
 export const getAllAnchors = (connectors: Connector[]) => {
   return connectors.reduce((acc, connector) => {
     return [...acc, ...connector.anchors];
   }, [] as ConnectorAnchor[]);
 };
 
-export const getAnchorTile = (
-  anchor: ConnectorAnchor,
-  nodes: Node[],
-  allAnchors: ConnectorAnchor[]
-): Coords => {
-  if (anchor.ref.type === 'NODE') {
-    const { item: node } = getItemById(nodes, anchor.ref.id);
-    return node.tile;
+export const getAnchorTile = (anchor: ConnectorAnchor, view: View): Coords => {
+  if (anchor.ref.item) {
+    const viewItem = getItemByIdOrThrow(view.items, anchor.ref.item).value;
+    return viewItem.tile;
   }
 
-  if (anchor.ref.type === 'ANCHOR') {
-    const anchorsWithIds = allAnchors.filter((_anchor) => {
-      return _anchor.id !== undefined;
-    }) as Required<ConnectorAnchor>[];
+  if (anchor.ref.anchor) {
+    const allAnchors = getAllAnchors(view.connectors ?? []);
+    const nextAnchor = getItemByIdOrThrow(allAnchors, anchor.ref.anchor).value;
 
-    const nextAnchor = getItemById(anchorsWithIds, anchor.ref.id);
-
-    return getAnchorTile(nextAnchor.item, nodes, allAnchors);
+    return getAnchorTile(nextAnchor, view);
   }
 
-  return anchor.ref.coords;
+  if (anchor.ref.tile) {
+    return anchor.ref.tile;
+  }
+
+  throw new Error('Could not get anchor tile.');
 };
 
 interface NormalisePositionFromOrigin {
@@ -358,14 +342,12 @@ export const normalisePositionFromOrigin = ({
 
 interface GetConnectorPath {
   anchors: ConnectorAnchor[];
-  nodes: Node[];
-  allAnchors: ConnectorAnchor[];
+  view: View;
 }
 
 export const getConnectorPath = ({
   anchors,
-  nodes,
-  allAnchors
+  view
 }: GetConnectorPath): {
   tiles: Coords[];
   rectangle: Rect;
@@ -375,14 +357,11 @@ export const getConnectorPath = ({
       `Connector needs at least two anchors (receieved: ${anchors.length})`
     );
 
-  const anchorPositions = anchors.map((anchor) => {
-    return getAnchorTile(anchor, nodes, allAnchors);
+  const anchorPosition = anchors.map((anchor) => {
+    return getAnchorTile(anchor, view);
   });
 
-  const searchArea = getBoundingBox(
-    anchorPositions,
-    CONNECTOR_DEFAULTS.searchOffset
-  );
+  const searchArea = getBoundingBox(anchorPosition, CONNECTOR_SEARCH_OFFSET);
 
   const sorted = sortByPosition(searchArea);
   const searchAreaSize = getBoundingBoxSize(searchArea);
@@ -391,7 +370,7 @@ export const getConnectorPath = ({
     to: { x: sorted.lowX, y: sorted.lowY }
   };
 
-  const positionsNormalisedFromSearchArea = anchorPositions.map((position) => {
+  const positionsNormalisedFromSearchArea = anchorPosition.map((position) => {
     return normalisePositionFromOrigin({
       position,
       origin: rectangle.from
@@ -440,42 +419,47 @@ export const connectorPathTileToGlobal = (
   origin: Coords
 ): Coords => {
   return CoordsUtils.subtract(
-    CoordsUtils.subtract(origin, CONNECTOR_DEFAULTS.searchOffset),
-    CoordsUtils.subtract(tile, CONNECTOR_DEFAULTS.searchOffset)
+    CoordsUtils.subtract(origin, CONNECTOR_SEARCH_OFFSET),
+    CoordsUtils.subtract(tile, CONNECTOR_SEARCH_OFFSET)
   );
 };
 
-export const getTextBoxTo = (textBox: TextBox) => {
+export const getTextBoxEndTile = (textBox: TextBox, size: Size) => {
   if (textBox.orientation === ProjectionOrientationEnum.X) {
     return CoordsUtils.add(textBox.tile, {
-      x: textBox.size.width,
+      x: size.width,
       y: 0
     });
   }
 
   return CoordsUtils.add(textBox.tile, {
     x: 0,
-    y: -textBox.size.width
+    y: -size.width
   });
 };
 
 interface GetItemAtTile {
   tile: Coords;
-  scene: Scene;
+  scene: ReturnType<typeof useScene>;
 }
 
 export const getItemAtTile = ({
   tile,
   scene
-}: GetItemAtTile): SceneItem | null => {
-  const node = scene.nodes.find((n) => {
-    return CoordsUtils.isEqual(n.tile, tile);
+}: GetItemAtTile): ItemReference | null => {
+  const viewItem = scene.items.find((item) => {
+    return CoordsUtils.isEqual(item.tile, tile);
   });
 
-  if (node) return node;
+  if (viewItem) {
+    return {
+      type: 'ITEM',
+      id: viewItem.id
+    };
+  }
 
   const textBox = scene.textBoxes.find((tb) => {
-    const textBoxTo = getTextBoxTo(tb);
+    const textBoxTo = getTextBoxEndTile(tb, tb.size);
     const textBoxBounds = getBoundingBox([
       tb.tile,
       {
@@ -490,7 +474,12 @@ export const getItemAtTile = ({
     return isWithinBounds(tile, textBoxBounds);
   });
 
-  if (textBox) return textBox;
+  if (textBox) {
+    return {
+      type: 'TEXTBOX',
+      id: textBox.id
+    };
+  }
 
   const connector = scene.connectors.find((con) => {
     return con.path.tiles.find((pathTile) => {
@@ -503,13 +492,23 @@ export const getItemAtTile = ({
     });
   });
 
-  if (connector) return connector;
+  if (connector) {
+    return {
+      type: 'CONNECTOR',
+      id: connector.id
+    };
+  }
 
   const rectangle = scene.rectangles.find(({ from, to }) => {
     return isWithinBounds(tile, [from, to]);
   });
 
-  if (rectangle) return rectangle;
+  if (rectangle) {
+    return {
+      type: 'RECTANGLE',
+      id: rectangle.id
+    };
+  }
 
   return null;
 };
@@ -523,7 +522,7 @@ interface FontProps {
 export const getTextWidth = (text: string, fontProps: FontProps) => {
   if (!text) return 0;
 
-  const paddingX = TEXTBOX_DEFAULTS.paddingX * UNPROJECTED_TILE_SIZE;
+  const paddingX = TEXTBOX_PADDING * UNPROJECTED_TILE_SIZE;
   const fontSizePx = toPx(fontProps.fontSize * UNPROJECTED_TILE_SIZE);
   const canvas: HTMLCanvasElement = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -540,26 +539,30 @@ export const getTextWidth = (text: string, fontProps: FontProps) => {
   return (metrics.width + paddingX * 2) / UNPROJECTED_TILE_SIZE - 0.8;
 };
 
-export const outermostCornerPositions = [
-  TileOriginEnum.BOTTOM,
-  TileOriginEnum.RIGHT,
-  TileOriginEnum.TOP,
-  TileOriginEnum.LEFT
+export const outermostCornerPositions: TileOrigin[] = [
+  'BOTTOM',
+  'RIGHT',
+  'TOP',
+  'LEFT'
 ];
 
-export const convertBoundsToNamedAnchors = (boundingBox: BoundingBox) => {
+export const convertBoundsToNamedAnchors = (
+  boundingBox: BoundingBox
+): {
+  [key in AnchorPosition]: Coords;
+} => {
   return {
-    [AnchorPositionsEnum.BOTTOM_LEFT]: boundingBox[0],
-    [AnchorPositionsEnum.BOTTOM_RIGHT]: boundingBox[1],
-    [AnchorPositionsEnum.TOP_RIGHT]: boundingBox[2],
-    [AnchorPositionsEnum.TOP_LEFT]: boundingBox[3]
+    BOTTOM_LEFT: boundingBox[0],
+    BOTTOM_RIGHT: boundingBox[1],
+    TOP_RIGHT: boundingBox[2],
+    TOP_LEFT: boundingBox[3]
   };
 };
 
 export const getAnchorAtTile = (tile: Coords, anchors: ConnectorAnchor[]) => {
   return anchors.find((anchor) => {
-    return (
-      anchor.ref.type === 'TILE' && CoordsUtils.isEqual(anchor.ref.coords, tile)
+    return Boolean(
+      anchor.ref.tile && CoordsUtils.isEqual(anchor.ref.tile, tile)
     );
   });
 };
@@ -580,7 +583,7 @@ export const getAnchorParent = (anchorId: string, connectors: Connector[]) => {
 
 export const getTileScrollPosition = (
   tile: Coords,
-  origin?: TileOriginEnum
+  origin?: TileOrigin
 ): Coords => {
   const tilePosition = getTilePosition({ tile, origin });
 
@@ -588,4 +591,15 @@ export const getTileScrollPosition = (
     x: -tilePosition.x,
     y: -tilePosition.y
   };
+};
+
+export const getConnectorsByViewItem = (
+  viewItemId: string,
+  connectors: Connector[]
+) => {
+  return connectors.filter((connector) => {
+    return connector.anchors.find((anchor) => {
+      return anchor.ref.item === viewItemId;
+    });
+  });
 };

@@ -1,10 +1,5 @@
 import { useMemo } from 'react';
-import {
-  Coords,
-  TileOriginEnum,
-  Size,
-  ProjectionOrientationEnum
-} from 'src/types';
+import { Coords, Size, ProjectionOrientationEnum } from 'src/types';
 import {
   getBoundingBox,
   getIsoProjectionCss,
@@ -48,7 +43,7 @@ export const useIsoProjection = ({
   const position = useMemo(() => {
     const pos = getTilePosition({
       tile: origin,
-      origin: orientation === 'Y' ? TileOriginEnum.TOP : TileOriginEnum.LEFT
+      origin: orientation === 'Y' ? 'TOP' : 'LEFT'
     });
 
     return pos;

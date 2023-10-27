@@ -78,3 +78,28 @@ export const getStartingMode = (
       throw new Error('Invalid editor mode.');
   }
 };
+
+export function getItemByIdOrThrow<T extends { id: string }>(
+  values: T[],
+  id: string
+): { value: T; index: number } {
+  const index = values.findIndex((val) => {
+    return val.id === id;
+  });
+
+  if (index === -1) {
+    throw new Error(`Item with id "${id}" not found.`);
+  }
+
+  return { value: values[index], index };
+}
+
+export function getItemByIndexOrThrow<T>(items: T[], index: number): T {
+  const item = items[index];
+
+  if (!item) {
+    throw new Error(`Item with index "${index}" not found.`);
+  }
+
+  return item;
+}

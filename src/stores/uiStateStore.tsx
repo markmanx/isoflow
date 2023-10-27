@@ -8,10 +8,14 @@ import {
   getTileScrollPosition
 } from 'src/utils';
 import { UiStateStore } from 'src/types';
+import { INITIAL_UI_STATE } from 'src/config';
 
 const initialState = () => {
   return createStore<UiStateStore>((set, get) => {
     return {
+      zoom: INITIAL_UI_STATE.zoom,
+      scroll: INITIAL_UI_STATE.scroll,
+      view: '',
       mainMenuOptions: [],
       editorMode: 'EXPLORABLE_READONLY',
       mode: getStartingMode('EXPLORABLE_READONLY'),
@@ -25,13 +29,11 @@ const initialState = () => {
         delta: null
       },
       itemControls: null,
-      scroll: {
-        position: { x: 0, y: 0 },
-        offset: { x: 0, y: 0 }
-      },
       enableDebugTools: false,
-      zoom: 1,
       actions: {
+        setView: (view) => {
+          set({ view });
+        },
         setMainMenuOptions: (mainMenuOptions) => {
           set({ mainMenuOptions });
         },

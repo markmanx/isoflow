@@ -14,7 +14,7 @@ export const ItemControlsManager = () => {
 
   const Controls = useMemo(() => {
     switch (itemControls?.type) {
-      case 'NODE':
+      case 'ITEM':
         return <NodeControls key={itemControls.id} id={itemControls.id} />;
       case 'CONNECTOR':
         return <ConnectorControls key={itemControls.id} id={itemControls.id} />;

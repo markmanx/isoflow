@@ -8,9 +8,8 @@ import {
   Stack,
   Alert
 } from '@mui/material';
-import { useSceneStore } from 'src/stores/sceneStore';
+import { useModelStore } from 'src/stores/modelStore';
 import {
-  sceneToSceneInput,
   exportAsImage,
   downloadFile as downloadFileUtil,
   getTileScrollPosition,
@@ -34,16 +33,18 @@ export const ExportImageDialog = ({ onClose }: Props) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const scene = useSceneStore((state) => {
-    return {
-      title: state.title,
-      nodes: state.nodes,
-      connectors: state.connectors,
-      textBoxes: state.textBoxes,
-      rectangles: state.rectangles,
-      icons: state.icons
-    };
-  });
+  const model = useModelStore(
+    ({ views, description, version, title, items, icons }) => {
+      return {
+        views,
+        description,
+        version,
+        title,
+        items,
+        icons
+      };
+    }
+  );
   const unprojectedBounds = useMemo(() => {
     return getUnprojectedBounds();
   }, [getUnprojectedBounds]);
@@ -116,9 +117,9 @@ export const ExportImageDialog = ({ onClose }: Props) => {
                 >
                   <Isoflow
                     editorMode="NON_INTERACTIVE"
-                    onSceneUpdated={exportImage}
-                    initialScene={{
-                      ...sceneToSceneInput(scene),
+                    onModelUpdated={exportImage}
+                    initialData={{
+                      ...model,
                       zoom: previewParams.zoom,
                       scroll: getTileScrollPosition(previewParams.scrollTarget)
                     }}

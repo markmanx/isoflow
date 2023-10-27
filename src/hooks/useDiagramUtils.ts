@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { useSceneStore } from 'src/stores/sceneStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Size, Coords } from 'src/types';
 import {
@@ -7,28 +6,17 @@ import {
   getBoundingBoxSize,
   sortByPosition,
   clamp,
-  getAnchorTile,
-  getAllAnchors,
   getTilePosition,
   CoordsUtils
 } from 'src/utils';
 import { MAX_ZOOM } from 'src/config';
+import { useScene } from 'src/hooks/useScene';
 import { useResizeObserver } from './useResizeObserver';
 
 const BOUNDING_BOX_PADDING = 1;
 
 export const useDiagramUtils = () => {
-  const scene = useSceneStore(
-    ({ nodes, rectangles, connectors, icons, textBoxes }) => {
-      return {
-        nodes,
-        rectangles,
-        connectors,
-        icons,
-        textBoxes
-      };
-    }
-  );
+  const scene = useScene();
   const rendererEl = useUiStateStore((state) => {
     return state.rendererEl;
   });
@@ -38,50 +26,48 @@ export const useDiagramUtils = () => {
   });
 
   const getProjectBounds = useCallback((): Coords[] => {
-    const items = [
-      ...scene.nodes,
-      ...scene.connectors,
-      ...scene.rectangles,
-      ...scene.textBoxes
-    ];
+    const itemTiles = scene.items.map((item) => {
+      return item.tile;
+    });
 
-    let tiles = items.reduce<Coords[]>((acc, item) => {
-      switch (item.type) {
-        case 'NODE':
-          return [...acc, item.tile];
-        case 'CONNECTOR':
-          return [
-            ...acc,
-            ...item.anchors.map((anchor) => {
-              return getAnchorTile(
-                anchor,
-                scene.nodes,
-                getAllAnchors(scene.connectors)
-              );
-            })
-          ];
-        case 'RECTANGLE':
-          return [...acc, item.from, item.to];
-        case 'TEXTBOX':
-          return [
-            ...acc,
-            item.tile,
-            CoordsUtils.add(item.tile, {
-              x: item.size.width,
-              y: item.size.height
-            })
-          ];
-        default:
-          return acc;
-      }
+    const connectorTiles = scene.connectors.reduce<Coords[]>(
+      (acc, connector) => {
+        return [...acc, ...connector.path.tiles];
+      },
+      []
+    );
+
+    const rectangleTiles = scene.rectangles.reduce<Coords[]>(
+      (acc, rectangle) => {
+        return [...acc, rectangle.from, rectangle.to];
+      },
+      []
+    );
+
+    const textBoxTiles = scene.textBoxes.reduce<Coords[]>((acc, textBox) => {
+      return [
+        ...acc,
+        textBox.tile,
+        CoordsUtils.add(textBox.tile, {
+          x: textBox.size.width,
+          y: textBox.size.height
+        })
+      ];
     }, []);
 
-    if (tiles.length === 0) {
+    let allTiles = [
+      ...itemTiles,
+      ...connectorTiles,
+      ...rectangleTiles,
+      ...textBoxTiles
+    ];
+
+    if (allTiles.length === 0) {
       const centerTile = CoordsUtils.zero();
-      tiles = [centerTile, centerTile, centerTile, centerTile];
+      allTiles = [centerTile, centerTile, centerTile, centerTile];
     }
 
-    const corners = getBoundingBox(tiles, {
+    const corners = getBoundingBox(allTiles, {
       x: BOUNDING_BOX_PADDING,
       y: BOUNDING_BOX_PADDING
     });

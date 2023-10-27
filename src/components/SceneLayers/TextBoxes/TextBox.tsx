@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import { toPx, CoordsUtils } from 'src/utils';
-import { TextBox as TextBoxI } from 'src/types';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
 import { useTextBoxProps } from 'src/hooks/useTextBoxProps';
+import { useScene } from 'src/hooks/useScene';
 
 interface Props {
-  textBox: TextBoxI;
+  textBox: ReturnType<typeof useScene>['textBoxes'][0];
 }
 
 export const TextBox = ({ textBox }: Props) => {
@@ -44,7 +44,7 @@ export const TextBox = ({ textBox }: Props) => {
             ...fontProps
           }}
         >
-          {textBox.text}
+          {textBox.content}
         </Typography>
       </Box>
     </Box>
