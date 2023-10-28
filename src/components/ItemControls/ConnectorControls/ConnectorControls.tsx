@@ -32,7 +32,7 @@ export const ConnectorControls = ({ id }: Props) => {
     <ControlsContainer>
       <Section>
         <TextField
-          label="Label"
+          label="Description"
           value={connector.description}
           onChange={(e) => {
             updateConnector(connector.id, {
