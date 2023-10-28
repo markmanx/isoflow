@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { PROJECTED_TILE_SIZE, DEFAULT_LABEL_HEIGHT } from 'src/config';
 import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 import { ViewItem } from 'src/types';
-import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
-import { LabelContainer } from './LabelContainer/LabelContainer';
+import { Label } from 'src/components/Label/Label';
 
 interface Props {
   node: ViewItem;
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const Node = ({ node, order }: Props) => {
-  const theme = useTheme();
   const modelItem = useModelItem(node.id);
   const { iconComponent } = useIcon(modelItem.icon);
 
@@ -50,33 +48,22 @@ export const Node = ({ node, order }: Props) => {
         }}
       >
         {(modelItem.name || description) && (
-          <>
-            <Box
-              style={{
-                position: 'absolute',
-                top: -PROJECTED_TILE_SIZE.height
-              }}
-            />
-            <LabelContainer
+          <Box
+            sx={{ position: 'absolute' }}
+            style={{ bottom: PROJECTED_TILE_SIZE.height / 2 }}
+          >
+            <Label
+              maxWidth={250}
+              maxHeight={100}
+              expandDirection="BOTTOM"
               labelHeight={node.labelHeight ?? DEFAULT_LABEL_HEIGHT}
               connectorDotSize={3}
             >
               {modelItem.name && (
                 <Typography fontWeight={600}>{modelItem.name}</Typography>
               )}
-              {description && (
-                <Box sx={{ pt: 0.2, width: 200 }}>
-                  <MarkdownEditor
-                    readOnly
-                    value={modelItem.description}
-                    styles={{
-                      color: theme.palette.text.secondary
-                    }}
-                  />
-                </Box>
-              )}
-            </LabelContainer>
-          </>
+            </Label>
+          </Box>
         )}
         {iconComponent && (
           <Box

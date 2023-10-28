@@ -4,6 +4,7 @@ import { useScene } from 'src/hooks/useScene';
 import { connectorPathTileToGlobal, getTilePosition } from 'src/utils';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { Label } from 'src/components/Label/Label';
 
 interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
@@ -22,6 +23,23 @@ export const ConnectorLabel = ({ connector }: Props) => {
       tile: connectorPathTileToGlobal(tile, connector.path.rectangle.from)
     });
   }, [connector.path]);
+
+  return (
+    <Box
+      sx={{ position: 'absolute', pointerEvents: 'none' }}
+      style={{
+        maxWidth: PROJECTED_TILE_SIZE.width,
+        left: labelPosition.x,
+        top: labelPosition.y
+      }}
+    >
+      <Label maxWidth={150} labelHeight={0} connectorDotSize={0}>
+        <Typography color="text.secondary" variant="body2">
+          {connector.description}
+        </Typography>
+      </Label>
+    </Box>
+  );
 
   return (
     <Box
