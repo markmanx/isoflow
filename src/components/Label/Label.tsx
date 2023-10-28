@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Box } from '@mui/material';
-import { ExpandButton } from './ExpandButton';
+import React, { useRef } from 'react';
+import { Box, SxProps } from '@mui/material';
+
+const CONNECTOR_DOT_SIZE = 3;
 
 interface Props {
   labelHeight?: number;
@@ -8,7 +9,7 @@ interface Props {
   maxHeight?: number;
   expandDirection?: 'CENTER' | 'BOTTOM';
   children: React.ReactNode;
-  connectorDotSize: number;
+  sx?: SxProps;
 }
 
 export const Label = ({
@@ -17,14 +18,9 @@ export const Label = ({
   maxHeight,
   expandDirection = 'CENTER',
   labelHeight = 0,
-  connectorDotSize
+  sx
 }: Props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>();
-
-  useEffect(() => {
-    contentRef.current?.scrollTo({ top: 0 });
-  }, [isExpanded]);
 
   return (
     <Box
@@ -36,22 +32,22 @@ export const Label = ({
       {labelHeight > 0 && (
         <Box
           component="svg"
-          viewBox={`0 0 ${connectorDotSize} ${labelHeight}`}
-          width={connectorDotSize}
+          viewBox={`0 0 ${CONNECTOR_DOT_SIZE} ${labelHeight}`}
+          width={CONNECTOR_DOT_SIZE}
           sx={{
             position: 'absolute',
             top: -labelHeight,
-            left: -connectorDotSize / 2
+            left: -CONNECTOR_DOT_SIZE / 2
           }}
         >
           <line
-            x1={connectorDotSize / 2}
+            x1={CONNECTOR_DOT_SIZE / 2}
             y1={0}
-            x2={connectorDotSize / 2}
+            x2={CONNECTOR_DOT_SIZE / 2}
             y2={labelHeight}
-            strokeDasharray={`0, ${connectorDotSize * 2}`}
+            strokeDasharray={`0, ${CONNECTOR_DOT_SIZE * 2}`}
             stroke="black"
-            strokeWidth={connectorDotSize}
+            strokeWidth={CONNECTOR_DOT_SIZE}
             strokeLinecap="round"
           />
         </Box>
@@ -72,7 +68,8 @@ export const Label = ({
           transform: `translate(-50%, ${
             expandDirection === 'BOTTOM' ? '-100%' : '-50%'
           })`,
-          overflow: 'hidden'
+          overflow: 'hidden',
+          ...sx
         }}
         style={{
           maxHeight,
@@ -80,24 +77,6 @@ export const Label = ({
         }}
       >
         {children}
-
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0
-          }}
-        >
-          {isExpanded && (
-            <ExpandButton
-              isExpanded={isExpanded}
-              onClick={() => {
-                setIsExpanded(false);
-              }}
-            />
-          )}
-          {/* </Box> */}
-        </Box>
       </Box>
     </Box>
   );

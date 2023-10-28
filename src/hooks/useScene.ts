@@ -14,6 +14,11 @@ import { useSceneStore } from 'src/stores/sceneStore';
 import * as reducers from 'src/stores/reducers';
 import type { State } from 'src/stores/reducers/types';
 import { getItemByIdOrThrow } from 'src/utils';
+import {
+  CONNECTOR_DEFAULTS,
+  RECTANGLE_DEFAULTS,
+  TEXTBOX_DEFAULTS
+} from 'src/config';
 
 export const useScene = () => {
   const model = useModelStore((state) => {
@@ -41,6 +46,7 @@ export const useScene = () => {
       const sceneConnector = scene.connectors[connector.id];
 
       return {
+        ...CONNECTOR_DEFAULTS,
         ...connector,
         ...sceneConnector
       };
@@ -48,7 +54,12 @@ export const useScene = () => {
   }, [currentView.connectors, scene.connectors]);
 
   const rectangles = useMemo(() => {
-    return currentView.rectangles ?? [];
+    return (currentView.rectangles ?? []).map((rectangle) => {
+      return {
+        ...RECTANGLE_DEFAULTS,
+        ...rectangle
+      };
+    });
   }, [currentView.rectangles]);
 
   const textBoxes = useMemo(() => {
@@ -56,6 +67,7 @@ export const useScene = () => {
       const sceneTextBox = scene.textBoxes[textBox.id];
 
       return {
+        ...TEXTBOX_DEFAULTS,
         ...textBox,
         ...sceneTextBox
       };

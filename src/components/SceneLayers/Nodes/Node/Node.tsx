@@ -57,7 +57,6 @@ export const Node = ({ node, order }: Props) => {
               maxHeight={100}
               expandDirection="BOTTOM"
               labelHeight={node.labelHeight ?? DEFAULT_LABEL_HEIGHT}
-              connectorDotSize={3}
             >
               {modelItem.name && (
                 <Typography fontWeight={600}>{modelItem.name}</Typography>

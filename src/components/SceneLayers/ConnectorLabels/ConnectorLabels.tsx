@@ -10,8 +10,8 @@ export const ConnectorLabels = ({ connectors }: Props) => {
   return (
     <>
       {connectors
-        .filter((con) => {
-          return con.description !== undefined;
+        .filter((connector) => {
+          return Boolean(connector.description);
         })
         .map((connector) => {
           return <ConnectorLabel key={connector.id} connector={connector} />;
