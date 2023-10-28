@@ -1,5 +1,13 @@
 import { useCallback, useMemo } from 'react';
-import { ModelItem, ViewItem, Connector, TextBox, Rectangle } from 'src/types';
+import {
+  ModelItem,
+  ViewItem,
+  Connector,
+  TextBox,
+  Rectangle,
+  ItemReference,
+  LayerOrderingAction
+} from 'src/types';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useModelStore } from 'src/stores/modelStore';
 import { useSceneStore } from 'src/stores/sceneStore';
@@ -226,6 +234,19 @@ export const useScene = () => {
     [getState, setState, currentViewId]
   );
 
+  const changeLayerOrder = useCallback(
+    (action: LayerOrderingAction, item: ItemReference) => {
+      const newState = reducers.changeLayerOrder(
+        action,
+        item,
+        currentViewId,
+        getState()
+      );
+      setState(newState);
+    },
+    [getState, setState, currentViewId]
+  );
+
   return {
     items,
     connectors,
@@ -246,6 +267,7 @@ export const useScene = () => {
     deleteTextBox,
     createRectangle,
     updateRectangle,
-    deleteRectangle
+    deleteRectangle,
+    changeLayerOrder
   };
 };

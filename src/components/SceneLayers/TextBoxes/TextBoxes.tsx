@@ -9,7 +9,7 @@ interface Props {
 export const TextBoxes = ({ textBoxes }: Props) => {
   return (
     <>
-      {textBoxes.map((textBox) => {
+      {[...textBoxes].reverse().map((textBox) => {
         return <TextBox key={textBox.id} textBox={textBox} />;
       })}
     </>

@@ -37,14 +37,14 @@ export const Node = ({ node, order }: Props) => {
 
   return (
     <Box
-      style={{
+      sx={{
         position: 'absolute',
         zIndex: order
       }}
     >
       <Box
+        sx={{ position: 'absolute' }}
         style={{
-          position: 'absolute',
           left: position.x,
           top: position.y
         }}

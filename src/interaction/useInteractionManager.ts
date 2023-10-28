@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useModelStore } from 'src/stores/modelStore';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { ModeActions, State, SlimMouseEvent } from 'src/types';
-import { getMouse } from 'src/utils';
+import { getMouse, getItemAtTile } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { useScene } from 'src/hooks/useScene';
 import { Cursor } from './modes/Cursor';
@@ -100,6 +100,27 @@ export const useInteractionManager = () => {
     [model, scene, uiState, rendererSize]
   );
 
+  const onContextMenu = useCallback(
+    (e: SlimMouseEvent) => {
+      e.preventDefault();
+
+      const itemAtTile = getItemAtTile({
+        tile: uiState.mouse.position.tile,
+        scene
+      });
+
+      if (itemAtTile?.type === 'RECTANGLE') {
+        uiState.actions.setContextMenu({
+          item: itemAtTile,
+          tile: uiState.mouse.position.tile
+        });
+      } else if (uiState.contextMenu) {
+        uiState.actions.setContextMenu(null);
+      }
+    },
+    [uiState.mouse, scene, uiState.contextMenu, uiState.actions]
+  );
+
   useEffect(() => {
     if (uiState.mode.type === 'INTERACTIONS_DISABLED') return;
 
@@ -135,6 +156,7 @@ export const useInteractionManager = () => {
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
+    el.addEventListener('contextmenu', onContextMenu);
     el.addEventListener('touchstart', onTouchStart);
     el.addEventListener('touchmove', onTouchMove);
     el.addEventListener('touchend', onTouchEnd);
@@ -143,11 +165,12 @@ export const useInteractionManager = () => {
       el.removeEventListener('mousemove', onMouseEvent);
       el.removeEventListener('mousedown', onMouseEvent);
       el.removeEventListener('mouseup', onMouseEvent);
+      el.removeEventListener('contextmenu', onContextMenu);
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
     };
-  }, [uiState.editorMode, onMouseEvent, uiState.mode.type]);
+  }, [uiState.editorMode, onMouseEvent, uiState.mode.type, onContextMenu]);
 
   const setInteractionsElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;

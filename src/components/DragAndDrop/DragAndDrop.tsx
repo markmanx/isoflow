@@ -19,10 +19,9 @@ export const DragAndDrop = ({ iconId, tile }: Props) => {
   return (
     <Box
       sx={{
-        position: 'absolute',
-        left: tilePosition.x,
-        top: tilePosition.y
+        position: 'absolute'
       }}
+      style={{ left: tilePosition.x, top: tilePosition.y }}
     >
       {iconComponent}
     </Box>

@@ -37,7 +37,7 @@ export const createRectangle = (
     if (!rectangles) {
       draft.model.views[view.index].rectangles = [newRectangle];
     } else {
-      draft.model.views[view.index].rectangles?.push(newRectangle);
+      draft.model.views[view.index].rectangles?.unshift(newRectangle);
     }
   });
 

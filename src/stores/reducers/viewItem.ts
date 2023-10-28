@@ -57,7 +57,7 @@ export const createViewItem = (
 
   const newState = produce(state, (draft) => {
     const { items } = draft.model.views[view.index];
-    items.push(newViewItem);
+    items.unshift(newViewItem);
   });
 
   return updateViewItem(newViewItem.id, newViewItem, viewId, newState);

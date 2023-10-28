@@ -23,6 +23,7 @@ const initialState = () => {
       isMainMenuOpen: false,
       dialog: null,
       rendererEl: null,
+      contextMenu: null,
       mouse: {
         position: { screen: CoordsUtils.zero(), tile: CoordsUtils.zero() },
         mousedown: null,
@@ -87,6 +88,9 @@ const initialState = () => {
         },
         setItemControls: (itemControls) => {
           set({ itemControls });
+        },
+        setContextMenu: (contextMenu) => {
+          set({ contextMenu });
         },
         setMouse: (mouse) => {
           set({ mouse });

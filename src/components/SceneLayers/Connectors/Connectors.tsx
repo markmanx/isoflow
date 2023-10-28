@@ -9,7 +9,7 @@ interface Props {
 export const Connectors = ({ connectors }: Props) => {
   return (
     <>
-      {connectors.map((connector) => {
+      {[...connectors].reverse().map((connector) => {
         return <Connector key={connector.id} connector={connector} />;
       })}
     </>

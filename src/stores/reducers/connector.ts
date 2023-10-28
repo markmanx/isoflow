@@ -87,7 +87,7 @@ export const createConnector = (
     if (!connectors) {
       draft.model.views[view.index].connectors = [newConnector];
     } else {
-      draft.model.views[view.index].connectors?.push(newConnector);
+      draft.model.views[view.index].connectors?.unshift(newConnector);
     }
   });
 

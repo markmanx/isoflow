@@ -19,7 +19,6 @@ import {
   ItemReference,
   Rect,
   ProjectionOrientationEnum,
-  AnchorPositionOptions,
   BoundingBox,
   TextBox,
   SlimMouseEvent,

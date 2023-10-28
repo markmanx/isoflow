@@ -9,7 +9,7 @@ interface Props {
 export const Rectangles = ({ rectangles }: Props) => {
   return (
     <>
-      {rectangles.map((rectangle) => {
+      {[...rectangles].reverse().map((rectangle) => {
         return <Rectangle key={rectangle.id} {...rectangle} />;
       })}
     </>

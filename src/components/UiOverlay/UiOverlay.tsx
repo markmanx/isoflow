@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Box, useTheme, Typography } from '@mui/material';
 import { EditorModeEnum } from 'src/types';
 import { UiElement } from 'components/UiElement/UiElement';
@@ -12,6 +12,7 @@ import { ZoomControls } from 'src/components/ZoomControls/ZoomControls';
 import { useModelStore } from 'src/stores/modelStore';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
+import { ContextMenuManager } from 'src/components/ContextMenu/ContextMenuManager';
 import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
 
 const ToolsEnum = {
@@ -46,6 +47,7 @@ const getEditorModeMapping = (editorMode: keyof typeof EditorModeEnum) => {
 
 export const UiOverlay = () => {
   const theme = useTheme();
+  const contextMenuAnchorRef = useRef();
   const { appPadding } = theme.customVars;
   const spacing = useCallback(
     (multiplier: number) => {
@@ -199,6 +201,7 @@ export const UiOverlay = () => {
           </UiElement>
         )}
       </Box>
+
       {mode.type === 'PLACE_ICON' && mode.id && (
         <SceneLayer>
           <DragAndDrop iconId={mode.id} tile={mouse.position.tile} />
@@ -212,6 +215,11 @@ export const UiOverlay = () => {
           }}
         />
       )}
+
+      <SceneLayer>
+        <Box ref={contextMenuAnchorRef} />
+        <ContextMenuManager anchorEl={contextMenuAnchorRef.current} />
+      </SceneLayer>
     </>
   );
 };

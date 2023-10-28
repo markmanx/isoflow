@@ -6,7 +6,7 @@ interface AddItemControls {
   type: 'ADD_ITEM';
 }
 
-export type ItemControls = ItemReference | AddItemControls | null;
+export type ItemControls = ItemReference | AddItemControls;
 
 export interface Mouse {
   position: {
@@ -117,6 +117,20 @@ export const DialogTypeEnum = {
   EXPORT_IMAGE: 'EXPORT_IMAGE'
 } as const;
 
+export interface ContextMenu {
+  item: ItemReference;
+  tile: Coords;
+}
+
+export const LayerOrderingActionOptions = {
+  BRING_TO_FRONT: 'BRING_TO_FRONT',
+  SEND_TO_BACK: 'SEND_TO_BACK',
+  BRING_FORWARD: 'BRING_FORWARD',
+  SEND_BACKWARD: 'SEND_BACKWARD'
+} as const;
+
+export type LayerOrderingAction = keyof typeof LayerOrderingActionOptions;
+
 export interface UiState {
   view: string;
   mainMenuOptions: MainMenuOptions;
@@ -125,7 +139,8 @@ export interface UiState {
   mode: Mode;
   dialog: keyof typeof DialogTypeEnum | null;
   isMainMenuOpen: boolean;
-  itemControls: ItemControls;
+  itemControls: ItemControls | null;
+  contextMenu: ContextMenu | null;
   zoom: number;
   scroll: Scroll;
   mouse: Mouse;
@@ -147,7 +162,8 @@ export interface UiStateActions {
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
   scrollToTile: (tile: Coords, origin?: TileOrigin) => void;
-  setItemControls: (itemControls: ItemControls) => void;
+  setItemControls: (itemControls: ItemControls | null) => void;
+  setContextMenu: (contextMenu: ContextMenu | null) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererEl: (el: HTMLDivElement) => void;
   setenableDebugTools: (enabled: boolean) => void;

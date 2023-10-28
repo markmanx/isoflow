@@ -57,7 +57,7 @@ export const createTextBox = (
     if (!textBoxes) {
       draft.model.views[view.index].textBoxes = [newTextBox];
     } else {
-      draft.model.views[view.index].textBoxes?.push(newTextBox);
+      draft.model.views[view.index].textBoxes?.unshift(newTextBox);
     }
   });
 
