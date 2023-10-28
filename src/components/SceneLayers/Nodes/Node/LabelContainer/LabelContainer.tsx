@@ -76,18 +76,21 @@ export const LabelContainer = ({
       <Box
         sx={{
           position: 'absolute',
-          bgcolor: 'common.white',
-          border: '1px solid',
-          borderColor: 'grey.400',
-          borderRadius: 2,
           left: -contentSize.width * 0.5,
           top: -(contentSize.height + labelHeight + yOffset),
-          overflow: 'hidden'
+          overflow: 'hidden',
+          width: 250
         }}
       >
         <Box
           ref={contentRef}
           sx={{
+            position: 'relative',
+            display: 'inline-block',
+            bgcolor: 'common.white',
+            border: '1px solid',
+            borderColor: 'grey.400',
+            borderRadius: 2,
             py: 1,
             px: 1.5
           }}
@@ -101,10 +104,11 @@ export const LabelContainer = ({
             <Box
               sx={{
                 position: 'absolute',
-                height: 50,
+                height: 60,
                 width: '100%',
                 bottom: 0,
-                left: 0
+                left: 0,
+                overflow: 'hidden'
               }}
             >
               <Gradient
@@ -112,24 +116,32 @@ export const LabelContainer = ({
               />
             </Box>
           )}
-        </Box>
 
-        {isContentTruncated && (
-          <ExpandButton
-            isExpanded={isExpanded}
-            onClick={() => {
-              setIsExpanded(true);
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0
             }}
-          />
-        )}
-        {isExpanded && (
-          <ExpandButton
-            isExpanded={isExpanded}
-            onClick={() => {
-              setIsExpanded(false);
-            }}
-          />
-        )}
+          >
+            {isContentTruncated && (
+              <ExpandButton
+                isExpanded={isExpanded}
+                onClick={() => {
+                  setIsExpanded(true);
+                }}
+              />
+            )}
+            {isExpanded && (
+              <ExpandButton
+                isExpanded={isExpanded}
+                onClick={() => {
+                  setIsExpanded(false);
+                }}
+              />
+            )}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

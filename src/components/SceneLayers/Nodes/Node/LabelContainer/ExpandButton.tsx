@@ -14,7 +14,6 @@ export const ExpandButton = ({ isExpanded, onClick }: Props) => {
   return (
     <MuiButton
       sx={{
-        position: 'absolute',
         px: 0.5,
         py: 0,
         height: 'auto',

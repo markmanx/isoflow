@@ -18,9 +18,28 @@ const isopacks = flattenCollections([
 // The data used in this visualisation example has been derived from the following blog post
 // https://www.altexsoft.com/blog/travel/airport-technology-management-operations-software-solutions-and-vendors/
 export const initialData: InitialData = {
-  icons: isopacks
+  icons: isopacks,
+  items: [
+    {
+      id: 'item1',
+      name: 'This is the ting',
+      icon: 'storage'
+    }
+  ],
+  views: [
+    {
+      id: 'view1',
+      name: 'View 1',
+      items: [
+        {
+          id: 'item1',
+          tile: { x: 0, y: 0 },
+          labelHeight: 100
+        }
+      ]
+    }
+  ]
 };
-
 // export const initialData: InitialData = {
 //   title: 'Airport Management Software',
 //   icons: isopacks,
