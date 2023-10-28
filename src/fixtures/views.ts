@@ -2,7 +2,7 @@ import { Model } from 'src/types';
 
 export const views: Model['views'] = [
   {
-    id: 'View1',
+    id: 'view1',
     name: 'View1',
     description: 'View1Description',
     items: [],
