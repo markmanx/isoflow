@@ -1,88 +1,81 @@
-import { modelSchema } from '../model';
-import { modelItems } from '../../fixtures/modelItems';
+import { produce } from 'immer';
+import { Connector, ViewItem } from 'src/types';
+import { model as modelFixture } from '../../fixtures/model';
+import { validateModel } from '../utils';
 
 describe('Model validation works correctly', () => {
   test('Model fixture is valid', () => {
-    const result = modelSchema.safeParse(modelItems);
+    const issues = validateModel(modelFixture);
 
-    expect(result).toEqual(
-      expect.objectContaining({
-        success: true
-      })
-    );
+    expect(issues.length).toStrictEqual(0);
   });
 
-  // test('node with invalid icon fails validation', () => {
-  //   const invalidNode = {
-  //     id: 'invalidNode',
-  //     icon: 'doesntExist',
-  //     tile: { x: -1, y: -1 }
-  //   };
-  //   const Model = produce(ModelData, (draft) => {
-  //     draft.nodes.push(invalidNode);
-  //   });
+  test('Connector with anchor that references an invalid item fails validation', () => {
+    const invalidConnector: Connector = {
+      id: 'invalidConnector',
+      anchors: [
+        { id: 'testAnch', ref: { item: 'node1' } },
+        { id: 'testAnch2', ref: { item: 'invalidItem' } }
+      ]
+    };
 
-  //   const result = Model.safeParse(Model);
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].connectors?.push(invalidConnector);
+    });
 
-  //   expect(result.success).toBe(false);
-  //   if (result.success === false) {
-  //     expect(result.error.errors[0].message).toContain('invalid icon');
-  //   }
-  // });
+    const issues = validateModel(model);
 
-  // test('connector with anchor that references an invalid node fails validation', () => {
-  //   const invalidConnector = {
-  //     id: 'invalidConnector',
-  //     anchors: [{ ref: { node: 'node1' } }, { ref: { node: 'invalidNode' } }]
-  //   };
-  //   const Model = produce(ModelData, (draft) => {
-  //     draft.connectors.push(invalidConnector);
-  //   });
+    expect(issues[0].type).toStrictEqual('INVALID_ANCHOR_TO_VIEW_ITEM_REF');
+  });
 
-  //   const result = Model.safeParse(Model);
+  test('Connector with less than two anchors fails validation', () => {
+    const invalidConnector: Connector = {
+      id: 'invalidConnector',
+      anchors: []
+    };
 
-  //   expect(result.success).toBe(false);
-  //   if (result.success === false) {
-  //     expect(result.error.errors[0].message).toContain('node does not exist');
-  //   }
-  // });
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].connectors?.push(invalidConnector);
+    });
 
-  // test('connector with less than two anchors fails validation', () => {
-  //   const invalidConnector = {
-  //     id: 'invalidConnector',
-  //     anchors: [{ ref: { anchor: 'invalidAnchor' } }]
-  //   };
-  //   const Model = produce(ModelData, (draft) => {
-  //     draft.connectors.push(invalidConnector);
-  //   });
+    const issues = validateModel(model);
 
-  //   const result = Model.safeParse(Model);
+    expect(issues[0].type).toStrictEqual('CONNECTOR_TOO_FEW_ANCHORS');
+  });
 
-  //   expect(result.success).toBe(false);
-  //   if (result.success === false) {
-  //     expect(result.error.errors[0].message).toContain(
-  //       'must have at least 2 anchors'
-  //     );
-  //   }
-  // });
+  test('Connector with anchor that references an invalid anchor fails validation', () => {
+    const invalidConnector: Connector = {
+      id: 'invalidConnector',
+      anchors: [
+        { id: 'testAnch1', ref: { anchor: 'invalidAnchor' } },
+        { id: 'testAnch2', ref: { anchor: 'anchor1' } }
+      ]
+    };
 
-  // test('connector with anchor that references an invalid anchor fails validation', () => {
-  //   const invalidConnector = {
-  //     id: 'invalidConnector',
-  //     anchors: [
-  //       { ref: { anchor: 'invalidAnchor' } },
-  //       { ref: { anchor: 'anchor1' } }
-  //     ]
-  //   };
-  //   const Model = produce(ModelData, (draft) => {
-  //     draft.connectors.push(invalidConnector);
-  //   });
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].connectors?.push(invalidConnector);
+    });
 
-  //   const result = Model.safeParse(Model);
+    const issues = validateModel(model);
 
-  //   expect(result.success).toBe(false);
-  //   if (result.success === false) {
-  //     expect(result.error.errors[0].message).toContain('anchor does not exist');
-  //   }
-  // });
+    expect(issues[0].type).toStrictEqual('INVALID_ANCHOR_TO_ANCHOR_REF');
+  });
+
+  test('An invalid view item fails validation', () => {
+    const invalidItem: ViewItem = {
+      id: 'invalidItem',
+      tile: {
+        x: 0,
+        y: 0
+      }
+    };
+
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].items.push(invalidItem);
+    });
+
+    const issues = validateModel(model);
+
+    expect(issues[0].type).toStrictEqual('INVALID_VIEW_ITEM_TO_MODEL_ITEM_REF');
+  });
 });

@@ -5,7 +5,29 @@ export const views: Model['views'] = [
     id: 'view1',
     name: 'View1',
     description: 'View1Description',
-    items: [],
+    items: [
+      {
+        id: 'node1',
+        tile: {
+          x: 0,
+          y: 0
+        }
+      },
+      {
+        id: 'node2',
+        tile: {
+          x: 0,
+          y: 4
+        }
+      },
+      {
+        id: 'node3',
+        tile: {
+          x: 0,
+          y: -4
+        }
+      }
+    ],
     rectangles: [
       { id: 'rectangle1', from: { x: 0, y: 0 }, to: { x: 2, y: 2 } }
     ],
