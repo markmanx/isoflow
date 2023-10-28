@@ -13,6 +13,7 @@ import { useModelStore } from 'src/stores/modelStore';
 import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { ContextMenuManager } from 'src/components/ContextMenu/ContextMenuManager';
+import { useScene } from 'src/hooks/useScene';
 import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
 
 const ToolsEnum = {
@@ -73,9 +74,7 @@ export const UiOverlay = () => {
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
   });
-  const ModelTitle = useModelStore((state) => {
-    return state.title;
-  });
+  const { currentView } = useScene();
   const editorMode = useUiStateStore((state) => {
     return state.editorMode;
   });
@@ -180,7 +179,7 @@ export const UiOverlay = () => {
               }}
             >
               <Typography fontWeight={600} color="text.secondary">
-                {ModelTitle}
+                {currentView.name}
               </Typography>
             </UiElement>
           </Box>
