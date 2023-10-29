@@ -13,6 +13,7 @@ describe('Model validation works correctly', () => {
   test('Connector with anchor that references an invalid item fails validation', () => {
     const invalidConnector: Connector = {
       id: 'invalidConnector',
+      color: 'color1',
       anchors: [
         { id: 'testAnch', ref: { item: 'node1' } },
         { id: 'testAnch2', ref: { item: 'invalidItem' } }
@@ -31,6 +32,7 @@ describe('Model validation works correctly', () => {
   test('Connector with less than two anchors fails validation', () => {
     const invalidConnector: Connector = {
       id: 'invalidConnector',
+      color: 'color1',
       anchors: []
     };
 
@@ -46,6 +48,7 @@ describe('Model validation works correctly', () => {
   test('Connector with anchor that references an invalid anchor fails validation', () => {
     const invalidConnector: Connector = {
       id: 'invalidConnector',
+      color: 'color1',
       anchors: [
         { id: 'testAnch1', ref: { anchor: 'invalidAnchor' } },
         { id: 'testAnch2', ref: { anchor: 'anchor1' } }

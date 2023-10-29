@@ -1,7 +1,7 @@
 import { Connector } from 'src/types';
 import { produce } from 'immer';
 import { getItemByIdOrThrow, getConnectorPath, getAllAnchors } from 'src/utils';
-import { validateConnector } from 'src/validation/utils';
+import { validateConnector } from 'src/schemas/utils';
 import { State } from './types';
 
 export const deleteConnector = (

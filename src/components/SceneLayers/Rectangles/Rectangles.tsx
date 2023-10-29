@@ -1,9 +1,9 @@
 import React from 'react';
-import { Rectangle as RectangleI } from 'src/types';
+import { useScene } from 'src/hooks/useScene';
 import { Rectangle } from './Rectangle';
 
 interface Props {
-  rectangles: RectangleI[];
+  rectangles: ReturnType<typeof useScene>['rectangles'];
 }
 
 export const Rectangles = ({ rectangles }: Props) => {

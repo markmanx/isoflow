@@ -33,13 +33,7 @@ export const customVars: CustomThemeVars = {
   },
   customPalette: {
     diagramBg: '#f6faff',
-    blue: '#a0b9f8',
-    purple: '#bbadfb',
-    yellow: '#f4eb8e',
-    red: '#f0aca9',
-    orange: '#fad6ac',
-    green: '#a8dc9d',
-    torquise: '#b3e5e3'
+    defaultColor: '#a5b8f3'
   }
 };
 

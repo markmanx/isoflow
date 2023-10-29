@@ -29,7 +29,11 @@ export const views: Model['views'] = [
       }
     ],
     rectangles: [
-      { id: 'rectangle1', from: { x: 0, y: 0 }, to: { x: 2, y: 2 } }
+      {
+        id: 'rectangle1',
+        from: { x: 0, y: 0 },
+        to: { x: 2, y: 2 }
+      }
     ],
     connectors: [
       {

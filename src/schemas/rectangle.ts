@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { id, color, coords } from '../common';
+import { id, coords } from './common';
 
 export const rectangleSchema = z.object({
   id,
-  color: color.optional(),
+  color: id.optional(),
   from: coords,
   to: coords
 });

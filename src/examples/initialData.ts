@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { InitialData } from 'src/Isoflow';
+import { InitialData, Colors, Icons } from 'src/Isoflow';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
 import awsIsopack from '@isoflow/isopacks/dist/aws';
@@ -15,10 +15,38 @@ const isopacks = flattenCollections([
   kubernetesIsopack
 ]);
 
-// The data used in this visualisation example has been derived from the following blog post
-// https://www.altexsoft.com/blog/travel/airport-technology-management-operations-software-solutions-and-vendors/
+export const colors: Colors = [
+  {
+    id: 'color2',
+    value: '#bbadfb'
+  },
+  {
+    id: 'color3',
+    value: '#f4eb8e'
+  },
+  {
+    id: 'color4',
+    value: '#f0aca9'
+  },
+  {
+    id: 'color5',
+    value: '#fad6ac'
+  },
+  {
+    id: 'color6',
+    value: '#a8dc9d'
+  },
+  {
+    id: 'color7',
+    value: '#b3e5e3'
+  }
+];
+
+export const icons: Icons = isopacks;
+
 export const initialData: InitialData = {
-  icons: isopacks,
+  icons,
+  colors,
   items: [
     {
       id: 'item1',
@@ -40,6 +68,7 @@ export const initialData: InitialData = {
     }
   ]
 };
+
 // export const initialData: InitialData = {
 //   title: 'Airport Management Software',
 //   icons: isopacks,

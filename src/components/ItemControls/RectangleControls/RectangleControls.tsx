@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import { useRectangle } from 'src/hooks/useRectangle';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const RectangleControls = ({ id }: Props) => {
-  const theme = useTheme();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -24,7 +23,6 @@ export const RectangleControls = ({ id }: Props) => {
     <ControlsContainer>
       <Section>
         <ColorSelector
-          colors={Object.values(theme.customVars.customPalette)}
           onChange={(color) => {
             updateRectangle(rectangle.id, { color });
           }}

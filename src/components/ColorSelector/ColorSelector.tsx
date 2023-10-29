@@ -1,25 +1,27 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { useScene } from 'src/hooks/useScene';
 import { ColorSwatch } from './ColorSwatch';
 
 interface Props {
-  colors: string[];
   onChange: (color: string) => void;
   activeColor: string;
 }
 
-export const ColorSelector = ({ colors, onChange, activeColor }: Props) => {
+export const ColorSelector = ({ onChange, activeColor }: Props) => {
+  const { colors } = useScene();
+
   return (
     <Box>
       {colors.map((color) => {
         return (
           <ColorSwatch
-            key={color}
-            hex={color}
+            key={color.id}
+            hex={color.value}
             onClick={() => {
-              return onChange(color);
+              return onChange(color.id);
             }}
-            isActive={activeColor === color}
+            isActive={activeColor === color.id}
           />
         );
       })}

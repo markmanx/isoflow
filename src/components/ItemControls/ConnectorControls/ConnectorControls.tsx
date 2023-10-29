@@ -1,13 +1,6 @@
 import React from 'react';
 import { Connector, connectorStyleOptions } from 'src/types';
-import {
-  useTheme,
-  Box,
-  Slider,
-  Select,
-  MenuItem,
-  TextField
-} from '@mui/material';
+import { Box, Slider, Select, MenuItem, TextField } from '@mui/material';
 import { useConnector } from 'src/hooks/useConnector';
 import { ColorSelector } from 'src/components/ColorSelector/ColorSelector';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -21,7 +14,6 @@ interface Props {
 }
 
 export const ConnectorControls = ({ id }: Props) => {
-  const theme = useTheme();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -43,7 +35,6 @@ export const ConnectorControls = ({ id }: Props) => {
       </Section>
       <Section>
         <ColorSelector
-          colors={Object.values(theme.customVars.customPalette)}
           onChange={(color) => {
             return updateConnector(connector.id, { color });
           }}

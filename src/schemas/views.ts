@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { id, constrainedStrings, coords } from './common';
-import { rectangleSchema } from './annotations/rectangle';
-import { connectorSchema } from './annotations/connector';
-import { textBoxSchema } from './annotations/textBox';
+import { rectangleSchema } from './rectangle';
+import { connectorSchema } from './connector';
+import { textBoxSchema } from './textBox';
 
 export const viewItemSchema = z.object({
   id,

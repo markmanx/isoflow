@@ -1,20 +1,22 @@
 import React from 'react';
-import { Rectangle as RectangleI } from 'src/types';
+import { useScene } from 'src/hooks/useScene';
 import { IsoTileArea } from 'src/components/IsoTileArea/IsoTileArea';
 import { getColorVariant } from 'src/utils';
-import { DEFAULT_COLOR } from 'src/config';
+import { useColor } from 'src/hooks/useColor';
 
-type Props = RectangleI;
+type Props = ReturnType<typeof useScene>['rectangles'][0];
 
-export const Rectangle = ({ from, to, color = DEFAULT_COLOR }: Props) => {
+export const Rectangle = ({ from, to, color: colorId }: Props) => {
+  const color = useColor(colorId);
+
   return (
     <IsoTileArea
       from={from}
       to={to}
-      fill={color}
+      fill={color.value}
       cornerRadius={22}
       stroke={{
-        color: getColorVariant(color, 'dark', { grade: 2 }),
+        color: getColorVariant(color.value, 'dark', { grade: 2 }),
         width: 1
       }}
     />

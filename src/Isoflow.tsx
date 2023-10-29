@@ -10,15 +10,17 @@ import {
   Connector,
   Rectangle,
   IsoflowProps,
-  InitialData
+  InitialData,
+  EditorConfig,
+  Colors,
+  Icons
 } from 'src/types';
 import { setWindowCursor, generateId } from 'src/utils';
-import { modelSchema } from 'src/validation/model';
+import { modelSchema } from 'src/schemas/model';
 import { useModelStore, ModelProvider } from 'src/stores/modelStore';
 import { SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
-import { useWindowUtils } from 'src/hooks/useWindowUtils';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
 import {
@@ -174,10 +176,13 @@ const useIsoflow = () => {
 export {
   useIsoflow,
   InitialData,
+  EditorConfig,
   Model,
   Icon,
   ModelItem,
   Rectangle,
+  Colors,
+  Icons,
   Connector,
   modelSchema,
   IsoflowProps

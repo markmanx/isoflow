@@ -78,6 +78,7 @@ export const MainMenu = () => {
   const onExportAsJSON = useCallback(async () => {
     const payload: Model = {
       icons: model.icons,
+      colors: model.colors,
       items: model.items,
       title: model.title,
       version: model.version,

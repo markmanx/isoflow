@@ -7,6 +7,7 @@ import { Svg } from 'src/components/Svg/Svg';
 import { useIsoProjection } from 'src/hooks/useIsoProjection';
 import { useConnector } from 'src/hooks/useConnector';
 import { useScene } from 'src/hooks/useScene';
+import { useColor } from 'src/hooks/useColor';
 
 interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
@@ -14,6 +15,7 @@ interface Props {
 
 export const Connector = ({ connector: _connector }: Props) => {
   const theme = useTheme();
+  const color = useColor(_connector.color);
   const { currentView } = useScene();
   const connector = useConnector(_connector.id);
   const { css, pxSize } = useIsoProjection({
@@ -89,7 +91,7 @@ export const Connector = ({ connector: _connector }: Props) => {
         />
         <polyline
           points={pathString}
-          stroke={getColorVariant(connector.color, 'dark', { grade: 1 })}
+          stroke={getColorVariant(color.value, 'dark', { grade: 1 })}
           strokeWidth={connectorWidthPx}
           strokeLinecap="round"
           strokeLinejoin="round"

@@ -1,6 +1,6 @@
 import { produce } from 'immer';
 import { Model } from 'src/types';
-import { validateModel } from 'src/validation/utils';
+import { validateModel } from 'src/schemas/utils';
 import { getItemByIdOrThrow } from './common';
 
 export const fixModel = (model: Model): Model => {

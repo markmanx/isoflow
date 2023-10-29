@@ -7,7 +7,8 @@ import {
   TextBox,
   ViewItem,
   View,
-  Rectangle
+  Rectangle,
+  Colors
 } from 'src/types';
 import { customVars } from './styles/theme';
 import { CoordsUtils } from './utils';
@@ -23,7 +24,11 @@ export const PROJECTED_TILE_SIZE = {
   height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height
 };
 
-export const DEFAULT_COLOR = customVars.customPalette.blue;
+export const DEFAULT_COLOR: Colors[0] = {
+  id: '__DEFAULT__',
+  value: customVars.customPalette.defaultColor
+};
+
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
 
 export const VIEW_DEFAULTS: Required<Omit<View, 'id' | 'description'>> = {
@@ -41,7 +46,7 @@ export const VIEW_ITEM_DEFAULTS: Required<Omit<ViewItem, 'id' | 'tile'>> = {
 export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id'>> = {
   width: 10,
   description: '',
-  color: DEFAULT_COLOR,
+  color: DEFAULT_COLOR.id,
   anchors: [],
   style: 'SOLID'
 };
@@ -62,7 +67,7 @@ export const TEXTBOX_FONT_WEIGHT = 'bold';
 export const RECTANGLE_DEFAULTS: Required<
   Omit<Rectangle, 'id' | 'from' | 'to'>
 > = {
-  color: DEFAULT_COLOR
+  color: DEFAULT_COLOR.id
 };
 
 export const ZOOM_INCREMENT = 0.2;
@@ -74,6 +79,7 @@ export const INITIAL_DATA: Model = {
   title: 'Untitled',
   version: '',
   icons: [],
+  colors: [],
   items: [],
   views: []
 };
@@ -102,3 +108,5 @@ export const DEFAULT_ICON: Icon = {
 };
 
 export const DEFAULT_LABEL_HEIGHT = 20;
+
+export const EDITOR_CONFIG = {};
