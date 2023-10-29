@@ -30,7 +30,7 @@ const scene = {
   textBoxes: {}
 };
 
-describe('Test layer ordering reducers', () => {
+describe('Layer ordering reducers works correctly', () => {
   test('Brings layer forwards correctly', () => {
     const model = getModel();
     const item: ItemReference = {

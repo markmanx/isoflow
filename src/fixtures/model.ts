@@ -12,4 +12,4 @@ export const model: Model = {
   icons,
   items: modelItems,
   views
-};
+} as const;
