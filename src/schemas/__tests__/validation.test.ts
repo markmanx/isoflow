@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import { Connector, ViewItem } from 'src/types';
 import { model as modelFixture } from '../../fixtures/model';
-import { validateModel } from '../utils';
+import { validateModel } from '../validation';
 
 describe('Model validation works correctly', () => {
   test('Model fixture is valid', () => {
@@ -80,5 +80,38 @@ describe('Model validation works correctly', () => {
     const issues = validateModel(model);
 
     expect(issues[0].type).toStrictEqual('INVALID_VIEW_ITEM_TO_MODEL_ITEM_REF');
+  });
+
+  test('A connector with an invalid color fails validation', () => {
+    const invalidConnector: Connector = {
+      id: 'invalidConnector',
+      color: 'invalidColor',
+      anchors: []
+    };
+
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].connectors?.push(invalidConnector);
+    });
+
+    const issues = validateModel(model);
+
+    expect(issues[0].type).toStrictEqual('INVALID_CONNECTOR_COLOR_REF');
+  });
+
+  test('A rectangle with an invalid color fails validation', () => {
+    const invalidRectangle = {
+      id: 'invalidRectangle',
+      color: 'invalidColor',
+      from: { x: 0, y: 0 },
+      to: { x: 2, y: 2 }
+    };
+
+    const model = produce(modelFixture, (draft) => {
+      draft.views[0].rectangles?.push(invalidRectangle);
+    });
+
+    const issues = validateModel(model);
+
+    expect(issues[0].type).toStrictEqual('INVALID_RECTANGLE_COLOR_REF');
   });
 });

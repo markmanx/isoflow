@@ -3,7 +3,8 @@ import type {
   ModelItem,
   Connector,
   ConnectorAnchor,
-  View
+  View,
+  Rectangle
 } from 'src/types';
 import { getAllAnchors, getItemByIdOrThrow } from 'src/utils';
 
@@ -15,6 +16,22 @@ type IssueType =
         viewItem: string;
         view: string;
         connector: string;
+      };
+    }
+  | {
+      type: 'INVALID_CONNECTOR_COLOR_REF';
+      params: {
+        connector: string;
+        view: string;
+        color: string;
+      };
+    }
+  | {
+      type: 'INVALID_RECTANGLE_COLOR_REF';
+      params: {
+        rectangle: string;
+        view: string;
+        color: string;
       };
     }
   | {
@@ -130,10 +147,28 @@ export const validateConnector = (
   connector: Connector,
   ctx: {
     view: View;
+    model: Model;
     allAnchors: ConnectorAnchor[];
   }
 ): Issue[] => {
   const issues: Issue[] = [];
+
+  if (connector.color) {
+    try {
+      getItemByIdOrThrow(ctx.model.colors, connector.color);
+    } catch (e) {
+      issues.push({
+        type: 'INVALID_CONNECTOR_COLOR_REF',
+        params: {
+          connector: connector.id,
+          view: ctx.view.id,
+          color: connector.color
+        },
+        message:
+          'Connector references a color that does not exist in the model.'
+      });
+    }
+  }
 
   if (connector.anchors.length < 2) {
     issues.push({
@@ -162,6 +197,32 @@ export const validateConnector = (
   return issues;
 };
 
+export const validateRectangle = (
+  rectangle: Rectangle,
+  ctx: { view: View; model: Model }
+): Issue[] => {
+  const issues: Issue[] = [];
+
+  if (rectangle.color) {
+    try {
+      getItemByIdOrThrow(ctx.model.colors, rectangle.color);
+    } catch (e) {
+      issues.push({
+        type: 'INVALID_RECTANGLE_COLOR_REF',
+        params: {
+          rectangle: rectangle.id,
+          view: ctx.view.id,
+          color: rectangle.color
+        },
+        message:
+          'Connector references a color that does not exist in the model.'
+      });
+    }
+  }
+
+  return issues;
+};
+
 export const validateView = (view: View, ctx: { model: Model }): Issue[] => {
   const issues: Issue[] = [];
 
@@ -172,7 +233,19 @@ export const validateView = (view: View, ctx: { model: Model }): Issue[] => {
       issues.push(
         ...validateConnector(connector, {
           view,
+          model: ctx.model,
           allAnchors
+        })
+      );
+    });
+  }
+
+  if (view.rectangles) {
+    view.rectangles.forEach((rectangle) => {
+      issues.push(
+        ...validateRectangle(rectangle, {
+          view,
+          model: ctx.model
         })
       );
     });

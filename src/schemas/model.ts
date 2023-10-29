@@ -3,7 +3,7 @@ import { INITIAL_DATA } from '../config';
 import { constrainedStrings } from './common';
 import { modelItemsSchema } from './modelItems';
 import { viewsSchema } from './views';
-import { validateModel } from './utils';
+import { validateModel } from './validation';
 import { iconsSchema } from './icons';
 import { colorsSchema } from './colors';
 

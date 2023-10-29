@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import { ViewItem } from 'src/types';
 import { getItemByIdOrThrow, getConnectorsByViewItem } from 'src/utils';
-import { validateView } from 'src/schemas/utils';
+import { validateView } from 'src/schemas/validation';
 import { State } from './types';
 import { updateConnector, syncConnector } from './connector';
 

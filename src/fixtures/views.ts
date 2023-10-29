@@ -31,6 +31,12 @@ export const views: Model['views'] = [
     rectangles: [
       {
         id: 'rectangle1',
+        color: 'color1',
+        from: { x: 0, y: 0 },
+        to: { x: 2, y: 2 }
+      },
+      {
+        id: 'rectangle2',
         from: { x: 0, y: 0 },
         to: { x: 2, y: 2 }
       }
@@ -38,6 +44,7 @@ export const views: Model['views'] = [
     connectors: [
       {
         id: 'connector1',
+        color: 'color1',
         anchors: [
           { id: 'anch1-1', ref: { item: 'node1' } },
           { id: 'anch1-2', ref: { item: 'node2' } }
