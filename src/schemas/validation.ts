@@ -215,7 +215,7 @@ export const validateRectangle = (
           color: rectangle.color
         },
         message:
-          'Connector references a color that does not exist in the model.'
+          'Rectangle references a color that does not exist in the model.'
       });
     }
   }
