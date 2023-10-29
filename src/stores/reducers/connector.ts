@@ -27,6 +27,7 @@ export const syncConnector = (id: string, viewId: string, state: State) => {
     const allAnchors = getAllAnchors(view.value.connectors ?? []);
     const issues = validateConnector(connector.value, {
       view: view.value,
+      model: state.model,
       allAnchors
     });
 
