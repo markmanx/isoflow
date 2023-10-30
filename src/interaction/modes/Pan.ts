@@ -9,8 +9,8 @@ export const Pan: ModeActions = {
   exit: () => {
     setWindowCursor('default');
   },
-  mousemove: ({ uiState }) => {
-    if (uiState.mode.type !== 'PAN') return;
+  mousemove: ({ uiState, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'PAN' || !isRendererInteraction) return;
 
     if (uiState.mouse.mousedown !== null) {
       const newScroll = produce(uiState.scroll, (draft) => {
@@ -22,7 +22,9 @@ export const Pan: ModeActions = {
       uiState.actions.setScroll(newScroll);
     }
   },
-  mousedown: () => {
+  mousedown: ({ uiState, isRendererInteraction }) => {
+    if (uiState.mode.type !== 'PAN' || !isRendererInteraction) return;
+
     setWindowCursor('grabbing');
   },
   mouseup: () => {
