@@ -9,8 +9,8 @@ export const Pan: ModeActions = {
   exit: () => {
     setWindowCursor('default');
   },
-  mousemove: ({ uiState, isRendererInteraction }) => {
-    if (uiState.mode.type !== 'PAN' || !isRendererInteraction) return;
+  mousemove: ({ uiState }) => {
+    if (uiState.mode.type !== 'PAN') return;
 
     if (uiState.mouse.mousedown !== null) {
       const newScroll = produce(uiState.scroll, (draft) => {
