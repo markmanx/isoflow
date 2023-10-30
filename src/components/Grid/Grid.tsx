@@ -1,20 +1,42 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
+import gsap from 'gsap';
+import { Size } from 'src/types';
 import gridTileSvg from 'src/assets/grid-tile-bg.svg';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { SizeUtils } from 'src/utils/SizeUtils';
 
 export const Grid = () => {
+  const elementRef = useRef<HTMLDivElement>(null);
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
-  const projectedTileSize = useMemo(() => {
-    return SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
-  }, [zoom]);
+
+  useEffect(() => {
+    if (!elementRef.current) return;
+
+    const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
+    const elSize = elementRef.current.getBoundingClientRect();
+    const backgroundPosition: Size = {
+      width: elSize.width / 2 + scroll.position.x + projectedTileSize.width / 2,
+      height: elSize.height / 2 + scroll.position.y
+    };
+
+    gsap.to(elementRef.current, {
+      duration: isFirstRender ? 0 : 0.25,
+      backgroundSize: `${projectedTileSize.width}px`,
+      backgroundPosition: `${backgroundPosition.width}px ${backgroundPosition.height}px`
+    });
+
+    if (isFirstRender) {
+      setIsFirstRender(false);
+    }
+  }, [scroll, zoom, isFirstRender]);
 
   return (
     <Box
@@ -29,17 +51,12 @@ export const Grid = () => {
       }}
     >
       <Box
+        ref={elementRef}
         sx={{
           position: 'absolute',
           width: '100%',
-          height: '100%'
-        }}
-        style={{
-          background: `repeat url("${gridTileSvg}")`,
-          backgroundSize: `${projectedTileSize.width}px`,
-          backgroundPosition: `calc(50% + ${
-            scroll.position.x % projectedTileSize.width
-          }px) calc(50% + ${scroll.position.y % projectedTileSize.height}px)`
+          height: '100%',
+          background: `repeat url("${gridTileSvg}")`
         }}
       />
     </Box>

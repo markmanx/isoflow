@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { Box, SxProps } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export const SceneLayer = ({ children, order = 0, sx }: Props) => {
+  const elementRef = useRef<HTMLDivElement>(null);
+
   const scroll = useUiStateStore((state) => {
     return state.scroll;
   });
@@ -16,8 +19,20 @@ export const SceneLayer = ({ children, order = 0, sx }: Props) => {
     return state.zoom;
   });
 
+  useEffect(() => {
+    if (!elementRef.current) return;
+
+    gsap.to(elementRef.current, {
+      duration: 0.25,
+      translateX: scroll.position.x,
+      translateY: scroll.position.y,
+      scale: zoom
+    });
+  }, [zoom, scroll]);
+
   return (
     <Box
+      ref={elementRef}
       sx={{
         position: 'absolute',
         zIndex: order,
@@ -27,9 +42,6 @@ export const SceneLayer = ({ children, order = 0, sx }: Props) => {
         height: 0,
         userSelect: 'none',
         ...sx
-      }}
-      style={{
-        transform: `translate(${scroll.position.x}px, ${scroll.position.y}px) scale(${zoom})`
       }}
     >
       {children}
