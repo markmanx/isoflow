@@ -88,8 +88,14 @@ export const Connector: ModeActions = {
     if (uiState.mode.type !== 'CONNECTOR' || !uiState.mode.id) return;
 
     const connector = getItemByIdOrThrow(scene.connectors, uiState.mode.id);
+    const firstAnchor = connector.value.anchors[0];
+    const lastAnchor =
+      connector.value.anchors[connector.value.anchors.length - 1];
 
-    if (connector.value.path.tiles.length < 2) {
+    if (
+      connector.value.path.tiles.length < 2 ||
+      !(firstAnchor.ref.item && lastAnchor.ref.item)
+    ) {
       scene.deleteConnector(uiState.mode.id);
     }
 
