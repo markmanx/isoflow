@@ -65,7 +65,7 @@
     "typescript": "^5.1.6",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.1"
+    "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

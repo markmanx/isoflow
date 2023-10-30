@@ -5,7 +5,7 @@ import { ColorSwatch } from './ColorSwatch';
 
 interface Props {
   onChange: (color: string) => void;
-  activeColor: string;
+  activeColor?: string;
 }
 
 export const ColorSelector = ({ onChange, activeColor }: Props) => {

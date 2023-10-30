@@ -43,10 +43,9 @@ export const VIEW_ITEM_DEFAULTS: Required<Omit<ViewItem, 'id' | 'tile'>> = {
   labelHeight: 80
 };
 
-export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id'>> = {
+export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id' | 'color'>> = {
   width: 10,
   description: '',
-  color: DEFAULT_COLOR.id,
   anchors: [],
   style: 'SOLID'
 };
@@ -65,10 +64,8 @@ export const TEXTBOX_PADDING = 0.2;
 export const TEXTBOX_FONT_WEIGHT = 'bold';
 
 export const RECTANGLE_DEFAULTS: Required<
-  Omit<Rectangle, 'id' | 'from' | 'to'>
-> = {
-  color: DEFAULT_COLOR.id
-};
+  Omit<Rectangle, 'id' | 'from' | 'to' | 'color'>
+> = {};
 
 export const ZOOM_INCREMENT = 0.2;
 export const MIN_ZOOM = 0.2;
@@ -79,7 +76,7 @@ export const INITIAL_DATA: Model = {
   title: 'Untitled',
   version: '',
   icons: [],
-  colors: [],
+  colors: [DEFAULT_COLOR],
   items: [],
   views: []
 };

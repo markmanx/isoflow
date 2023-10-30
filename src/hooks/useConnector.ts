@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
-import { Connector, SceneConnector } from 'src/types';
 import { getItemByIdOrThrow } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
 
-export const useConnector = (
-  id: string
-): Required<Connector> & SceneConnector => {
+export const useConnector = (id: string) => {
   const { connectors } = useScene();
 
   const connector = useMemo(() => {

@@ -52,6 +52,7 @@ export const Connector: ModeActions = {
 
     const newConnector: ConnectorI = {
       id: generateId(),
+      color: scene.colors[0].id,
       anchors: []
     };
 

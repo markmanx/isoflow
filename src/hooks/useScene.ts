@@ -16,7 +16,6 @@ import type { State } from 'src/stores/reducers/types';
 import { getItemByIdOrThrow } from 'src/utils';
 import {
   CONNECTOR_DEFAULTS,
-  DEFAULT_COLOR,
   RECTANGLE_DEFAULTS,
   TEXTBOX_DEFAULTS
 } from 'src/config';
@@ -43,7 +42,7 @@ export const useScene = () => {
   }, [currentView.items]);
 
   const colors = useMemo(() => {
-    return [DEFAULT_COLOR, ...model.colors];
+    return model.colors;
   }, [model.colors]);
 
   const connectors = useMemo(() => {
