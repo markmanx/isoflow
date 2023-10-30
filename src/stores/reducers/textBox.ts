@@ -8,6 +8,29 @@ import {
 } from 'src/config';
 import { State } from './types';
 
+export const syncTextBox = (
+  id: string,
+  viewId: string,
+  state: State
+): State => {
+  const newState = produce(state, (draft) => {
+    const view = getItemByIdOrThrow(draft.model.views, viewId);
+    const textBox = getItemByIdOrThrow(view.value.textBoxes ?? [], id);
+
+    const width = getTextWidth(textBox.value.content, {
+      fontSize: textBox.value.fontSize ?? TEXTBOX_DEFAULTS.fontSize,
+      fontFamily: DEFAULT_FONT_FAMILY,
+      fontWeight: TEXTBOX_FONT_WEIGHT
+    });
+    const height = 1;
+    const size = { width, height };
+
+    draft.scene.textBoxes[textBox.value.id] = { size };
+  });
+
+  return newState;
+};
+
 export const updateTextBox = (
   id: string,
   updates: Partial<TextBox>,
@@ -26,18 +49,9 @@ export const updateTextBox = (
     textBoxes[textBox.index] = newTextBox;
 
     if (updates.content !== undefined || updates.fontSize !== undefined) {
-      const width = getTextWidth(updates.content ?? textBox.value.content, {
-        fontSize:
-          updates.fontSize ??
-          textBox.value.fontSize ??
-          TEXTBOX_DEFAULTS.fontSize,
-        fontFamily: DEFAULT_FONT_FAMILY,
-        fontWeight: TEXTBOX_FONT_WEIGHT
-      });
-      const height = 1;
-      const size = { width, height };
-
-      draft.scene.textBoxes[newTextBox.id] = { size };
+      const stateAfterSync = syncTextBox(newTextBox.id, viewId, draft);
+      draft.model = stateAfterSync.model;
+      draft.scene = stateAfterSync.scene;
     }
   });
 

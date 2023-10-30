@@ -9,12 +9,11 @@ import {
   FolderOpen as FolderOpenIcon,
   DeleteOutline as DeleteOutlineIcon
 } from '@mui/icons-material';
-import { Model } from 'src/types/model';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useModelStore } from 'src/stores/modelStore';
-import { exportAsJSON } from 'src/utils';
+import { exportAsJSON, modelFromModelStore } from 'src/utils';
 import { INITIAL_DATA } from 'src/config';
 import { MenuItem } from './MenuItem';
 
@@ -27,7 +26,7 @@ export const MainMenu = () => {
     return state.mainMenuOptions;
   });
   const model = useModelStore((state) => {
-    return state;
+    return modelFromModelStore(state);
   });
   const modelActions = useModelStore((state) => {
     return state.actions;
@@ -76,17 +75,7 @@ export const MainMenu = () => {
   }, [uiStateActions, modelActions]);
 
   const onExportAsJSON = useCallback(async () => {
-    const payload: Model = {
-      icons: model.icons,
-      colors: model.colors,
-      items: model.items,
-      title: model.title,
-      version: model.version,
-      views: model.views,
-      description: model.description
-    };
-
-    exportAsJSON(payload);
+    exportAsJSON(model);
     uiStateActions.setIsMainMenuOpen(false);
   }, [model, uiStateActions]);
 

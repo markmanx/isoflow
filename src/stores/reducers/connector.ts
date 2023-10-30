@@ -54,9 +54,8 @@ export const updateConnector = (
   viewId: string,
   state: State
 ): State => {
-  const view = getItemByIdOrThrow(state.model.views, viewId);
-
   const newState = produce(state, (draft) => {
+    const view = getItemByIdOrThrow(draft.model.views, viewId);
     const { connectors } = draft.model.views[view.index];
 
     if (!connectors) return;
@@ -67,8 +66,8 @@ export const updateConnector = (
 
     if (updates.anchors) {
       const stateAfterSync = syncConnector(id, viewId, draft);
-      draft.scene = stateAfterSync.scene;
       draft.model = stateAfterSync.model;
+      draft.scene = stateAfterSync.scene;
     }
   });
 
@@ -80,9 +79,8 @@ export const createConnector = (
   viewId: string,
   state: State
 ): State => {
-  const view = getItemByIdOrThrow(state.model.views, viewId);
-
   const newState = produce(state, (draft) => {
+    const view = getItemByIdOrThrow(draft.model.views, viewId);
     const { connectors } = draft.model.views[view.index];
 
     if (!connectors) {
@@ -90,7 +88,11 @@ export const createConnector = (
     } else {
       draft.model.views[view.index].connectors?.unshift(newConnector);
     }
+
+    const stateAfterSync = syncConnector(newConnector.id, viewId, draft);
+    draft.model = stateAfterSync.model;
+    draft.scene = stateAfterSync.scene;
   });
 
-  return syncConnector(newConnector.id, viewId, newState);
+  return newState;
 };

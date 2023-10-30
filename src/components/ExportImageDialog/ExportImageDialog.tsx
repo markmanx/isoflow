@@ -14,7 +14,8 @@ import {
   downloadFile as downloadFileUtil,
   getTileScrollPosition,
   base64ToBlob,
-  generateGenericFilename
+  generateGenericFilename,
+  modelFromModelStore
 } from 'src/utils';
 import { ModelStore } from 'src/types';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
@@ -36,14 +37,7 @@ export const ExportImageDialog = ({ onClose, quality = 4 }: Props) => {
     return state.actions;
   });
   const model = useModelStore((state): Omit<ModelStore, 'actions'> => {
-    return {
-      title: state.title,
-      version: state.version,
-      items: state.items,
-      icons: state.icons,
-      views: state.views,
-      colors: state.colors
-    };
+    return modelFromModelStore(state);
   });
 
   const unprojectedBounds = useMemo(() => {

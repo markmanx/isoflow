@@ -23,7 +23,10 @@ export const Connector: ModeActions = {
     )
       return;
 
-    const connector = getItemByIdOrThrow(scene.connectors, uiState.mode.id);
+    const connector = getItemByIdOrThrow(
+      scene.currentView.connectors ?? [],
+      uiState.mode.id
+    );
 
     const itemAtTile = getItemAtTile({
       tile: uiState.mouse.position.tile,

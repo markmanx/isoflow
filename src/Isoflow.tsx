@@ -30,6 +30,7 @@ import {
   VIEW_DEFAULTS
 } from 'src/config';
 import { createView } from 'src/stores/reducers';
+import { useView } from 'src/hooks/useView';
 import { useIconCategories } from './hooks/useIconCategories';
 
 const App = ({
@@ -53,6 +54,7 @@ const App = ({
     return state.actions;
   });
   const { setIconCategoriesState } = useIconCategories();
+  const { changeView } = useView();
 
   useEffect(() => {
     if (initialData?.zoom) {
@@ -100,9 +102,10 @@ const App = ({
 
     prevInitialData.current = fullInitialData;
     modelActions.set(fullInitialData);
-    uiActions.setView(fullInitialData.views[0].id);
+
+    changeView(fullInitialData.views[0].id, fullInitialData);
     setIsReady(true);
-  }, [initialData, modelActions, uiActions]);
+  }, [initialData, modelActions, uiActions, changeView]);
 
   useEffect(() => {
     setIconCategoriesState();
