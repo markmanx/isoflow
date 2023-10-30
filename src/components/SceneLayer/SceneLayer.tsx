@@ -7,9 +7,15 @@ interface Props {
   children?: React.ReactNode;
   order?: number;
   sx?: SxProps;
+  disableAnimation?: boolean;
 }
 
-export const SceneLayer = ({ children, order = 0, sx }: Props) => {
+export const SceneLayer = ({
+  children,
+  order = 0,
+  sx,
+  disableAnimation
+}: Props) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
   const scroll = useUiStateStore((state) => {
@@ -23,12 +29,12 @@ export const SceneLayer = ({ children, order = 0, sx }: Props) => {
     if (!elementRef.current) return;
 
     gsap.to(elementRef.current, {
-      duration: 0.25,
+      duration: disableAnimation ? 0 : 0.25,
       translateX: scroll.position.x,
       translateY: scroll.position.y,
       scale: zoom
     });
-  }, [zoom, scroll]);
+  }, [zoom, scroll, disableAnimation]);
 
   return (
     <Box

@@ -190,10 +190,12 @@ export const UiOverlay = () => {
             sx={{
               position: 'absolute',
               width: 350,
+              transform: 'translateY(-100%)'
+            }}
+            style={{
               maxWidth: `calc(${rendererSize.width} - ${appPadding.x * 2}px)`,
               left: appPadding.x,
-              top: rendererSize.height - appPadding.y * 2 - spacing(1),
-              transform: 'translateY(-100%)'
+              top: rendererSize.height - appPadding.y * 2 - spacing(1)
             }}
           >
             <DebugUtils />
@@ -202,7 +204,7 @@ export const UiOverlay = () => {
       </Box>
 
       {mode.type === 'PLACE_ICON' && mode.id && (
-        <SceneLayer>
+        <SceneLayer disableAnimation>
           <DragAndDrop iconId={mode.id} tile={mouse.position.tile} />
         </SceneLayer>
       )}
