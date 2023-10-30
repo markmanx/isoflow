@@ -13,7 +13,7 @@ import { MAX_ZOOM } from 'src/config';
 import { useScene } from 'src/hooks/useScene';
 import { useResizeObserver } from './useResizeObserver';
 
-const BOUNDING_BOX_PADDING = 1;
+const BOUNDING_BOX_PADDING = 3;
 
 export const useDiagramUtils = () => {
   const scene = useScene();

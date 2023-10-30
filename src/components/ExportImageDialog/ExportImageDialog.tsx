@@ -16,16 +16,18 @@ import {
   base64ToBlob,
   generateGenericFilename
 } from 'src/utils';
+import { ModelStore } from 'src/types';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Isoflow } from 'src/Isoflow';
 import { Loader } from 'src/components/Loader/Loader';
 
 interface Props {
+  quality?: number;
   onClose: () => void;
 }
 
-export const ExportImageDialog = ({ onClose }: Props) => {
+export const ExportImageDialog = ({ onClose, quality = 4 }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const debounceRef = useRef<NodeJS.Timeout>();
   const [imageData, setImageData] = React.useState<string>();
@@ -33,18 +35,17 @@ export const ExportImageDialog = ({ onClose }: Props) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const model = useModelStore(
-    ({ views, description, version, title, items, icons }) => {
-      return {
-        views,
-        description,
-        version,
-        title,
-        items,
-        icons
-      };
-    }
-  );
+  const model = useModelStore((state): Omit<ModelStore, 'actions'> => {
+    return {
+      title: state.title,
+      version: state.version,
+      items: state.items,
+      icons: state.icons,
+      views: state.views,
+      colors: state.colors
+    };
+  });
+
   const unprojectedBounds = useMemo(() => {
     return getUnprojectedBounds();
   }, [getUnprojectedBounds]);
@@ -111,8 +112,8 @@ export const ExportImageDialog = ({ onClose }: Props) => {
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    width: unprojectedBounds.width,
-                    height: unprojectedBounds.height
+                    width: unprojectedBounds.width * quality,
+                    height: unprojectedBounds.height * quality
                   }}
                 >
                   <Isoflow
@@ -120,7 +121,7 @@ export const ExportImageDialog = ({ onClose }: Props) => {
                     onModelUpdated={exportImage}
                     initialData={{
                       ...model,
-                      zoom: previewParams.zoom,
+                      zoom: previewParams.zoom * quality,
                       scroll: getTileScrollPosition(previewParams.scrollTarget)
                     }}
                   />
@@ -142,14 +143,17 @@ export const ExportImageDialog = ({ onClose }: Props) => {
           )}
 
           {imageData && (
-            <>
+            <Stack alignItems="center" spacing={2}>
               <Box
                 component="img"
-                sx={{ width: 900, maxWidth: '100%' }}
+                sx={{
+                  width: unprojectedBounds.width,
+                  maxWidth: '100%'
+                }}
                 src={imageData}
                 alt="preview"
               />
-              <Stack alignItems="flex-end">
+              <Stack sx={{ width: '100%' }} alignItems="flex-end">
                 <Stack direction="row" spacing={2}>
                   <Button variant="text" onClick={onClose}>
                     Cancel
@@ -157,7 +161,7 @@ export const ExportImageDialog = ({ onClose }: Props) => {
                   <Button onClick={downloadFile}>Download as PNG</Button>
                 </Stack>
               </Stack>
-            </>
+            </Stack>
           )}
         </Stack>
       </DialogContent>

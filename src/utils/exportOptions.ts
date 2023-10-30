@@ -45,7 +45,10 @@ export const exportAsJSON = (model: Model) => {
 };
 
 export const exportAsImage = async (el: HTMLDivElement, size?: Size) => {
-  const imageData = await domtoimage.toPng(el, { ...size });
+  const imageData = await domtoimage.toPng(el, {
+    ...size,
+    cacheBust: true
+  });
 
   return imageData;
 };
