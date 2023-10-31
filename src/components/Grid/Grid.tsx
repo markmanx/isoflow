@@ -20,16 +20,16 @@ export const Grid = () => {
   useEffect(() => {
     if (!elementRef.current) return;
 
-    const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
+    const tileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
     const elSize = elementRef.current.getBoundingClientRect();
     const backgroundPosition: Size = {
-      width: elSize.width / 2 + scroll.position.x + projectedTileSize.width / 2,
+      width: elSize.width / 2 + scroll.position.x + tileSize.width / 2,
       height: elSize.height / 2 + scroll.position.y
     };
 
     gsap.to(elementRef.current, {
       duration: isFirstRender ? 0 : 0.25,
-      backgroundSize: `${projectedTileSize.width}px`,
+      backgroundSize: `${tileSize.width}px ${tileSize.height * 2}px`,
       backgroundPosition: `${backgroundPosition.width}px ${backgroundPosition.height}px`
     });
 
