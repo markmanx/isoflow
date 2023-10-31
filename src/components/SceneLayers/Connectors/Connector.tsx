@@ -15,9 +15,10 @@ import { useColor } from 'src/hooks/useColor';
 
 interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
+  isSelected?: boolean;
 }
 
-export const Connector = ({ connector: _connector }: Props) => {
+export const Connector = ({ connector: _connector, isSelected }: Props) => {
   const theme = useTheme();
   const color = useColor(_connector.color);
   const { currentView } = useScene();
@@ -42,6 +43,8 @@ export const Connector = ({ connector: _connector }: Props) => {
   }, [connector.path.tiles, drawOffset]);
 
   const anchorPositions = useMemo(() => {
+    if (!isSelected) return [];
+
     return connector.anchors.map((anchor) => {
       const position = getAnchorTile(anchor, currentView);
 
@@ -57,7 +60,13 @@ export const Connector = ({ connector: _connector }: Props) => {
           drawOffset.y
       };
     });
-  }, [currentView, connector.path.rectangle, connector.anchors, drawOffset]);
+  }, [
+    currentView,
+    connector.path.rectangle,
+    connector.anchors,
+    drawOffset,
+    isSelected
+  ]);
 
   const directionIcon = useMemo(() => {
     return getConnectorDirectionIcon(connector.path.tiles);
