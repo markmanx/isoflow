@@ -3,7 +3,7 @@ import { StoreApi } from 'zustand';
 import type { EditorModeEnum, MainMenuOptions } from './common';
 import type { Model } from './model';
 
-export type InitialData = Partial<Model> & {
+export type InitialData = Model & {
   zoom?: number;
   scroll?: Coords;
 };

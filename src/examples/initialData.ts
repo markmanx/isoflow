@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { InitialData, Colors, Icons } from 'src/Isoflow';
+import { Colors, Icons, InitialData } from 'src/Isoflow';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
 import awsIsopack from '@isoflow/isopacks/dist/aws';
@@ -49,7 +49,6 @@ export const colors: Colors = [
 export const icons: Icons = isopacks;
 
 export const initialData: InitialData = {
-  version: '',
   title: 'Airport management software system',
   icons,
   colors: [

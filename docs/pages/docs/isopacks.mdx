@@ -45,7 +45,13 @@ const icons = flattenCollections([
 
 const App = () => {
   return (
-    <Isoflow InitialData={{ icons }} />
+    <Isoflow initialData={{
+      title: 'Example scene',
+      icons,
+      colors: [],
+      items: [],
+      views: []
+    }} />
   );
 }
 

@@ -11,7 +11,6 @@ import {
   Rectangle,
   IsoflowProps,
   InitialData,
-  EditorConfig,
   Colors,
   Icons
 } from 'src/types';
@@ -178,8 +177,8 @@ const useIsoflow = () => {
 
 export {
   useIsoflow,
+  IsoflowProps,
   InitialData,
-  EditorConfig,
   Model,
   Icon,
   ModelItem,
@@ -187,8 +186,7 @@ export {
   Colors,
   Icons,
   Connector,
-  modelSchema,
-  IsoflowProps
+  modelSchema
 };
 
 export const version = PACKAGE_VERSION;

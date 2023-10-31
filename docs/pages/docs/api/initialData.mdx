@@ -1,0 +1,172 @@
+# `initialData`
+
+The `initialData` object contains the following properties:
+
+| Name | Type | Default |
+| --- | --- | --- |
+| `version` | `string \| undefined` | `undefined` |
+| `title` | `string \| undefined` | `undefined` |
+| `description` | `string \| undefined` | `undefined` |
+| `icons` | [`Icon[]`](#icon) | `[]` |
+| `colors` | [`Color[]`](#color) | `[]` |
+| `items` | [`Item[]`](#item) | `[]` |
+| `views` | [`View[]`](#view) | `[]` |
+| `zoom` | `number` | `1` |
+| `scroll` | `Coords` | `{ x: 0, y: 0 }` |
+
+## Example payload
+An example payload can be found here on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow/tree/main).
+
+## `Icon`
+
+```js
+{
+  id: string;
+  name: string;
+  url: string;
+  collection?: string;
+  isIsometric?: boolean;
+}
+```
+
+**Notes on Icons:**
+- `collection` is an optional property that can be used to group icons together in the icon picker.  All icons with the same `collection` will be grouped together under the collection's name.
+- If you are using a non-isometric icon image, you can set `isIsometric` to `false` to render it with an isometric perpective and help it blend into the scene.
+
+## `Color`
+
+```js
+{
+  id: string;
+  value: string;
+}
+```
+
+**Notes on Colors:**
+The `value` property accepts any color value in a CSS acceptable format (e.g. a hex value like `#000000`, a string value for example `black` or an rgba value for example `rgba(0, 0, 0, 1)`).
+
+## `Item`
+
+```js
+{
+  id: string;
+  name: string;
+  description?: string;
+  icon: string;
+}
+```
+
+**Notes on Items:**
+- The `description` property can accept markdown.
+- The `icon` property accepts the `id` of an `Icon`.
+
+## `View`
+
+```js
+{
+  id: string;
+  name: string;
+  description?: string;
+  items: ViewItem[];
+  rectangles?: Rectangle[];
+  connectors?: Connector[];
+  textBoxes?: TextBox[];
+}
+```
+
+**Notes on Views:**
+- The `description` property can accept markdown.
+
+## `ViewItem`
+
+```js
+{
+  id: string;
+  labelHeight?: number;
+  tile: {
+    x: number;
+    y: number;
+  }
+}
+```
+
+**Notes on ViewItems:**
+- The `id` property accepts the `id` of an `Item` (defined at root level).
+
+## `Connector`
+
+```js
+{
+  id: string;
+  description?: string;
+  color?: string;
+  width?: number;
+  style?: 'SOLID' | 'DOTTED' | 'DASHED';
+  anchors: ConnectorAnchor[];
+}
+```
+
+**Notes on connectors:**
+- The `color` property accepts an `id` of a `Color` (defined at root level).
+- A connector needs a minimum of 2 anchors to determine where it starts and ends. If you want more control over the connector's path you can specify additional anchors that the connector will pass through.
+
+## `ConnectorAnchor`
+
+```js
+id: string;
+ref: 
+  | {
+      tile: {
+        x: number;
+        y: number;
+      }
+    }
+  | {
+      item: string;
+    }
+```
+
+**Notes on ConnectorAnchors**
+- Connector anchors can reference either a `tile` or an `item`.  If the reference is to an `item`, the anchor is dynamic and will be tied to the item's position.
+- When anchoring a connector to an `item`, you must specify the `id` of the of the item being referred to.
+
+## `Rectangle`
+
+```js
+{
+  id: string;
+  color?: string;
+  from: {
+    x: number;
+    y: number;
+  };
+  to: {
+    x: number;
+    y: number;
+  };
+}
+```
+
+## `TextBox`
+
+```js
+{
+  id: string;
+  tile: {
+    x: number;
+    y: number;
+  };
+  content: string;
+  fontSize?: number;
+  orientation?: 'X' | 'Y';
+}
+```
+
+## Validation
+The `initialData` object is validated before Isoflow renders the scene, and an error is thrown if invalid data is detected.
+
+Examples of common errors are as follows:
+- A `ConnectorAnchor` references an `Item` that does not exist.
+- An `Item` references an `Icon` that does not exist.
+- A `Rectangle` has a `from` but not a `to` property.
+- A `Connector` has less than 2 anchors.

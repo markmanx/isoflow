@@ -14,11 +14,6 @@ import {
   connectorStyleOptions
 } from 'src/schemas';
 
-export interface EditorConfig {
-  icons: Icons;
-  colors: Colors;
-}
-
 export { connectorStyleOptions } from 'src/schemas';
 export type Model = z.infer<typeof modelSchema>;
 export type ModelItems = Model['items'];
