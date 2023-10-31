@@ -49,13 +49,153 @@ export const colors: Colors = [
 export const icons: Icons = isopacks;
 
 export const initialData: InitialData = {
+  version: '',
+  title: 'Airport management software system',
   icons,
-  colors,
+  colors: [
+    { id: 'color1', value: '#a5b8f3' },
+    { id: 'color2', value: '#bbadfb' },
+    { id: 'color3', value: '#f4eb8e' },
+    { id: 'color4', value: '#f0aca9' },
+    { id: 'color5', value: '#fad6ac' },
+    { id: 'color6', value: '#a8dc9d' },
+    { id: 'color7', value: '#b3e5e3' }
+  ],
   items: [
     {
       id: 'item1',
-      name: 'This is the ting',
-      icon: 'storage'
+      name: 'Airport Operational Database',
+      icon: 'storage',
+      description:
+        '<p>Each airport has its own central database that stores and updates all necessary data regarding daily flights, seasonal schedules, available resources, and other flight-related information, like billing data and flight fees. AODB is a key feature for the functioning of an airport.</p><p><br></p><p>This database is connected to the rest of the airport modules: <em>airport information systems, revenue management systems, and air traffic management</em>.</p><p><br></p><p>The system can supply different information for different segments of users: passengers, airport staff, crew, or members of specific departments, authorities, business partners, or police.</p><p><br></p><p>AODB represents the information on a graphical display.</p><p><br></p><p><strong>AODB functions include:</strong></p><p>- Reference-data processing</p><p>- Seasonal scheduling</p><p>- Daily flight schedule processing</p><p>- Processing of payments</p>'
+    },
+    {
+      id: 'bc6fdded-a090-4eae-b1fe-fe0ee0fd1c92',
+      name: 'Landside operations',
+      icon: 'office',
+      description:
+        '<p>This subsystem is aimed at serving passengers and maintenance of terminal buildings, parking facilities, and vehicular traffic circular drives. Passenger operations include baggage handling and tagging.</p>'
+    },
+    {
+      id: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f',
+      name: 'Passenger facilitation services',
+      icon: 'user',
+      description:
+        '<p>Includes passenger processing (check-in, boarding, border control) and baggage handling (tagging, dropping and handling). They follow passengers to the shuttle buses to carry them to their flights. Arrival operations include boarding control and baggage handling.</p>'
+    },
+    {
+      id: 'a147b06a-324a-47ab-9e16-ac9101aa3d28',
+      name: 'Border control (customs and security services)',
+      icon: 'block',
+      description:
+        '<p>In airports, security services usually unite perimeter security, terminal security, and border controls. These services require biometric authentication and integration into government systems to allow a customs officer to view the status of a passenger.</p>'
+    },
+    {
+      id: '4a27ed88-abf2-448b-af07-5d2b6ebdb67f',
+      name: 'Common use services (self-service check-in systems)',
+      icon: 'block',
+      description:
+        '<p>An airport must ensure smooth passenger flow. Various&nbsp;digital self-services, like check-in kiosks or automated self-service gates, make it happen. Self-service options, especially check-in kiosks, remain popular. Worldwide in 2018, passengers used kiosks to check themselves in&nbsp;88 percent of the time.</p>'
+    },
+    {
+      id: 'c54ab120-44d2-46d2-9fc1-efd83ab67307',
+      name: 'Baggage handling',
+      icon: 'block',
+      description:
+        '<p>A passenger must check a bag before it’s loaded on the aircraft. The time the baggage is loaded is displayed and tracked until the destination is reached and the bag is returned to the owners.</p>'
+    },
+    {
+      id: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05',
+      name: 'Untitled',
+      icon: 'function-module'
+    },
+    {
+      id: '040dfb11-f920-48cf-bf96-64234db1b7e8',
+      name: 'Maintenance and monitoring',
+      icon: 'block'
+    },
+    {
+      id: 'a71d7911-261d-4b6e-895a-27765baf0403',
+      name: 'Resource management',
+      icon: 'block'
+    },
+    {
+      id: '67895813-ac6f-4dd4-9ae2-e994e9a5aa09',
+      name: 'Staff management',
+      icon: 'block',
+      description:
+        '<p>Staff modules provide the necessary information about ongoing processes in the airport, such as data on flights (in ICAO or UTC formats) and other important events to keep responsible staff members updated. Information is distributed through the airport radio system, or displayed on a PC connected via the airport LAN or on mobile devices.</p>'
+    },
+    {
+      id: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a',
+      name: 'Untitled',
+      icon: 'queue'
+    },
+    {
+      id: '00ff4dc0-09f9-4932-aa90-6c207da2989b',
+      name: 'Public address (PA) systems',
+      icon: 'block',
+      description:
+        '<p>Informs passengers and airport staff about any changes and processes of importance, for instance, gates, times of arrival, calls, and alerts. Also, information can be communicated to pilots, aircraft staff, crew, etc. PA systems usually include voice messages broadcasted through loudspeakers.</p>'
+    },
+    {
+      id: '791abb72-5481-4713-88a8-a9fe51cb5408',
+      name: 'Flight Information Display Systems (FIDS)',
+      icon: 'block',
+      description:
+        '<p>Exhibits the status of boarding, gates, aircraft, flight number, and other flight details.&nbsp;A computer controls the screens that are connected to the data management systems and displays up-to-date information about flights in real time. Some airports have a digital FIDS in the form of apps or on their websites. Also, the displays may show other public information such as the weather, news, safety messages, menus, and advertising. Airports can choose the type, languages, and means of entering the information, whether it be manually or loaded from a central database.</p>'
+    },
+    {
+      id: 'fe621de2-793b-42f9-968e-4cac33b8d5fe',
+      name: 'Automatic Terminal Information Service (ATIS)',
+      icon: 'block',
+      description:
+        '<p>Broadcasts the weather reports, the condition of the runway, or other local information for pilots and crews.</p><p><br></p><p>Some airport software vendors offer off-the-shelf solutions to facilitate particular tasks, like maintenance, or airport operations. However, most of them provide integrated systems that comprise modules for several operations.</p>'
+    },
+    {
+      id: '24d4a8b3-6056-4c3f-8f0b-143683509438',
+      name: 'Airside operations',
+      icon: 'plane',
+      description:
+        '<p>Includes systems to handle aircraft landing and navigation, airport traffic management, runway management, and ground handling safety.</p>'
+    },
+    {
+      id: '2ac34480-95cc-4b01-8efd-683ec46fcd68',
+      name: 'Apron handling',
+      icon: 'block',
+      description:
+        '<p>Apron (or ground handling) deals with aircraft servicing. This includes passenger boarding and guidance, cargo and mail loading, and apron services. Apron services include aircraft guiding, cleaning, drainage, deicing, catering, and fueling. At this stage, the software facilitates dealing with information about the weight of the baggage and cargo load, number of passengers, boarding bridges parking, and the ground services that must be supplied to the aircraft. By entering this information into the system, their costs can be calculated and invoiced through the billing system.</p>'
+    },
+    {
+      id: '9172d115-93ae-4e89-bd75-4979b7f8a49a',
+      name: 'ATC Tower',
+      icon: 'block',
+      description:
+        '<p>The Air Traffic Control Tower is a structure that delivers air and ground control of the aircraft. It ensures safety by guiding and navigating the vehicles and aircraft. It is performed by way of visual signaling, radar, and radio communication in the air and on the ground. The main focus of the tower is to make sure that all aircraft have been assigned to the right place, that passengers aren’t at risk, and that the aircraft will have a suitable passenger boarding bridge allocated on the apron.</p><p><br></p><p>The ATC tower has a control room that serves as a channel between landside (terminal) and airside operations in airports. The control room personnel are tasked with ensuring the security and safety of the passengers as well as ground handling. Usually, a control room has CCTV monitors and air traffic control systems that maintain the order in the terminal and on the apron.</p>'
+    },
+    {
+      id: '2db4a232-2cf3-4277-9cd4-e2c0a35a4eac',
+      name: 'Aeronautical Fixed Telecommunication Network (AFTN) Systems',
+      icon: 'block',
+      description:
+        '<p>AFTN systems handle communication and exchange of data including navigation services. Usually, airports exchange traffic environment messages, safety messages, information about the weather, geographic material, disruptions, etc. They serve as communication between airports and aircraft.</p><p><br></p><p>Software for aeronautical telecommunications stores flight plans and flight information, entered in ICAO format and UTC. The information stored can be used for planning and statistical purposes. For airports, it’s important to understand the aircraft type and its weight to assign it to the right place on the runway. AFTN systems hold the following information:</p><p><br></p><p>- Aircraft registration</p><p>- Runway used</p><p>- Actual time of landing and departure</p><p>- Number of circuits</p><p>- Number and type of approaches</p><p>- New estimates of arrival and departure</p><p>- New flight information</p><p><br></p><p>Air traffic management is performed from an ATC tower.</p>'
+    },
+    {
+      id: 'b46088d6-7bd4-4ccf-9d35-cf56a891d869',
+      name: 'Invoicing and billing',
+      icon: 'paymentcard',
+      description:
+        '<p>Each flight an airport handles generates a defined revenue for the airport paid by the airline operating the aircraft. Aeronautical invoicing systems make payment possible for any type and size of aircraft. It accepts payments in cash and credit in multiple currencies. The billing also extends to ATC services.</p><p><br></p><p>Depending on the aircraft type and weight and ground services provided, an airport can calculate the aeronautical fee and issue an invoice with a bill.&nbsp;It is calculated using the following data:</p><p><br></p><p>- Aircraft registration</p><p>- Parking time at the airport</p><p>- Airport point of departure and/or landing</p><p>- Times at the different points of entry or departure</p><p><br></p><p>The data is entered or integrated from ATC. Based on this information, the airport calculates the charges and sends the bills.</p>'
+    },
+    {
+      id: 'afa7b887-8aff-45a6-86fa-7a896626e920',
+      name: 'ATC Tower Billing',
+      icon: 'block'
+    },
+    {
+      id: 'd917b7d7-a5c4-479e-a366-da8d22ea8ebb',
+      name: 'Non Aeronautical revenue',
+      icon: 'block'
     }
   ],
   views: [
@@ -64,771 +204,574 @@ export const initialData: InitialData = {
       name: 'View 1',
       items: [
         {
-          id: 'item1',
-          tile: { x: 0, y: 0 },
-          labelHeight: 100
+          labelHeight: 80,
+          id: 'd917b7d7-a5c4-479e-a366-da8d22ea8ebb',
+          tile: { x: 5, y: -11 }
+        },
+        {
+          labelHeight: 80,
+          id: 'afa7b887-8aff-45a6-86fa-7a896626e920',
+          tile: { x: 2, y: -11 }
+        },
+        {
+          labelHeight: 80,
+          id: 'b46088d6-7bd4-4ccf-9d35-cf56a891d869',
+          tile: { x: 4, y: -7 }
+        },
+        {
+          labelHeight: 80,
+          id: '2db4a232-2cf3-4277-9cd4-e2c0a35a4eac',
+          tile: { x: 16, y: -3 }
+        },
+        {
+          labelHeight: 80,
+          id: '9172d115-93ae-4e89-bd75-4979b7f8a49a',
+          tile: { x: 16, y: 0 }
+        },
+        {
+          labelHeight: 80,
+          id: '2ac34480-95cc-4b01-8efd-683ec46fcd68',
+          tile: { x: 16, y: 3 }
+        },
+        {
+          labelHeight: 80,
+          id: '24d4a8b3-6056-4c3f-8f0b-143683509438',
+          tile: { x: 11, y: 0 }
+        },
+        {
+          labelHeight: 80,
+          id: 'fe621de2-793b-42f9-968e-4cac33b8d5fe',
+          tile: { x: 7, y: 12 }
+        },
+        {
+          labelHeight: 80,
+          id: '791abb72-5481-4713-88a8-a9fe51cb5408',
+          tile: { x: 4, y: 12 }
+        },
+        {
+          labelHeight: 80,
+          id: '00ff4dc0-09f9-4932-aa90-6c207da2989b',
+          tile: { x: 1, y: 12 }
+        },
+        {
+          labelHeight: 80,
+          id: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a',
+          tile: { x: 4, y: 6 }
+        },
+        {
+          labelHeight: 80,
+          id: '67895813-ac6f-4dd4-9ae2-e994e9a5aa09',
+          tile: { x: -11, y: 8 }
+        },
+        {
+          labelHeight: 80,
+          id: 'a71d7911-261d-4b6e-895a-27765baf0403',
+          tile: { x: -8, y: 8 }
+        },
+        {
+          labelHeight: 80,
+          id: '040dfb11-f920-48cf-bf96-64234db1b7e8',
+          tile: { x: -5, y: 8 }
+        },
+        {
+          labelHeight: 80,
+          id: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05',
+          tile: { x: -5, y: 4 }
+        },
+        {
+          labelHeight: 80,
+          id: 'c54ab120-44d2-46d2-9fc1-efd83ab67307',
+          tile: { x: -11, y: -9 }
+        },
+        {
+          labelHeight: 80,
+          id: '4a27ed88-abf2-448b-af07-5d2b6ebdb67f',
+          tile: { x: -8, y: -9 }
+        },
+        {
+          labelHeight: 80,
+          id: 'a147b06a-324a-47ab-9e16-ac9101aa3d28',
+          tile: { x: -5, y: -9 }
+        },
+        {
+          labelHeight: 180,
+          id: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f',
+          tile: { x: -5, y: -4 }
+        },
+        {
+          labelHeight: 180,
+          id: 'bc6fdded-a090-4eae-b1fe-fe0ee0fd1c92',
+          tile: { x: -4, y: 0 }
+        },
+        { id: 'item1', tile: { x: 4, y: 0 }, labelHeight: 140 }
+      ],
+      connectors: [
+        {
+          id: '527b88f3-4b50-4639-9802-cfc475cd08aa',
+          color: 'color6',
+          anchors: [
+            {
+              id: 'abe857f8-6219-4030-b5cf-6a7de2bff9be',
+              ref: { item: 'd917b7d7-a5c4-479e-a366-da8d22ea8ebb' }
+            },
+            {
+              id: '21b9d415-1429-4e68-9b35-46705c32e8a4',
+              ref: { tile: { x: 5, y: -10 } }
+            },
+            {
+              id: '0e768e42-228d-44c5-bc30-c8d40ebb69c6',
+              ref: { tile: { x: 4, y: -10 } }
+            },
+            {
+              id: 'c9d4b849-a044-4c43-9e8a-ec370cac7dd6',
+              ref: { item: 'b46088d6-7bd4-4ccf-9d35-cf56a891d869' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '073ecd08-0bff-4274-81e7-2fe35b0ac085',
+          color: 'color6',
+          anchors: [
+            {
+              id: 'aed7740d-75e5-471e-a9a0-01bbfb751a2c',
+              ref: { item: 'afa7b887-8aff-45a6-86fa-7a896626e920' }
+            },
+            {
+              id: 'eccb2e42-64cd-446c-a23a-74b8f759fdd1',
+              ref: { tile: { x: 2, y: -10 } }
+            },
+            {
+              id: 'd0f7054b-54e7-45f5-9e20-2ce766611477',
+              ref: { tile: { x: 4, y: -10 } }
+            },
+            {
+              id: 'c6fa8a43-722a-49a9-84f4-b76114322b0d',
+              ref: { item: 'b46088d6-7bd4-4ccf-9d35-cf56a891d869' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '170009dd-b855-4b91-ba49-07a998cf0485',
+          color: 'color6',
+          anchors: [
+            {
+              id: '24f16db1-6a3c-44b4-978d-6aa66f0b049f',
+              ref: { item: 'b46088d6-7bd4-4ccf-9d35-cf56a891d869' }
+            },
+            {
+              id: '034ffa18-b55b-4941-acd8-02dbd8c47bfb',
+              ref: { item: 'item1' }
+            }
+          ]
+        },
+        {
+          id: 'ae8f457f-df03-4582-925d-4c81131608fa',
+          color: 'color2',
+          anchors: [
+            {
+              id: '39a462b8-bc96-490b-849a-1199e44cfa8a',
+              ref: { item: '2db4a232-2cf3-4277-9cd4-e2c0a35a4eac' }
+            },
+            {
+              id: 'f4d0339b-45c8-4eb7-a3be-94616a4969a5',
+              ref: { tile: { x: 15, y: -3 } }
+            },
+            {
+              id: '3b1bc55b-ceb2-416d-8f1d-722273180e83',
+              ref: { tile: { x: 15, y: 0 } }
+            },
+            {
+              id: '072adfbc-9888-434a-bae4-9639fff026a4',
+              ref: { item: '24d4a8b3-6056-4c3f-8f0b-143683509438' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '4aba5eaf-e2b3-4b64-9af0-98cebafef64a',
+          color: 'color2',
+          anchors: [
+            {
+              id: '2410836d-4820-4492-8c64-d89b069ce9ec',
+              ref: { item: '9172d115-93ae-4e89-bd75-4979b7f8a49a' }
+            },
+            {
+              id: 'f583f42d-2eec-47a5-9d45-6dfd0603cb69',
+              ref: { item: '24d4a8b3-6056-4c3f-8f0b-143683509438' }
+            }
+          ]
+        },
+        {
+          id: '5cfb2816-10cd-4c90-b584-f045c26074c8',
+          color: 'color2',
+          anchors: [
+            {
+              id: '66854e7d-e46c-49b0-8f26-186742369158',
+              ref: { item: '2ac34480-95cc-4b01-8efd-683ec46fcd68' }
+            },
+            {
+              id: 'ffc7345f-854c-41ef-96ed-fd1cbeb4b3d6',
+              ref: { tile: { x: 15, y: 3 } }
+            },
+            {
+              id: '93e5620a-8d94-464e-bcc4-a4b20da4b6e7',
+              ref: { tile: { x: 15, y: 0 } }
+            },
+            {
+              id: 'd97de77f-ac92-42a9-892b-3e30485817ff',
+              ref: { item: '24d4a8b3-6056-4c3f-8f0b-143683509438' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '7392a711-e861-4c85-b394-49e47f2dd874',
+          color: 'color2',
+          anchors: [
+            {
+              id: 'bd8d118a-f676-4ca0-bfbd-b993625aece7',
+              ref: { item: '24d4a8b3-6056-4c3f-8f0b-143683509438' }
+            },
+            {
+              id: '613866b0-e6dd-4d8a-9a67-d8ce443273ec',
+              ref: { item: 'item1' }
+            }
+          ]
+        },
+        {
+          id: '1e329a8d-3fc9-40ea-8e82-67b478b35f16',
+          color: 'color7',
+          anchors: [
+            {
+              id: 'dd31d564-3b3a-4428-b05c-88b243173d21',
+              ref: { item: 'fe621de2-793b-42f9-968e-4cac33b8d5fe' }
+            },
+            {
+              id: '8b9dec3b-59e3-4ddf-9a2b-12e7e6092916',
+              ref: { tile: { x: 7, y: 11 } }
+            },
+            {
+              id: '5728c55e-03b6-4faa-b801-7a342a0b7650',
+              ref: { tile: { x: 4, y: 11 } }
+            },
+            {
+              id: '3678c2f1-4c13-4959-8aaf-8d27611b6ea7',
+              ref: { item: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: 'ff1c44f2-83f8-4596-a27f-54914b7da562',
+          color: 'color7',
+          anchors: [
+            {
+              id: '30064e8e-7894-4b83-833b-a171c10327e6',
+              ref: { item: '791abb72-5481-4713-88a8-a9fe51cb5408' }
+            },
+            {
+              id: 'b5aabbda-2802-4cf8-90c2-adfbc5bc5b5c',
+              ref: { item: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a' }
+            }
+          ]
+        },
+        {
+          id: '8c1f03c8-351a-4a39-9570-5fd4959f0272',
+          color: 'color7',
+          anchors: [
+            {
+              id: 'e8e8c135-3852-4475-96bc-6d6ec3eef8f0',
+              ref: { item: '00ff4dc0-09f9-4932-aa90-6c207da2989b' }
+            },
+            {
+              id: '56b0d80b-31b5-4960-bf01-47c2d2a9e90a',
+              ref: { tile: { x: 1, y: 11 } }
+            },
+            {
+              id: 'c42d6159-e6b8-447e-a197-0b7c761f2516',
+              ref: { tile: { x: 4, y: 11 } }
+            },
+            {
+              id: 'c858062e-faa9-410d-9a35-5090c3b42af5',
+              ref: { item: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '630f5788-9f0b-44df-83f9-c60e40928617',
+          color: 'color7',
+          anchors: [
+            {
+              id: 'c258cf27-4d97-4814-8438-96c7f9fa50c0',
+              ref: { item: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a' }
+            },
+            {
+              id: '3bdd5f99-0fc8-4b35-b2be-fa5473a51bfa',
+              ref: { item: 'item1' }
+            }
+          ]
+        },
+        {
+          id: '2f251ef8-d35e-4b57-ad48-dcd6f81325bc',
+          color: 'color1',
+          anchors: [
+            {
+              id: '3d0c51d0-0b90-4062-90e5-306e2aa2f633',
+              ref: { item: '040dfb11-f920-48cf-bf96-64234db1b7e8' }
+            },
+            {
+              id: '46d83bb9-30a5-4856-afb2-0e91076fce62',
+              ref: { item: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05' }
+            }
+          ]
+        },
+        {
+          id: '965ff8f1-59e9-45ae-b484-ba6ec4f546d0',
+          color: 'color1',
+          anchors: [
+            {
+              id: 'e031f407-88d7-4606-9d0d-99ffd12662d7',
+              ref: { item: 'a71d7911-261d-4b6e-895a-27765baf0403' }
+            },
+            {
+              id: '6bffb346-eb7e-45b7-a68f-23b49eed30c2',
+              ref: { tile: { x: -8, y: 6 } }
+            },
+            {
+              id: 'bb0fb0a7-492a-411b-8f74-9218ef607259',
+              ref: { tile: { x: -5, y: 6 } }
+            },
+            {
+              id: '4992ecf1-26bc-47bf-a781-4e5267cd0c02',
+              ref: { item: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '3b09e7aa-97f9-40b7-81e8-84e5e610d1e2',
+          color: 'color1',
+          anchors: [
+            {
+              id: '760ef8a7-b619-41bc-a61f-3d63fa1c2879',
+              ref: { item: '67895813-ac6f-4dd4-9ae2-e994e9a5aa09' }
+            },
+            {
+              id: 'd03b1bea-d63f-4960-b186-ccc582a0da1b',
+              ref: { tile: { x: -11, y: 6 } }
+            },
+            {
+              id: 'a2c1583d-667e-481c-9ddc-e1fd13a39203',
+              ref: { tile: { x: -5, y: 6 } }
+            },
+            {
+              id: 'bc60ae76-c0f1-4c7f-8ec1-acdec06a9250',
+              ref: { item: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '7180a187-4254-46af-806f-4184250d9609',
+          color: 'color1',
+          anchors: [
+            {
+              id: 'cb98ae3b-f88d-45ab-9dd8-0ced127e0ee1',
+              ref: { item: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05' }
+            },
+            {
+              id: '8a9f4c57-0685-4624-bf30-f5b27f34662a',
+              ref: { item: 'bc6fdded-a090-4eae-b1fe-fe0ee0fd1c92' }
+            }
+          ]
+        },
+        {
+          id: '2bbf530c-5b0a-4405-a6ef-9df4784ba49b',
+          color: 'color1',
+          anchors: [
+            {
+              id: '4072b959-8f00-4cef-9888-98b6faa5671b',
+              ref: { item: 'c54ab120-44d2-46d2-9fc1-efd83ab67307' }
+            },
+            {
+              id: '020bc704-e25f-4a3a-a613-6fb7ce800f7e',
+              ref: { tile: { x: -11, y: -6 } }
+            },
+            {
+              id: '6febf444-92b1-42ac-b6f3-afd71c3ee452',
+              ref: { tile: { x: -5, y: -6 } }
+            },
+            {
+              id: '237f901a-d01d-4d9b-8bd1-eb11efedaa1b',
+              ref: { item: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '1074fc66-d2ff-49ed-85d3-87a0ded7f54b',
+          color: 'color1',
+          anchors: [
+            {
+              id: 'b2db4f0d-59e7-4715-9d28-ea43887ae8c8',
+              ref: { item: '4a27ed88-abf2-448b-af07-5d2b6ebdb67f' }
+            },
+            {
+              id: 'e742a2df-8911-40d8-9227-3d5f391f3beb',
+              ref: { tile: { x: -8, y: -6 } }
+            },
+            {
+              id: 'e1ddafc5-0f79-41af-a9f6-e8f9007accb6',
+              ref: { tile: { x: -5, y: -6 } }
+            },
+            {
+              id: '03cb17bd-34cb-4c80-989d-f299aa1a2915',
+              ref: { item: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f' }
+            }
+          ],
+          width: 10,
+          description: '',
+          style: 'SOLID'
+        },
+        {
+          id: '120566e0-c0df-4d85-81b3-d6b224484668',
+          color: 'color1',
+          anchors: [
+            {
+              id: '433e4f1f-0bf9-44f5-ab9f-d98861206b59',
+              ref: { item: 'a147b06a-324a-47ab-9e16-ac9101aa3d28' }
+            },
+            {
+              id: '1affa818-d601-4ab3-b507-d71ece11920c',
+              ref: { item: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f' }
+            }
+          ]
+        },
+        {
+          id: '2185c84e-5277-40f1-82b9-774dd9f64e2a',
+          color: 'color1',
+          anchors: [
+            {
+              id: 'aa663458-6df7-4bb2-946b-c8cc6ab29957',
+              ref: { item: 'e0462e01-8acd-461c-89a2-42c6a04d5f7f' }
+            },
+            {
+              id: '77530d07-6183-420c-affe-91a99b685db0',
+              ref: { item: 'bc6fdded-a090-4eae-b1fe-fe0ee0fd1c92' }
+            }
+          ]
+        },
+        {
+          id: '2e025225-169c-4609-bf93-a4a7aa602b00',
+          color: 'color1',
+          anchors: [
+            {
+              id: '5870d75a-066c-422e-a517-c44417961809',
+              ref: { item: 'bc6fdded-a090-4eae-b1fe-fe0ee0fd1c92' }
+            },
+            {
+              id: '0fdeeb60-9820-41dc-a73b-96196e035331',
+              ref: { item: 'item1' }
+            }
+          ]
+        }
+      ],
+      rectangles: [
+        {
+          id: '75637566-6d10-49fb-b3ec-85584250475d',
+          color: 'color6',
+          from: { x: 1, y: -10 },
+          to: { x: 6, y: -12 }
+        },
+        {
+          id: '35cbdf0d-daa1-4939-9901-dd9aee36903f',
+          color: 'color2',
+          from: { x: 15, y: 4 },
+          to: { x: 17, y: -4 }
+        },
+        {
+          id: 'ae50ce7d-7b3e-49ec-8fe0-e2e09c4f2dfa',
+          color: 'color7',
+          from: { x: 0, y: 13 },
+          to: { x: 8, y: 11 }
+        },
+        {
+          id: 'e35ec239-f1eb-4e83-9112-d3b6b3f01f2c',
+          color: 'color1',
+          from: { x: -4, y: 9 },
+          to: { x: -12, y: 6 }
+        },
+        {
+          id: '27bea545-8505-4ebe-ae72-01de85833465',
+          color: 'color1',
+          from: { x: -4, y: -6 },
+          to: { x: -12, y: -10 }
+        },
+        {
+          id: '0a74d0a7-b987-480f-ada1-f5a575eae0b9',
+          color: 'color5',
+          from: { x: 3, y: 1 },
+          to: { x: 5, y: -1 }
+        }
+      ],
+      textBoxes: [
+        {
+          orientation: 'Y',
+          fontSize: 0.6,
+          content: 'Airside operations',
+          id: 'f19b5d77-733e-48be-93a0-a0b0cae276d4',
+          tile: { x: 14, y: -1 }
+        },
+        {
+          orientation: 'X',
+          fontSize: 0.6,
+          content: 'Information management',
+          id: 'a15c0d88-1682-4fc8-9678-62e029df4574',
+          tile: { x: 0, y: 10 }
+        },
+        {
+          orientation: 'X',
+          fontSize: 0.6,
+          content: 'Terminal management',
+          id: 'e8ae777d-2c29-4c8e-8f61-0c63fac32d11',
+          tile: { x: -12, y: 5 }
+        },
+        {
+          orientation: 'X',
+          fontSize: 0.6,
+          content: 'Passenger facilitation',
+          id: '82132c7f-704e-49f1-86e7-e4f072e56779',
+          tile: { x: -12, y: -11 }
+        },
+        {
+          orientation: 'X',
+          fontSize: 0.6,
+          content: 'AODB',
+          id: '52070439-245d-45ab-974a-615427c1c3d1',
+          tile: { x: 2, y: -2 }
         }
       ]
     }
   ]
 };
-
-// export const initialData: InitialData = {
-//   title: 'Airport Management Software',
-//   icons: isopacks,
-//   items: [
-//     {
-//       id: 'b6cf011d-0bc2-474d-8a4b-022d24ecc5d5',
-//       tile: { x: 0, y: 0 },
-//       label: 'Airport Operational Database',
-//       description:
-//         '<p>Each airport has its own central database that stores and updates all necessary data regarding daily flights, seasonal schedules, available resources, and other flight-related information, like billing data and flight fees. AODB is a key feature for the functioning of an airport.</p><p><br></p><p>This database is connected to the rest of the airport modules: <em>airport information systems, revenue management systems, and air traffic management</em>.</p><p><br></p><p>The system can supply different information for different segments of users: passengers, airport staff, crew, or members of specific departments, authorities, business partners, or police.</p><p><br></p><p>AODB represents the information on a graphical display.</p><p><br></p><p><strong>AODB functions include:</strong></p><p>- Reference-data processing</p><p>- Seasonal scheduling</p><p>- Daily flight schedule processing</p><p>- Processing of payments</p>',
-//       labelHeight: 140,
-//       icon: 'storage'
-//     },
-//     {
-//       id: '815b0205-516c-48a9-ac34-2007bb155d75',
-//       tile: { x: 11, y: 3 },
-//       label: 'Apron handling',
-//       description:
-//         '<p>Apron (or ground handling) deals with aircraft servicing. This includes passenger boarding and guidance, cargo and mail loading, and apron services. Apron services include aircraft guiding, cleaning, drainage, deicing, catering, and fueling. At this stage, the software facilitates dealing with information about the weight of the baggage and cargo load, number of passengers, boarding bridges parking, and the ground services that must be supplied to the aircraft. By entering this information into the system, their costs can be calculated and invoiced through the billing system.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '085f81b9-651d-47a1-94ec-c4cd02bb08c4',
-//       tile: { x: 11, y: 0 },
-//       label: 'ATC Tower',
-//       description:
-//         '<p>The Air Traffic Control Tower is a structure that delivers air and ground control of the aircraft. It ensures safety by guiding and navigating the vehicles and aircraft. It is performed by way of visual signaling, radar, and radio communication in the air and on the ground. The main focus of the tower is to make sure that all aircraft have been assigned to the right place, that passengers aren’t at risk, and that the aircraft will have a suitable passenger boarding bridge allocated on the apron.</p><p><br></p><p>The ATC tower has a control room that serves as a channel between landside (terminal) and airside operations in airports. The control room personnel are tasked with ensuring the security and safety of the passengers as well as ground handling. Usually, a control room has CCTV monitors and air traffic control systems that maintain the order in the terminal and on the apron.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: 'e4909db0-da09-49a3-8cfd-927ce191c28d',
-//       tile: { x: 11, y: -3 },
-//       label: 'Aeronautical Fixed Telecommunication Network (AFTN) Systems',
-//       description:
-//         '<p>AFTN systems handle communication and exchange of data including navigation services. Usually, airports exchange traffic environment messages, safety messages, information about the weather, geographic material, disruptions, etc. They serve as communication between airports and aircraft.</p><p><br></p><p>Software for aeronautical telecommunications stores flight plans and flight information, entered in ICAO format and UTC. The information stored can be used for planning and statistical purposes. For airports, it’s important to understand the aircraft type and its weight to assign it to the right place on the runway. AFTN systems hold the following information:</p><p><br></p><p>- Aircraft registration</p><p>- Runway used</p><p>- Actual time of landing and departure</p><p>- Number of circuits</p><p>- Number and type of approaches</p><p>- New estimates of arrival and departure</p><p>- New flight information</p><p><br></p><p>Air traffic management is performed from an ATC tower.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '680a2ad0-839f-4cfc-8b35-24c557fa1e8f',
-//       tile: { x: -9, y: -3 },
-//       label: 'Passenger facilitation services',
-//       description:
-//         '<p>include passenger processing (check-in, boarding, border control) and baggage handling (tagging, dropping and handling). They follow passengers to the shuttle buses to carry them to their flights. Arrival operations include boarding control and baggage handling.</p>',
-//       labelHeight: 120,
-//       icon: 'user'
-//     },
-//     {
-//       id: '8277f135-e833-40b3-8232-0461b86added',
-//       tile: { x: -9, y: 3 },
-//       label: 'Terminal management systems',
-//       description:
-//         '<p>Includes maintenance and monitoring of management systems for assets, buildings, electrical grids, environmental systems, and vertical transportation organization. It also facilitates staff communications and management.</p>',
-//       labelHeight: 120,
-//       icon: 'function-module'
-//     },
-//     {
-//       id: 'ca560fc6-da8b-49cc-b4eb-fdc300ff6aed',
-//       tile: { x: -9, y: 7 },
-//       label: 'Maintenance and monitoring',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '8f02ce50-0aa4-4950-b077-c1daf5da023b',
-//       tile: { x: -12, y: 7 },
-//       label: 'Resource management',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '308dfac4-fc9a-4985-9b5c-9616e0674ac4',
-//       tile: { x: -15, y: 7 },
-//       label: 'Staff management',
-//       description:
-//         '<p>Staff modules provide the necessary information about ongoing processes in the airport, such as data on flights (in ICAO or UTC formats) and other important events to keep responsible staff members updated. Information is distributed through the airport radio system, or displayed on a PC connected via the airport LAN or on mobile devices.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '2420494b-312a-4ddf-b8c3-591fa55563cb',
-//       tile: { x: -9, y: -8 },
-//       label: 'Border control (customs and security services)',
-//       description:
-//         '<p>In airports, security services usually unite perimeter security, terminal security, and border controls. These services require biometric authentication and integration into government systems to allow a customs officer to view the status of a passenger.</p>',
-//       labelHeight: 60,
-//       icon: 'block'
-//     },
-//     {
-//       id: '2557a6bd-0c92-4522-b704-f1f6d076be80',
-//       tile: { x: -12, y: -8 },
-//       label: 'Common use services (self-service check-in systems)',
-//       description:
-//         '<p>An airport must ensure smooth passenger flow. Various&nbsp;digital self-services, like check-in kiosks or automated self-service gates, make it happen. Self-service options, especially check-in kiosks, remain popular. Worldwide in 2018, passengers used kiosks to check themselves in&nbsp;88 percent of the time.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: '7c422bf4-bbd2-4364-ad9b-5250c2877695',
-//       tile: { x: -15, y: -8 },
-//       label: 'Baggage handling',
-//       description:
-//         '<p>A passenger must check a bag before it’s loaded on the aircraft. The time the baggage is loaded is displayed and tracked until the destination is reached and the bag is returned to the owners.</p>',
-//       labelHeight: 80,
-//       icon: 'block'
-//     },
-//     {
-//       id: 'fd5dd3ed-b8de-41ed-a642-b8bd71aaebf8',
-//       tile: { x: 5, y: 0 },
-//       label: 'Airside operations',
-//       description:
-//         '<p>Includes systems to handle aircraft landing and navigation, airport traffic management, runway management, and ground handling safety.</p>',
-//       labelHeight: 100,
-//       icon: 'plane'
-//     },
-//     {
-//       id: 'cb6b557e-01c8-4208-88f8-2076351aa53c',
-//       tile: { x: 0, y: -5 },
-//       label: 'Invoicing and billing',
-//       description:
-//         '<p>Each flight an airport handles generates a defined revenue for the airport paid by the airline operating the aircraft. Aeronautical invoicing systems make payment possible for any type and size of aircraft. It accepts payments in cash and credit in multiple currencies. The billing also extends to ATC services.</p><p><br></p><p>Depending on the aircraft type and weight and ground services provided, an airport can calculate the aeronautical fee and issue an invoice with a bill.&nbsp;It is calculated using the following data:</p><p><br></p><p>- Aircraft registration</p><p>- Parking time at the airport</p><p>- Airport point of departure and/or landing</p><p>- Times at the different points of entry or departure</p><p><br></p><p>The data is entered or integrated from ATC. Based on this information, the airport calculates the charges and sends the bills.</p>',
-//       labelHeight: 80,
-//       icon: 'paymentcard'
-//     },
-//     {
-//       id: '1789808d-6d52-4714-aeea-954f3e4aba66',
-//       tile: { x: -2, y: -11 },
-//       label: 'ATC Tower Billing',
-//       labelHeight: 60,
-//       icon: 'block'
-//     },
-//     {
-//       id: '5096a0f1-7548-4cba-8477-7f07e3bdc206',
-//       tile: { x: 2, y: -11 },
-//       label: 'Non Aeronautical revenue',
-//       labelHeight: 60,
-//       icon: 'block'
-//     },
-//     {
-//       id: '0e1ecd31-ee64-49b9-a5be-3375bd3cece6',
-//       tile: { x: 3, y: 13 },
-//       label: 'Automatic Terminal Information Service (ATIS)',
-//       description:
-//         '<p>Broadcasts the weather reports, the condition of the runway, or other local information for pilots and crews.</p><p><br></p><p>Some airport software vendors offer off-the-shelf solutions to facilitate particular tasks, like maintenance, or airport operations. However, most of them provide integrated systems that comprise modules for several operations.</p>',
-//       labelHeight: 100,
-//       icon: 'block'
-//     },
-//     {
-//       id: 'b0368dfe-cc6e-405a-9471-0867c4c51d08',
-//       tile: { x: 0, y: 13 },
-//       label: 'Flight Information Display Systems (FIDS)',
-//       description:
-//         '<p>Exhibits the status of boarding, gates, aircraft, flight number, and other flight details.&nbsp;A computer controls the screens that are connected to the data management systems and displays up-to-date information about flights in real time. Some airports have a digital FIDS in the form of apps or on their websites. Also, the displays may show other public information such as the weather, news, safety messages, menus, and advertising. Airports can choose the type, languages, and means of entering the information, whether it be manually or loaded from a central database.</p>',
-//       labelHeight: 100,
-//       icon: 'block'
-//     },
-//     {
-//       id: '9f1417b9-8785-498b-bb4e-4ee9a827e611',
-//       tile: { x: -3, y: 13 },
-//       label: 'Public address (PA) systems',
-//       description:
-//         '<p>Informs passengers and airport staff about any changes and processes of importance, for instance, gates, times of arrival, calls, and alerts. Also, information can be communicated to pilots, aircraft staff, crew, etc. PA systems usually include voice messages broadcasted through loudspeakers.</p>',
-//       labelHeight: 100,
-//       icon: 'block'
-//     },
-//     {
-//       id: '7f9e0f95-b490-4e03-99c7-8df10788d6df',
-//       tile: { x: 0, y: 6 },
-//       label: 'Information management',
-//       description:
-//         '<p>This subsystem is responsible for the collection and distribution of daily flight information, storing of seasonal and arrival/departure information, as well as the connection with airlines.</p>',
-//       labelHeight: 80,
-//       icon: 'queue'
-//     },
-//     {
-//       id: 'bf5b31ed-97fc-4e23-9ccf-107ba9f1bb58',
-//       tile: { x: -5, y: 0 },
-//       label: 'Landside operations',
-//       description:
-//         '<p>This subsystem is aimed at serving passengers and maintenance of terminal buildings, parking facilities, and vehicular traffic circular drives. Passenger operations include baggage handling and tagging.</p>',
-//       labelHeight: 180,
-//       icon: 'office'
-//     }
-//   ],
-//   connectors: [
-//     {
-//       id: 'be41366a-be8e-43f5-a85c-1528cc380b70',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '612d1f4e-588e-468e-a819-9e9b5528abe2',
-//           ref: { node: '308dfac4-fc9a-4985-9b5c-9616e0674ac4' }
-//         },
-//         {
-//           id: '82ce8f7c-1315-4bae-9966-435a3504de9a',
-//           ref: { tile: { x: -15, y: 5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'be678975-abc7-4345-82b3-2e829486fe3c',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '4d4868ff-53df-414b-b51f-2de31fd125e6',
-//           ref: { tile: { x: -9, y: -5 } }
-//         },
-//         {
-//           id: 'bec7a569-6f1f-46f8-8ddf-b6ace6354f88',
-//           ref: { node: '680a2ad0-839f-4cfc-8b35-24c557fa1e8f' }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'b155cdd6-da92-4553-b295-3c1a3262169d',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '80a0fa48-f4b2-46e7-8ede-0c725a279b52',
-//           ref: { node: 'ca560fc6-da8b-49cc-b4eb-fdc300ff6aed' }
-//         },
-//         {
-//           id: '6681a140-8535-4c14-ab87-656476c81c06',
-//           ref: { tile: { x: -9, y: 5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '1b3bcf33-ca67-461b-8f80-a70eba87e6ab',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'b1d4cc02-056d-4a06-bb93-932c8630c7a0',
-//           ref: { tile: { x: -9, y: -5 } }
-//         },
-//         {
-//           id: '72eb7689-fa58-4ac1-88a9-e9208f11928a',
-//           ref: { tile: { x: -12, y: -5 } }
-//         },
-//         {
-//           id: 'e7b2facb-c137-49f1-acdd-095739b51e05',
-//           ref: { tile: { x: -15, y: -5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '87b538b5-e908-495d-bb12-05f068f1b6ee',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'ca0d0583-8d87-4365-ae77-e420ae6a25cf',
-//           ref: { node: '2557a6bd-0c92-4522-b704-f1f6d076be80' }
-//         },
-//         {
-//           id: 'a5a1520b-5914-414e-82aa-5ebdf3fbda16',
-//           ref: { tile: { x: -12, y: -5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'eb44bfe6-66c3-492c-949c-3f8faba4c455',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '54d16963-57ad-4252-ae54-42417c4116a5',
-//           ref: { node: '8277f135-e833-40b3-8232-0461b86added' }
-//         },
-//         {
-//           id: '24eacb98-43cf-4e4c-8e4e-453247edfafc',
-//           ref: { tile: { x: -9, y: 5 } }
-//         },
-//         {
-//           id: 'e7d4f48d-68a1-48be-9488-173955730d17',
-//           ref: { tile: { x: -12, y: 5 } }
-//         },
-//         {
-//           id: '95c2eca2-c3ce-4fb3-abac-241ccd7a2f56',
-//           ref: { tile: { x: -15, y: 5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '110033ad-b542-4415-bb95-6bad8de33198',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '9ccd7127-1ed6-4ac0-9fcd-31e17c306987',
-//           ref: { node: '8f02ce50-0aa4-4950-b077-c1daf5da023b' }
-//         },
-//         {
-//           id: '4c4f7d59-2b06-46cc-8eed-f3cd2b2af9b3',
-//           ref: { tile: { x: -12, y: 5 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'f7b5f65c-0503-479b-983d-6b3be7d4355b',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'fbeb8d12-597a-4654-92f4-41006b57beb8',
-//           ref: { node: '815b0205-516c-48a9-ac34-2007bb155d75' }
-//         },
-//         {
-//           id: '6f88cf82-23d9-4d95-9823-3c76b1956c9c',
-//           ref: { tile: { x: 9, y: 3 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '1c7ccb81-9f31-4cc3-90ee-2f92c4be1e8f',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '199f843d-f8ce-4a26-b71a-1b4f799109a9',
-//           ref: { node: 'e4909db0-da09-49a3-8cfd-927ce191c28d' }
-//         },
-//         {
-//           id: 'd2d63da6-a60a-4569-af9f-5d497013bd8e',
-//           ref: { tile: { x: 9, y: -3 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '48435cd4-297f-4078-b5d4-79209babaa0f',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '9316ac7f-7913-489e-8516-fb74eb9aed9c',
-//           ref: { tile: { x: 9, y: 3 } }
-//         },
-//         {
-//           id: 'd53e7165-c645-4e8f-b4c7-84ebc4369f4a',
-//           ref: { tile: { x: 9, y: 0 } }
-//         },
-//         {
-//           id: '01860aaf-3b57-45f2-b833-15fcafdd4abb',
-//           ref: { tile: { x: 9, y: -3 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '1a58a13e-d136-4c99-a111-143097873147',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'fe873a58-afdc-4c8b-b89c-b01332e6264b',
-//           ref: { node: '085f81b9-651d-47a1-94ec-c4cd02bb08c4' }
-//         },
-//         {
-//           id: '93286249-0ee8-4a0d-ae09-c17736b0535f',
-//           ref: { tile: { x: 9, y: 0 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '3abc77ea-357b-4671-95a7-6b17e0219032',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '0077477a-8978-48dc-9051-51f9322519bc',
-//           ref: { node: '9f1417b9-8785-498b-bb4e-4ee9a827e611' }
-//         },
-//         {
-//           id: 'e69310e4-f794-4771-aa5f-39291aa090ef',
-//           ref: { tile: { x: -3, y: 11 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '75200d73-06f4-4403-923f-32f0041c9701',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '9f5616ae-e638-40af-ba0b-b25f6adae2f7',
-//           ref: { node: '0e1ecd31-ee64-49b9-a5be-3375bd3cece6' }
-//         },
-//         {
-//           id: 'e86b8651-a385-4a96-90cc-2ed2b6daa9f2',
-//           ref: { tile: { x: 3, y: 11 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '4a7ccc74-f296-4d0b-be11-8117c990795d',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '7b721b82-220d-45f6-87d4-479c1b847a60',
-//           ref: { node: 'b6cf011d-0bc2-474d-8a4b-022d24ecc5d5' }
-//         },
-//         {
-//           id: '1908c227-8066-4c8d-ba55-d5822c224d52',
-//           ref: { node: '7f9e0f95-b490-4e03-99c7-8df10788d6df' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '9f6bc159-507f-4b56-9171-d95f00490230',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'b41f10e5-5d29-4cee-8102-0005cf146300',
-//           ref: { node: '8277f135-e833-40b3-8232-0461b86added' }
-//         },
-//         {
-//           id: '3f5bfd1b-f8b3-4a00-976e-6bc4382749ee',
-//           ref: { tile: { x: -9, y: 0 } }
-//         },
-//         {
-//           id: '3792f3db-edd1-4d43-9f16-0be811687c85',
-//           ref: { node: 'bf5b31ed-97fc-4e23-9ccf-107ba9f1bb58' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '5b47caae-fbdd-4d1b-8cc5-0068536fb8b2',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '16ba31e6-a713-403d-b23e-4c40b19e7d66',
-//           ref: { node: '680a2ad0-839f-4cfc-8b35-24c557fa1e8f' }
-//         },
-//         {
-//           id: '59675d93-8ad7-4abd-85d4-cfe0004384c1',
-//           ref: { tile: { x: -9, y: 0 } }
-//         },
-//         {
-//           id: '1ab79aec-2587-47eb-9b2f-42e9eb44fe77',
-//           ref: { node: 'bf5b31ed-97fc-4e23-9ccf-107ba9f1bb58' }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'a6c63183-ce9a-4d54-9487-569f2a8a8add',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '8a2d4f72-5f62-4531-b2f7-b0eed5e533a5',
-//           ref: { node: 'bf5b31ed-97fc-4e23-9ccf-107ba9f1bb58' }
-//         },
-//         {
-//           id: 'ab054b9f-7574-4195-9465-c4a127b8e03e',
-//           ref: { node: 'b6cf011d-0bc2-474d-8a4b-022d24ecc5d5' }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'afa7915a-c1f6-4f40-87c0-ace0ecacf5bb',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '2b18ab38-7f76-4e63-ae79-ca6cfaa2ee49',
-//           ref: { tile: { x: -3, y: 11 } }
-//         },
-//         {
-//           id: 'a926bd20-a16e-4349-8e31-bb4109ab0387',
-//           ref: { tile: { x: 3, y: 11 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'c1263273-a57c-4e0b-92b8-04c21b805b29',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'b1ee48ad-70f7-44ff-9d84-b3893ce3dff1',
-//           ref: { node: 'b0368dfe-cc6e-405a-9471-0867c4c51d08' }
-//         },
-//         {
-//           id: 'e6148182-5a09-4e0a-85f4-1389dfb33f8b',
-//           ref: { tile: { x: 0, y: 11 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '5706f58e-6b29-4ec7-aa0b-c59ce6198870',
-//       color: '#b3e5e3',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '5a8e0e07-7e0c-40eb-b50c-bba2a2403c2f',
-//           ref: { tile: { x: 0, y: 11 } }
-//         },
-//         {
-//           id: 'b3611f56-35c2-4cc3-8dc6-461c182937e5',
-//           ref: { node: '7f9e0f95-b490-4e03-99c7-8df10788d6df' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '17547863-f8f3-4653-92ec-f76d3ec0835f',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '0445d65f-05b4-47cf-9163-dd0d6eefa4af',
-//           ref: { node: 'b6cf011d-0bc2-474d-8a4b-022d24ecc5d5' }
-//         },
-//         {
-//           id: 'e77a4942-1625-4893-a4f5-634dbc528321',
-//           ref: { node: 'fd5dd3ed-b8de-41ed-a642-b8bd71aaebf8' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '2656820b-e1fb-41fd-980f-7b94d6e9906e',
-//       color: '#bbadfb',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '2717739f-a2d4-44cf-bc45-5d8ae8bb67dd',
-//           ref: { node: 'fd5dd3ed-b8de-41ed-a642-b8bd71aaebf8' }
-//         },
-//         {
-//           id: 'b0399a5a-3bc3-4864-aa1b-c2194437f644',
-//           ref: { tile: { x: 9, y: 0 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: 'e9f0546e-d2f3-4ae3-b6dd-55d3cf774093',
-//       color: '#a8dc9d',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '7cca17bf-700b-4192-be94-7b347b73a77a',
-//           ref: { node: '1789808d-6d52-4714-aeea-954f3e4aba66' }
-//         },
-//         {
-//           id: '6e8d5fb2-b995-4e0e-9465-b664ea793f50',
-//           ref: { tile: { x: -2, y: -9 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '6dce44fd-0fb5-4a08-9daa-1716313c59d8',
-//       color: '#a8dc9d',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '5a3751f2-bd9f-4ddc-808a-f0f23a2eecd8',
-//           ref: { node: '5096a0f1-7548-4cba-8477-7f07e3bdc206' }
-//         },
-//         {
-//           id: '0f6673bf-b5c4-4e1b-b3aa-bcdca9f24e81',
-//           ref: { tile: { x: 2, y: -9 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '725419a0-6ca4-4d1b-b6a4-a7ae7feabcb0',
-//       color: '#a8dc9d',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'dfdda749-2f06-4a32-903e-35e336d3842d',
-//           ref: { node: 'b6cf011d-0bc2-474d-8a4b-022d24ecc5d5' }
-//         },
-//         {
-//           id: '354700b6-6b10-49cb-a943-f2eeb8e4741b',
-//           ref: { node: 'cb6b557e-01c8-4208-88f8-2076351aa53c' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '41431713-1647-4b47-b258-9d3ec4665b77',
-//       color: '#a8dc9d',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'f579ae26-9023-4041-ba62-33da290ca83f',
-//           ref: { tile: { x: 2, y: -9 } }
-//         },
-//         {
-//           id: '2a123a41-1481-4c87-9aca-89a819ee4478',
-//           ref: { tile: { x: -2, y: -9 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '3410464e-d12b-4cf2-bdc4-9eb338ea1c1a',
-//       color: '#a8dc9d',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: '832bad08-bd8a-4a57-b849-016b0482138c',
-//           ref: { node: 'cb6b557e-01c8-4208-88f8-2076351aa53c' }
-//         },
-//         {
-//           id: 'fe2422cd-1ced-4f4a-a79c-a9f052977cc5',
-//           ref: { tile: { x: 0, y: -9 } }
-//         }
-//       ]
-//     },
-//     {
-//       id: '8b95c19e-e5dd-4190-a93a-93fdec1bd37f',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'd1281ea9-0f2c-4e24-a1e9-d0c8a67805ba',
-//           ref: { tile: { x: -15, y: -5 } }
-//         },
-//         {
-//           id: 'c0a7d637-79aa-4400-ab70-2b874e865ad2',
-//           ref: { node: '7c422bf4-bbd2-4364-ad9b-5250c2877695' }
-//         }
-//       ]
-//     },
-//     {
-//       id: '7013bdc5-31f0-4e64-8604-95eba5e1ca8e',
-//       color: '#a0b9f8',
-//       style: 'SOLID',
-//       width: 10,
-//       anchors: [
-//         {
-//           id: 'e1d4e165-649f-48a7-93aa-2c8181289901',
-//           ref: { tile: { x: -9, y: -5 } }
-//         },
-//         {
-//           id: '1f3e5712-a5be-4d2b-ba86-a0ec2e4ab439',
-//           ref: { node: '2420494b-312a-4ddf-b8c3-591fa55563cb' }
-//         }
-//       ]
-//     }
-//   ],
-//   textBoxes: [
-//     {
-//       id: '29e365cf-5f40-4355-8a2d-db45a509b140',
-//       orientation: 'Y',
-//       fontSize: 0.6,
-//       tile: { x: -2, y: -1 },
-//       text: 'AODB'
-//     },
-//     {
-//       id: '40964f5b-7ebd-4c0d-9666-f8ff2de65dc8',
-//       orientation: 'Y',
-//       fontSize: 0.6,
-//       tile: { x: 8, y: -1 },
-//       text: 'Airside operations'
-//     },
-//     {
-//       id: 'c6d16ec6-7110-4082-9370-44e127984b90',
-//       orientation: 'X',
-//       fontSize: 0.6,
-//       tile: { x: -3, y: -13 },
-//       text: 'Invoicing & Billing'
-//     },
-//     {
-//       id: '57156c5e-9b82-4652-852d-422014228b74',
-//       orientation: 'X',
-//       fontSize: 0.6,
-//       tile: { x: -16, y: -10 },
-//       text: 'Passenger facilitation'
-//     },
-//     {
-//       id: '92637173-542c-4d25-addf-ab50eda7a573',
-//       orientation: 'X',
-//       fontSize: 0.6,
-//       tile: { x: -16, y: 4 },
-//       text: 'Terminal management'
-//     },
-//     {
-//       id: 'e555aad0-9e21-48db-9d71-53125c33c214',
-//       orientation: 'X',
-//       fontSize: 0.6,
-//       tile: { x: -4, y: 10 },
-//       text: 'Information management'
-//     }
-//   ],
-//   rectangles: [
-//     {
-//       id: '82ef2751-9ea7-40fc-b3f5-3ea8ce1e1d67',
-//       color: '#fad6ac',
-//       from: { x: -1, y: 1 },
-//       to: { x: 1, y: -1 }
-//     },
-//     {
-//       id: '7d730e86-7884-400d-857a-8af7f22a9937',
-//       color: '#a0b9f8',
-//       from: { x: -8, y: -5 },
-//       to: { x: -16, y: -9 }
-//     },
-//     {
-//       id: 'f41434d1-bbe6-4d6d-a13d-7c9ad52e8e62',
-//       color: '#a0b9f8',
-//       from: { x: -16, y: 8 },
-//       to: { x: -8, y: 5 }
-//     },
-//     {
-//       id: '4ffe42ed-9cd0-48a9-93a0-6099ab53a146',
-//       color: '#a8dc9d',
-//       from: { x: -3, y: -9 },
-//       to: { x: 3, y: -12 }
-//     },
-//     {
-//       id: 'dc93e93b-2c6c-43a1-bb82-ad93c04f7707',
-//       color: '#bbadfb',
-//       from: { x: 9, y: 4 },
-//       to: { x: 12, y: -4 }
-//     },
-//     {
-//       id: 'eec5c861-6192-4eb6-a378-7554bda4d9a7',
-//       color: '#b3e5e3',
-//       from: { x: -4, y: 14 },
-//       to: { x: 4, y: 11 }
-//     }
-//   ]
-// };
