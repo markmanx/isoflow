@@ -602,3 +602,48 @@ export const getConnectorsByViewItem = (
     });
   });
 };
+
+export const getConnectorDirectionIcon = (connectorTiles: Coords[]) => {
+  if (connectorTiles.length < 2) return null;
+
+  const iconTile = connectorTiles[connectorTiles.length - 2];
+  const lastTile = connectorTiles[connectorTiles.length - 1];
+
+  let rotation;
+
+  if (lastTile.x > iconTile.x) {
+    if (lastTile.y > iconTile.y) {
+      rotation = 135;
+    } else if (lastTile.y < iconTile.y) {
+      rotation = 45;
+    } else {
+      rotation = 90;
+    }
+  }
+
+  if (lastTile.x < iconTile.x) {
+    if (lastTile.y > iconTile.y) {
+      rotation = -135;
+    } else if (lastTile.y < iconTile.y) {
+      rotation = -45;
+    } else {
+      rotation = -90;
+    }
+  }
+
+  if (lastTile.x === iconTile.x) {
+    if (lastTile.y > iconTile.y) {
+      rotation = 180;
+    } else if (lastTile.y < iconTile.y) {
+      rotation = 0;
+    } else {
+      rotation = -90;
+    }
+  }
+
+  return {
+    x: iconTile.x * UNPROJECTED_TILE_SIZE + UNPROJECTED_TILE_SIZE / 2,
+    y: iconTile.y * UNPROJECTED_TILE_SIZE + UNPROJECTED_TILE_SIZE / 2,
+    rotation
+  };
+};
