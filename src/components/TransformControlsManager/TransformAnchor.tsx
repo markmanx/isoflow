@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { produce } from 'immer';
+import React, { useState } from 'react';
 import { Coords } from 'src/types';
 import { useTheme, Box } from '@mui/material';
 import { getIsoProjectionCss } from 'src/utils';
 import { Svg } from 'src/components/Svg/Svg';
-import { useUiStateStore } from 'src/stores/uiStateStore';
 import { TRANSFORM_ANCHOR_SIZE, TRANSFORM_CONTROLS_COLOR } from 'src/config';
 
 interface Props {
@@ -15,33 +13,8 @@ interface Props {
 const strokeWidth = 2;
 
 export const TransformAnchor = ({ position, onMouseDown }: Props) => {
-  const prevIsHoveredStateRef = useRef(false);
   const [isHovered, setIsHovered] = useState(false);
-  const mode = useUiStateStore((state) => {
-    return state.mode;
-  });
-  const uiActions = useUiStateStore((state) => {
-    return state.actions;
-  });
   const theme = useTheme();
-
-  const toggleCursor = useCallback(
-    (state: boolean) => {
-      const newMode = produce(mode, (draft) => {
-        draft.showCursor = state;
-      });
-
-      uiActions.setMode(newMode);
-    },
-    [mode, uiActions]
-  );
-
-  useEffect(() => {
-    if (prevIsHoveredStateRef.current !== isHovered) {
-      prevIsHoveredStateRef.current = isHovered;
-      toggleCursor(!isHovered);
-    }
-  }, [isHovered, toggleCursor]);
 
   return (
     <Box

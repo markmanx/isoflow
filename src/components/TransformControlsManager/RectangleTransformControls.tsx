@@ -20,7 +20,7 @@ export const RectangleTransformControls = ({ id }: Props) => {
         type: 'RECTANGLE.TRANSFORM',
         id: rectangle.id,
         selectedAnchor: key,
-        showCursor: false
+        showCursor: true
       });
     },
     [rectangle.id, uiStateActions]
