@@ -32,7 +32,11 @@ export const useDiagramUtils = () => {
 
     const connectorTiles = scene.connectors.reduce<Coords[]>(
       (acc, connector) => {
-        return [...acc, ...connector.path.tiles];
+        return [
+          ...acc,
+          connector.path.rectangle.from,
+          connector.path.rectangle.to
+        ];
       },
       []
     );
