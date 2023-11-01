@@ -6,6 +6,7 @@ import { createView } from 'src/stores/reducers';
 import { useModelStore } from 'src/stores/modelStore';
 import { useView } from 'src/hooks/useView';
 import { useUiStateStore } from 'src/stores/uiStateStore';
+import { modelSchema } from 'src/schemas/model';
 
 export const useModel = () => {
   const [isReady, setIsReady] = useState(false);
@@ -23,6 +24,13 @@ export const useModel = () => {
       if (!_initialData || prevInitialData.current === _initialData) return;
 
       setIsReady(false);
+
+      const validationResult = modelSchema.safeParse(_initialData);
+
+      if (!validationResult.success) {
+        window.alert('There is an error in your model.');
+        return;
+      }
 
       const initialData = _initialData;
 

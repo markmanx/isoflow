@@ -12,8 +12,7 @@ import {
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { useModelStore } from 'src/stores/modelStore';
-import { exportAsJSON } from 'src/utils';
+import { exportAsJSON, modelFromModelStore } from 'src/utils';
 import { useModel } from 'src/hooks/useModel';
 import { MenuItem } from './MenuItem';
 
@@ -24,9 +23,6 @@ export const MainMenu = () => {
   });
   const mainMenuOptions = useUiStateStore((state) => {
     return state.mainMenuOptions;
-  });
-  const modelActions = useModelStore((state) => {
-    return state.actions;
   });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
@@ -45,6 +41,8 @@ export const MainMenu = () => {
     window.open(url, '_blank');
   }, []);
 
+  const { load } = model;
+
   const onOpenModel = useCallback(async () => {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -60,8 +58,8 @@ export const MainMenu = () => {
       const fileReader = new FileReader();
 
       fileReader.onload = async (e) => {
-        const loadedModel = JSON.parse(e.target?.result as string);
-        modelActions.set(loadedModel);
+        const modelData = JSON.parse(e.target?.result as string);
+        load(modelData);
       };
       fileReader.readAsText(file);
 
@@ -70,10 +68,10 @@ export const MainMenu = () => {
 
     await fileInput.click();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, modelActions]);
+  }, [uiStateActions, load]);
 
   const onExportAsJSON = useCallback(async () => {
-    exportAsJSON(model);
+    exportAsJSON(modelFromModelStore(model));
     uiStateActions.setIsMainMenuOpen(false);
   }, [model, uiStateActions]);
 

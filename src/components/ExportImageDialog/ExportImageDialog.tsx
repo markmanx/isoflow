@@ -28,7 +28,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const ExportImageDialog = ({ onClose, quality = 4 }: Props) => {
+export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const debounceRef = useRef<NodeJS.Timeout>();
   const [imageData, setImageData] = React.useState<string>();
