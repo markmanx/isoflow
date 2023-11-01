@@ -6,9 +6,11 @@ import gridTileSvg from 'src/assets/grid-tile-bg.svg';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { PROJECTED_TILE_SIZE } from 'src/config';
 import { SizeUtils } from 'src/utils/SizeUtils';
+import { useResizeObserver } from 'src/hooks/useResizeObserver';
 
 export const Grid = () => {
   const elementRef = useRef<HTMLDivElement>(null);
+  const { size } = useResizeObserver(elementRef.current);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const scroll = useUiStateStore((state) => {
     return state.scroll;
@@ -36,7 +38,7 @@ export const Grid = () => {
     if (isFirstRender) {
       setIsFirstRender(false);
     }
-  }, [scroll, zoom, isFirstRender]);
+  }, [scroll, zoom, isFirstRender, size]);
 
   return (
     <Box
