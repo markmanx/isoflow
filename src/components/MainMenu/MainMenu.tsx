@@ -86,7 +86,6 @@ export const MainMenu = () => {
 
   const onClearCanvas = useCallback(() => {
     clear();
-    uiStateActions.resetUiState();
     uiStateActions.setIsMainMenuOpen(false);
   }, [uiStateActions, clear]);
 

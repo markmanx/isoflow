@@ -5,12 +5,16 @@ import { generateId } from 'src/utils';
 import { createView } from 'src/stores/reducers';
 import { useModelStore } from 'src/stores/modelStore';
 import { useView } from 'src/hooks/useView';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 export const useModel = () => {
   const [isReady, setIsReady] = useState(false);
   const prevInitialData = useRef<InitialData>();
   const model = useModelStore((state) => {
     return state;
+  });
+  const uiStateActions = useUiStateStore((state) => {
+    return state.actions;
   });
   const { changeView } = useView();
 
@@ -44,7 +48,8 @@ export const useModel = () => {
 
   const clear = useCallback(() => {
     load({ ...INITIAL_DATA, icons: model.icons });
-  }, [load, model.icons]);
+    uiStateActions.resetUiState();
+  }, [load, model.icons, uiStateActions]);
 
   return {
     load,
