@@ -4,8 +4,7 @@ import {
   CoordsUtils,
   incrementZoom,
   decrementZoom,
-  getStartingMode,
-  getTileScrollPosition
+  getStartingMode
 } from 'src/utils';
 import { UiStateStore } from 'src/types';
 import { INITIAL_UI_STATE } from 'src/config';
@@ -78,14 +77,6 @@ const initialState = () => {
         setScroll: ({ position, offset }) => {
           set({ scroll: { position, offset: offset ?? get().scroll.offset } });
         },
-        scrollToTile: (tile, origin) => {
-          const scrollTo = getTileScrollPosition(tile, origin);
-
-          get().actions.setScroll({
-            offset: CoordsUtils.zero(),
-            position: scrollTo
-          });
-        },
         setItemControls: (itemControls) => {
           set({ itemControls });
         },
@@ -95,7 +86,7 @@ const initialState = () => {
         setMouse: (mouse) => {
           set({ mouse });
         },
-        setenableDebugTools: (enableDebugTools) => {
+        setEnableDebugTools: (enableDebugTools) => {
           set({ enableDebugTools });
         },
         setRendererEl: (el) => {

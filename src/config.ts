@@ -1,6 +1,6 @@
 import {
   Size,
-  Model,
+  InitialData,
   MainMenuOptions,
   Icon,
   Connector,
@@ -10,8 +10,8 @@ import {
   Rectangle,
   Colors
 } from 'src/types';
+import { CoordsUtils } from 'src/utils';
 import { customVars } from './styles/theme';
-import { CoordsUtils } from './utils';
 
 // TODO: This file could do with better organisation and convention for easier reading.
 export const UNPROJECTED_TILE_SIZE = 100;
@@ -72,13 +72,14 @@ export const MIN_ZOOM = 0.2;
 export const MAX_ZOOM = 1;
 export const TRANSFORM_ANCHOR_SIZE = 30;
 export const TRANSFORM_CONTROLS_COLOR = '#0392ff';
-export const INITIAL_DATA: Model = {
+export const INITIAL_DATA: InitialData = {
   title: 'Untitled',
   version: '',
   icons: [],
   colors: [DEFAULT_COLOR],
   items: [],
-  views: []
+  views: [],
+  fitToView: false
 };
 export const INITIAL_UI_STATE = {
   zoom: 1,
@@ -105,5 +106,4 @@ export const DEFAULT_ICON: Icon = {
 };
 
 export const DEFAULT_LABEL_HEIGHT = 20;
-
-export const EDITOR_CONFIG = {};
+export const PROJECT_BOUNDING_BOX_PADDING = 3;

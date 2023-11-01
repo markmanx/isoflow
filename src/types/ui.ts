@@ -1,6 +1,6 @@
 import { Coords, EditorModeEnum, MainMenuOptions } from './common';
 import { Icon } from './model';
-import { TileOrigin, ItemReference } from './scene';
+import { ItemReference } from './scene';
 
 interface AddItemControls {
   type: 'ADD_ITEM';
@@ -161,12 +161,11 @@ export interface UiStateActions {
   setDialog: (dialog: keyof typeof DialogTypeEnum | null) => void;
   setZoom: (zoom: number) => void;
   setScroll: (scroll: Scroll) => void;
-  scrollToTile: (tile: Coords, origin?: TileOrigin) => void;
   setItemControls: (itemControls: ItemControls | null) => void;
   setContextMenu: (contextMenu: ContextMenu | null) => void;
   setMouse: (mouse: Mouse) => void;
   setRendererEl: (el: HTMLDivElement) => void;
-  setenableDebugTools: (enabled: boolean) => void;
+  setEnableDebugTools: (enabled: boolean) => void;
 }
 
 export type UiStateStore = UiState & {

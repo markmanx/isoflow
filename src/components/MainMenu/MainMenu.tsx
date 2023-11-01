@@ -13,11 +13,15 @@ import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { exportAsJSON, modelFromModelStore } from 'src/utils';
-import { useModel } from 'src/hooks/useModel';
+import { useInitialDataManager } from 'src/hooks/useInitialDataManager';
+import { useModelStore } from 'src/stores/modelStore';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const model = useModelStore((state) => {
+    return modelFromModelStore(state);
+  });
   const isMainMenuOpen = useUiStateStore((state) => {
     return state.isMainMenuOpen;
   });
@@ -27,7 +31,7 @@ export const MainMenu = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const model = useModel();
+  const initialDataManager = useInitialDataManager();
 
   const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +45,7 @@ export const MainMenu = () => {
     window.open(url, '_blank');
   }, []);
 
-  const { load } = model;
+  const { load } = initialDataManager;
 
   const onOpenModel = useCallback(async () => {
     const fileInput = document.createElement('input');
@@ -71,7 +75,7 @@ export const MainMenu = () => {
   }, [uiStateActions, load]);
 
   const onExportAsJSON = useCallback(async () => {
-    exportAsJSON(modelFromModelStore(model));
+    exportAsJSON(model);
     uiStateActions.setIsMainMenuOpen(false);
   }, [model, uiStateActions]);
 
@@ -80,7 +84,7 @@ export const MainMenu = () => {
     uiStateActions.setDialog('EXPORT_IMAGE');
   }, [uiStateActions]);
 
-  const { clear } = model;
+  const { clear } = initialDataManager;
 
   const onClearCanvas = useCallback(() => {
     clear();

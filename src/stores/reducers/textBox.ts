@@ -1,11 +1,7 @@
 import { produce } from 'immer';
 import { TextBox } from 'src/types';
-import { getItemByIdOrThrow, getTextWidth } from 'src/utils';
-import {
-  DEFAULT_FONT_FAMILY,
-  TEXTBOX_DEFAULTS,
-  TEXTBOX_FONT_WEIGHT
-} from 'src/config';
+import { getItemByIdOrThrow, getTextBoxDimensions } from 'src/utils';
+
 import { State } from './types';
 
 export const syncTextBox = (
@@ -17,15 +13,9 @@ export const syncTextBox = (
     const view = getItemByIdOrThrow(draft.model.views, viewId);
     const textBox = getItemByIdOrThrow(view.value.textBoxes ?? [], id);
 
-    const width = getTextWidth(textBox.value.content, {
-      fontSize: textBox.value.fontSize ?? TEXTBOX_DEFAULTS.fontSize,
-      fontFamily: DEFAULT_FONT_FAMILY,
-      fontWeight: TEXTBOX_FONT_WEIGHT
-    });
-    const height = 1;
-    const size = { width, height };
+    const textBoxSize = getTextBoxDimensions(textBox.value);
 
-    draft.scene.textBoxes[textBox.value.id] = { size };
+    draft.scene.textBoxes[textBox.value.id] = { size: textBoxSize };
   });
 
   return newState;

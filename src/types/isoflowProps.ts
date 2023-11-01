@@ -1,10 +1,8 @@
-import { Coords } from 'src/types';
 import type { EditorModeEnum, MainMenuOptions } from './common';
 import type { Model } from './model';
 
 export type InitialData = Model & {
-  zoom?: number;
-  scroll?: Coords;
+  fitToView?: boolean;
 };
 
 export interface IsoflowProps {

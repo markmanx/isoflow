@@ -12,7 +12,6 @@ import { useModelStore } from 'src/stores/modelStore';
 import {
   exportAsImage,
   downloadFile as downloadFileUtil,
-  getTileScrollPosition,
   base64ToBlob,
   generateGenericFilename,
   modelFromModelStore
@@ -32,7 +31,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const debounceRef = useRef<NodeJS.Timeout>();
   const [imageData, setImageData] = React.useState<string>();
-  const { getUnprojectedBounds, getFitToViewParams } = useDiagramUtils();
+  const { getUnprojectedBounds } = useDiagramUtils();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -43,9 +42,6 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const unprojectedBounds = useMemo(() => {
     return getUnprojectedBounds();
   }, [getUnprojectedBounds]);
-  const previewParams = useMemo(() => {
-    return getFitToViewParams(unprojectedBounds);
-  }, [unprojectedBounds, getFitToViewParams]);
 
   useEffect(() => {
     uiStateActions.setMode({
@@ -113,11 +109,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                   <Isoflow
                     editorMode="NON_INTERACTIVE"
                     onModelUpdated={exportImage}
-                    initialData={{
-                      ...model,
-                      zoom: previewParams.zoom * quality,
-                      scroll: getTileScrollPosition(previewParams.scrollTarget)
-                    }}
+                    initialData={{ ...model, fitToView: true }}
                   />
                 </Box>
               </Box>

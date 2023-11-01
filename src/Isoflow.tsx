@@ -13,7 +13,7 @@ import {
   Colors,
   Icons
 } from 'src/types';
-import { setWindowCursor } from 'src/utils';
+import { setWindowCursor, modelFromModelStore } from 'src/utils';
 import { modelSchema } from 'src/schemas/model';
 import { useModelStore, ModelProvider } from 'src/stores/modelStore';
 import { SceneProvider } from 'src/stores/sceneStore';
@@ -21,9 +21,8 @@ import { GlobalStyles } from 'src/styles/GlobalStyles';
 import { Renderer } from 'src/components/Renderer/Renderer';
 import { UiOverlay } from 'src/components/UiOverlay/UiOverlay';
 import { UiStateProvider, useUiStateStore } from 'src/stores/uiStateStore';
-import { INITIAL_DATA, MAIN_MENU_OPTIONS, INITIAL_UI_STATE } from 'src/config';
-import { useModel } from 'src/hooks/useModel';
-import { useIconCategories } from './hooks/useIconCategories';
+import { INITIAL_DATA, MAIN_MENU_OPTIONS } from 'src/config';
+import { useInitialDataManager } from 'src/hooks/useInitialDataManager';
 
 const App = ({
   initialData,
@@ -34,37 +33,24 @@ const App = ({
   enableDebugTools = false,
   editorMode = 'EDITABLE'
 }: IsoflowProps) => {
-  const modelActions = useModelStore((state) => {
+  const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
-  const uiActions = useUiStateStore((state) => {
-    return state.actions;
+  const initialDataManager = useInitialDataManager();
+  const model = useModelStore((state) => {
+    return modelFromModelStore(state);
   });
-  const { setIconCategoriesState } = useIconCategories();
-  const model = useModel();
+
+  const { load } = initialDataManager;
 
   useEffect(() => {
-    if (initialData?.zoom) {
-      uiActions.setZoom(initialData.zoom);
-    }
+    load({ ...INITIAL_DATA, ...initialData });
+  }, [initialData, load]);
 
-    if (initialData?.scroll) {
-      uiActions.setScroll({
-        position: initialData.scroll,
-        offset: INITIAL_UI_STATE.scroll.offset
-      });
-    }
-
-    uiActions.setEditorMode(editorMode);
-    uiActions.setMainMenuOptions(mainMenuOptions);
-  }, [
-    initialData?.zoom,
-    initialData?.scroll,
-    editorMode,
-    modelActions,
-    uiActions,
-    mainMenuOptions
-  ]);
+  useEffect(() => {
+    uiStateActions.setEditorMode(editorMode);
+    uiStateActions.setMainMenuOptions(mainMenuOptions);
+  }, [editorMode, uiStateActions, mainMenuOptions]);
 
   useEffect(() => {
     return () => {
@@ -72,27 +58,17 @@ const App = ({
     };
   }, []);
 
-  const { load } = model;
-
   useEffect(() => {
-    load({ ...INITIAL_DATA, ...initialData });
-  }, [initialData, load]);
-
-  useEffect(() => {
-    setIconCategoriesState();
-  }, [model.icons, setIconCategoriesState]);
-
-  useEffect(() => {
-    if (!model.isReady || !onModelUpdated) return;
+    if (!initialDataManager.isReady || !onModelUpdated) return;
 
     onModelUpdated(model);
-  }, [model, onModelUpdated, model.isReady]);
+  }, [model, initialDataManager.isReady, onModelUpdated]);
 
   useEffect(() => {
-    uiActions.setenableDebugTools(enableDebugTools);
-  }, [enableDebugTools, uiActions]);
+    uiStateActions.setEnableDebugTools(enableDebugTools);
+  }, [enableDebugTools, uiStateActions]);
 
-  if (!model.isReady) return null;
+  if (!initialDataManager.isReady) return null;
 
   return (
     <>

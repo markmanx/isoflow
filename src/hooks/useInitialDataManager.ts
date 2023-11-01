@@ -1,14 +1,20 @@
 import { useCallback, useState, useRef } from 'react';
-import { InitialData } from 'src/types';
+import { InitialData, IconCollectionState } from 'src/types';
 import { INITIAL_DATA, VIEW_DEFAULTS } from 'src/config';
-import { generateId } from 'src/utils';
+import {
+  generateId,
+  getFitToViewParams,
+  CoordsUtils,
+  categoriseIcons
+} from 'src/utils';
 import { createView } from 'src/stores/reducers';
 import { useModelStore } from 'src/stores/modelStore';
 import { useView } from 'src/hooks/useView';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { modelSchema } from 'src/schemas/model';
+import { useResizeObserver } from './useResizeObserver';
 
-export const useModel = () => {
+export const useInitialDataManager = () => {
   const [isReady, setIsReady] = useState(false);
   const prevInitialData = useRef<InitialData>();
   const model = useModelStore((state) => {
@@ -17,7 +23,11 @@ export const useModel = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const rendererEl = useUiStateStore((state) => {
+    return state.rendererEl;
+  });
   const { changeView } = useView();
+  const { size } = useResizeObserver(rendererEl);
 
   const load = useCallback(
     (_initialData: InitialData) => {
@@ -45,13 +55,35 @@ export const useModel = () => {
 
         Object.assign(initialData, updates);
       }
+
       prevInitialData.current = initialData;
       model.actions.set(initialData);
-
       changeView(initialData.views[0].id, initialData);
+
+      if (initialData.fitToView) {
+        const { zoom, scroll } = getFitToViewParams(initialData.views[0], size);
+
+        uiStateActions.setScroll({
+          position: scroll,
+          offset: CoordsUtils.zero()
+        });
+        uiStateActions.setZoom(zoom);
+      }
+
+      const categoriesState: IconCollectionState[] = categoriseIcons(
+        initialData.icons
+      ).map((collection) => {
+        return {
+          id: collection.name,
+          isExpanded: false
+        };
+      });
+
+      uiStateActions.setIconCategoriesState(categoriesState);
+
       setIsReady(true);
     },
-    [changeView, model.actions]
+    [changeView, model.actions, size, uiStateActions]
   );
 
   const clear = useCallback(() => {
@@ -62,7 +94,6 @@ export const useModel = () => {
   return {
     load,
     clear,
-    isReady,
-    ...model
+    isReady
   };
 };
