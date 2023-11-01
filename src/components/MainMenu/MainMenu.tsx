@@ -13,8 +13,8 @@ import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useModelStore } from 'src/stores/modelStore';
-import { exportAsJSON, modelFromModelStore } from 'src/utils';
-import { INITIAL_DATA } from 'src/config';
+import { exportAsJSON } from 'src/utils';
+import { useModel } from 'src/hooks/useModel';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
@@ -25,15 +25,13 @@ export const MainMenu = () => {
   const mainMenuOptions = useUiStateStore((state) => {
     return state.mainMenuOptions;
   });
-  const model = useModelStore((state) => {
-    return modelFromModelStore(state);
-  });
   const modelActions = useModelStore((state) => {
     return state.actions;
   });
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const model = useModel();
 
   const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -84,11 +82,13 @@ export const MainMenu = () => {
     uiStateActions.setDialog('EXPORT_IMAGE');
   }, [uiStateActions]);
 
+  const { clear } = model;
+
   const onClearCanvas = useCallback(() => {
-    modelActions.set({ ...INITIAL_DATA, icons: model.icons });
+    clear();
     uiStateActions.resetUiState();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [modelActions, uiStateActions, model.icons]);
+  }, [uiStateActions, clear]);
 
   const sectionVisibility = useMemo(() => {
     return {
