@@ -121,8 +121,10 @@ export const initialData: InitialData = {
     },
     {
       id: 'cf6b6e6e-f491-4547-b4ac-c5eecba8464a',
-      name: 'Untitled',
-      icon: 'queue'
+      name: 'Information management',
+      icon: 'queue',
+      description:
+        '<p>This subsystem is responsible for the collection and distribution of daily flight information, storing of seasonal and arrival/departure information, as well as the connection with airlines.</p>'
     },
     {
       id: '00ff4dc0-09f9-4932-aa90-6c207da2989b',
