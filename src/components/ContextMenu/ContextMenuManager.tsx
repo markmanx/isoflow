@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
-import { getTilePosition } from 'src/utils';
+import { getTilePosition, CoordsUtils } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
 import { ContextMenu } from './ContextMenu';
 
@@ -10,6 +10,9 @@ interface Props {
 
 export const ContextMenuManager = ({ anchorEl }: Props) => {
   const scene = useScene();
+  const zoom = useUiStateStore((state) => {
+    return state.zoom;
+  });
   const contextMenu = useUiStateStore((state) => {
     return state.contextMenu;
   });
@@ -30,7 +33,10 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
     <ContextMenu
       anchorEl={anchorEl}
       onClose={onClose}
-      position={getTilePosition({ tile: contextMenu.tile })}
+      position={CoordsUtils.multiply(
+        getTilePosition({ tile: contextMenu.tile }),
+        zoom
+      )}
       menuItems={[
         {
           label: 'Send backward',
