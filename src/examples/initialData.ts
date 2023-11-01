@@ -51,15 +51,7 @@ export const icons: Icons = isopacks;
 export const initialData: InitialData = {
   title: 'Airport management software system',
   icons,
-  colors: [
-    { id: 'color1', value: '#a5b8f3' },
-    { id: 'color2', value: '#bbadfb' },
-    { id: 'color3', value: '#f4eb8e' },
-    { id: 'color4', value: '#f0aca9' },
-    { id: 'color5', value: '#fad6ac' },
-    { id: 'color6', value: '#a8dc9d' },
-    { id: 'color7', value: '#b3e5e3' }
-  ],
+  colors,
   items: [
     {
       id: 'item1',
@@ -105,8 +97,10 @@ export const initialData: InitialData = {
     },
     {
       id: 'a2d5f2c4-ea64-4b3c-8c82-d50be88adb05',
-      name: 'Untitled',
-      icon: 'function-module'
+      name: 'Terminal management systems',
+      icon: 'function-module',
+      description:
+        '<p>Includes maintenance and monitoring of management systems for assets, buildings, electrical grids, environmental systems, and vertical transportation organization. It also facilitates staff communications and management.</p>'
     },
     {
       id: '040dfb11-f920-48cf-bf96-64234db1b7e8',
