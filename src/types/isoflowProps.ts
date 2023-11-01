@@ -1,5 +1,4 @@
 import { Coords } from 'src/types';
-import { StoreApi } from 'zustand';
 import type { EditorModeEnum, MainMenuOptions } from './common';
 import type { Model } from './model';
 
@@ -17,10 +16,3 @@ export interface IsoflowProps {
   enableDebugTools?: boolean;
   editorMode?: keyof typeof EditorModeEnum;
 }
-
-export type ModelStore = Model & {
-  actions: {
-    get: StoreApi<ModelStore>['getState'];
-    set: StoreApi<ModelStore>['setState'];
-  };
-};

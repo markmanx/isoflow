@@ -13,6 +13,7 @@ import {
   rectangleSchema,
   connectorStyleOptions
 } from 'src/schemas';
+import { StoreApi } from 'zustand';
 
 export { connectorStyleOptions } from 'src/schemas';
 export type Model = z.infer<typeof modelSchema>;
@@ -29,3 +30,10 @@ export type ConnectorAnchor = z.infer<typeof anchorSchema>;
 export type Connector = z.infer<typeof connectorSchema>;
 export type TextBox = z.infer<typeof textBoxSchema>;
 export type Rectangle = z.infer<typeof rectangleSchema>;
+
+export type ModelStore = Model & {
+  actions: {
+    get: StoreApi<ModelStore>['getState'];
+    set: StoreApi<ModelStore>['setState'];
+  };
+};
