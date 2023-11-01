@@ -12,7 +12,6 @@ import { useModelStore } from 'src/stores/modelStore';
 import { useView } from 'src/hooks/useView';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { modelSchema } from 'src/schemas/model';
-import { useResizeObserver } from './useResizeObserver';
 
 export const useInitialDataManager = () => {
   const [isReady, setIsReady] = useState(false);
@@ -27,7 +26,6 @@ export const useInitialDataManager = () => {
     return state.rendererEl;
   });
   const { changeView } = useView();
-  const { size } = useResizeObserver(rendererEl);
 
   const load = useCallback(
     (_initialData: InitialData) => {
@@ -61,7 +59,12 @@ export const useInitialDataManager = () => {
       changeView(initialData.views[0].id, initialData);
 
       if (initialData.fitToView) {
-        const { zoom, scroll } = getFitToViewParams(initialData.views[0], size);
+        const rendererSize = rendererEl?.getBoundingClientRect();
+
+        const { zoom, scroll } = getFitToViewParams(initialData.views[0], {
+          width: rendererSize?.width ?? 0,
+          height: rendererSize?.height ?? 0
+        });
 
         uiStateActions.setScroll({
           position: scroll,
@@ -83,13 +86,13 @@ export const useInitialDataManager = () => {
 
       setIsReady(true);
     },
-    [changeView, model.actions, size, uiStateActions]
+    [changeView, model.actions, rendererEl, uiStateActions]
   );
 
   const clear = useCallback(() => {
-    load({ ...INITIAL_DATA, icons: model.icons });
+    load({ ...INITIAL_DATA, icons: model.icons, colors: model.colors });
     uiStateActions.resetUiState();
-  }, [load, model.icons, uiStateActions]);
+  }, [load, model.icons, model.colors, uiStateActions]);
 
   return {
     load,
