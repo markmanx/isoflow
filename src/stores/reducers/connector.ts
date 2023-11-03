@@ -2,12 +2,11 @@ import { Connector } from 'src/types';
 import { produce } from 'immer';
 import { getItemByIdOrThrow, getConnectorPath, getAllAnchors } from 'src/utils';
 import { validateConnector } from 'src/schemas/validation';
-import { State } from './types';
+import { State, ViewReducerContext } from './types';
 
 export const deleteConnector = (
   id: string,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
   const connector = getItemByIdOrThrow(view.value.connectors ?? [], id);
@@ -20,7 +19,10 @@ export const deleteConnector = (
   return newState;
 };
 
-export const syncConnector = (id: string, viewId: string, state: State) => {
+export const syncConnector = (
+  id: string,
+  { viewId, state }: ViewReducerContext
+) => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
     const connector = getItemByIdOrThrow(view.value.connectors ?? [], id);
@@ -32,7 +34,8 @@ export const syncConnector = (id: string, viewId: string, state: State) => {
     });
 
     if (issues.length > 0) {
-      const stateAfterDelete = deleteConnector(id, viewId, draft);
+      const stateAfterDelete = deleteConnector(id, { viewId, state: draft });
+
       draft.scene = stateAfterDelete.scene;
       draft.model = stateAfterDelete.model;
     } else {
@@ -49,10 +52,8 @@ export const syncConnector = (id: string, viewId: string, state: State) => {
 };
 
 export const updateConnector = (
-  id: string,
-  updates: Partial<Connector>,
-  viewId: string,
-  state: State
+  { id, ...updates }: { id: string } & Partial<Connector>,
+  { state, viewId }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
@@ -65,7 +66,11 @@ export const updateConnector = (
     connectors[connector.index] = newConnector;
 
     if (updates.anchors) {
-      const stateAfterSync = syncConnector(id, viewId, draft);
+      const stateAfterSync = syncConnector(newConnector.id, {
+        viewId,
+        state: draft
+      });
+
       draft.model = stateAfterSync.model;
       draft.scene = stateAfterSync.scene;
     }
@@ -76,8 +81,7 @@ export const updateConnector = (
 
 export const createConnector = (
   newConnector: Connector,
-  viewId: string,
-  state: State
+  { state, viewId }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
@@ -89,7 +93,11 @@ export const createConnector = (
       draft.model.views[view.index].connectors?.unshift(newConnector);
     }
 
-    const stateAfterSync = syncConnector(newConnector.id, viewId, draft);
+    const stateAfterSync = syncConnector(newConnector.id, {
+      viewId,
+      state: draft
+    });
+
     draft.model = stateAfterSync.model;
     draft.scene = stateAfterSync.scene;
   });

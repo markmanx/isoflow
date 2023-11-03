@@ -1,13 +1,13 @@
 import { useCallback, useState, useRef } from 'react';
 import { InitialData, IconCollectionState } from 'src/types';
-import { INITIAL_DATA, VIEW_DEFAULTS } from 'src/config';
+import { INITIAL_DATA, INITIAL_SCENE_STATE } from 'src/config';
 import {
-  generateId,
   getFitToViewParams,
   CoordsUtils,
-  categoriseIcons
+  categoriseIcons,
+  generateId
 } from 'src/utils';
-import { createView } from 'src/stores/reducers';
+import * as reducers from 'src/stores/reducers';
 import { useModelStore } from 'src/stores/modelStore';
 import { useView } from 'src/hooks/useView';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -43,13 +43,14 @@ export const useInitialDataManager = () => {
       const initialData = _initialData;
 
       if (initialData.views.length === 0) {
-        const updates = createView(
-          {
-            ...VIEW_DEFAULTS,
-            id: generateId()
-          },
-          initialData
-        );
+        const updates = reducers.view({
+          action: 'CREATE_VIEW',
+          payload: {},
+          ctx: {
+            state: { model: initialData, scene: INITIAL_SCENE_STATE },
+            viewId: generateId()
+          }
+        });
 
         Object.assign(initialData, updates);
       }

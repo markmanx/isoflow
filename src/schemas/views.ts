@@ -12,6 +12,7 @@ export const viewItemSchema = z.object({
 
 export const viewSchema = z.object({
   id,
+  lastUpdated: z.string().datetime().optional(),
   name: constrainedStrings.name,
   description: constrainedStrings.description.optional(),
   items: z.array(viewItemSchema),

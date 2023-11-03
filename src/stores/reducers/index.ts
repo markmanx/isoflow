@@ -1,7 +1,3 @@
-export * from './connector';
+export { view } from './view';
 export * from './modelItem';
-export * from './viewItem';
-export * from './rectangle';
-export * from './textBox';
-export * from './view';
-export * from './layerOrdering';
+export { syncConnector } from './connector';

@@ -119,11 +119,11 @@ export const useScene = () => {
 
   const createViewItem = useCallback(
     (newViewItem: ViewItem) => {
-      const newState = reducers.createViewItem(
-        newViewItem,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'CREATE_VIEWITEM',
+        payload: newViewItem,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -131,12 +131,11 @@ export const useScene = () => {
 
   const updateViewItem = useCallback(
     (id: string, updates: Partial<ViewItem>) => {
-      const newState = reducers.updateViewItem(
-        id,
-        updates,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'UPDATE_VIEWITEM',
+        payload: { id, ...updates },
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -144,7 +143,11 @@ export const useScene = () => {
 
   const deleteViewItem = useCallback(
     (id: string) => {
-      const newState = reducers.deleteViewItem(id, currentViewId, getState());
+      const newState = reducers.view({
+        action: 'DELETE_VIEWITEM',
+        payload: id,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -152,11 +155,11 @@ export const useScene = () => {
 
   const createConnector = useCallback(
     (newConnector: Connector) => {
-      const newState = reducers.createConnector(
-        newConnector,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'CREATE_CONNECTOR',
+        payload: newConnector,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -164,12 +167,11 @@ export const useScene = () => {
 
   const updateConnector = useCallback(
     (id: string, updates: Partial<Connector>) => {
-      const newState = reducers.updateConnector(
-        id,
-        updates,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'UPDATE_CONNECTOR',
+        payload: { id, ...updates },
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -177,7 +179,11 @@ export const useScene = () => {
 
   const deleteConnector = useCallback(
     (id: string) => {
-      const newState = reducers.deleteConnector(id, currentViewId, getState());
+      const newState = reducers.view({
+        action: 'DELETE_CONNECTOR',
+        payload: id,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -185,11 +191,11 @@ export const useScene = () => {
 
   const createTextBox = useCallback(
     (newTextBox: TextBox) => {
-      const newState = reducers.createTextBox(
-        newTextBox,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'CREATE_TEXTBOX',
+        payload: newTextBox,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -197,12 +203,11 @@ export const useScene = () => {
 
   const updateTextBox = useCallback(
     (id: string, updates: Partial<TextBox>) => {
-      const newState = reducers.updateTextBox(
-        id,
-        updates,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'UPDATE_TEXTBOX',
+        payload: { id, ...updates },
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -210,7 +215,11 @@ export const useScene = () => {
 
   const deleteTextBox = useCallback(
     (id: string) => {
-      const newState = reducers.deleteTextBox(id, currentViewId, getState());
+      const newState = reducers.view({
+        action: 'DELETE_TEXTBOX',
+        payload: id,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -218,12 +227,11 @@ export const useScene = () => {
 
   const createRectangle = useCallback(
     (newRectangle: Rectangle) => {
-      const newState = reducers.createRectangle(
-        newRectangle,
-        currentViewId,
-        getState()
-      );
-
+      const newState = reducers.view({
+        action: 'CREATE_RECTANGLE',
+        payload: newRectangle,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -231,12 +239,11 @@ export const useScene = () => {
 
   const updateRectangle = useCallback(
     (id: string, updates: Partial<Rectangle>) => {
-      const newState = reducers.updateRectangle(
-        id,
-        updates,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'UPDATE_RECTANGLE',
+        payload: { id, ...updates },
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -244,7 +251,11 @@ export const useScene = () => {
 
   const deleteRectangle = useCallback(
     (id: string) => {
-      const newState = reducers.deleteRectangle(id, currentViewId, getState());
+      const newState = reducers.view({
+        action: 'DELETE_RECTANGLE',
+        payload: id,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]
@@ -252,12 +263,11 @@ export const useScene = () => {
 
   const changeLayerOrder = useCallback(
     (action: LayerOrderingAction, item: ItemReference) => {
-      const newState = reducers.changeLayerOrder(
-        action,
-        item,
-        currentViewId,
-        getState()
-      );
+      const newState = reducers.view({
+        action: 'CHANGE_LAYER_ORDER',
+        payload: { action, item },
+        ctx: { viewId: currentViewId, state: getState() }
+      });
       setState(newState);
     },
     [getState, setState, currentViewId]

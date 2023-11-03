@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import { model as modelFixture } from 'src/fixtures/model';
 import { ItemReference } from 'src/types';
-import { changeLayerOrder } from '../layerOrdering';
+import * as reducers from 'src/stores/reducers';
 
 const getModel = () => {
   return produce(modelFixture, (draft) => {
@@ -37,9 +37,17 @@ describe('Layer ordering reducers works correctly', () => {
       type: 'RECTANGLE',
       id: 'rect3'
     };
-    const result = changeLayerOrder('BRING_FORWARD', item, 'view1', {
-      model,
-      scene
+
+    const result = reducers.view({
+      action: 'CHANGE_LAYER_ORDER',
+      payload: {
+        action: 'BRING_FORWARD',
+        item
+      },
+      ctx: {
+        viewId: 'view1',
+        state: { model, scene }
+      }
     });
 
     expect(result.model.views[0].rectangles?.[1].id).toBe('rect3');
@@ -51,9 +59,17 @@ describe('Layer ordering reducers works correctly', () => {
       type: 'RECTANGLE',
       id: 'rect3'
     };
-    const result = changeLayerOrder('BRING_TO_FRONT', item, 'view1', {
-      model,
-      scene
+
+    const result = reducers.view({
+      action: 'CHANGE_LAYER_ORDER',
+      payload: {
+        action: 'BRING_TO_FRONT',
+        item
+      },
+      ctx: {
+        viewId: 'view1',
+        state: { model, scene }
+      }
     });
 
     expect(result.model.views[0].rectangles?.[0].id).toBe('rect3');
@@ -65,9 +81,17 @@ describe('Layer ordering reducers works correctly', () => {
       type: 'RECTANGLE',
       id: 'rect1'
     };
-    const result = changeLayerOrder('SEND_BACKWARD', item, 'view1', {
-      model,
-      scene
+
+    const result = reducers.view({
+      action: 'CHANGE_LAYER_ORDER',
+      payload: {
+        action: 'SEND_BACKWARD',
+        item
+      },
+      ctx: {
+        viewId: 'view1',
+        state: { model, scene }
+      }
     });
 
     expect(result.model.views[0].rectangles?.[1].id).toBe('rect1');
@@ -79,9 +103,17 @@ describe('Layer ordering reducers works correctly', () => {
       type: 'RECTANGLE',
       id: 'rect1'
     };
-    const result = changeLayerOrder('SEND_TO_BACK', item, 'view1', {
-      model,
-      scene
+
+    const result = reducers.view({
+      action: 'CHANGE_LAYER_ORDER',
+      payload: {
+        action: 'SEND_TO_BACK',
+        item
+      },
+      ctx: {
+        viewId: 'view1',
+        state: { model, scene }
+      }
     });
 
     expect(result.model.views[0].rectangles?.[2].id).toBe('rect1');

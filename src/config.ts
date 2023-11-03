@@ -31,7 +31,9 @@ export const DEFAULT_COLOR: Colors[0] = {
 
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
 
-export const VIEW_DEFAULTS: Required<Omit<View, 'id' | 'description'>> = {
+export const VIEW_DEFAULTS: Required<
+  Omit<View, 'id' | 'description' | 'lastUpdated'>
+> = {
   name: 'Untitled view',
   items: [],
   connectors: [],
@@ -87,6 +89,10 @@ export const INITIAL_UI_STATE = {
     position: CoordsUtils.zero(),
     offset: CoordsUtils.zero()
   }
+};
+export const INITIAL_SCENE_STATE = {
+  connectors: {},
+  textBoxes: {}
 };
 export const MAIN_MENU_OPTIONS: MainMenuOptions = [
   'ACTION.OPEN',

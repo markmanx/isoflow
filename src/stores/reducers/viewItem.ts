@@ -2,14 +2,12 @@ import { produce } from 'immer';
 import { ViewItem } from 'src/types';
 import { getItemByIdOrThrow, getConnectorsByViewItem } from 'src/utils';
 import { validateView } from 'src/schemas/validation';
-import { State } from './types';
-import { updateConnector, syncConnector } from './connector';
+import { State, ViewReducerContext } from './types';
+import * as reducers from './view';
 
 export const updateViewItem = (
-  id: string,
-  updates: Partial<ViewItem>,
-  viewId: string,
-  state: State
+  { id, ...updates }: { id: string } & Partial<ViewItem>,
+  { viewId, state }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
@@ -28,7 +26,11 @@ export const updateViewItem = (
       );
 
       const updatedConnectors = connectorsToUpdate.reduce((acc, connector) => {
-        return updateConnector(connector.id, connector, viewId, acc);
+        return reducers.view({
+          action: 'UPDATE_CONNECTOR',
+          payload: connector,
+          ctx: { viewId, state: acc }
+        });
       }, draft);
 
       draft.model.views[view.index].connectors =
@@ -50,9 +52,9 @@ export const updateViewItem = (
 
 export const createViewItem = (
   newViewItem: ViewItem,
-  viewId: string,
-  state: State
+  ctx: ViewReducerContext
 ): State => {
+  const { state, viewId } = ctx;
   const view = getItemByIdOrThrow(state.model.views, viewId);
 
   const newState = produce(state, (draft) => {
@@ -60,13 +62,12 @@ export const createViewItem = (
     items.unshift(newViewItem);
   });
 
-  return updateViewItem(newViewItem.id, newViewItem, viewId, newState);
+  return updateViewItem(newViewItem, { viewId, state: newState });
 };
 
 export const deleteViewItem = (
   id: string,
-  viewId: string,
-  state: State
+  { state, viewId }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
@@ -80,7 +81,11 @@ export const deleteViewItem = (
     );
 
     const updatedConnectors = connectorsToUpdate.reduce((acc, connector) => {
-      return syncConnector(connector.id, viewId, acc);
+      return reducers.view({
+        action: 'SYNC_CONNECTOR',
+        payload: connector.id,
+        ctx: { viewId, state: acc }
+      });
     }, draft);
 
     draft.model.views[view.index].connectors =

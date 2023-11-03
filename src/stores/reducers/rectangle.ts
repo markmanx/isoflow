@@ -1,13 +1,11 @@
 import { produce } from 'immer';
 import { Rectangle } from 'src/types';
 import { getItemByIdOrThrow } from 'src/utils';
-import { State } from './types';
+import { State, ViewReducerContext } from './types';
 
 export const updateRectangle = (
-  id: string,
-  updates: Partial<Rectangle>,
-  viewId: string,
-  state: State
+  { id, ...updates }: { id: string } & Partial<Rectangle>,
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
 
@@ -26,8 +24,7 @@ export const updateRectangle = (
 
 export const createRectangle = (
   newRectangle: Rectangle,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
 
@@ -41,13 +38,15 @@ export const createRectangle = (
     }
   });
 
-  return updateRectangle(newRectangle.id, newRectangle, viewId, newState);
+  return updateRectangle(newRectangle, {
+    viewId,
+    state: newState
+  });
 };
 
 export const deleteRectangle = (
   id: string,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
   const rectangle = getItemByIdOrThrow(view.value.rectangles ?? [], id);

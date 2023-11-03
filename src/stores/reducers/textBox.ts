@@ -1,13 +1,11 @@
 import { produce } from 'immer';
 import { TextBox } from 'src/types';
 import { getItemByIdOrThrow, getTextBoxDimensions } from 'src/utils';
-
-import { State } from './types';
+import { State, ViewReducerContext } from './types';
 
 export const syncTextBox = (
   id: string,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
@@ -22,10 +20,8 @@ export const syncTextBox = (
 };
 
 export const updateTextBox = (
-  id: string,
-  updates: Partial<TextBox>,
-  viewId: string,
-  state: State
+  { id, ...updates }: { id: string } & Partial<TextBox>,
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
 
@@ -39,7 +35,11 @@ export const updateTextBox = (
     textBoxes[textBox.index] = newTextBox;
 
     if (updates.content !== undefined || updates.fontSize !== undefined) {
-      const stateAfterSync = syncTextBox(newTextBox.id, viewId, draft);
+      const stateAfterSync = syncTextBox(newTextBox.id, {
+        viewId,
+        state: draft
+      });
+
       draft.model = stateAfterSync.model;
       draft.scene = stateAfterSync.scene;
     }
@@ -50,8 +50,7 @@ export const updateTextBox = (
 
 export const createTextBox = (
   newTextBox: TextBox,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
 
@@ -65,13 +64,12 @@ export const createTextBox = (
     }
   });
 
-  return updateTextBox(newTextBox.id, newTextBox, viewId, newState);
+  return updateTextBox(newTextBox, { viewId, state: newState });
 };
 
 export const deleteTextBox = (
   id: string,
-  viewId: string,
-  state: State
+  { viewId, state }: ViewReducerContext
 ): State => {
   const view = getItemByIdOrThrow(state.model.views, viewId);
   const textBox = getItemByIdOrThrow(view.value.textBoxes ?? [], id);

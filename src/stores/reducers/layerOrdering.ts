@@ -1,13 +1,11 @@
 import { produce } from 'immer';
 import { ItemReference, LayerOrderingAction, View } from 'src/types';
 import { getItemByIdOrThrow } from 'src/utils';
-import { State } from './types';
+import { State, ViewReducerContext } from './types';
 
 export const changeLayerOrder = (
-  action: LayerOrderingAction,
-  item: ItemReference,
-  viewId: string,
-  state: State
+  { action, item }: { action: LayerOrderingAction; item: ItemReference },
+  { viewId, state }: ViewReducerContext
 ): State => {
   const newState = produce(state, (draft) => {
     const view = getItemByIdOrThrow(draft.model.views, viewId);
