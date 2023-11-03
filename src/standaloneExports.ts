@@ -2,7 +2,7 @@
 // bundle requires `window` to be present and so can't be imported into a Node environment.
 export const version = PACKAGE_VERSION;
 export * as reducers from 'src/stores/reducers';
-export { INITIAL_DATA } from 'src/config';
+export { INITIAL_DATA, INITIAL_SCENE_STATE } from 'src/config';
 export { modelSchema } from 'src/schemas/model';
 export type { IsoflowProps, InitialData } from 'src/types';
 export type * from 'src/types/model';
