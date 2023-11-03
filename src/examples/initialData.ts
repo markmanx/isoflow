@@ -195,8 +195,8 @@ export const initialData: InitialData = {
   ],
   views: [
     {
-      id: 'view1',
-      name: 'View 1',
+      id: 'overview',
+      name: 'Overview',
       items: [
         {
           labelHeight: 80,

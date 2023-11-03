@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { Box, useTheme, Typography } from '@mui/material';
+import { Box, useTheme, Typography, Stack } from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
 import { EditorModeEnum } from 'src/types';
 import { UiElement } from 'components/UiElement/UiElement';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
@@ -13,6 +14,7 @@ import { DebugUtils } from 'src/components/DebugUtils/DebugUtils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { ContextMenuManager } from 'src/components/ContextMenu/ContextMenuManager';
 import { useScene } from 'src/hooks/useScene';
+import { useModelStore } from 'src/stores/modelStore';
 import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
 
 const ToolsEnum = {
@@ -20,7 +22,7 @@ const ToolsEnum = {
   ZOOM_CONTROLS: 'ZOOM_CONTROLS',
   TOOL_MENU: 'TOOL_MENU',
   ITEM_CONTROLS: 'ITEM_CONTROLS',
-  Model_TITLE: 'Model_TITLE'
+  VIEW_TITLE: 'VIEW_TITLE'
 } as const;
 
 interface EditorModeMapping {
@@ -33,9 +35,9 @@ const EDITOR_MODE_MAPPING: EditorModeMapping = {
     'ZOOM_CONTROLS',
     'TOOL_MENU',
     'MAIN_MENU',
-    'Model_TITLE'
+    'VIEW_TITLE'
   ],
-  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'Model_TITLE'],
+  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'VIEW_TITLE'],
   [EditorModeEnum.NON_INTERACTIVE]: []
 };
 
@@ -83,6 +85,9 @@ export const UiOverlay = () => {
   const rendererEl = useUiStateStore((state) => {
     return state.rendererEl;
   });
+  const title = useModelStore((state) => {
+    return state.title;
+  });
   const { size: rendererSize } = useResizeObserver(rendererEl);
 
   return (
@@ -101,8 +106,6 @@ export const UiOverlay = () => {
           <UiElement
             sx={{
               position: 'absolute',
-              top: appPadding.y * 2 + spacing(2),
-              left: appPadding.x,
               width: '360px',
               overflowY: 'scroll',
               '&::-webkit-scrollbar': {
@@ -110,6 +113,8 @@ export const UiOverlay = () => {
               }
             }}
             style={{
+              left: appPadding.x,
+              top: appPadding.y * 2 + spacing(2),
               maxHeight: rendererSize.height - appPadding.y * 6
             }}
           >
@@ -119,9 +124,11 @@ export const UiOverlay = () => {
 
         {availableTools.includes('TOOL_MENU') && (
           <Box
-            style={{
+            sx={{
               position: 'absolute',
-              transform: 'translateX(-100%)',
+              transform: 'translateX(-100%)'
+            }}
+            style={{
               left: rendererSize.width - appPadding.x,
               top: appPadding.y
             }}
@@ -132,9 +139,11 @@ export const UiOverlay = () => {
 
         {availableTools.includes('ZOOM_CONTROLS') && (
           <Box
-            style={{
+            sx={{
               position: 'absolute',
-              transformOrigin: 'bottom left',
+              transformOrigin: 'bottom left'
+            }}
+            style={{
               top: rendererSize.height - appPadding.y * 2,
               left: appPadding.x
             }}
@@ -146,7 +155,9 @@ export const UiOverlay = () => {
         {availableTools.includes('MAIN_MENU') && (
           <Box
             sx={{
-              position: 'absolute',
+              position: 'absolute'
+            }}
+            style={{
               top: appPadding.y,
               left: appPadding.x
             }}
@@ -155,18 +166,20 @@ export const UiOverlay = () => {
           </Box>
         )}
 
-        {availableTools.includes('Model_TITLE') && (
+        {availableTools.includes('VIEW_TITLE') && (
           <Box
             sx={{
               position: 'absolute',
               display: 'flex',
               justifyContent: 'center',
+              transform: 'translateX(-50%)',
+              pointerEvents: 'none'
+            }}
+            style={{
               left: rendererSize.width / 2,
               top: rendererSize.height - appPadding.y * 2,
               width: rendererSize.width - 500,
-              height: appPadding.y,
-              transform: 'translateX(-50%)',
-              pointerEvents: 'none'
+              height: appPadding.y
             }}
           >
             <UiElement
@@ -177,9 +190,15 @@ export const UiOverlay = () => {
                 height: '100%'
               }}
             >
-              <Typography fontWeight={600} color="text.secondary">
-                {currentView.name}
-              </Typography>
+              <Stack direction="row" alignItems="center">
+                <Typography fontWeight={600} color="text.secondary">
+                  {title}
+                </Typography>
+                <ChevronRight />
+                <Typography fontWeight={600} color="text.secondary">
+                  {currentView.name}
+                </Typography>
+              </Stack>
             </UiElement>
           </Box>
         )}
