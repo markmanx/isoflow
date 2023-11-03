@@ -3,6 +3,7 @@ import type { Model } from './model';
 
 export type InitialData = Model & {
   fitToView?: boolean;
+  view?: string;
 };
 
 export interface IsoflowProps {

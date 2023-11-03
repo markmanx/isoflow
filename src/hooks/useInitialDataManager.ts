@@ -56,7 +56,7 @@ export const useInitialDataManager = () => {
 
       prevInitialData.current = initialData;
       model.actions.set(initialData);
-      changeView(initialData.views[0].id, initialData);
+      changeView(initialData.view ?? initialData.views[0].id, initialData);
 
       if (initialData.fitToView) {
         const rendererSize = rendererEl?.getBoundingClientRect();
