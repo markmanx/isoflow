@@ -46,6 +46,16 @@ export const syncScene = ({ viewId, state }: ViewReducerContext): State => {
   return stateAfterTextBoxesSynced;
 };
 
+export const deleteView = (ctx: ViewReducerContext): State => {
+  const newState = produce(ctx.state, (draft) => {
+    const view = getItemByIdOrThrow(draft.model.views, ctx.viewId);
+
+    draft.model.views.splice(view.index, 1);
+  });
+
+  return newState;
+};
+
 export const updateView = (
   updates: Partial<Pick<View, 'name'>>,
   ctx: ViewReducerContext
@@ -85,6 +95,9 @@ export const view = ({ action, payload, ctx }: ViewReducerParams) => {
       break;
     case 'UPDATE_VIEW':
       newState = updateView(payload, ctx);
+      break;
+    case 'DELETE_VIEW':
+      newState = deleteView(ctx);
       break;
     case 'CREATE_VIEWITEM':
       newState = viewItemReducers.createViewItem(payload, ctx);

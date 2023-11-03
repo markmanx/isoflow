@@ -30,6 +30,10 @@ type ViewReducerAction =
       payload: Parameters<typeof viewReducers.updateView>[0];
     }
   | {
+      action: 'DELETE_VIEW';
+      payload: undefined;
+    }
+  | {
       action: 'CREATE_VIEWITEM';
       payload: Parameters<typeof viewItemReducers.createViewItem>[0];
     }
