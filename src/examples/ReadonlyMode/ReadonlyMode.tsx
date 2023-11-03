@@ -3,5 +3,10 @@ import Isoflow from 'src/Isoflow';
 import { initialData } from '../initialData';
 
 export const ReadonlyMode = () => {
-  return <Isoflow initialData={initialData} editorMode="EXPLORABLE_READONLY" />;
+  return (
+    <Isoflow
+      initialData={{ ...initialData, fitToView: true }}
+      editorMode="EXPLORABLE_READONLY"
+    />
+  );
 };
