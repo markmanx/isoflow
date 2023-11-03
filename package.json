@@ -1,6 +1,6 @@
 {
   "name": "isoflow",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "description": "An open-source React component for drawing network diagrams.",
   "license": "MIT",
