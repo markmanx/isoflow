@@ -5,7 +5,8 @@ import {
   getFitToViewParams,
   CoordsUtils,
   categoriseIcons,
-  generateId
+  generateId,
+  getItemByIdOrThrow
 } from 'src/utils';
 import * as reducers from 'src/stores/reducers';
 import { useModelStore } from 'src/stores/modelStore';
@@ -57,12 +58,18 @@ export const useInitialDataManager = () => {
 
       prevInitialData.current = initialData;
       model.actions.set(initialData);
-      changeView(initialData.view ?? initialData.views[0].id, initialData);
+
+      const view = getItemByIdOrThrow(
+        initialData.views,
+        initialData.view ?? initialData.views[0].id
+      );
+
+      changeView(view.value.id, initialData);
 
       if (initialData.fitToView) {
         const rendererSize = rendererEl?.getBoundingClientRect();
 
-        const { zoom, scroll } = getFitToViewParams(initialData.views[0], {
+        const { zoom, scroll } = getFitToViewParams(view.value, {
           width: rendererSize?.width ?? 0,
           height: rendererSize?.height ?? 0
         });
@@ -71,6 +78,7 @@ export const useInitialDataManager = () => {
           position: scroll,
           offset: CoordsUtils.zero()
         });
+
         uiStateActions.setZoom(zoom);
       }
 
