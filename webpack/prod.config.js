@@ -7,7 +7,7 @@ module.exports = {
   target: 'web',
   entry: {
     'index': './src/Isoflow.tsx',
-    '/nodeExports': './src/nodeExports.ts',
+    '/standaloneExports': './src/standaloneExports.ts',
   },
   output: {
     path: path.resolve(__dirname, '../dist'),

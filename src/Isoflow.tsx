@@ -2,19 +2,8 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { theme } from 'src/styles/theme';
-import {
-  Model,
-  ModelItem,
-  Icon,
-  Connector,
-  Rectangle,
-  IsoflowProps,
-  InitialData,
-  Colors,
-  Icons
-} from 'src/types';
+import { IsoflowProps } from 'src/types';
 import { setWindowCursor, modelFromModelStore } from 'src/utils';
-import { modelSchema } from 'src/schemas/model';
 import { useModelStore, ModelProvider } from 'src/stores/modelStore';
 import { SceneProvider } from 'src/stores/sceneStore';
 import { GlobalStyles } from 'src/styles/GlobalStyles';
@@ -123,21 +112,6 @@ const useIsoflow = () => {
   };
 };
 
-export {
-  useIsoflow,
-  IsoflowProps,
-  InitialData,
-  Model,
-  Icon,
-  ModelItem,
-  Rectangle,
-  Colors,
-  Icons,
-  Connector,
-  modelSchema
-};
-
-export const version = PACKAGE_VERSION;
-export const initialData = INITIAL_DATA;
-
+export { useIsoflow };
+export * from 'src/standaloneExports';
 export default Isoflow;
