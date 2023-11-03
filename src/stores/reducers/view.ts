@@ -145,10 +145,14 @@ export const view = ({ action, payload, ctx }: ViewReducerParams) => {
       throw new Error('Invalid action.');
   }
 
-  const withUpdatedTimeStamp = updateViewTimestamp({
-    state: newState,
-    viewId: ctx.viewId
-  });
-
-  return withUpdatedTimeStamp;
+  switch (action) {
+    case 'SYNC_SCENE':
+    case 'DELETE_VIEW':
+      return newState;
+    default:
+      return updateViewTimestamp({
+        state: newState,
+        viewId: ctx.viewId
+      });
+  }
 };
