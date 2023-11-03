@@ -66,6 +66,8 @@ export const ToolMenu = () => {
               type: 'PAN',
               showCursor: false
             });
+
+            uiStateStoreActions.setItemControls(null);
           }}
           isActive={mode.type === 'PAN'}
         />
