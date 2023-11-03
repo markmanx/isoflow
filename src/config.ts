@@ -32,7 +32,7 @@ export const DEFAULT_COLOR: Colors[0] = {
 export const DEFAULT_FONT_FAMILY = 'Roboto, Arial, sans-serif';
 
 export const VIEW_DEFAULTS: Required<Omit<View, 'id' | 'description'>> = {
-  name: 'New view',
+  name: 'Untitled view',
   items: [],
   connectors: [],
   rectangles: [],
