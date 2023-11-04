@@ -37,6 +37,9 @@ export const useInitialDataManager = () => {
       const validationResult = modelSchema.safeParse(_initialData);
 
       if (!validationResult.success) {
+        // TODO: let's get better at reporting error messages here (starting with how we present them to users)
+        // - not in console but in a modal
+        console.log(validationResult.error.errors);
         window.alert('There is an error in your model.');
         return;
       }
@@ -53,7 +56,7 @@ export const useInitialDataManager = () => {
           }
         });
 
-        Object.assign(initialData, updates);
+        Object.assign(initialData, updates.model);
       }
 
       prevInitialData.current = initialData;
