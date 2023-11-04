@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useMemo, useCallback } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+  useState
+} from 'react';
 import {
   Dialog,
   DialogContent,
@@ -31,6 +37,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const debounceRef = useRef<NodeJS.Timeout>();
   const [imageData, setImageData] = React.useState<string>();
+  const [exportError, setExportError] = useState(false);
   const { getUnprojectedBounds } = useDiagramUtils();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
@@ -55,9 +62,14 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
 
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      exportAsImage(containerRef.current as HTMLDivElement).then((data) => {
-        return setImageData(data);
-      });
+      exportAsImage(containerRef.current as HTMLDivElement)
+        .then((data) => {
+          return setImageData(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setExportError(true);
+        });
     }, 2000);
   }, []);
 
@@ -148,6 +160,10 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                 </Stack>
               </Stack>
             </Stack>
+          )}
+
+          {exportError && (
+            <Alert severity="error">Could not export image</Alert>
           )}
         </Stack>
       </DialogContent>
