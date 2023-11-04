@@ -36,6 +36,9 @@ interface Props {
 export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const containerRef = useRef<HTMLDivElement>();
   const debounceRef = useRef<NodeJS.Timeout>();
+  const currentView = useUiStateStore((state) => {
+    return state.view;
+  });
   const [imageData, setImageData] = React.useState<string>();
   const [exportError, setExportError] = useState(false);
   const { getUnprojectedBounds } = useDiagramUtils();
@@ -113,7 +116,9 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                   sx={{
                     position: 'absolute',
                     top: 0,
-                    left: 0,
+                    left: 0
+                  }}
+                  style={{
                     width: unprojectedBounds.width * quality,
                     height: unprojectedBounds.height * quality
                   }}
@@ -121,7 +126,11 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                   <Isoflow
                     editorMode="NON_INTERACTIVE"
                     onModelUpdated={exportImage}
-                    initialData={{ ...model, fitToView: true }}
+                    initialData={{
+                      ...model,
+                      fitToView: true,
+                      view: currentView
+                    }}
                   />
                 </Box>
               </Box>
@@ -145,8 +154,10 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
               <Box
                 component="img"
                 sx={{
-                  width: unprojectedBounds.width,
                   maxWidth: '100%'
+                }}
+                style={{
+                  width: unprojectedBounds.width
                 }}
                 src={imageData}
                 alt="preview"
