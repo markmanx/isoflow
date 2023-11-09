@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Stack, Alert } from '@mui/material';
 import { ControlsContainer } from 'src/components/ItemControls/components/ControlsContainer';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Icon } from 'src/types';
@@ -36,7 +37,12 @@ export const IconSelectionControls = () => {
     <ControlsContainer
       header={
         <Section sx={{ position: 'sticky', top: 0, pt: 6, pb: 3 }}>
-          <Searchbox value={filter} onChange={setFilter} />
+          <Stack spacing={2}>
+            <Searchbox value={filter} onChange={setFilter} />
+            <Alert severity="info">
+              You can drag and drop icons below onto the canvas.
+            </Alert>
+          </Stack>
         </Section>
       }
     >

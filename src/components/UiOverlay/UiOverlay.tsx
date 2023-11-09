@@ -98,8 +98,7 @@ export const UiOverlay = () => {
           width: 0,
           height: 0,
           top: 0,
-          left: 0,
-          zIndex: 1
+          left: 0
         }}
       >
         {availableTools.includes('ITEM_CONTROLS') && itemControls && (
