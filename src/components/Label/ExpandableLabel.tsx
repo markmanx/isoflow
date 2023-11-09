@@ -5,11 +5,17 @@ import { Gradient } from 'src/components/Gradient/Gradient';
 import { ExpandButton } from './ExpandButton';
 import { Label, Props as LabelProps } from './Label';
 
-type Props = Omit<LabelProps, 'maxHeight'>;
+type Props = Omit<LabelProps, 'maxHeight'> & {
+  onToggleExpand?: (isExpanded: boolean) => void;
+};
 
 const STANDARD_LABEL_HEIGHT = 80;
 
-export const ExpandableLabel = ({ children, ...rest }: Props) => {
+export const ExpandableLabel = ({
+  children,
+  onToggleExpand,
+  ...rest
+}: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>();
   const { observe, size: contentSize } = useResizeObserver();
@@ -76,6 +82,7 @@ export const ExpandableLabel = ({ children, ...rest }: Props) => {
           isExpanded={isExpanded}
           onClick={() => {
             setIsExpanded(!isExpanded);
+            onToggleExpand?.(!isExpanded);
           }}
         />
       )}
