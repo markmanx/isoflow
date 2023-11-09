@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as MuiButton } from '@mui/material';
+import { Button as MuiButton, SxProps } from '@mui/material';
 import {
   ExpandMore as ReadMoreIcon,
   ExpandLess as ReadLessIcon
@@ -8,9 +8,10 @@ import {
 interface Props {
   isExpanded: boolean;
   onClick: () => void;
+  sx?: SxProps;
 }
 
-export const ExpandButton = ({ isExpanded, onClick }: Props) => {
+export const ExpandButton = ({ isExpanded, onClick, sx }: Props) => {
   return (
     <MuiButton
       sx={{
@@ -21,7 +22,8 @@ export const ExpandButton = ({ isExpanded, onClick }: Props) => {
         fontSize: '0.7em',
         bottom: 5,
         right: 5,
-        color: 'common.white'
+        color: 'common.white',
+        ...sx
       }}
       onClick={onClick}
     >

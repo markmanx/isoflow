@@ -1,11 +1,16 @@
 import React, { useMemo } from 'react';
-import { Box, Typography } from '@mui/material';
-import { PROJECTED_TILE_SIZE, DEFAULT_LABEL_HEIGHT } from 'src/config';
+import { Box, Typography, Stack } from '@mui/material';
+import {
+  PROJECTED_TILE_SIZE,
+  DEFAULT_LABEL_HEIGHT,
+  MARKDOWN_EMPTY_VALUE
+} from 'src/config';
 import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 import { ViewItem } from 'src/types';
 import { useModelItem } from 'src/hooks/useModelItem';
-import { Label } from 'src/components/Label/Label';
+import { ExpandableLabel } from 'src/components/Label/ExpandableLabel';
+import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 
 interface Props {
   node: ViewItem;
@@ -26,7 +31,7 @@ export const Node = ({ node, order }: Props) => {
   const description = useMemo(() => {
     if (
       modelItem.description === undefined ||
-      modelItem.description === '<p><br></p>'
+      modelItem.description === MARKDOWN_EMPTY_VALUE
     )
       return null;
 
@@ -52,16 +57,21 @@ export const Node = ({ node, order }: Props) => {
             sx={{ position: 'absolute' }}
             style={{ bottom: PROJECTED_TILE_SIZE.height / 2 }}
           >
-            <Label
+            <ExpandableLabel
               maxWidth={250}
-              maxHeight={100}
               expandDirection="BOTTOM"
               labelHeight={node.labelHeight ?? DEFAULT_LABEL_HEIGHT}
             >
-              {modelItem.name && (
-                <Typography fontWeight={600}>{modelItem.name}</Typography>
-              )}
-            </Label>
+              <Stack spacing={1}>
+                {modelItem.name && (
+                  <Typography fontWeight={600}>{modelItem.name}</Typography>
+                )}
+                {modelItem.description &&
+                  modelItem.description !== MARKDOWN_EMPTY_VALUE && (
+                    <MarkdownEditor value={modelItem.description} readOnly />
+                  )}
+              </Stack>
+            </ExpandableLabel>
           </Box>
         )}
         {iconComponent && (

@@ -3,7 +3,7 @@ import { Box, SxProps } from '@mui/material';
 
 const CONNECTOR_DOT_SIZE = 3;
 
-interface Props {
+export interface Props {
   labelHeight?: number;
   maxWidth: number;
   maxHeight?: number;
