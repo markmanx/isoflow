@@ -40,7 +40,7 @@ export const IconSelectionControls = () => {
           <Stack spacing={2}>
             <Searchbox value={filter} onChange={setFilter} />
             <Alert severity="info">
-              You can drag and drop items below onto the canvas.
+              You can drag and drop any item below onto the canvas.
             </Alert>
           </Stack>
         </Section>
