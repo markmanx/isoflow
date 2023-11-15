@@ -72,7 +72,7 @@ export const ToolMenu = () => {
           isActive={mode.type === 'PAN'}
         />
         <IconButton
-          name="Add element"
+          name="Add item"
           Icon={<AddIcon />}
           onClick={() => {
             uiStateStoreActions.setItemControls({
