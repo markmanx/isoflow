@@ -29,6 +29,8 @@ import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Isoflow } from 'src/Isoflow';
 import { Loader } from 'src/components/Loader/Loader';
+import { MuiColorInput } from 'mui-color-input';
+import { customVars } from 'src/styles/theme';
 
 interface Props {
   quality?: number;
@@ -90,8 +92,16 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   }, [imageData]);
 
   const [hideGrid, setHideGrid] = useState(false);
-  const toggleGrid = (checked: boolean) => {
+  const handleHideGridChange = (checked: boolean) => {
     setHideGrid(checked);
+    setImageData(undefined);
+  };
+
+  const [backgroundColor, setBackgroundColor] = useState<string>(
+    customVars.customPalette.diagramBg
+  );
+  const handleBackgroundColorChange = (color: string) => {
+    setBackgroundColor(color);
     setImageData(undefined);
   };
 
@@ -115,11 +125,21 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                 size="small"
                 checked={hideGrid}
                 onChange={(event) => {
-                  toggleGrid(event.target.checked);
+                  handleHideGridChange(event.target.checked);
                 }}
               />
             }
           />
+          <div>
+            <MuiColorInput
+              size="small"
+              variant="standard"
+              label="Background color"
+              format="hex"
+              value={backgroundColor}
+              onChange={handleBackgroundColorChange}
+            />
+          </div>
 
           {!imageData && (
             <>
@@ -152,7 +172,8 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                       view: currentView
                     }}
                     renderer={{
-                      hideGrid
+                      hideGrid,
+                      backgroundColor
                     }}
                   />
                 </Box>

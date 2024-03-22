@@ -15,7 +15,7 @@ import { TransformControlsManager } from 'src/components/TransformControlsManage
 import { useScene } from 'src/hooks/useScene';
 import { RendererProps } from 'src/types/rendererProps';
 
-export const Renderer = ({ hideGrid }: RendererProps) => {
+export const Renderer = ({ hideGrid, backgroundColor }: RendererProps) => {
   const containerRef = useRef<HTMLDivElement>();
   const interactionsRef = useRef<HTMLDivElement>();
   const enableDebugTools = useUiStateStore((state) => {
@@ -48,8 +48,7 @@ export const Renderer = ({ hideGrid }: RendererProps) => {
         height: '100%',
         zIndex: 0,
         bgcolor: (theme) => {
-          return theme.customVars.customPalette.diagramBg;
-          // return backgroundColor ?? theme.customVars.customPalette.diagramBg;
+          return backgroundColor ?? theme.customVars.customPalette.diagramBg;
         }
       }}
     >
