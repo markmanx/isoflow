@@ -12,7 +12,9 @@ import {
   Box,
   Button,
   Stack,
-  Alert
+  Alert,
+  Checkbox,
+  FormControlLabel
 } from '@mui/material';
 import { useModelStore } from 'src/stores/modelStore';
 import {
@@ -87,6 +89,12 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
     downloadFileUtil(data, generateGenericFilename('png'));
   }, [imageData]);
 
+  const [hideGrid, setHideGrid] = useState(false);
+  const toggleGrid = (checked: boolean) => {
+    setHideGrid(checked);
+    setImageData(undefined);
+  };
+
   return (
     <Dialog open onClose={onClose}>
       <DialogTitle>Export as image</DialogTitle>
@@ -100,6 +108,18 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
             For best results, please use the latest version of either Chrome or
             Firefox.
           </Alert>
+          <FormControlLabel
+            label="Hide grid"
+            control={
+              <Checkbox
+                size="small"
+                checked={hideGrid}
+                onChange={(event) => {
+                  toggleGrid(event.target.checked);
+                }}
+              />
+            }
+          />
 
           {!imageData && (
             <>
@@ -130,6 +150,9 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                       ...model,
                       fitToView: true,
                       view: currentView
+                    }}
+                    renderer={{
+                      hideGrid
                     }}
                   />
                 </Box>

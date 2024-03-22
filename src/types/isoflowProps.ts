@@ -1,5 +1,6 @@
 import type { EditorModeEnum, MainMenuOptions } from './common';
 import type { Model } from './model';
+import type { RendererProps } from './rendererProps';
 
 export type InitialData = Model & {
   fitToView?: boolean;
@@ -14,4 +15,5 @@ export interface IsoflowProps {
   height?: number | string;
   enableDebugTools?: boolean;
   editorMode?: keyof typeof EditorModeEnum;
+  renderer?: RendererProps;
 }
