@@ -15,7 +15,7 @@ import { TransformControlsManager } from 'src/components/TransformControlsManage
 import { useScene } from 'src/hooks/useScene';
 import { RendererProps } from 'src/types/rendererProps';
 
-export const Renderer = ({ hideGrid, backgroundColor }: RendererProps) => {
+export const Renderer = ({ showGrid, backgroundColor }: RendererProps) => {
   const containerRef = useRef<HTMLDivElement>();
   const interactionsRef = useRef<HTMLDivElement>();
   const enableDebugTools = useUiStateStore((state) => {
@@ -64,7 +64,7 @@ export const Renderer = ({ hideGrid, backgroundColor }: RendererProps) => {
           left: 0
         }}
       >
-        {!hideGrid && <Grid />}
+        {showGrid && <Grid />}
       </Box>
       {mode.showCursor && (
         <SceneLayer>

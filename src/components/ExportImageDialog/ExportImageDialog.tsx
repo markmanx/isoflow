@@ -14,7 +14,8 @@ import {
   Stack,
   Alert,
   Checkbox,
-  FormControlLabel
+  FormControlLabel,
+  Typography
 } from '@mui/material';
 import { useModelStore } from 'src/stores/modelStore';
 import {
@@ -29,8 +30,8 @@ import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Isoflow } from 'src/Isoflow';
 import { Loader } from 'src/components/Loader/Loader';
-import { MuiColorInput } from 'mui-color-input';
 import { customVars } from 'src/styles/theme';
+import { ColorPicker } from 'src/components/ColorSelector/ColorPicker';
 
 interface Props {
   quality?: number;
@@ -91,10 +92,9 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
     downloadFileUtil(data, generateGenericFilename('png'));
   }, [imageData]);
 
-  const [hideGrid, setHideGrid] = useState(false);
-  const handleHideGridChange = (checked: boolean) => {
-    setHideGrid(checked);
-    setImageData(undefined);
+  const [showGrid, setShowGrid] = useState(false);
+  const handleShowGridChange = (checked: boolean) => {
+    setShowGrid(checked);
   };
 
   const [backgroundColor, setBackgroundColor] = useState<string>(
@@ -102,8 +102,11 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   );
   const handleBackgroundColorChange = (color: string) => {
     setBackgroundColor(color);
-    setImageData(undefined);
   };
+
+  useEffect(() => {
+    setImageData(undefined);
+  }, [showGrid, backgroundColor]);
 
   return (
     <Dialog open onClose={onClose}>
@@ -118,28 +121,6 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
             For best results, please use the latest version of either Chrome or
             Firefox.
           </Alert>
-          <FormControlLabel
-            label="Hide grid"
-            control={
-              <Checkbox
-                size="small"
-                checked={hideGrid}
-                onChange={(event) => {
-                  handleHideGridChange(event.target.checked);
-                }}
-              />
-            }
-          />
-          <div>
-            <MuiColorInput
-              size="small"
-              variant="standard"
-              label="Background color"
-              format="hex"
-              value={backgroundColor}
-              onChange={handleBackgroundColorChange}
-            />
-          </div>
 
           {!imageData && (
             <>
@@ -172,7 +153,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                       view: currentView
                     }}
                     renderer={{
-                      hideGrid,
+                      showGrid,
                       backgroundColor
                     }}
                   />
@@ -192,9 +173,8 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
               </Box>
             </>
           )}
-
-          {imageData && (
-            <Stack alignItems="center" spacing={2}>
+          <Stack alignItems="center" spacing={2}>
+            {imageData && (
               <Box
                 component="img"
                 sx={{
@@ -206,6 +186,37 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                 src={imageData}
                 alt="preview"
               />
+            )}
+            <Box sx={{ width: '100%' }}>
+              <Box component="fieldset">
+                <Typography variant="caption" component="legend">
+                  Options
+                </Typography>
+
+                <FormControlLabel
+                  label="Show grid"
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={showGrid}
+                      onChange={(event) => {
+                        handleShowGridChange(event.target.checked);
+                      }}
+                    />
+                  }
+                />
+                <FormControlLabel
+                  label="Background color"
+                  control={
+                    <ColorPicker
+                      value={backgroundColor}
+                      onChange={handleBackgroundColorChange}
+                    />
+                  }
+                />
+              </Box>
+            </Box>
+            {imageData && (
               <Stack sx={{ width: '100%' }} alignItems="flex-end">
                 <Stack direction="row" spacing={2}>
                   <Button variant="text" onClick={onClose}>
@@ -214,8 +225,8 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                   <Button onClick={downloadFile}>Download as PNG</Button>
                 </Stack>
               </Stack>
-            </Stack>
-          )}
+            )}
+          </Stack>
 
           {exportError && (
             <Alert severity="error">Could not export image</Alert>

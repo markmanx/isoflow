@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material';
 export type Props = {
   hex: string;
   isActive?: boolean;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 export const ColorSwatch = ({ hex, onClick, isActive }: Props) => {

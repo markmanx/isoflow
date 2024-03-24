@@ -1,4 +1,4 @@
 export interface RendererProps {
-  hideGrid?: boolean;
+  showGrid?: boolean;
   backgroundColor?: string;
 }
