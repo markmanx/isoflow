@@ -12,7 +12,10 @@ import {
   Box,
   Button,
   Stack,
-  Alert
+  Alert,
+  Checkbox,
+  FormControlLabel,
+  Typography
 } from '@mui/material';
 import { useModelStore } from 'src/stores/modelStore';
 import {
@@ -27,6 +30,8 @@ import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { Isoflow } from 'src/Isoflow';
 import { Loader } from 'src/components/Loader/Loader';
+import { customVars } from 'src/styles/theme';
+import { ColorPicker } from 'src/components/ColorSelector/ColorPicker';
 
 interface Props {
   quality?: number;
@@ -87,6 +92,22 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
     downloadFileUtil(data, generateGenericFilename('png'));
   }, [imageData]);
 
+  const [showGrid, setShowGrid] = useState(false);
+  const handleShowGridChange = (checked: boolean) => {
+    setShowGrid(checked);
+  };
+
+  const [backgroundColor, setBackgroundColor] = useState<string>(
+    customVars.customPalette.diagramBg
+  );
+  const handleBackgroundColorChange = (color: string) => {
+    setBackgroundColor(color);
+  };
+
+  useEffect(() => {
+    setImageData(undefined);
+  }, [showGrid, backgroundColor]);
+
   return (
     <Dialog open onClose={onClose}>
       <DialogTitle>Export as image</DialogTitle>
@@ -131,6 +152,10 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                       fitToView: true,
                       view: currentView
                     }}
+                    renderer={{
+                      showGrid,
+                      backgroundColor
+                    }}
                   />
                 </Box>
               </Box>
@@ -148,9 +173,8 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
               </Box>
             </>
           )}
-
-          {imageData && (
-            <Stack alignItems="center" spacing={2}>
+          <Stack alignItems="center" spacing={2}>
+            {imageData && (
               <Box
                 component="img"
                 sx={{
@@ -162,6 +186,37 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                 src={imageData}
                 alt="preview"
               />
+            )}
+            <Box sx={{ width: '100%' }}>
+              <Box component="fieldset">
+                <Typography variant="caption" component="legend">
+                  Options
+                </Typography>
+
+                <FormControlLabel
+                  label="Show grid"
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={showGrid}
+                      onChange={(event) => {
+                        handleShowGridChange(event.target.checked);
+                      }}
+                    />
+                  }
+                />
+                <FormControlLabel
+                  label="Background color"
+                  control={
+                    <ColorPicker
+                      value={backgroundColor}
+                      onChange={handleBackgroundColorChange}
+                    />
+                  }
+                />
+              </Box>
+            </Box>
+            {imageData && (
               <Stack sx={{ width: '100%' }} alignItems="flex-end">
                 <Stack direction="row" spacing={2}>
                   <Button variant="text" onClick={onClose}>
@@ -170,8 +225,8 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
                   <Button onClick={downloadFile}>Download as PNG</Button>
                 </Stack>
               </Stack>
-            </Stack>
-          )}
+            )}
+          </Stack>
 
           {exportError && (
             <Alert severity="error">Could not export image</Alert>

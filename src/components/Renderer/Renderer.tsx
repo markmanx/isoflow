@@ -13,8 +13,9 @@ import { SizeIndicator } from 'src/components/DebugUtils/SizeIndicator';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { TransformControlsManager } from 'src/components/TransformControlsManager/TransformControlsManager';
 import { useScene } from 'src/hooks/useScene';
+import { RendererProps } from 'src/types/rendererProps';
 
-export const Renderer = () => {
+export const Renderer = ({ showGrid, backgroundColor }: RendererProps) => {
   const containerRef = useRef<HTMLDivElement>();
   const interactionsRef = useRef<HTMLDivElement>();
   const enableDebugTools = useUiStateStore((state) => {
@@ -47,7 +48,7 @@ export const Renderer = () => {
         height: '100%',
         zIndex: 0,
         bgcolor: (theme) => {
-          return theme.customVars.customPalette.diagramBg;
+          return backgroundColor ?? theme.customVars.customPalette.diagramBg;
         }
       }}
     >
@@ -63,7 +64,7 @@ export const Renderer = () => {
           left: 0
         }}
       >
-        <Grid />
+        {showGrid && <Grid />}
       </Box>
       {mode.showCursor && (
         <SceneLayer>

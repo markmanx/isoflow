@@ -20,7 +20,8 @@ const App = ({
   height = '100%',
   onModelUpdated,
   enableDebugTools = false,
-  editorMode = 'EDITABLE'
+  editorMode = 'EDITABLE',
+  renderer
 }: IsoflowProps) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
@@ -71,7 +72,7 @@ const App = ({
           transform: 'translateZ(0)'
         }}
       >
-        <Renderer />
+        <Renderer {...renderer} />
         <UiOverlay />
       </Box>
     </>
