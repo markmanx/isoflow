@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Box } from '@mui/material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useInteractionManager } from 'src/interaction/useInteractionManager';
@@ -37,6 +37,10 @@ export const Renderer = ({ showGrid, backgroundColor }: RendererProps) => {
     uiStateActions.setRendererEl(containerRef.current);
   }, [setInteractionsElement, uiStateActions]);
 
+  const isShowGrid = useMemo(() => {
+    return showGrid === undefined || showGrid;
+  }, [showGrid]);
+
   return (
     <Box
       ref={containerRef}
@@ -64,7 +68,7 @@ export const Renderer = ({ showGrid, backgroundColor }: RendererProps) => {
           left: 0
         }}
       >
-        {showGrid && <Grid />}
+        {isShowGrid && <Grid />}
       </Box>
       {mode.showCursor && (
         <SceneLayer>
