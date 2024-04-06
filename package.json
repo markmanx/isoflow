@@ -1,6 +1,6 @@
 {
   "name": "isoflow",
-  "version": "1.0.11",
+  "version": "1.1.0",
   "private": false,
   "description": "An open-source React component for drawing network diagrams.",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "docs:dev": "cd ./docs && npm run dev",
     "docs:build": "cd ./docs && npm run build",
     "docs:start": "cd ./docs && npm run start",
-    "standalone": "webpack --config ./webpack/standalone.config.js"
+    "docker:build": "webpack --config ./webpack/docker.config.js"
   },
   "devDependencies": {
     "@isoflow/isopacks": "^0.0.10",

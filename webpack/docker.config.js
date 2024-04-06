@@ -5,11 +5,11 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.tsx',
+  entry: './src/index-docker.tsx',
   target: 'web',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].js',
+    filename: 'main.js',
   },
   module: {
     rules: [

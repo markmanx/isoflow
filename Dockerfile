@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the React app for production
-RUN npm run standalone
+RUN npm run docker:build
 
 # Use Nginx as the production server
 FROM nginx:alpine
