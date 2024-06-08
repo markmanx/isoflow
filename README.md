@@ -2,7 +2,7 @@
 
 <h4 align="center">
   <a href="https://isoflow.io/app">Online playground</a> |
-  <a href="https://v2.isoflow.io/docs">Developer docs</a> |
+  <a href="https://isoflow.io/docs">Developer docs</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
   <a href="https://discord.gg/QYPkvZth7D">Discord</a> |
   <a href="https://hub.docker.com/r/markmanx/isoflow/tags">Docker image</a>
