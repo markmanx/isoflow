@@ -26,7 +26,7 @@
 - **Export options:** Export diagrams as code or images.
 
 ## Roadmap
-- [ ] Keyboard & mouse shortcuts (undo / redo, copy / paste, zoom in / out)
+- [ ] Keyboard & mouse shortcuts (undo / redo, copy / paste)
 
 🚢 Shipped
 - [x] Export options
