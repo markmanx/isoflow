@@ -129,6 +129,18 @@ export const useScene = () => {
     [getState, setState, currentViewId]
   );
 
+  const duplicateViewItem = useCallback(
+    (newViewItem: ViewItem) => {
+      const newState = reducers.view({
+        action: 'CREATE_VIEWITEM',
+        payload: newViewItem,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
+      setState(newState);
+    },
+    [getState, setState, currentViewId]
+  )
+
   const updateViewItem = useCallback(
     (id: string, updates: Partial<ViewItem>) => {
       const newState = reducers.view({
@@ -287,6 +299,7 @@ export const useScene = () => {
     updateViewItem,
     deleteViewItem,
     createConnector,
+    duplicateViewItem,
     updateConnector,
     deleteConnector,
     createTextBox,
