@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Stack, Alert } from '@mui/material';
 import { ControlsContainer } from 'src/components/ItemControls/components/ControlsContainer';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -32,6 +32,13 @@ export const IconSelectionControls = () => {
     },
     [mode, uiStateActions]
   );
+
+  useEffect(() => {
+    uiStateActions.setDisableScrollZoom(true);
+    return () => {
+      uiStateActions.setDisableScrollZoom(false); // Reset on unmount
+    };
+  }, [uiStateActions]);
 
   return (
     <ControlsContainer

@@ -4,11 +4,14 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 
 const useScrollZoom = () => {
   const uiStateActions = useUiStateStore((state) => {
-      return state.actions;
+    return state.actions;
+  });
+  const disableScrollZoom = useUiStateStore((state) => {
+    return state.disableScrollZoom;
   });
 
   const handleScroll = (e: WheelEvent) => {
-    e.preventDefault();
+    if (disableScrollZoom) return;
     if (e.deltaY > 0) {
         uiStateActions.decrementZoom();
       } else {
@@ -21,7 +24,7 @@ const useScrollZoom = () => {
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
-  }, []);
+  }, [disableScrollZoom]);
 };
 
 export default useScrollZoom;
