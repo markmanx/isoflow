@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { Box, useTheme, Typography, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
 import { EditorModeEnum } from 'src/types';
@@ -16,6 +16,7 @@ import { ContextMenuManager } from 'src/components/ContextMenu/ContextMenuManage
 import { useScene } from 'src/hooks/useScene';
 import { useModelStore } from 'src/stores/modelStore';
 import { ExportImageDialog } from '../ExportImageDialog/ExportImageDialog';
+import useScrollZoom from 'src/hooks/useScrollZoom';
 
 const ToolsEnum = {
   MAIN_MENU: 'MAIN_MENU',
@@ -49,6 +50,7 @@ const getEditorModeMapping = (editorMode: keyof typeof EditorModeEnum) => {
 
 export const UiOverlay = () => {
   const theme = useTheme();
+  useScrollZoom();
   const contextMenuAnchorRef = useRef();
   const { appPadding } = theme.customVars;
   const spacing = useCallback(
