@@ -30,7 +30,6 @@ const initialState = () => {
       },
       itemControls: null,
       enableDebugTools: false,
-      disableScrollZoom: false,
       actions: {
         setView: (view) => {
           set({ view });
@@ -92,9 +91,6 @@ const initialState = () => {
         },
         setRendererEl: (el) => {
           set({ rendererEl: el });
-        },
-        setDisableScrollZoom: (disableScrollZoom) => {
-          set({ disableScrollZoom });
         }
       }
     };

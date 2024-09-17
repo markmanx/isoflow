@@ -153,6 +153,14 @@ export const useInteractionManager = () => {
       });
     };
 
+    const onScroll = (e: WheelEvent) => {
+      if (e.deltaY > 0) {
+        uiState.actions.decrementZoom();
+      } else {
+        uiState.actions.incrementZoom();
+      }
+    }
+
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
     el.addEventListener('mouseup', onMouseEvent);
@@ -160,6 +168,7 @@ export const useInteractionManager = () => {
     el.addEventListener('touchstart', onTouchStart);
     el.addEventListener('touchmove', onTouchMove);
     el.addEventListener('touchend', onTouchEnd);
+    el.addEventListener('wheel', onScroll);
 
     return () => {
       el.removeEventListener('mousemove', onMouseEvent);
@@ -169,6 +178,7 @@ export const useInteractionManager = () => {
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('wheel', onScroll);
     };
   }, [uiState.editorMode, onMouseEvent, uiState.mode.type, onContextMenu]);
 

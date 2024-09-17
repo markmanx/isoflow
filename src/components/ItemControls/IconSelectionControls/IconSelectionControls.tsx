@@ -33,13 +33,6 @@ export const IconSelectionControls = () => {
     [mode, uiStateActions]
   );
 
-  useEffect(() => {
-    uiStateActions.setDisableScrollZoom(true);
-    return () => {
-      uiStateActions.setDisableScrollZoom(false); // Reset on unmount
-    };
-  }, [uiStateActions]);
-
   return (
     <ControlsContainer
       header={
