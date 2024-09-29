@@ -9,7 +9,7 @@
 </h4>
 
 <div align="center">
-  <h1>An open-source React library for drawing network diagrams.</h2>
+    <h1>A React component for drawing network diagrams.</h1>
 </div>
 
 <div align="center">
@@ -19,47 +19,27 @@
 
 </div>
 
-## Key Features
+## About Isoflow Community Edition
+Isoflow is an open-core project. We offer the [Isoflow Community Edition](https://github.com/markmanx/isoflow) as fully-functional, open-source software under the MIT license.  In addition, we also support our development efforts by offering **Isoflow Pro** with additional features for commercial use.  You can read more about the differences between Pro and the Community Edition at [isoflow.io](https://isoflow.io/pro-vs-community-edition).
 
-- **Highly visual drag and drop interface:** Express your architecture with icons, regions and connectors.
-- **Customizable:** Easily extend Isoflow with your own icons.
-- **Export options:** Export diagrams as code or images.
-
-## Roadmap
-- [ ] Keyboard & mouse shortcuts (undo / redo, copy / paste, zoom in / out)
-
-🚢 Shipped
-- [x] Export options
-- [x] Docker image
-- [x] Modifiable connector segments
-- [x] Display labels over connectors
-- [x] Layer re-ordering (bring forward / send to back)
-- [x] Allow custom colours
-- [x] Export diagrams as images
-- [x] Allow main menu to be customised
-- [x] Fit diagram to viewport
-- [x] Pan & zoom controls
-- [x] Nodes, connectors & groups
-- [x] Local storage support
-- [x] Icon support for AWS, GCP, Azure, K8S & generic network hardware (e.g. server, database)
-- [x] Event callbacks
-- [x] Documentation site
+## Key features
+- **Drag-and-drop editor** - Express your architecture with icons, regions and connectors.
+- **Extensible icon system** - Create your own icon library, or use plugins for existing libraries including AWS, Azure, GCP, Kubernetes, and more.
+- **Export options** - Export diagrams as code or images.
 
 ## Quick start
 
-Install the Isoflow editor [npm package](https://www.npmjs.com/package/isoflow) and isopacks (icon packages):
+Install both the editor and isopacks from [npm](https://www.npmjs.com/package/isoflow):
 
-- `npm install isoflow`
-- `npm install @isoflow/isopacks`
+- `npm install isoflow @isoflow/isopacks`
 
-For more information, see our [documentation](https://v2.isoflow.io/docs).
+See our [documentation](https://isoflow.io/docs) for more information.
 
 ## CodeSandbox demo
-Demo the latest version of Isoflow on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
+Demo the latest version of Isoflow Community Edition on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
 ## Professional support
-Isoflow is free to use for personal and commercial projects.  If you're using Isoflow commercially and require support, please get in touch.  We are also looking for project sponsors.
+For professional support, please consider purchasing a license for Isoflow Pro.  Isoflow Pro includes additional features and support options.  For more information, visit [isoflow.io](https://isoflow.io).
 
-## Contributing
-- Isoflow is actively being worked on.  Missing something or found a bug? Report it [here](https://github.com/markmanx/isoflow/issues) or join our [Discord server](https://discord.gg/QYPkvZth7D).
-- Want to contribute? See [good first issues](https://github.com/markmanx/isoflow/contribute).
+## Found a bug or need support?
+Report it [here](https://github.com/markmanx/isoflow/issues), or on our [Discord server](https://discord.gg/QYPkvZth7D).
