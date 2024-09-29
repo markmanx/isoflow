@@ -1,7 +1,7 @@
 ![readme-header](https://user-images.githubusercontent.com/1769678/223572353-788d5d38-cd28-40fa-96cd-9d29226f7e4b.png)
 
 <h4 align="center">
-  <a href="https://isoflow.io/app">Online playground</a> |
+  <a href="https://codesandbox.io/p/sandbox/github/markmanx/isoflow">Online playground</a> |
   <a href="https://isoflow.io/docs">Developer docs</a> |
   <a href="https://github.com/markmanx/isoflow">Github</a> |
   <a href="https://discord.gg/QYPkvZth7D">Discord</a> |
@@ -34,9 +34,6 @@ Install both the editor and isopacks from [npm](https://www.npmjs.com/package/is
 - `npm install isoflow @isoflow/isopacks`
 
 See our [documentation](https://isoflow.io/docs) for more information.
-
-## CodeSandbox demo
-Demo the latest version of Isoflow Community Edition on [CodeSandbox](https://codesandbox.io/p/sandbox/github/markmanx/isoflow).  The sandbox will always be synced with the `main` branch on the Github repo, and also includes the latest version of the developer documentation.
 
 ## Professional support
 For professional support, please consider purchasing a license for Isoflow Pro.  Isoflow Pro includes additional features and support options.  For more information, visit [isoflow.io](https://isoflow.io).
