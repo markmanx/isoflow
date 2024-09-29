@@ -42,4 +42,4 @@ Demo the latest version of Isoflow Community Edition on [CodeSandbox](https://co
 For professional support, please consider purchasing a license for Isoflow Pro.  Isoflow Pro includes additional features and support options.  For more information, visit [isoflow.io](https://isoflow.io).
 
 ## Found a bug or need support?
-Report it [here](https://github.com/markmanx/isoflow/issues), or on our [Discord server](https://discord.gg/QYPkvZth7D).
+Please report bugs and issues [here](https://github.com/markmanx/isoflow/issues), or on our [Discord server](https://discord.gg/QYPkvZth7D).
