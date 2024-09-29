@@ -20,7 +20,7 @@
 </div>
 
 ## About Isoflow Community Edition
-Isoflow is an open-core project. We offer the [Isoflow Community Edition](https://github.com/markmanx/isoflow) as fully-functional, open-source software under the MIT license.  In addition, we also support our development efforts by offering **Isoflow Pro** with additional features for commercial use.  You can read more about the differences between Pro and the Community Edition at [isoflow.io](https://isoflow.io/pro-vs-community-edition).
+Isoflow is an open-core project. We offer the [Isoflow Community Edition](https://github.com/markmanx/isoflow) as fully-functional, open-source software under the MIT license.  In addition, we also support our development efforts by offering **Isoflow Pro** with additional features for commercial use.  You can read more about the differences between Pro and the Community Edition [here](https://isoflow.io/pro-vs-community-edition).
 
 ## Key features
 - **Drag-and-drop editor** - Express your architecture with icons, regions and connectors.
