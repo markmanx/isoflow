@@ -168,7 +168,7 @@ export const useInteractionManager = () => {
     el.addEventListener('touchstart', onTouchStart);
     el.addEventListener('touchmove', onTouchMove);
     el.addEventListener('touchend', onTouchEnd);
-    el.addEventListener('wheel', onScroll);
+    uiState.rendererEl?.addEventListener('wheel', onScroll);
 
     return () => {
       el.removeEventListener('mousemove', onMouseEvent);
@@ -178,9 +178,16 @@ export const useInteractionManager = () => {
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
-      el.removeEventListener('wheel', onScroll);
+      uiState.rendererEl?.removeEventListener('wheel', onScroll);
     };
-  }, [uiState.editorMode, onMouseEvent, uiState.mode.type, onContextMenu]);
+  }, [
+    uiState.editorMode,
+    onMouseEvent,
+    uiState.mode.type,
+    onContextMenu,
+    uiState.actions,
+    uiState.rendererEl
+  ]);
 
   const setInteractionsElement = useCallback((element: HTMLElement) => {
     rendererRef.current = element;

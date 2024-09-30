@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Box, useTheme, Typography, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
 import { EditorModeEnum } from 'src/types';
