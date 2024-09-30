@@ -159,7 +159,7 @@ export const useInteractionManager = () => {
       } else {
         uiState.actions.incrementZoom();
       }
-    }
+    };
 
     el.addEventListener('mousemove', onMouseEvent);
     el.addEventListener('mousedown', onMouseEvent);
