@@ -28,7 +28,7 @@ type Mode = keyof typeof ModeOptions;
 
 export const NodeControls = ({ id }: Props) => {
   const [mode, setMode] = useState<Mode>('SETTINGS');
-  const { updateModelItem, updateViewItem, deleteViewItem } = useScene();
+  const { updateModelItem, updateViewItem, deleteViewItem, duplicateViewItem } = useScene();
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -100,6 +100,9 @@ export const NodeControls = ({ id }: Props) => {
           onDeleted={() => {
             uiStateActions.setItemControls(null);
             deleteViewItem(viewItem.id);
+          }}
+          onDuplicated={() => {
+            duplicateViewItem(viewItem);
           }}
         />
       )}

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Slider, Box, TextField } from '@mui/material';
+import { Slider, TextField, Grid } from '@mui/material';
 import { ModelItem, ViewItem } from 'src/types';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { DeleteButton } from '../../components/DeleteButton';
+import { DuplicateButton } from '../../components/DuplicateButton';
 import { Section } from '../../components/Section';
 
 export type NodeUpdates = {
@@ -16,13 +17,15 @@ interface Props {
   onModelItemUpdated: (updates: Partial<ModelItem>) => void;
   onViewItemUpdated: (updates: Partial<ViewItem>) => void;
   onDeleted: () => void;
+  onDuplicated: () => void;
 }
 
 export const NodeSettings = ({
   node,
   onModelItemUpdated,
   onViewItemUpdated,
-  onDeleted
+  onDeleted,
+  onDuplicated
 }: Props) => {
   const modelItem = useModelItem(node.id);
 
@@ -61,11 +64,14 @@ export const NodeSettings = ({
           />
         </Section>
       )}
-      <Section>
-        <Box>
+      <Grid container spacing={2} sx={{ pt: 3, px: 3 }}>
+        <Grid item>
           <DeleteButton onClick={onDeleted} />
-        </Box>
-      </Section>
+        </Grid>
+        <Grid item>
+          <DuplicateButton onClick={onDuplicated} />
+        </Grid>
+      </Grid>
     </>
   );
 };
