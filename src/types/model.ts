@@ -39,3 +39,13 @@ export type ModelStore = Model & {
     set: StoreApi<ModelStore>['setState'];
   };
 };
+
+export type {
+  ModelStoreWithHistory,
+  HistoryState as ModelHistoryState
+} from 'src/stores/modelStore';
+
+export type {
+  SceneStoreWithHistory,
+  SceneHistoryState
+} from 'src/stores/sceneStore';

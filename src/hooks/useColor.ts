@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { getItemByIdOrThrow } from 'src/utils';
+import { getItemById } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
 
 export const useColor = (colorId?: string) => {
@@ -7,14 +7,11 @@ export const useColor = (colorId?: string) => {
 
   const color = useMemo(() => {
     if (colorId === undefined) {
-      if (colors.length > 0) {
-        return colors[0];
-      }
-
-      throw new Error('No colors available.');
+      return colors.length > 0 ? colors[0] : null;
     }
 
-    return getItemByIdOrThrow(colors, colorId).value;
+    const item = getItemById(colors, colorId);
+    return item ? item.value : null;
   }, [colorId, colors]);
 
   return color;

@@ -35,11 +35,16 @@ export const NodeControls = ({ id }: Props) => {
   const viewItem = useViewItem(id);
   const modelItem = useModelItem(id);
   const { iconCategories } = useIconCategories();
-  const { icon } = useIcon(modelItem.icon);
+  const { icon } = useIcon(modelItem?.icon || '');
 
   const onSwitchMode = useCallback((newMode: Mode) => {
     setMode(newMode);
   }, []);
+
+  // If items don't exist, return null (component will unmount)
+  if (!viewItem || !modelItem) {
+    return null;
+  }
 
   return (
     <ControlsContainer>

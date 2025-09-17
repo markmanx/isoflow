@@ -5,6 +5,7 @@ import { ModeActions, State, SlimMouseEvent } from 'src/types';
 import { getMouse, getItemAtTile } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { useScene } from 'src/hooks/useScene';
+import { useHistory } from 'src/hooks/useHistory';
 import { Cursor } from './modes/Cursor';
 import { DragItems } from './modes/DragItems';
 import { DrawRectangle } from './modes/Rectangle/DrawRectangle';
@@ -17,7 +18,6 @@ import { TextBox } from './modes/TextBox';
 const modes: { [k in string]: ModeActions } = {
   CURSOR: Cursor,
   DRAG_ITEMS: DragItems,
-  // TODO: Adopt this notation for all modes (i.e. {node.type}.{action})
   'RECTANGLE.DRAW': DrawRectangle,
   'RECTANGLE.TRANSFORM': TransformRectangle,
   CONNECTOR: Connector,
@@ -50,6 +50,48 @@ export const useInteractionManager = () => {
   });
   const scene = useScene();
   const { size: rendererSize } = useResizeObserver(uiState.rendererEl);
+  const { undo, redo, canUndo, canRedo } = useHistory();
+
+  // Keyboard shortcuts for undo/redo
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't handle shortcuts when typing in input fields
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.contentEditable === 'true' ||
+        target.closest('.ql-editor') // Quill editor
+      ) {
+        return;
+      }
+
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+
+      if (isCtrlOrCmd && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        if (canUndo) {
+          undo();
+        }
+      }
+
+      if (
+        isCtrlOrCmd &&
+        (e.key.toLowerCase() === 'y' ||
+          (e.key.toLowerCase() === 'z' && e.shiftKey))
+      ) {
+        e.preventDefault();
+        if (canRedo) {
+          redo();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      return window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [undo, redo, canUndo, canRedo]);
 
   const onMouseEvent = useCallback(
     (e: SlimMouseEvent) => {

@@ -1,22 +1,26 @@
 import React, { useCallback } from 'react';
-import { Stack } from '@mui/material';
+import { Stack, Divider } from '@mui/material';
 import {
   PanToolOutlined as PanToolIcon,
   NearMeOutlined as NearMeIcon,
   AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
   CropSquareOutlined as CropSquareIcon,
-  Title as TitleIcon
+  Title as TitleIcon,
+  Undo as UndoIcon,
+  Redo as RedoIcon
 } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { useScene } from 'src/hooks/useScene';
+import { useHistory } from 'src/hooks/useHistory';
 import { TEXTBOX_DEFAULTS } from 'src/config';
 import { generateId } from 'src/utils';
 
 export const ToolMenu = () => {
   const { createTextBox } = useScene();
+  const { undo, redo, canUndo, canRedo } = useHistory();
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
@@ -26,6 +30,14 @@ export const ToolMenu = () => {
   const mousePosition = useUiStateStore((state) => {
     return state.mouse.position.tile;
   });
+
+  const handleUndo = useCallback(() => {
+    undo();
+  }, [undo]);
+
+  const handleRedo = useCallback(() => {
+    redo();
+  }, [redo]);
 
   const createTextBoxProxy = useCallback(() => {
     const textBoxId = generateId();
@@ -46,6 +58,23 @@ export const ToolMenu = () => {
   return (
     <UiElement>
       <Stack direction="row">
+        {/* Undo/Redo Section */}
+        <IconButton
+          name="Undo (Ctrl+Z)"
+          Icon={<UndoIcon />}
+          onClick={handleUndo}
+          disabled={!canUndo}
+        />
+        <IconButton
+          name="Redo (Ctrl+Y)"
+          Icon={<RedoIcon />}
+          onClick={handleRedo}
+          disabled={!canRedo}
+        />
+
+        <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+
+        {/* Main Tools */}
         <IconButton
           name="Select"
           Icon={<NearMeIcon />}

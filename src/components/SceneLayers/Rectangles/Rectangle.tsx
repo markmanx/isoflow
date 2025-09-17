@@ -9,6 +9,10 @@ type Props = ReturnType<typeof useScene>['rectangles'][0];
 export const Rectangle = ({ from, to, color: colorId }: Props) => {
   const color = useColor(colorId);
 
+  if (!color) {
+    return null;
+  }
+
   return (
     <IsoTileArea
       from={from}

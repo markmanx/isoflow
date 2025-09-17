@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
-import { getItemByIdOrThrow } from 'src/utils';
+import { getItemById } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
 
 export const useRectangle = (id: string) => {
   const { rectangles } = useScene();
 
   const rectangle = useMemo(() => {
-    return getItemByIdOrThrow(rectangles, id).value;
+    const item = getItemById(rectangles, id);
+    return item ? item.value : null;
   }, [rectangles, id]);
 
   return rectangle;

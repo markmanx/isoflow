@@ -20,6 +20,11 @@ export const ConnectorControls = ({ id }: Props) => {
   const connector = useConnector(id);
   const { updateConnector, deleteConnector } = useScene();
 
+  // If connector doesn't exist, return null
+  if (!connector) {
+    return null;
+  }
+
   return (
     <ControlsContainer>
       <Section>

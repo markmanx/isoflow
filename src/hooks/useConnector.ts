@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
-import { getItemByIdOrThrow } from 'src/utils';
+import { getItemById } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
 
 export const useConnector = (id: string) => {
   const { connectors } = useScene();
 
   const connector = useMemo(() => {
-    return getItemByIdOrThrow(connectors, id).value;
+    const item = getItemById(connectors, id);
+    return item ? item.value : null;
   }, [connectors, id]);
 
   return connector;

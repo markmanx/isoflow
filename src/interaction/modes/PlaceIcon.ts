@@ -29,16 +29,17 @@ export const PlaceIcon: ModeActions = {
     if (uiState.mode.id !== null) {
       const modelItemId = generateId();
 
-      scene.createModelItem({
-        id: modelItemId,
-        name: 'Untitled',
-        icon: uiState.mode.id
-      });
-
-      scene.createViewItem({
-        ...VIEW_ITEM_DEFAULTS,
-        id: modelItemId,
-        tile: uiState.mouse.position.tile
+      scene.placeIcon({
+        modelItem: {
+          id: modelItemId,
+          name: 'Untitled',
+          icon: uiState.mode.id
+        },
+        viewItem: {
+          ...VIEW_ITEM_DEFAULTS,
+          id: modelItemId,
+          tile: uiState.mouse.position.tile
+        }
       });
     }
 

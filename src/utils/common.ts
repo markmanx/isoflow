@@ -94,6 +94,21 @@ export function getItemByIdOrThrow<T extends { id: string }>(
   return { value: values[index], index };
 }
 
+export function getItemById<T extends { id: string }>(
+  values: T[],
+  id: string
+): { value: T; index: number } | null {
+  const index = values.findIndex((val) => {
+    return val.id === id;
+  });
+
+  if (index === -1) {
+    return null;
+  }
+
+  return { value: values[index], index };
+}
+
 export function getItemByIndexOrThrow<T>(items: T[], index: number): T {
   const item = items[index];
 

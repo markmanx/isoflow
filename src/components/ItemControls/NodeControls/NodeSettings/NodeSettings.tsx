@@ -26,6 +26,10 @@ export const NodeSettings = ({
 }: Props) => {
   const modelItem = useModelItem(node.id);
 
+  if (!modelItem) {
+    return null;
+  }
+
   return (
     <>
       <Section title="Name">

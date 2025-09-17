@@ -7,7 +7,9 @@ import {
   DataObject as ExportJsonIcon,
   ImageOutlined as ExportImageIcon,
   FolderOpen as FolderOpenIcon,
-  DeleteOutline as DeleteOutlineIcon
+  DeleteOutline as DeleteOutlineIcon,
+  Undo as UndoIcon,
+  Redo as RedoIcon
 } from '@mui/icons-material';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
@@ -15,6 +17,7 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { exportAsJSON, modelFromModelStore } from 'src/utils';
 import { useInitialDataManager } from 'src/hooks/useInitialDataManager';
 import { useModelStore } from 'src/stores/modelStore';
+import { useHistory } from 'src/hooks/useHistory';
 import { MenuItem } from './MenuItem';
 
 export const MainMenu = () => {
@@ -32,6 +35,7 @@ export const MainMenu = () => {
     return state.actions;
   });
   const initialDataManager = useInitialDataManager();
+  const { undo, redo, canUndo, canRedo, clearHistory } = useHistory();
 
   const onToggleMenu = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,6 +68,7 @@ export const MainMenu = () => {
       fileReader.onload = async (e) => {
         const modelData = JSON.parse(e.target?.result as string);
         load(modelData);
+        clearHistory(); // Clear history when loading new model
       };
       fileReader.readAsText(file);
 
@@ -72,7 +77,7 @@ export const MainMenu = () => {
 
     await fileInput.click();
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, load]);
+  }, [uiStateActions, load, clearHistory]);
 
   const onExportAsJSON = useCallback(async () => {
     exportAsJSON(model);
@@ -88,8 +93,19 @@ export const MainMenu = () => {
 
   const onClearCanvas = useCallback(() => {
     clear();
+    clearHistory(); // Clear history when clearing canvas
     uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, clear]);
+  }, [uiStateActions, clear, clearHistory]);
+
+  const handleUndo = useCallback(() => {
+    undo();
+    uiStateActions.setIsMainMenuOpen(false);
+  }, [undo, uiStateActions]);
+
+  const handleRedo = useCallback(() => {
+    redo();
+    uiStateActions.setIsMainMenuOpen(false);
+  }, [redo, uiStateActions]);
 
   const sectionVisibility = useMemo(() => {
     return {
@@ -133,6 +149,26 @@ export const MainMenu = () => {
         }}
       >
         <Card sx={{ py: 1 }}>
+          {/* Undo/Redo Section */}
+          <MenuItem
+            onClick={handleUndo}
+            Icon={<UndoIcon />}
+            disabled={!canUndo}
+          >
+            Undo
+          </MenuItem>
+
+          <MenuItem
+            onClick={handleRedo}
+            Icon={<RedoIcon />}
+            disabled={!canRedo}
+          >
+            Redo
+          </MenuItem>
+
+          {(canUndo || canRedo) && sectionVisibility.actions && <Divider />}
+
+          {/* File Actions */}
           {mainMenuOptions.includes('ACTION.OPEN') && (
             <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon />}>
               Open

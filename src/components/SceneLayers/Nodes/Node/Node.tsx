@@ -19,7 +19,7 @@ interface Props {
 
 export const Node = ({ node, order }: Props) => {
   const modelItem = useModelItem(node.id);
-  const { iconComponent } = useIcon(modelItem.icon);
+  const { iconComponent } = useIcon(modelItem?.icon);
 
   const position = useMemo(() => {
     return getTilePosition({
@@ -30,13 +30,19 @@ export const Node = ({ node, order }: Props) => {
 
   const description = useMemo(() => {
     if (
+      !modelItem ||
       modelItem.description === undefined ||
       modelItem.description === MARKDOWN_EMPTY_VALUE
     )
       return null;
 
     return modelItem.description;
-  }, [modelItem.description]);
+  }, [modelItem?.description]);
+
+  // If modelItem doesn't exist, don't render the node
+  if (!modelItem) {
+    return null;
+  }
 
   return (
     <Box
@@ -52,7 +58,7 @@ export const Node = ({ node, order }: Props) => {
           top: position.y
         }}
       >
-        {(modelItem.name || description) && (
+        {(modelItem?.name || description) && (
           <Box
             sx={{ position: 'absolute' }}
             style={{ bottom: PROJECTED_TILE_SIZE.height / 2 }}

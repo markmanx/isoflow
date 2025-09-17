@@ -16,6 +16,7 @@ export const RectangleTransformControls = ({ id }: Props) => {
 
   const onAnchorMouseDown = useCallback(
     (key: AnchorPosition) => {
+      if (!rectangle) return;
       uiStateActions.setMode({
         type: 'RECTANGLE.TRANSFORM',
         id: rectangle.id,
@@ -23,8 +24,12 @@ export const RectangleTransformControls = ({ id }: Props) => {
         showCursor: true
       });
     },
-    [rectangle.id, uiStateActions]
+    [rectangle?.id, uiStateActions]
   );
+
+  if (!rectangle) {
+    return null;
+  }
 
   return (
     <TransformControls

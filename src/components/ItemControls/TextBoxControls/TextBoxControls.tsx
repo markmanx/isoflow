@@ -27,6 +27,11 @@ export const TextBoxControls = ({ id }: Props) => {
   const textBox = useTextBox(id);
   const { updateTextBox, deleteTextBox } = useScene();
 
+  // If textBox doesn't exist, return null
+  if (!textBox) {
+    return null;
+  }
+
   return (
     <ControlsContainer>
       <Section>

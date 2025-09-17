@@ -19,6 +19,11 @@ export const RectangleControls = ({ id }: Props) => {
   const rectangle = useRectangle(id);
   const { updateRectangle, deleteRectangle } = useScene();
 
+  // If rectangle doesn't exist, return null
+  if (!rectangle) {
+    return null;
+  }
+
   return (
     <ControlsContainer>
       <Section>
