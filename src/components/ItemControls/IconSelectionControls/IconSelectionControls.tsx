@@ -17,6 +17,9 @@ export const IconSelectionControls = () => {
   const mode = useUiStateStore((state) => {
     return state.mode;
   });
+  const hiddenIcons = useUiStateStore((state) => {
+    return state.hiddenIcons;
+  });
   const { setFilter, filteredIcons, filter } = useIconFiltering();
   const { iconCategories } = useIconCategories();
 
@@ -33,6 +36,25 @@ export const IconSelectionControls = () => {
     [mode, uiStateActions]
   );
 
+  const hideIcons = useCallback(
+    (icons: Icon[], hidden: string[]) => {
+      return icons.filter((icon) => !hidden.includes(icon.id));
+    },
+    []
+  );
+
+  const hideIconsInCategories = useCallback(
+    (categories: typeof iconCategories, hidden: string[]) => {
+      return categories.map((category) => {
+        return {
+          ...category,
+          icons: hideIcons(category.icons, hidden)
+        };
+      }).filter((category) => category.icons.length > 0);
+    },
+    [hideIcons]
+  );
+
   return (
     <ControlsContainer
       header={
@@ -40,7 +62,7 @@ export const IconSelectionControls = () => {
           <Stack spacing={2}>
             <Searchbox value={filter} onChange={setFilter} />
             <Alert severity="info">
-              You can drag and drop any item below onto the canvas.
+              You can drag and drop any item below onto the workspace.
             </Alert>
           </Stack>
         </Section>
@@ -48,11 +70,11 @@ export const IconSelectionControls = () => {
     >
       {filteredIcons && (
         <Section>
-          <IconGrid icons={filteredIcons} onMouseDown={onMouseDown} />
+          <IconGrid icons={hideIcons(filteredIcons, hiddenIcons)} onMouseDown={onMouseDown} />
         </Section>
       )}
       {!filteredIcons && (
-        <Icons iconCategories={iconCategories} onMouseDown={onMouseDown} />
+        <Icons iconCategories={hideIconsInCategories(iconCategories, hiddenIcons)} onMouseDown={onMouseDown} />
       )}
     </ControlsContainer>
   );

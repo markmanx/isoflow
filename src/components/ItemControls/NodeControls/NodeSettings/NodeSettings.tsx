@@ -5,6 +5,7 @@ import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { DeleteButton } from '../../components/DeleteButton';
 import { Section } from '../../components/Section';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 export type NodeUpdates = {
   model: Partial<ModelItem>;
@@ -24,10 +25,15 @@ export const NodeSettings = ({
   onViewItemUpdated,
   onDeleted
 }: Props) => {
+  const nodeSettingsOptions = useUiStateStore((state) => {
+    return state.nodeSettingsOptions;
+  });
+
   const modelItem = useModelItem(node.id);
 
   return (
     <>
+      {nodeSettingsOptions.includes('NAME') &&
       <Section title="Name">
         <TextField
           value={modelItem.name}
@@ -36,7 +42,8 @@ export const NodeSettings = ({
             if (modelItem.name !== text) onModelItemUpdated({ name: text });
           }}
         />
-      </Section>
+      </Section>}
+      {nodeSettingsOptions.includes('DESCRIPTION') && (
       <Section title="Description">
         <MarkdownEditor
           value={modelItem.description}
@@ -45,8 +52,8 @@ export const NodeSettings = ({
               onModelItemUpdated({ description: text });
           }}
         />
-      </Section>
-      {modelItem.name && (
+      </Section>)}
+      {modelItem.name && nodeSettingsOptions.includes('LABEL_HEIGHT') && (
         <Section title="Label height">
           <Slider
             marks
@@ -61,11 +68,13 @@ export const NodeSettings = ({
           />
         </Section>
       )}
-      <Section>
-        <Box>
-          <DeleteButton onClick={onDeleted} />
-        </Box>
-      </Section>
+      {nodeSettingsOptions.includes('DELETE') && (
+        <Section>
+          <Box>
+            <DeleteButton onClick={onDeleted} />
+          </Box>
+        </Section>
+      )}
     </>
   );
 };

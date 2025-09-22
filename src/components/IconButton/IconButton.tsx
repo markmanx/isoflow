@@ -44,6 +44,7 @@ export const IconButton = ({
       <Button
         variant="text"
         onClick={onClick}
+        key="icon-button-button"
         sx={{
           borderRadius: 0,
           height: theme.customVars.toolMenu.height,

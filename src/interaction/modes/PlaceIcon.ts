@@ -31,7 +31,7 @@ export const PlaceIcon: ModeActions = {
 
       scene.createModelItem({
         id: modelItemId,
-        name: 'Untitled',
+        name: '',
         icon: uiState.mode.id
       });
 

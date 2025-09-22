@@ -62,7 +62,7 @@ export const NodeControls = ({ id }: Props) => {
               src={icon.url}
               sx={{ width: 70, height: 70 }}
             />
-            {mode === 'SETTINGS' && (
+            {/* {mode === 'SETTINGS' && (
               <Button
                 endIcon={<ChevronRightIcon />}
                 onClick={() => {
@@ -72,7 +72,7 @@ export const NodeControls = ({ id }: Props) => {
               >
                 Update icon
               </Button>
-            )}
+            )} */}
             {mode === 'CHANGE_ICON' && (
               <Button
                 startIcon={<ChevronLeftIcon />}

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { Box, useTheme, Typography, Stack } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
 import { EditorModeEnum } from 'src/types';
-import { UiElement } from 'components/UiElement/UiElement';
+import { UiElement } from 'src/components/UiElement/UiElement';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
 import { DragAndDrop } from 'src/components/DragAndDrop/DragAndDrop';
 import { ItemControlsManager } from 'src/components/ItemControls/ItemControlsManager';

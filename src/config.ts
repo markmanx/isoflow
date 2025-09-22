@@ -8,7 +8,9 @@ import {
   ViewItem,
   View,
   Rectangle,
-  Colors
+  Colors,
+  ToolMenuOptions,
+  NodeSettingsOptions
 } from 'src/types';
 import { CoordsUtils } from 'src/utils';
 import { customVars } from './styles/theme';
@@ -75,7 +77,7 @@ export const MAX_ZOOM = 1;
 export const TRANSFORM_ANCHOR_SIZE = 30;
 export const TRANSFORM_CONTROLS_COLOR = '#0392ff';
 export const INITIAL_DATA: InitialData = {
-  title: 'Untitled',
+  title: '',
   version: '',
   icons: [],
   colors: [DEFAULT_COLOR],
@@ -102,6 +104,21 @@ export const MAIN_MENU_OPTIONS: MainMenuOptions = [
   'LINK.DISCORD',
   'LINK.GITHUB',
   'VERSION'
+];
+export const TOOL_MENU_OPTIONS: ToolMenuOptions = [
+  'SELECT',
+  'PAN',
+  'ADD_ITEM',
+  'RECTANGLE',
+  'CONNECTOR',
+  'TEXT'
+];
+
+export const NODE_SETTINGS_OPTIONS: NodeSettingsOptions = [
+  'NAME',
+  'DESCRIPTION',
+  'LABEL_HEIGHT',
+  'DELETE',
 ];
 
 export const DEFAULT_ICON: Icon = {

@@ -1,5 +1,5 @@
-import { Coords, EditorModeEnum, MainMenuOptions } from './common';
-import { Icon } from './model';
+import { Coords, EditorModeEnum, MainMenuOptions, NodeSettingsOptions, ToolMenuOptions } from './common';
+import { Icon, ModelItem, } from './model';
 import { ItemReference } from './scene';
 
 interface AddItemControls {
@@ -134,6 +134,11 @@ export type LayerOrderingAction = keyof typeof LayerOrderingActionOptions;
 export interface UiState {
   view: string;
   mainMenuOptions: MainMenuOptions;
+  toolMenuOptions: ToolMenuOptions;
+  nodeSettingsOptions: NodeSettingsOptions;
+  hiddenIcons: string[];
+  extraToolMenuOptions: React.ReactNode;
+  nodeIndicatorComponent: (props: { item: ModelItem }) => JSX.Element;
   editorMode: keyof typeof EditorModeEnum;
   iconCategoriesState: IconCollectionState[];
   mode: Mode;
@@ -151,6 +156,11 @@ export interface UiState {
 export interface UiStateActions {
   setView: (view: string) => void;
   setMainMenuOptions: (options: MainMenuOptions) => void;
+  setToolMenuOptions: (options: ToolMenuOptions) => void;
+  setNodeSettingsOptions: (options: NodeSettingsOptions) => void;
+  setHiddenIcons: (hiddenIcons: string[]) => void;
+  setExtraToolMenuOptions: (extraToolMenuOptions: React.ReactNode) => void;
+  setNodeIndicatorComponent: (nodeIndicatorComponent: (props: { item: ModelItem }) => JSX.Element) => void;
   setEditorMode: (mode: keyof typeof EditorModeEnum) => void;
   setIconCategoriesState: (iconCategoriesState: IconCollectionState[]) => void;
   resetUiState: () => void;

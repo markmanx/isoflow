@@ -15,12 +15,14 @@
     "module": "es6",
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "exclude": ["node_modules", "./dist", "./docs"],
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/global.d.ts"
-  ],
+    "src/global.d.ts",
+    "src/vitest-setup.d.ts"
+, "src/__mocks__/setupTests.ts", "src/__mocks__/expectRenderError.jsx", "src/__mocks__/expectRenderError.jsx"  ],
 }

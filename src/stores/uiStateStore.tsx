@@ -16,6 +16,11 @@ const initialState = () => {
       scroll: INITIAL_UI_STATE.scroll,
       view: '',
       mainMenuOptions: [],
+      toolMenuOptions: [],
+      nodeSettingsOptions: [],
+      hiddenIcons: [],
+      extraToolMenuOptions: null,
+      nodeIndicatorComponent: () => <></>,
       editorMode: 'EXPLORABLE_READONLY',
       mode: getStartingMode('EXPLORABLE_READONLY'),
       iconCategoriesState: [],
@@ -36,6 +41,21 @@ const initialState = () => {
         },
         setMainMenuOptions: (mainMenuOptions) => {
           set({ mainMenuOptions });
+        },
+        setToolMenuOptions: (toolMenuOptions) => {
+          set({ toolMenuOptions });
+        },
+        setNodeSettingsOptions: (nodeSettingsOptions) => {
+          set({ nodeSettingsOptions });
+        },
+        setHiddenIcons: (hiddenIcons) => {
+          set({ hiddenIcons });
+        },
+        setExtraToolMenuOptions: (extraToolMenuOptions) => {
+          set({ extraToolMenuOptions });
+        },
+        setNodeIndicatorComponent: (nodeIndicatorComponent) => {
+          set({ nodeIndicatorComponent });
         },
         setEditorMode: (mode) => {
           set({ editorMode: mode, mode: getStartingMode(mode) });

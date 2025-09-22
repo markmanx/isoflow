@@ -26,6 +26,12 @@ export const ToolMenu = () => {
   const mousePosition = useUiStateStore((state) => {
     return state.mouse.position.tile;
   });
+  const toolMenuOptions = useUiStateStore((state) => {
+    return state.toolMenuOptions;
+  });
+  const extraToolMenuOptions = useUiStateStore((state) => {
+    return state.extraToolMenuOptions;
+  });
 
   const createTextBoxProxy = useCallback(() => {
     const textBoxId = generateId();
@@ -43,10 +49,15 @@ export const ToolMenu = () => {
     });
   }, [uiStateStoreActions, createTextBox, mousePosition]);
 
+  if (toolMenuOptions.length === 0) {
+    return null;
+  }
+
   return (
     <UiElement>
       <Stack direction="row">
-        <IconButton
+        {extraToolMenuOptions}
+        {toolMenuOptions.includes('SELECT') && (<IconButton
           name="Select"
           Icon={<NearMeIcon />}
           onClick={() => {
@@ -57,8 +68,8 @@ export const ToolMenu = () => {
             });
           }}
           isActive={mode.type === 'CURSOR' || mode.type === 'DRAG_ITEMS'}
-        />
-        <IconButton
+        />)}
+        {toolMenuOptions.includes('PAN') && (<IconButton
           name="Pan"
           Icon={<PanToolIcon />}
           onClick={() => {
@@ -70,7 +81,8 @@ export const ToolMenu = () => {
             uiStateStoreActions.setItemControls(null);
           }}
           isActive={mode.type === 'PAN'}
-        />
+        />)}
+        {toolMenuOptions.includes('ADD_ITEM') && (
         <IconButton
           name="Add item"
           Icon={<AddIcon />}
@@ -85,7 +97,8 @@ export const ToolMenu = () => {
             });
           }}
           isActive={mode.type === 'PLACE_ICON'}
-        />
+        />)}
+        {toolMenuOptions.includes('RECTANGLE') && (
         <IconButton
           name="Rectangle"
           Icon={<CropSquareIcon />}
@@ -97,7 +110,8 @@ export const ToolMenu = () => {
             });
           }}
           isActive={mode.type === 'RECTANGLE.DRAW'}
-        />
+        />)}
+        {toolMenuOptions.includes('CONNECTOR') && (
         <IconButton
           name="Connector"
           Icon={<ConnectorIcon />}
@@ -109,13 +123,14 @@ export const ToolMenu = () => {
             });
           }}
           isActive={mode.type === 'CONNECTOR'}
-        />
+        />)}
+        {toolMenuOptions.includes('TEXT') && (
         <IconButton
           name="Text"
           Icon={<TitleIcon />}
           onClick={createTextBoxProxy}
           isActive={mode.type === 'TEXTBOX'}
-        />
+        />)}
       </Stack>
     </UiElement>
   );
