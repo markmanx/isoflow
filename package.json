@@ -9,20 +9,35 @@
     "url": "https://github.com/markmanx/isoflow.git"
   },
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/Isoflow.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/Isoflow.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./standaloneExports": {
+      "import": "./dist/standaloneExports.mjs",
+      "require": "./dist/standaloneExports.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "webpack serve --config ./webpack/dev.config.js",
     "dev": "nodemon --watch ./src/ -e ts,tsx --exec npm run build",
     "build": "webpack --config ./webpack/prod.config.js && tsc --declaration --emitDeclarationOnly && tsc-alias",
     "test": "jest",
-    "lint": "tsc --noEmit && eslint ./src/**/* --ext .ts,.tsx",
+    "lint": "tsc --noEmit && eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix ./src/**/* --ext .ts,.tsx",
     "docker:build": "webpack --config ./webpack/docker.config.js"
   },
   "devDependencies": {
     "@isoflow/isopacks": "^0.0.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/chroma-js": "^2.4.0",
     "@types/dom-to-image": "^2.6.5",
@@ -30,8 +45,8 @@
     "@types/jest": "^27.5.2",
     "@types/jsdom": "^21.1.0",
     "@types/pathfinding": "^0.0.6",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
     "@types/uuid": "^9.0.2",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
@@ -51,10 +66,10 @@
     "jest-environment-jsdom": "^29.5.0",
     "jsdom": "^21.1.1",
     "nodemon": "^3.0.1",
-    "prettier": "^3.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "recharts": "^2.7.2",
+    "prettier": "^3.9.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "recharts": "^3.10.1",
     "style-loader": "^3.3.3",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
@@ -66,24 +81,24 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.11.10",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/icons-material": "9.3.1",
+    "@mui/material": "9.3.1",
     "auto-bind": "^5.0.1",
     "chroma-js": "^2.4.2",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
     "gsap": "^3.11.4",
     "immer": "^10.0.2",
-    "mui-color-input": "^2.0.3",
+    "mui-color-input": "^9.0.0",
     "paper": "^0.12.17",
     "pathfinding": "^0.4.18",
-    "react-hook-form": "^7.43.2",
-    "react-quill": "^2.0.0",
-    "react-router-dom": "^6.8.1",
+    "quill": "^2.0.3",
+    "react-hook-form": "^7.85.0",
+    "react-router-dom": "^7.18.2",
     "uuid": "^9.0.0",
-    "zod": "3.22.2",
+    "zod": "4.4.3",
     "zustand": "^4.3.3"
   },
   "peerDependencies": {

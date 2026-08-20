@@ -5,6 +5,7 @@ import { VIEW_DEFAULTS, INITIAL_SCENE_STATE } from 'src/config';
 import type { ViewReducerContext, State, ViewReducerParams } from './types';
 import { syncConnector } from './connector';
 import { syncTextBox } from './textBox';
+// eslint-disable-next-line import/no-cycle
 import * as viewItemReducers from './viewItem';
 import * as connectorReducers from './connector';
 import * as textBoxReducers from './textBox';

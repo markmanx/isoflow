@@ -39,8 +39,8 @@ interface Props {
 }
 
 export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
-  const containerRef = useRef<HTMLDivElement>();
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const currentView = useUiStateStore((state) => {
     return state.view;
   });
@@ -68,14 +68,15 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
   const exportImage = useCallback(async () => {
     if (!containerRef.current) return;
 
-    clearTimeout(debounceRef.current);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       exportAsImage(containerRef.current as HTMLDivElement)
         .then((data) => {
           return setImageData(data);
         })
         .catch((err) => {
-          console.log(err);
+          // eslint-disable-next-line no-console
+          console.error(err);
           setExportError(true);
         });
     }, 2000);
@@ -173,7 +174,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
               </Box>
             </>
           )}
-          <Stack alignItems="center" spacing={2}>
+          <Stack sx={{ alignItems: 'center' }} spacing={2}>
             {imageData && (
               <Box
                 component="img"
@@ -217,7 +218,7 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
               </Box>
             </Box>
             {imageData && (
-              <Stack sx={{ width: '100%' }} alignItems="flex-end">
+              <Stack sx={{ width: '100%', alignItems: 'flex-end' }}>
                 <Stack direction="row" spacing={2}>
                   <Button variant="text" onClick={onClose}>
                     Cancel

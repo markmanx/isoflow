@@ -16,12 +16,14 @@ export const Searchbox = ({ value, onChange }: Props) => {
       onChange={(e) => {
         return onChange(e.target.value as string);
       }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        )
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          )
+        }
       }}
     />
   );

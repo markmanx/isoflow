@@ -40,8 +40,8 @@ const getModeFunction = (mode: ModeActions, e: SlimMouseEvent) => {
 };
 
 export const useInteractionManager = () => {
-  const rendererRef = useRef<HTMLElement>();
-  const reducerTypeRef = useRef<string>();
+  const rendererRef = useRef<HTMLElement>(null);
+  const reducerTypeRef = useRef<string>(null);
   const uiState = useUiStateStore((state) => {
     return state;
   });

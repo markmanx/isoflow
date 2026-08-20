@@ -17,7 +17,7 @@ export const ExpandableLabel = ({
   ...rest
 }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const contentRef = useRef<HTMLDivElement>();
+  const contentRef = useRef<HTMLDivElement>(null);
   const { observe, size: contentSize } = useResizeObserver();
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Slider, Box, TextField } from '@mui/material';
 import { ModelItem, ViewItem } from 'src/types';
 import { MarkdownEditor } from 'src/components/MarkdownEditor/MarkdownEditor';
@@ -25,6 +25,11 @@ export const NodeSettings = ({
   onDeleted
 }: Props) => {
   const modelItem = useModelItem(node.id);
+  const [description, setDescription] = useState(modelItem.description ?? '');
+
+  useEffect(() => {
+    setDescription(modelItem.description ?? '');
+  }, [modelItem.description, node.id]);
 
   return (
     <>
@@ -39,10 +44,12 @@ export const NodeSettings = ({
       </Section>
       <Section title="Description">
         <MarkdownEditor
-          value={modelItem.description}
-          onChange={(text) => {
-            if (modelItem.description !== text)
-              onModelItemUpdated({ description: text });
+          value={description}
+          onChange={setDescription}
+          onBlur={() => {
+            if ((modelItem.description ?? '') !== description) {
+              onModelItemUpdated({ description });
+            }
           }}
         />
       </Section>

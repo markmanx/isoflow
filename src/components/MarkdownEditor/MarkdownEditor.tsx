@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import ReactQuill from 'react-quill';
 import { Box } from '@mui/material';
+import { ReactQuill } from './ReactQuill';
 
 interface Props {
   value?: string;
   onChange?: (value: string) => void;
+  onBlur?: () => void;
   readOnly?: boolean;
   height?: number;
   styles?: React.CSSProperties;
@@ -15,6 +16,7 @@ const tools = ['bold', 'italic', 'underline', 'strike', 'link'];
 export const MarkdownEditor = ({
   value,
   onChange,
+  onBlur,
   readOnly,
   height = 120,
   styles
@@ -58,6 +60,7 @@ export const MarkdownEditor = ({
         value={value ?? ''}
         readOnly={readOnly}
         onChange={onChange}
+        onBlur={onBlur}
         formats={tools}
         modules={modules}
       />

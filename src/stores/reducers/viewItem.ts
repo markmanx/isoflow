@@ -3,6 +3,7 @@ import { ViewItem } from 'src/types';
 import { getItemByIdOrThrow, getConnectorsByViewItem } from 'src/utils';
 import { validateView } from 'src/schemas/validation';
 import { State, ViewReducerContext } from './types';
+// eslint-disable-next-line import/no-cycle
 import * as reducers from './view';
 
 export const updateViewItem = (

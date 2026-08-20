@@ -15,8 +15,7 @@ export const Icons = ({ iconCategories, onClick, onMouseDown }: Props) => {
       {iconCategories.map((cat) => {
         return (
           <Grid
-            item
-            xs={12}
+            size={{ xs: 12 }}
             key={`icon-collection-${cat.id ?? 'uncategorised'}`}
           >
             <IconCollection

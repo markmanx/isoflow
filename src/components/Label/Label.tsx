@@ -20,7 +20,7 @@ export const Label = ({
   labelHeight = 0,
   sx
 }: Props) => {
-  const contentRef = useRef<HTMLDivElement>();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   return (
     <Box

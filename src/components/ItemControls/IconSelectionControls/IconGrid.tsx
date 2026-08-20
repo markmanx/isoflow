@@ -14,7 +14,7 @@ export const IconGrid = ({ icons, onMouseDown, onClick }: Props) => {
     <Grid container>
       {icons.map((icon) => {
         return (
-          <Grid item xs={3} key={icon.id}>
+          <Grid size={{ xs: 3 }} key={icon.id}>
             <Icon
               icon={icon}
               onClick={() => {

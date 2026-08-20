@@ -49,7 +49,7 @@ const getEditorModeMapping = (editorMode: keyof typeof EditorModeEnum) => {
 
 export const UiOverlay = () => {
   const theme = useTheme();
-  const contextMenuAnchorRef = useRef();
+  const contextMenuAnchorRef = useRef(null);
   const { appPadding } = theme.customVars;
   const spacing = useCallback(
     (multiplier: number) => {
@@ -189,12 +189,12 @@ export const UiOverlay = () => {
                 height: '100%'
               }}
             >
-              <Stack direction="row" alignItems="center">
-                <Typography fontWeight={600} color="text.secondary">
+              <Stack direction="row" sx={{ alignItems: 'center' }}>
+                <Typography color="text.secondary" sx={{ fontWeight: 600 }}>
                   {title}
                 </Typography>
                 <ChevronRight />
-                <Typography fontWeight={600} color="text.secondary">
+                <Typography color="text.secondary" sx={{ fontWeight: 600 }}>
                   {currentView.name}
                 </Typography>
               </Stack>
@@ -236,7 +236,9 @@ export const UiOverlay = () => {
 
       <SceneLayer>
         <Box ref={contextMenuAnchorRef} />
-        <ContextMenuManager anchorEl={contextMenuAnchorRef.current} />
+        <ContextMenuManager
+          anchorEl={contextMenuAnchorRef.current ?? undefined}
+        />
       </SceneLayer>
     </>
   );

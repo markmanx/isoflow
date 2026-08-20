@@ -40,7 +40,6 @@ export const NodeControls = ({ id }: Props) => {
   const onSwitchMode = useCallback((newMode: Mode) => {
     setMode(newMode);
   }, []);
-
   return (
     <ControlsContainer>
       <Box
@@ -54,8 +53,10 @@ export const NodeControls = ({ id }: Props) => {
           <Stack
             direction="row"
             spacing={2}
-            alignItems="flex-end"
-            justifyContent="space-between"
+            sx={{
+              alignItems: 'flex-end',
+              justifyContent: 'space-between'
+            }}
           >
             <Box
               component="img"
